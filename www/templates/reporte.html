@@ -1,0 +1,56 @@
+<ion-view view-title="Reporte">
+  <ion-content>
+    <div class="spin" ng-if="!dataReady">
+      <ion-spinner></ion-spinner>
+    </div>
+    <div class=""  nd-if="dataReady">
+      <form name="form" ng-submit="form.$valid && doRegistro()" novalidate>
+        <div class="list">
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">Nombre</span>
+            <input type="text" name="nombre" ng-model="data.nombre" required>
+          </label>
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">Tipo de novedad</span>
+            <br>
+            <button class="button button-clear button-calm" modal-select ng-model="data.tipo" options="tipolist"
+            option-property="nombre" modal-title="Seleciona un tipo" cancel-button="Cancelar"  reset-button="Limpiar">
+              {{ data.tipo || &apos;Seleccionar...&apos;}}
+                <div class="option">
+                  <h2>{{option.nombre}}</h2>
+                  <p>
+                    Cierre...
+                  </p>
+                </div>
+            </button>
+          </label>
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">Descricción</span>
+            <textarea type="text" heigth="500px" ng-model="data.descripcion" required></textarea>
+          </label>
+          <label class="item item-input">
+            <span class="input-label">Tomar foto</span>
+            <button class="button  button-outline button-calm" ng-click="takePicture()">
+              <i class="icon ion-camera"></i>
+            </button>
+          </label>
+          <label class="item item-input">
+            <span class="input-label"> Galeria</span>
+            <button class="button  button-outline button-dark" ng-click="getGallery()">
+              <i class="icon ion-images"></i>
+            </button>
+          </label>
+          <label class="item item-input">
+            <span class="input-label">Imagenes ({{total}})</span>
+            <button class="button  button-outline button-balanced" ng-disabled="total==0" ng-click="verGaleria()">
+              <i class="icon ion-image"></i>
+            </button>
+          </label>
+          <label class="item">
+            <button class="button button-block button-positive" ng-click="" type="submit">Enviar</button>
+          </label>
+        </div>
+      </form>
+    </div>
+  </ion-content>
+</ion-view>

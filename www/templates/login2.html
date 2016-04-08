@@ -1,0 +1,25 @@
+<ion-header-bar class="bar-positive" align-title="center">
+    <h1 class="title">Iniciar sesión</h1>
+</ion-header-bar>
+<ion-view hide-nav-bar="true">
+	<ion-content>
+    <div class="spin" ng-if="!loginReady">
+      <ion-spinner></ion-spinner>
+    </div>
+    <form name="form" ng-submit="form.$valid && doLogin()" novalidate ng-if="loginReady">
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Usuario</span>
+          <input type="text" name="username" ng-model="loginData.username" required>
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Contraseña</span>
+          <input type="password" name="password" ng-model="loginData.password" required>
+        </label>
+        <label class="item">
+          <button class="button button-block button-positive" ng-click="validLogin()" type="submit">Entrar</button>
+        </label>
+      </div>
+    </form>
+  </ion-content>
+</ion-view>

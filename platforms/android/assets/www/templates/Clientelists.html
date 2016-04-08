@@ -1,0 +1,21 @@
+<ion-view cache-view="false" view-title="Clientes">
+  <ion-content>
+    <div class="bar bar-header  bar-dark item-input-inset">
+      <label class="item-input-wrapper">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text" placeholder="Search" ng-model="search">
+      </label>
+      <button class="button button-clear" ng-click="search=''">
+         Limpiar
+      </button>
+    </div>
+      <ion-list ng-if="dataReady" >
+        <ion-item ng-repeat="cliente in clientelists|filter:search" href="#/app/info/{{cliente.id}}" class="item-avatar">
+            <img src="{{server}}/media/{{cliente.imagen}}">
+            <h2>{{cliente.nombre}} {{cliente.apellidos}}</h2>
+            <p>Piscina: {{ cliente.piscinac }}</p>
+        </ion-item >
+      </ion-list>
+      <ion-infinite-scroll ng-if="!noMoreItemsAvailable" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll>
+  </ion-content>
+</ion-view>

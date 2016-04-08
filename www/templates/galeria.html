@@ -1,0 +1,15 @@
+<ion-modal-view>
+  <ion-header-bar class="bar-balanced">
+    <h1 class="title">Galeria</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeGaleria()">Cerrar</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <div class="list card">
+      <div ng-repeat="imagen in imagenes" class="item item-image">
+        <img src="{{imagen}}">
+      </div>
+    </div>
+  </ion-content>
+</ion-modal-view>
