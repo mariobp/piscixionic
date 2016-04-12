@@ -240,7 +240,7 @@ angular.module('starter.controllers', [])
     var scope = $rootScope;
     $ionicModal.fromTemplateUrl('templates/galeria.html', {
         scope: scope,
-        animation: 'slide-in-up'
+        animation: 'fade'
     }).then(function(modal) {
         scope.modal = modal;
     });
@@ -261,6 +261,7 @@ angular.module('starter.controllers', [])
     $scope.data = {};
     $scope.data.imagenes = [];
     $scope.total = 0;
+    $scope.ready = true;
     $http.get($scope.server + '/list/tiporepor/')
         .then(function doneCallbacks(response) {
             $scope.tipolist = response.data.object_list;
@@ -325,6 +326,78 @@ angular.module('starter.controllers', [])
             });
     };
 
+    $scope.datosForm = function() {
+        console.log("Entro");
+        var dataSend = {};
+        dataSend.nombre = $scope.data.nombre;
+        dataSend.descripcion = $scope.data.descripcion;
+        dataSend.tipo = $scope.data.tipo.id;
+        dataSend.cliente = $stateParams.clienteId;
+        dataSend["solicituddeproducto_set-TOTAL_FORMS"] = $scope.total;
+        dataSend["solicituddeproducto_set-INITIAL_FORMS"] = 0;
+        dataSend["solicituddeproducto_set-MIN_NUM_FORMS"] = 0;
+        dataSend["solicituddeproducto_set-MAX_NUM_FORMS"] = 1000;
+        if ($scope.data.imagenes.length > 0) {
+            for (var i = 0; i < $scope.data.imagenes; i++) {
+                dataSend["imagenr_set-" + i + "-imagen"] = $scope.data.imagenes[i];
+            }
+            enviar(dataSend); //Se formatea la informacion y se envia.
+        } else {
+            $ionicPopup.confirm({
+                title: "Fotos",
+                content: "Esta seguro que quiere enviar sin fotos?",
+                cancelText: 'Tomar Foto',
+                cancelType: 'button-calm',
+                okText: 'Si, Enviar!'
+            }).then(function(result) {
+                if (result) {
+                    enviar(dataSend); //Se envia sin fotos
+                }else{
+                    $scope.takePicture();
+                }
+            });
+        }
+
+    };
+
+    var enviar = function(data){
+      $scope.ready = false;
+      $http({
+        method:'POST',
+        url: $scope.server + '/reporte/',
+        data: $.param(data),
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+      }).then(function doneCallbacks(response){
+          $scope.data = {};
+          $cordovaToast.show("Enviado exitoso", 'long', 'center');
+          $scope.ready = true;
+      }, function failCallbacks(response){
+          $scope.ready = true;
+        if (response.status == 400) {
+          var data = response.data;
+          if (data.error) {
+              $cordovaToast.show(data.error[0], 'short', 'center');
+          }
+          if (data.nombre) {
+              $cordovaToast.show("Usuario:" + data.nombre[0], 'short', 'center');
+          }
+          if (data.descripcion) {
+              $cordovaToast.show("Contraseña:" + data.descripcion[0], 'short', 'center');
+          }
+          if (data.cliente) {
+              $cordovaToast.show("Contraseña:" + data.cliente[0], 'short', 'center');
+          }if (data.tipo) {
+              $cordovaToast.show("Contraseña:" + data.tipo[0], 'short', 'center');
+          }if (data.reporta) {
+              $cordovaToast.show("Contraseña:" + data.reporta[0], 'short', 'center');
+          }
+        }else{
+          $cordovaToast.show("Ups algo anda mal!",'short', 'center');
+        }
+      });
+    };
 })
 
 .controller('Mantenimiento', function($http, $scope, $stateParams, Camera, Galeria, $cordovaImagePicker) {
