@@ -8,16 +8,22 @@
     </div>
     <form name="form" ng-submit="form.$valid && doLogin()" novalidate ng-if="loginReady">
       <div class="list">
-        <label class="item item-input">
+        <label class="item item-input" ng-class="{'has-errors':form.username.$invalid && form.$submitted,'no-errors':form.username.$valid && form.$submitted}">
           <span class="input-label">Usuario</span>
           <input type="text" name="username" ng-model="loginData.username" required>
         </label>
-        <label class="item item-input">
+        <div class="error-container" ng-show="form.username.$error && form.$submitted" ng-messages="form.username.$error">
+          <div ng-messages-include="templates/error-list.html"></div>
+        </div>
+        <label class="item item-input" ng-class="{'has-errors':form.password.$invalid && form.$submitted, 'no-errors':form.password.$valid && form.$submitted}">
           <span class="input-label">Contraseña</span>
           <input type="password" name="password" ng-model="loginData.password" required>
         </label>
+        <div class="error-container" ng-show="form.password.$error && form.$submitted" ng-messages="form.password.$error">
+          <div ng-messages-include="templates/error-list.html"></div>
+        </div>
         <label class="item">
-          <button class="button button-block button-positive" ng-click="validLogin()" type="submit">Entrar</button>
+          <button class="button button-block button-positive"  type="submit">Entrar</button>
         </label>
       </div>
     </form>

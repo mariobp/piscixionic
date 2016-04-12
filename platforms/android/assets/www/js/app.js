@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.service.core', 'starter.controllers', 'ionic-native-transitions'])
+angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.service.core', 'starter.controllers', 'ionic-native-transitions','ngMessages'])
 
 .run(function($ionicPlatform, $ionicPopup, $interval, $http, $location, $window) {
     $ionicPlatform.ready(function() {
@@ -78,6 +78,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $ionicNativeTransitionsProvider) {
     $ionicConfigProvider.views.transition('none');
+    $ionicConfigProvider.scrolling.jsScrolling(false);
     $ionicNativeTransitionsProvider.setDefaultOptions({
         duration: 300, // in milliseconds (ms), default 400,
         slowdownfactor: 4, // overlap views (higher number is more) or no overlap (1), default 4
@@ -105,13 +106,13 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
     .state('app.login', {
         url: '/login/:next',
         nativeTransitionsAndroid: {
-          "type": "slider",
-          "direction": "up"
+            "type": "slider",
+            "direction": "up"
         },
         nativeTransitionsBackAndroid: {
-          "type": "slider",
-          "direction": "down"
-        },  
+            "type": "slider",
+            "direction": "down"
+        },
         views: {
             'menuContent': {
                 templateUrl: 'templates/login2.html',
@@ -122,9 +123,10 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
 
     .state('app.reporte', {
         url: '/reporte/:clienteId',
-         nativeTransitionsAndroid: {
-          "type": "slider",
-          "direction": "up"
+        nativeTransitionsAndroid: {
+            "type": "slider",
+            "direction": "up",
+            "duration": 200
         },
         views: {
             'menuContent': {
@@ -137,8 +139,9 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
     .state('app.mantenimiento', {
         url: '/mantenimiento/:clienteId',
         nativeTransitionsAndroid: {
-          "type": "slider",
-          "direction": "up"
+            "type": "slider",
+            "direction": "up",
+            "duration": 200
         },
         views: {
             'menuContent': {
@@ -151,8 +154,9 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
     .state('app.reparacion', {
         url: '/reparacion/:clienteId',
         nativeTransitionsAndroid: {
-          "type": "slider",
-          "direction": "up"
+            "type": "slider",
+            "direction": "up",
+            "duration": 200
         },
         views: {
             'menuContent': {
@@ -165,9 +169,9 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
     .state('app.clientelists', {
         url: '/clientelists',
         nativeTransitionsBackAndroid: {
-          "type": "slider",
-          "direction": "right"
-        },  
+            "type": "slider",
+            "direction": "right"
+        },
         views: {
             'menuContent': {
                 templateUrl: 'templates/Clientelists.html',
@@ -179,9 +183,10 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
     .state('app.info', {
         url: '/info/:clienteId',
         nativeTransitionsBackAndroid: {
-          "type": "slider",
-          "direction": "down"
-        },  
+            "type": "fade",
+            //"direction": "down"
+            "duration": 500
+        },
         views: {
             'menuContent': {
                 templateUrl: 'templates/InfoC.html',
@@ -189,14 +194,22 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
             }
         }
     })
-        .state('app.acerca', {
-            url: '/acerca',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/acerca.html',
-                }
+    .state('app.acerca', {
+        url: '/acerca',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/acerca.html',
             }
-        });
+        }
+    })
+    .state('app.historial', {
+        url: '/historial',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/historial.html',
+            }
+        }
+    });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/clientelists');
 });

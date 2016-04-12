@@ -190,30 +190,32 @@ angular.module('starter.controllers', [])
 })
 
 //Controlador de informacion de cliente
-.controller('InfoC', function($http, $scope, $stateParams, $ionicPopup, $location, $cordovaToast) {
+.controller('InfoC', function($http, $scope, $stateParams, $ionicPopup, $location, $timeout, $cordovaToast) {
     var id = $stateParams.clienteId;
     $scope.dataReady = false;
-    $http.get($scope.server + '/single/cliente/' + id + '/')
-        .then(function successCallback(response) {
-            $scope.info = response.data;
-            $scope.dataReady = true;
-        }, function errorCallback(response) {
-            if (response.status === 403) {
-                $cordovaToast
-                    .show(response.data.error, 'short', 'center')
-                    .then(function(success) {
-                        $location.path('/app/login/' + id);
-                    }, function(error) {
-                        console.log(error);
+    $timeout(function() {
+        $http.get($scope.server + '/single/cliente/' + id + '/')
+            .then(function successCallback(response) {
+                $scope.info = response.data;
+                $scope.dataReady = true;
+            }, function errorCallback(response) {
+                if (response.status === 403) {
+                    $cordovaToast
+                        .show(response.data.error, 'short', 'center')
+                        .then(function(success) {
+                            $location.path('/app/login/' + id);
+                        }, function(error) {
+                            console.log(error);
+                        });
+                }
+                if (response.status === 0) {
+                    $ionicPopup.alert({
+                        title: "Error",
+                        content: "No se puede acceder a este servicio en este momento.",
                     });
-            }
-            if (response.status === 0) {
-                $ionicPopup.alert({
-                    title: "Error",
-                    content: "No se puede acceder a este servicio en este momento.",
-                });
-            }
-        });
+                }
+            });
+    }, 500);
 })
 
 .factory('Camera', function($q) {
@@ -238,7 +240,7 @@ angular.module('starter.controllers', [])
     var scope = $rootScope;
     $ionicModal.fromTemplateUrl('templates/galeria.html', {
         scope: scope,
-        animation: 'slide-in-up'
+        animation: 'fade'
     }).then(function(modal) {
         scope.modal = modal;
     });
@@ -323,6 +325,9 @@ angular.module('starter.controllers', [])
             });
     };
 
+    $scope.enviarForm = function(){
+      
+    }
 })
 
 .controller('Mantenimiento', function($http, $scope, $stateParams, Camera, Galeria, $cordovaImagePicker) {
