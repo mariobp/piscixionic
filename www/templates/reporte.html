@@ -15,7 +15,7 @@
           <label class="item item-input item-stacked-label" ng-class="{'has-errors': !data.tipo && form.$submitted,'no-errors':data.tipo && form.$submitted}">
             <span class="input-label">Tipo de novedad</span>
             <br>
-            <button class="button button-clear button-calm" modal-select ng-model="data.tipo" options="tipolist"
+            <button type="button" class="button button-clear button-calm" modal-select ng-model="data.tipo" options="tipolist"
             option-property="nombre" modal-title="Seleciona un tipo" cancel-button="Cancelar"  reset-button="Limpiar">
               {{ data.tipo || &apos;Seleccionar...&apos;}}
                 <div class="option">
@@ -38,19 +38,19 @@
           </div>
           <label class="item item-input">
             <span class="input-label">Tomar foto</span>
-            <button class="button  button-outline button-calm" ng-click="takePicture()">
+            <button type="button" class="button  button-outline button-calm" ng-click="takePicture()">
               <i class="icon ion-camera"></i>
             </button>
           </label>
           <label class="item item-input">
             <span class="input-label"> Galeria</span>
-            <button class="button  button-outline button-dark" ng-click="getGallery()">
+            <button type="button" class="button  button-outline button-dark" ng-click="getGallery()">
               <i class="icon ion-images"></i>
             </button>
           </label>
           <label class="item item-input">
             <span class="input-label">Imagenes ({{total}})</span>
-            <button class="button  button-outline button-balanced" ng-disabled="total==0" ng-click="verGaleria()">
+            <button type="button" class="button  button-outline button-balanced" ng-disabled="total==0" ng-click="verGaleria()">
               <i class="icon ion-image"></i>
             </button>
           </label>

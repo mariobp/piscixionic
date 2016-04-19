@@ -407,6 +407,7 @@ angular.module('starter.controllers', [])
     $scope.data = {};
     $scope.data.imagenes = [];
     $scope.total = 0;
+    $scope.ready = true;
     $scope.takePicture = function() {
         if ($scope.total < 5) {
             var options = {
@@ -535,6 +536,7 @@ angular.module('starter.controllers', [])
     $scope.data = {};
     $scope.data.imagenes = [];
     $scope.total = 0;
+    $scope.ready = true;
     $scope.takePicture = function() {
         if ($scope.total < 5) {
             var options = {

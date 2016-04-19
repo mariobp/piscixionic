@@ -106,12 +106,12 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
     .state('app.login', {
         url: '/login/:next',
         nativeTransitionsAndroid: {
-            "type": "slider",
-            "direction": "up"
+            "type": "fade",
+            "duration": 500
         },
         nativeTransitionsBackAndroid: {
-            "type": "slider",
-            "direction": "down"
+            "type": "fade",
+            "duration": 500
         },
         views: {
             'menuContent': {
