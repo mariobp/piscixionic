@@ -1,6 +1,9 @@
 <ion-view view-title="Reparacion">
 <ion-content>
-<form name="form" ng-submit="form.$valid && doRegistro()" novalidate>
+<div class="spin" ng-if="!ready">
+  <ion-spinner></ion-spinner>
+</div>
+<form name="form" ng-submit="form.$valid && datosForm()" ng-if="ready" novalidate>
   <div class="list">
     <label class="item item-input item-stacked-label" ng-class="{'has-errors':form.nombre.$invalid && form.$submitted,'no-errors':form.nombre.$valid && form.$submitted}">
       <span class="input-label">Nombre</span>
@@ -35,7 +38,7 @@
       </button>
     </label>
     <label class="item">
-      <button class="button button-block button-positive" ng-click="" type="submit">Enviar</button>
+      <button class="button button-block button-positive" type="submit">Enviar</button>
     </label>
   </div>
 </form>

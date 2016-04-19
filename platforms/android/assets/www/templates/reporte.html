@@ -3,7 +3,7 @@
     <div class="spin" ng-if="!ready">
       <ion-spinner></ion-spinner>
     </div>
-      <form name="form" ng-submit="form.$valid && datosForm()" ng-if="ready" novalidate>
+      <form name="form" ng-submit="form.$valid && datosForm()" novalidate  ng-if="ready" >
         <div class="list">
           <label class="item item-input item-stacked-label" ng-class="{'has-errors':form.nombre.$invalid && form.$submitted,'no-errors':form.nombre.$valid && form.$submitted}">
             <span class="input-label">Nombre</span>

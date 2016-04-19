@@ -11,6 +11,7 @@ angular.module('starter.controllers', [])
     // Form data for the login modal
     $scope.loginData = {};
     $scope.server = "http://104.236.33.228:8040";
+    //$scope.server = "http://192.168.1.51:8000";
     // Create the login modal that we will use later
     $ionicModal.fromTemplateUrl('templates/login.html', {
         scope: $scope
@@ -99,95 +100,95 @@ angular.module('starter.controllers', [])
 })
 
 .controller('Login', function($scope, $http, $location, $stateParams, $ionicHistory, $cordovaToast) {
-    $ionicHistory.nextViewOptions({
-        //  disableAnimate: true,
-        disableBack: true
-    });
-    var next = function(id) {
-        if (id === '0') {
-            $location.path('/app/clientelists');
-        } else {
-            $location.path('/app/info/' + id);
-        }
-    };
-
-    $scope.loginReady = true;
-    $scope.doLogin = function() {
-        $scope.loginReady = false;
-        $http({
-            method: 'POST',
-            url: $scope.server + '/login/piscinero/',
-            data: $.param($scope.loginData),
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-        }).then(function doneCallbacks(response) {
-            $scope.loginData = {};
-            $scope.loginReady = true;
-            next($stateParams.next);
-
-        }, function failCallbacks(response) {
-            $scope.loginReady = true;
-            if (response.status == 400) {
-                var data = response.data;
-                if (data.error) {
-                    $cordovaToast.show(data.error[0], 'short', 'center');
-                }
-                if (data.username) {
-                    $cordovaToast.show("Usuario:" + data.username[0], 'short', 'center');
-                }
-                if (data.password) {
-                    $cordovaToast.show("Contraseña:" + data.password[0], 'short', 'center');
-                }
-            }
+        $ionicHistory.nextViewOptions({
+            //  disableAnimate: true,
+            disableBack: true
         });
-        // Simulate a login delay. Remove this and replace with your login
-        // code if using a login system
+        var next = function(id) {
+            if (id === '0') {
+                $location.path('/app/clientelists');
+            } else {
+                $location.path('/app/info/' + id);
+            }
+        };
 
-    };
+        $scope.loginReady = true;
+        $scope.doLogin = function() {
+            $scope.loginReady = false;
+            $http({
+                method: 'POST',
+                url: $scope.server + '/login/piscinero/',
+                data: $.param($scope.loginData),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+            }).then(function doneCallbacks(response) {
+                $scope.loginData = {};
+                $scope.loginReady = true;
+                next($stateParams.next);
 
-})
-//Controlador de lista de clientes
-.controller('Clientelists', function($http, $scope, $timeout, $ionicPopup, $location, $cordovaToast) {
-    $scope.search = "";
-    $scope.clientelists = [];
-    $scope.noMoreItemsAvailable = false;
-    $scope.dataReady = false;
-    var num = 1,
-        max = 0;
-    $scope.loadMore = function() {
-        $http.get($scope.server + '/list/cliente/?page=' + num)
-            .then(function successCallback(response) {
-                clientes = response.data.object_list;
-                clientes.forEach(function(cliente) {
-                    $scope.clientelists.push(cliente);
-                });
-                max = response.data.count;
-                if ($scope.clientelists.length === max) {
-                    $scope.noMoreItemsAvailable = true;
-                }
-                $scope.dataReady = true;
-                num++;
-                $scope.$broadcast('scroll.infiniteScrollComplete');
-            }, function errorCallback(response) {
-                if (response.status === 403) {
-                    $cordovaToast
-                        .show(response.data.error, 'short', 'center')
-                        .then(function(success) {
-                            $location.path('/app/login/0');
-                        }, function(error) {
-                            console.log(error);
-                        });
-                }
-                if (response.status === 0) {
-                    $ionicPopup.alert({
-                        title: "Error",
-                        content: "No se puede acceder a este servicio en este momento.",
-                    });
+            }, function failCallbacks(response) {
+                $scope.loginReady = true;
+                if (response.status == 400) {
+                    var data = response.data;
+                    if (data.error) {
+                        $cordovaToast.show(data.error[0], 'short', 'center');
+                    }
+                    if (data.username) {
+                        $cordovaToast.show("Usuario:" + data.username[0], 'short', 'center');
+                    }
+                    if (data.password) {
+                        $cordovaToast.show("Contraseña:" + data.password[0], 'short', 'center');
+                    }
                 }
             });
-    };
-})
+            // Simulate a login delay. Remove this and replace with your login
+            // code if using a login system
+
+        };
+
+    })
+    //Controlador de lista de clientes
+    .controller('Clientelists', function($http, $scope, $timeout, $ionicPopup, $location, $cordovaToast) {
+        $scope.search = "";
+        $scope.clientelists = [];
+        $scope.noMoreItemsAvailable = false;
+        $scope.dataReady = false;
+        var num = 1,
+            max = 0;
+        $scope.loadMore = function() {
+            $http.get($scope.server + '/list/cliente/?page=' + num)
+                .then(function successCallback(response) {
+                    clientes = response.data.object_list;
+                    clientes.forEach(function(cliente) {
+                        $scope.clientelists.push(cliente);
+                    });
+                    max = response.data.count;
+                    if ($scope.clientelists.length === max) {
+                        $scope.noMoreItemsAvailable = true;
+                    }
+                    $scope.dataReady = true;
+                    num++;
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                }, function errorCallback(response) {
+                    if (response.status === 403) {
+                        $cordovaToast
+                            .show(response.data.error, 'short', 'center')
+                            .then(function(success) {
+                                $location.path('/app/login/0');
+                            }, function(error) {
+                                console.log(error);
+                            });
+                    }
+                    if (response.status === 0) {
+                        $ionicPopup.alert({
+                            title: "Error",
+                            content: "No se puede acceder a este servicio en este momento.",
+                        });
+                    }
+                });
+        };
+    })
 
 //Controlador de informacion de cliente
 .controller('InfoC', function($http, $scope, $stateParams, $ionicPopup, $location, $timeout, $cordovaToast) {
@@ -326,8 +327,49 @@ angular.module('starter.controllers', [])
             });
     };
 
+    var enviar = function(data) {
+        $scope.ready = false;
+        $http({
+            method: 'POST',
+            url: $scope.server + '/reporte/',
+            data: data,
+            //transformRequest: formDataObject, // this sends your data to the formDataObject provider that we are defining below.
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+        }).then(function doneCallbacks(response) {
+            $scope.data = {};
+            $cordovaToast.show("Enviado exitoso", 'long', 'center');
+            $scope.ready = true;
+        }, function failCallbacks(response) {
+            $scope.ready = true;
+            if (response.status == 400) {
+                var data = response.data;
+                if (data.error) {
+                    $cordovaToast.show(data.error[0], 'short', 'center');
+                }
+                if (data.nombre) {
+                    $cordovaToast.show("Usuario:" + data.nombre[0], 'short', 'center');
+                }
+                if (data.descripcion) {
+                    $cordovaToast.show("Contraseña:" + data.descripcion[0], 'short', 'center');
+                }
+                if (data.cliente) {
+                    $cordovaToast.show("Contraseña:" + data.cliente[0], 'short', 'center');
+                }
+                if (data.tipo) {
+                    $cordovaToast.show("Contraseña:" + data.tipo[0], 'short', 'center');
+                }
+                if (data.reporta) {
+                    $cordovaToast.show("Contraseña:" + data.reporta[0], 'short', 'center');
+                }
+            } else {
+                $cordovaToast.show("Ups algo anda mal!", 'short', 'center');
+            }
+        });
+    };
+
     $scope.datosForm = function() {
-        console.log("Entro");
         var dataSend = {};
         dataSend.nombre = $scope.data.nombre;
         dataSend.descripcion = $scope.data.descripcion;
@@ -352,51 +394,12 @@ angular.module('starter.controllers', [])
             }).then(function(result) {
                 if (result) {
                     enviar(dataSend); //Se envia sin fotos
-                }else{
+                } else {
                     $scope.takePicture();
                 }
             });
         }
 
-    };
-
-    var enviar = function(data){
-      $scope.ready = false;
-      $http({
-        method:'POST',
-        url: $scope.server + '/reporte/',
-        data: $.param(data),
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-      }).then(function doneCallbacks(response){
-          $scope.data = {};
-          $cordovaToast.show("Enviado exitoso", 'long', 'center');
-          $scope.ready = true;
-      }, function failCallbacks(response){
-          $scope.ready = true;
-        if (response.status == 400) {
-          var data = response.data;
-          if (data.error) {
-              $cordovaToast.show(data.error[0], 'short', 'center');
-          }
-          if (data.nombre) {
-              $cordovaToast.show("Usuario:" + data.nombre[0], 'short', 'center');
-          }
-          if (data.descripcion) {
-              $cordovaToast.show("Contraseña:" + data.descripcion[0], 'short', 'center');
-          }
-          if (data.cliente) {
-              $cordovaToast.show("Contraseña:" + data.cliente[0], 'short', 'center');
-          }if (data.tipo) {
-              $cordovaToast.show("Contraseña:" + data.tipo[0], 'short', 'center');
-          }if (data.reporta) {
-              $cordovaToast.show("Contraseña:" + data.reporta[0], 'short', 'center');
-          }
-        }else{
-          $cordovaToast.show("Ups algo anda mal!",'short', 'center');
-        }
-      });
     };
 })
 
@@ -454,6 +457,78 @@ angular.module('starter.controllers', [])
             });
     };
 
+    var enviar = function(data) {
+        $scope.ready = false;
+        $http({
+            method: 'POST',
+            url: $scope.server + '/reporte/',
+            data: data,
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+        }).then(function doneCallbacks(response) {
+            $scope.data = {};
+            $cordovaToast.show("Enviado exitoso", 'long', 'center');
+            $scope.ready = true;
+        }, function failCallbacks(response) {
+            $scope.ready = true;
+            if (response.status == 400) {
+                var data = response.data;
+                if (data.error) {
+                    $cordovaToast.show(data.error[0], 'short', 'center');
+                }
+                if (data.nombre) {
+                    $cordovaToast.show("Usuario:" + data.nombre[0], 'short', 'center');
+                }
+                if (data.descripcion) {
+                    $cordovaToast.show("Contraseña:" + data.descripcion[0], 'short', 'center');
+                }
+                if (data.cliente) {
+                    $cordovaToast.show("Contraseña:" + data.cliente[0], 'short', 'center');
+                }
+                if (data.tipo) {
+                    $cordovaToast.show("Contraseña:" + data.tipo[0], 'short', 'center');
+                }
+                if (data.reporta) {
+                    $cordovaToast.show("Contraseña:" + data.reporta[0], 'short', 'center');
+                }
+            } else {
+                $cordovaToast.show("Ups algo anda mal!", 'short', 'center');
+            }
+        });
+    };
+
+    $scope.datosForm = function() {
+        var dataSend = {};
+        dataSend.nombre = $scope.data.nombre;
+        dataSend.descripcion = $scope.data.descripcion;
+        dataSend.cliente = $stateParams.clienteId;
+        dataSend["solicituddeproducto_set-TOTAL_FORMS"] = $scope.total;
+        dataSend["solicituddeproducto_set-INITIAL_FORMS"] = 0;
+        dataSend["solicituddeproducto_set-MIN_NUM_FORMS"] = 0;
+        dataSend["solicituddeproducto_set-MAX_NUM_FORMS"] = 1000;
+        if ($scope.data.imagenes.length > 0) {
+            for (var i = 0; i < $scope.data.imagenes; i++) {
+                dataSend["imagenr_set-" + i + "-imagen"] = $scope.data.imagenes[i];
+            }
+            enviar(dataSend); //Se formatea la informacion y se envia.
+        } else {
+            $ionicPopup.confirm({
+                title: "Fotos",
+                content: "Esta seguro que quiere enviar sin fotos?",
+                cancelText: 'Tomar Foto',
+                cancelType: 'button-calm',
+                okText: 'Si, Enviar!'
+            }).then(function(result) {
+                if (result) {
+                    enviar(dataSend); //Se envia sin fotos
+                } else {
+                    $scope.takePicture();
+                }
+            });
+        }
+
+    };
 })
 
 .controller('Reparacion', function($http, $scope, $stateParams, Camera, Galeria, $cordovaImagePicker) {
@@ -510,4 +585,76 @@ angular.module('starter.controllers', [])
             });
     };
 
+    var enviar = function(data) {
+        $scope.ready = false;
+        $http({
+            method: 'POST',
+            url: $scope.server + '/reporte/',
+            data: data,
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+        }).then(function doneCallbacks(response) {
+            $scope.data = {};
+            $cordovaToast.show("Enviado exitoso", 'long', 'center');
+            $scope.ready = true;
+        }, function failCallbacks(response) {
+            $scope.ready = true;
+            if (response.status == 400) {
+                var data = response.data;
+                if (data.error) {
+                    $cordovaToast.show(data.error[0], 'short', 'center');
+                }
+                if (data.nombre) {
+                    $cordovaToast.show("Usuario:" + data.nombre[0], 'short', 'center');
+                }
+                if (data.descripcion) {
+                    $cordovaToast.show("Contraseña:" + data.descripcion[0], 'short', 'center');
+                }
+                if (data.cliente) {
+                    $cordovaToast.show("Contraseña:" + data.cliente[0], 'short', 'center');
+                }
+                if (data.tipo) {
+                    $cordovaToast.show("Contraseña:" + data.tipo[0], 'short', 'center');
+                }
+                if (data.reporta) {
+                    $cordovaToast.show("Contraseña:" + data.reporta[0], 'short', 'center');
+                }
+            } else {
+                $cordovaToast.show("Ups algo anda mal!", 'short', 'center');
+            }
+        });
+    };
+
+    $scope.datosForm = function() {
+        var dataSend = {};
+        dataSend.nombre = $scope.data.nombre;
+        dataSend.descripcion = $scope.data.descripcion;
+        dataSend.cliente = $stateParams.clienteId;
+        dataSend["solicituddeproducto_set-TOTAL_FORMS"] = $scope.total;
+        dataSend["solicituddeproducto_set-INITIAL_FORMS"] = 0;
+        dataSend["solicituddeproducto_set-MIN_NUM_FORMS"] = 0;
+        dataSend["solicituddeproducto_set-MAX_NUM_FORMS"] = 1000;
+        if ($scope.data.imagenes.length > 0) {
+            for (var i = 0; i < $scope.data.imagenes; i++) {
+                dataSend["imagenr_set-" + i + "-imagen"] = $scope.data.imagenes[i];
+            }
+            enviar(dataSend); //Se formatea la informacion y se envia.
+        } else {
+            $ionicPopup.confirm({
+                title: "Fotos",
+                content: "Esta seguro que quiere enviar sin fotos?",
+                cancelText: 'Tomar Foto',
+                cancelType: 'button-calm',
+                okText: 'Si, Enviar!'
+            }).then(function(result) {
+                if (result) {
+                    enviar(dataSend); //Se envia sin fotos
+                } else {
+                    $scope.takePicture();
+                }
+            });
+        }
+
+    };
 });

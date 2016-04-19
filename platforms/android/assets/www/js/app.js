@@ -124,9 +124,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
     .state('app.reporte', {
         url: '/reporte/:clienteId',
         nativeTransitionsAndroid: {
-            "type": "slider",
-            "direction": "up",
-            "duration": 200
+            "type": "fade",
+            "duration": 500
         },
         views: {
             'menuContent': {
@@ -139,9 +138,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
     .state('app.mantenimiento', {
         url: '/mantenimiento/:clienteId',
         nativeTransitionsAndroid: {
-            "type": "slider",
-            "direction": "up",
-            "duration": 200
+            "type": "fade",
+            "duration": 500
         },
         views: {
             'menuContent': {
@@ -154,9 +152,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
     .state('app.reparacion', {
         url: '/reparacion/:clienteId',
         nativeTransitionsAndroid: {
-            "type": "slider",
-            "direction": "up",
-            "duration": 200
+            "type": "fade",
+            "duration": 500
         },
         views: {
             'menuContent': {
@@ -184,7 +181,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
         url: '/info/:clienteId',
         nativeTransitionsBackAndroid: {
             "type": "fade",
-            //"direction": "down"
             "duration": 500
         },
         views: {
