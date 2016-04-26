@@ -6,8 +6,9 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.service.core', 'starter.controllers', 'ionic-native-transitions','ngMessages'])
 
-.run(function($ionicPlatform, $ionicPopup, $interval, $http, $location, $window) {
+.run(function($ionicPlatform, $ionicPopup, $interval, $http, $location, $window, $cordovaStatusbar) {
     $ionicPlatform.ready(function() {
+        $cordovaStatusbar.overlaysWebView(true);
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
         if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -17,7 +18,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
         }
         if (window.StatusBar) {
             // org.apache.cordova.statusbar required
-            StatusBar.styleDefault();
+            StatusBar.styleLightContent();
+            StatusBar.backgroundColorByHexString('#ef473a');
         }
 
     });
@@ -41,8 +43,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
 
     function onOnline() {
         // Handle the online event
-        var server = "http://104.236.33.228:8040";
-
+        //var server = "http://104.236.33.228:8040";
+        var server = "http://192.168.1.51:8000";
         var isLogin = function() {
             $http.get(server + "/is/login/")
                 .then(function doneCallbacks(response) {
@@ -107,11 +109,11 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
         url: '/login/:next',
         nativeTransitionsAndroid: {
             "type": "fade",
-            "duration": 500
+            "direction": "up"
         },
         nativeTransitionsBackAndroid: {
             "type": "fade",
-            "duration": 500
+            "direction": "down"
         },
         views: {
             'menuContent': {
