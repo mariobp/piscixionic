@@ -1,6 +1,5 @@
-<ion-view cache-view="false" view-title="Clientes">
-  <ion-content overflow-scroll=”true”>
-    <div class="bar bar-header  bar-assertive item-input-inset">
+1.<ion-view cache-view="false" view-title="Clientes">
+  <ion-header-bar class="bar bar-subheader bar-assertive item-input-inset">
       <label class="item-input-wrapper">
         <i class="icon ion-search placeholder-icon"></i>
         <input type="text" placeholder="Buscar" ng-model="search">
@@ -8,12 +7,13 @@
       <button class="button button-clear" ng-click="search=''">
          Limpiar
       </button>
-    </div>
+  </ion-header-bar>
+  <ion-content overflow-scroll=”true”>
+
       <ion-refresher
        pulling-text ="Refrescar"
-       refreshing-icon="ripple"
        on-refresh="reload()"
-       spinner="lines">
+       spinner="ripple">
      </ion-refresher
       <ion-list show-delete="false" can-swipe="true">
         <ion-item ng-repeat="cliente in clientelists|filter:search" item="cliente" href="#/app/info/{{cliente.id}}" class="item-avatar">

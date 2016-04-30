@@ -1,14 +1,13 @@
 <ion-view view-title="Scroll with {{items.length}} items">
-	<ion-content>
+	<ion-content  overflow-scroll=”true”>
 		 <ion-refresher
-		    pulling-text="Pull to refresh..."
-		    on-refresh="loadMore()">
+		    pulling-text="Refrescar..."
+		    on-refresh="reload()">
 		  </ion-refresher>
        <ion-list can-swipe="false">
 
          <ion-item ng-repeat="item in items"
-                   item="item"
-                   href="#/item/{{item.id}}">
+                   item="item" >
            Item {{ item.id }}
          </ion-item>
 

@@ -10,8 +10,8 @@ angular.module('starter.controllers', [])
     //});
     // Form data for the login modal
     $scope.loginData = {};
-    $scope.server = "http://104.236.33.228:8040";
-    //$scope.server = "http://192.168.1.51:8000";
+    //$scope.server = "http://104.236.33.228:8040";
+    $scope.server = "http://192.168.1.51:8000";
     // Create the login modal that we will use later
     $ionicModal.fromTemplateUrl('templates/login.html', {
         scope: $scope
@@ -189,6 +189,7 @@ angular.module('starter.controllers', [])
         $scope.reload = function() {
             num = 1;
             max = 0;
+            $scope.noMoreItemsAvailable = false;
             $scope.clientelists = [];
             $scope.loadMore();
         };
@@ -753,4 +754,9 @@ angular.module('starter.controllers', [])
 
     $scope.items = [];
 
+   $scope.reload = function(){
+     $scope.noMoreItemsAvailable = false;
+     $scope.items = [];
+     $scope.loadMore();
+   }
 });
