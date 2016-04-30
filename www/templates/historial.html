@@ -1,21 +1,20 @@
-<ion-view view-title="Historial">
-<ion-content>
-	<ion-tabs class="tabs-dark tabs-icon-top">
+<ion-view view-title="Scroll with {{items.length}} items">
+	<ion-content>
+		 <ion-refresher
+		    pulling-text="Pull to refresh..."
+		    on-refresh="loadMore()">
+		  </ion-refresher>
+       <ion-list can-swipe="false">
 
-	  <ion-tab title="Home" icon-on="ion-ios-filing" icon-off="ion-ios-filing-outline">
-	    <!-- Tab 1 content -->
-	  </ion-tab>
+         <ion-item ng-repeat="item in items"
+                   item="item"
+                   href="#/item/{{item.id}}">
+           Item {{ item.id }}
+         </ion-item>
 
-	  <ion-tab title="About" icon-on="ion-ios-clock" icon-off="ion-ios-clock-outline">
-	    <!-- Tab 2 content -->
-	  </ion-tab>
+       </ion-list>
 
-	  <ion-tab title="Settings" icon-on="ion-ios-gear" icon-off="ion-ios-gear-outline">
-	    <!-- Tab 3 content -->
-	  </ion-tab>
+       <ion-infinite-scroll ng-if="!noMoreItemsAvailable" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll>
 
-	</ion-tabs>
-
-
-</ion-content>
+     </ion-content>
 </ion-view>

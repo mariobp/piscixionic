@@ -1,5 +1,5 @@
 <ion-view cache-view="false" view-title="Clientes">
-  <ion-content>
+  <ion-content overflow-scroll=”true”>
     <div class="bar bar-header  bar-assertive item-input-inset">
       <label class="item-input-wrapper">
         <i class="icon ion-search placeholder-icon"></i>
@@ -9,12 +9,18 @@
          Limpiar
       </button>
     </div>
-      <ion-list ng-if="dataReady" >
-        <ion-item ng-repeat="cliente in clientelists|filter:search" href="#/app/info/{{cliente.id}}" class="item-avatar">
+      <ion-refresher
+       pulling-text ="Refrescar"
+       refreshing-icon="ripple"
+       on-refresh="reload()"
+       spinner="lines">
+     </ion-refresher
+      <ion-list show-delete="false" can-swipe="true">
+        <ion-item ng-repeat="cliente in clientelists|filter:search" item="cliente" href="#/app/info/{{cliente.id}}" class="item-avatar">
             <img src="{{server}}/media/{{cliente.imagen}}">
             <h2>{{cliente.nombre}} {{cliente.apellidos}}</h2>
             <p>Piscina: {{ cliente.piscinac }}</p>
-        </ion-item >
+        </ion-item>
       </ion-list>
       <ion-infinite-scroll ng-if="!noMoreItemsAvailable" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll>
   </ion-content>

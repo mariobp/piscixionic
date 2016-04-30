@@ -39,9 +39,6 @@
         },
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.ionicframework.piscix612347"
-        },
-        "cordova-plugin-crosswalk-webview": {
-            "PACKAGE_NAME": "com.ionicframework.piscix612347"
         }
     },
     "dependent_plugins": {}

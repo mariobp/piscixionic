@@ -149,11 +149,10 @@ angular.module('starter.controllers', [])
 
     })
     //Controlador de lista de clientes
-    .controller('Clientelists', function($http, $scope, $timeout, $ionicPopup, $location, $cordovaToast) {
+    .controller('Clientelists', function($http, $scope, $timeout, $ionicPopup, $location, $cordovaToast, $ionicHistory) {
         $scope.search = "";
         $scope.clientelists = [];
         $scope.noMoreItemsAvailable = false;
-        $scope.dataReady = false;
         var num = 1,
             max = 0;
         $scope.loadMore = function() {
@@ -167,7 +166,6 @@ angular.module('starter.controllers', [])
                     if ($scope.clientelists.length === max) {
                         $scope.noMoreItemsAvailable = true;
                     }
-                    $scope.dataReady = true;
                     num++;
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                 }, function errorCallback(response) {
@@ -187,6 +185,12 @@ angular.module('starter.controllers', [])
                         });
                     }
                 });
+        };
+        $scope.reload = function() {
+            num = 1;
+            max = 0;
+            $scope.clientelists = [];
+            $scope.loadMore();
         };
     })
 
@@ -284,6 +288,31 @@ angular.module('starter.controllers', [])
                 targetWidth: 1280,
                 targetHeight: 720,
                 sourceType: 1
+            };
+            Camera.getPicture(options).then(function(imageData) {
+                $scope.data.imagenes.push(imageData);
+                $scope.total = $scope.data.imagenes.length;
+            }, function(err) {
+                console.log("Error", err);
+            });
+        } else {
+            $cordovaToast
+                .show('El maximo es 5 fotos', 'short', 'center')
+                .then(function(success) {
+                    // success
+                }, function(error) {
+                    // error
+                });
+        }
+    };
+
+    $scope.getPicture = function() {
+        if ($scope.total < 5) {
+            var options = {
+                quality: 75,
+                targetWidth: 1280,
+                targetHeight: 720,
+                sourceType: 0
             };
             Camera.getPicture(options).then(function(imageData) {
                 $scope.data.imagenes.push(imageData);
@@ -438,6 +467,31 @@ angular.module('starter.controllers', [])
     };
 
 
+    $scope.getPicture = function() {
+        if ($scope.total < 5) {
+            var options = {
+                quality: 75,
+                targetWidth: 1280,
+                targetHeight: 720,
+                sourceType: 0
+            };
+            Camera.getPicture(options).then(function(imageData) {
+                $scope.data.imagenes.push(imageData);
+                $scope.total = $scope.data.imagenes.length;
+            }, function(err) {
+                console.log("Error", err);
+            });
+        } else {
+            $cordovaToast
+                .show('El maximo es 5 fotos', 'short', 'center')
+                .then(function(success) {
+                    // success
+                }, function(error) {
+                    // error
+                });
+        }
+    };
+
     //$cordovaImagePicker
     $scope.getGallery = function() {
         var options2 = {
@@ -566,7 +620,30 @@ angular.module('starter.controllers', [])
         Galeria.openGaleria($scope.data.imagenes);
     };
 
-
+    $scope.getPicture = function() {
+        if ($scope.total < 5) {
+            var options = {
+                quality: 75,
+                targetWidth: 1280,
+                targetHeight: 720,
+                sourceType: 0
+            };
+            Camera.getPicture(options).then(function(imageData) {
+                $scope.data.imagenes.push(imageData);
+                $scope.total = $scope.data.imagenes.length;
+            }, function(err) {
+                console.log("Error", err);
+            });
+        } else {
+            $cordovaToast
+                .show('El maximo es 5 fotos', 'short', 'center')
+                .then(function(success) {
+                    // success
+                }, function(error) {
+                    // error
+                });
+        }
+    };
     //$cordovaImagePicker
     $scope.getGallery = function() {
         var options2 = {
@@ -659,4 +736,21 @@ angular.module('starter.controllers', [])
         }
 
     };
+})
+
+.controller('Historial', function($scope) {
+
+  $scope.noMoreItemsAvailable = false;
+
+    $scope.loadMore = function() {
+      $scope.items.push({ id: $scope.items.length});
+
+      if ( $scope.items.length == 99 ) {
+        $scope.noMoreItemsAvailable = true;
+      }
+      $scope.$broadcast('scroll.infiniteScrollComplete');
+    };
+
+    $scope.items = [];
+
 });

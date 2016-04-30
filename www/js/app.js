@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.service.core', 'starter.controllers', 'ionic-native-transitions','ngMessages'])
 
-.run(function($ionicPlatform, $ionicPopup, $interval, $http, $location, $window, $cordovaStatusbar) {
+.run(function($ionicPlatform, $ionicPopup, $http, $location, $window, $cordovaStatusbar, $cordovaToast) {
     $ionicPlatform.ready(function() {
         $cordovaStatusbar.overlaysWebView(true);
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -23,28 +23,36 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
         }
 
     });
+    $ionicPlatform.registerBackButtonAction(function () {
+    if($location.path() == "/app/clientelists" ){
+       var confirmPopup = $ionicPopup.confirm({
+           //title: 'Confirm',
+           template: 'Seguro que desea salir?'
+         });
+         confirmPopup.then(function(res) {
+            if(res){
+              navigator.app.exitApp();
+            }
+         });
+      }else{
+        navigator.app.backHistory();
+      }
+    }, 100);
+
+    var bandera = false;
     document.addEventListener("offline", onOffline, false);
 
     function onOffline() {
         // Handle the offline event
-        $ionicPopup.confirm({
-            title: "Internet desconectado",
-            content: "Su equipo esta desconectado de Internet.",
-            cancelText: 'Cerrar',
-            cancelType: 'button-assertive'
-        }).then(function(result) {
-            if (!result) {
-                ionic.Platform.exitApp();
-            }
-        });
+        $cordovaToast.show('Su equipo esta desconectado de Internet','long','top');
+        bandera = true;
     }
 
     document.addEventListener("online", onOnline, false);
-
     function onOnline() {
         // Handle the online event
-        //var server = "http://104.236.33.228:8040";
-        var server = "http://192.168.1.51:8000";
+        var server = "http://104.236.33.228:8040";
+        //var server = "http://192.168.1.51:8000";
         var isLogin = function() {
             $http.get(server + "/is/login/")
                 .then(function doneCallbacks(response) {
@@ -62,24 +70,25 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
             isLogin();
         }, function failCallbacks(response) {
             if (response.status === 0) {
-                $ionicPopup.confirm({
-                    title: "Server",
-                    content: "Servidor fuera de servicio",
-                    cancelText: 'Cerrar',
-                    cancelType: 'button-assertive'
-                }).then(function(result) {
-                    if (!result) {
-                        ionic.Platform.exitApp();
-                    }
-                });
+                $cordovaToast.show('Servidor fuera de servicio','long','center');
             }
         });
 
+        if(bandera){
+          $cordovaToast.show('Su equipo se conecto a internet','short','top')
+          .then(function(success) {
+            // success
+            bandera = false;
+          });
+        }
     }
+
 })
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $ionicNativeTransitionsProvider) {
+    $ionicConfigProvider.views.maxCache(5);
     $ionicConfigProvider.views.transition('none');
+    $ionicConfigProvider.spinner.icon('ripple');
     $ionicConfigProvider.scrolling.jsScrolling(false);
     $ionicNativeTransitionsProvider.setDefaultOptions({
         duration: 300, // in milliseconds (ms), default 400,
@@ -92,12 +101,18 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
         triggerTransitionEvent: '$ionicView.afterEnter', // internal ionic-native-transitions option
         backInOppositeDirection: false // Takes over default back transition and state back transition to use the opposite direction transition to go back
     });
+
     $ionicNativeTransitionsProvider.setDefaultTransition({
         type: 'slide',
         direction: 'left'
     });
-    $stateProvider
 
+    $ionicNativeTransitionsProvider.setDefaultBackTransition({
+       type: 'slide',
+       direction: 'right'
+   });
+
+    $stateProvider
     .state('app', {
         url: '/app',
         abstract: true,
@@ -125,10 +140,10 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
 
     .state('app.reporte', {
         url: '/reporte/:clienteId',
-        nativeTransitionsAndroid: {
+        /*nativeTransitionsAndroid: {
             "type": "fade",
             "duration": 500
-        },
+        },*/
         views: {
             'menuContent': {
                 templateUrl: 'templates/reporte.html',
@@ -139,10 +154,10 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
 
     .state('app.mantenimiento', {
         url: '/mantenimiento/:clienteId',
-        nativeTransitionsAndroid: {
+        /*nativeTransitionsAndroid: {
             "type": "fade",
             "duration": 500
-        },
+        },*/
         views: {
             'menuContent': {
                 templateUrl: 'templates/mantenimiento.html',
@@ -153,10 +168,10 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
 
     .state('app.reparacion', {
         url: '/reparacion/:clienteId',
-        nativeTransitionsAndroid: {
+        /*nativeTransitionsAndroid: {
             "type": "fade",
             "duration": 500
-        },
+        },*/
         views: {
             'menuContent': {
                 templateUrl: 'templates/reparacion.html',
@@ -167,10 +182,10 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
 
     .state('app.clientelists', {
         url: '/clientelists',
-        nativeTransitionsBackAndroid: {
+      /*  nativeTransitionsBackAndroid: {
             "type": "slider",
             "direction": "right"
-        },
+        },*/
         views: {
             'menuContent': {
                 templateUrl: 'templates/Clientelists.html',
@@ -181,10 +196,10 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
 
     .state('app.info', {
         url: '/info/:clienteId',
-        nativeTransitionsBackAndroid: {
+        /*nativeTransitionsBackAndroid: {
             "type": "fade",
             "duration": 500
-        },
+        },*/
         views: {
             'menuContent': {
                 templateUrl: 'templates/InfoC.html',
@@ -205,6 +220,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
         views: {
             'menuContent': {
                 templateUrl: 'templates/historial.html',
+                controller: 'Historial'
             }
         }
     });
