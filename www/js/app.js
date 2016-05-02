@@ -62,6 +62,10 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
 
         // Codigo notificaciones push
         */
+        var androidConfig = {
+          "senderID": "AIzaSyBeuBsMahCuzv7P09GZ69wWbtqDR_4nqGA",
+        };
+        
         $cordovaPush.register(androidConfig).then(function(result) {
               console.log(result);
             // Success
