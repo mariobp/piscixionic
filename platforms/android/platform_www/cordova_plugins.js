@@ -101,6 +101,13 @@ module.exports = [
             "cordova.plugins.Keyboard"
         ],
         "runs": true
+    },
+    {
+        "file": "plugins/phonegap-plugin-push/www/push.js",
+        "id": "phonegap-plugin-push.PushNotification",
+        "clobbers": [
+            "PushNotification"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -117,6 +124,7 @@ module.exports.metadata =
     "cordova-plugin-whitelist": "1.2.1",
     "cordova-plugin-x-toast": "2.5.0",
     "ionic-plugin-keyboard": "2.0.1",
+    "phonegap-plugin-push": "1.6.3",
     "cordova-plugin-crosswalk-webview": "1.6.1"
 };
 // BOTTOM OF METADATA

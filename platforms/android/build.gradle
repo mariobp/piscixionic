@@ -86,6 +86,7 @@ ext {
 }
 
 // PLUGIN GRADLE EXTENSIONS START
+apply from: "phonegap-plugin-push/piscix612347-push.gradle"
 apply from: "cordova-plugin-crosswalk-webview/piscix612347-xwalk.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
@@ -242,6 +243,8 @@ dependencies {
     // SUB-PROJECT DEPENDENCIES START
     debugCompile project(path: "CordovaLib", configuration: "debug")
     releaseCompile project(path: "CordovaLib", configuration: "release")
+    compile "com.android.support:support-v13:23+"
+    compile "com.google.android.gms:play-services-gcm:+"
     // SUB-PROJECT DEPENDENCIES END
 }
 

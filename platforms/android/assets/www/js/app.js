@@ -4,9 +4,12 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.service.core', 'starter.controllers', 'ionic-native-transitions','ngMessages'])
+angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-modal-select', 'starter.controllers', 'ionic-native-transitions', 'ngMessages'])
 
-.run(function($ionicPlatform, $ionicPopup, $http, $location, $window, $cordovaStatusbar, $cordovaToast) {
+.run(function($ionicPlatform, $ionicPopup, $http, $location, $window, $cordovaStatusbar, $cordovaToast, $cordovaPush, $rootScope, $state) {
+    //Project Number: 725278590059
+    //API Key: AIzaSyBeuBsMahCuzv7P09GZ69wWbtqDR_4nqGA
+
     $ionicPlatform.ready(function() {
         $cordovaStatusbar.overlaysWebView(true);
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -21,22 +24,98 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
             StatusBar.styleLightContent();
             StatusBar.backgroundColorByHexString('#ef473a');
         }
-
-    });
-    $ionicPlatform.registerBackButtonAction(function () {
-    if($location.path() == "/app/clientelists" ){
-       var confirmPopup = $ionicPopup.confirm({
-           //title: 'Confirm',
-           template: 'Seguro que desea salir?'
-         });
-         confirmPopup.then(function(res) {
-            if(res){
-              navigator.app.exitApp();
+        /*
+        var push = new Ionic.Push({
+          "onNotification": function(notification){
+            alert("Received Notification!");
+          },
+          "pluginConfig": {
+            "android":{
+              "iconColor": "#ef473a"
             }
-         });
-      }else{
-        navigator.app.backHistory();
-      }
+          }
+        });
+
+        Ionic.io();
+
+        // this will give you a fresh user or the previously saved 'current user'
+        var user = Ionic.User.current();
+
+        // if the user doesn't have an id, you'll need to give it one.
+        if (!user.id) {
+          user.id = Ionic.User.anonymousId();
+          // user.id = 'your-custom-user-id';
+        }
+
+        //persist the user
+
+        user.set('name','Mario');
+        user.set('bio','Desarrollaor');
+        user.save();
+
+        var callback = function() {
+          push.addTokenToUser(user);
+          user.save();
+        };
+
+        push.register(callback);
+
+        // Codigo notificaciones push
+        */
+        $cordovaPush.register(androidConfig).then(function(result) {
+              console.log(result);
+            // Success
+        }, function(err) {
+            // Error
+        });
+
+        $rootScope.$on('$cordovaPush:notificationReceived', function(event, notification) {
+            switch (notification.event) {
+                case 'registered':
+                    if (notification.regid.length > 0) {
+                        console.log('registration ID = ' + notification.regid);
+                    }
+                    break;
+
+                case 'message':
+                    // this is the actual push notification. its format depends on the data model from the push server
+                    console.log('message = ' + notification.message + ' msgCount = ' + notification.msgcnt);
+                    break;
+
+                case 'error':
+                    console.log('GCM error = ' + notification.msg);
+                    break;
+
+                default:
+                    console.log('An unknown GCM event has occurred');
+                    break;
+            }
+
+        });
+
+        // WARNING: dangerous to unregister (results in loss of tokenID)
+        /*$cordovaPush.unregister(options).then(function(result) {
+            // Success!
+        }, function(err) {
+            // Error
+        });
+        */
+    });
+
+    $ionicPlatform.registerBackButtonAction(function() {
+        if ($state.current.name == "app.clientelists" || $state.current.name == "app.acerca" || $state.current.name == "app.historial" ) {
+            var confirmPopup = $ionicPopup.confirm({
+                //title: 'Confirm',
+                template: 'Seguro que desea salir?'
+            });
+            confirmPopup.then(function(res) {
+                if (res) {
+                    navigator.app.exitApp();
+                }
+            });
+        } else {
+            navigator.app.backHistory();
+        }
     }, 100);
 
     var bandera = false;
@@ -44,11 +123,12 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
 
     function onOffline() {
         // Handle the offline event
-        $cordovaToast.show('Su equipo esta desconectado de Internet','long','top');
+        $cordovaToast.show('Su equipo esta desconectado de Internet', 'long', 'center');
         bandera = true;
     }
 
     document.addEventListener("online", onOnline, false);
+
     function onOnline() {
         // Handle the online event
         var server = "http://104.236.33.228:8040";
@@ -70,18 +150,21 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
             isLogin();
         }, function failCallbacks(response) {
             if (response.status === 0) {
-                $cordovaToast.show('Servidor fuera de servicio','long','center');
+                $cordovaToast.show('Servidor fuera de servicio', 'long', 'center');
             }
         });
 
-        if(bandera){
-          $cordovaToast.show('Su equipo se conecto a internet','short','top')
-          .then(function(success) {
-            // success
-            bandera = false;
-          });
+        if (bandera) {
+            $cordovaToast.show('Su equipo se conecto a internet', 'short', 'center')
+                .then(function(success) {
+                    // success
+                    bandera = false;
+                });
         }
     }
+
+    //Codigo Notifiaciones Push
+
 
 })
 
@@ -108,17 +191,17 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
     });
 
     $ionicNativeTransitionsProvider.setDefaultBackTransition({
-       type: 'slide',
-       direction: 'right'
-   });
+        type: 'slide',
+        direction: 'right'
+    });
 
     $stateProvider
-    .state('app', {
-        url: '/app',
-        abstract: true,
-        templateUrl: 'templates/menu.html',
-        controller: 'AppCtrl'
-    })
+        .state('app', {
+            url: '/app',
+            abstract: true,
+            templateUrl: 'templates/menu.html',
+            controller: 'AppCtrl'
+        })
 
     .state('app.login', {
         url: '/login/:next',
@@ -182,10 +265,10 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
 
     .state('app.clientelists', {
         url: '/clientelists',
-      /*  nativeTransitionsBackAndroid: {
-            "type": "slider",
-            "direction": "right"
-        },*/
+        /*  nativeTransitionsBackAndroid: {
+              "type": "slider",
+              "direction": "right"
+          },*/
         views: {
             'menuContent': {
                 templateUrl: 'templates/Clientelists.html',
@@ -195,35 +278,35 @@ angular.module('starter', ['ionic', 'ngCordova', 'ionic-modal-select', 'ionic.se
     })
 
     .state('app.info', {
-        url: '/info/:clienteId',
-        /*nativeTransitionsBackAndroid: {
-            "type": "fade",
-            "duration": 500
-        },*/
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/InfoC.html',
-                controller: 'InfoC'
+            url: '/info/:clienteId',
+            /*nativeTransitionsBackAndroid: {
+                "type": "fade",
+                "duration": 500
+            },*/
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/InfoC.html',
+                    controller: 'InfoC'
+                }
             }
-        }
-    })
-    .state('app.acerca', {
-        url: '/acerca',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/acerca.html',
+        })
+        .state('app.acerca', {
+            url: '/acerca',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/acerca.html',
+                }
             }
-        }
-    })
-    .state('app.historial', {
-        url: '/historial',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/historial.html',
-                controller: 'Historial'
+        })
+        .state('app.historial', {
+            url: '/historial',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/historial.html',
+                    controller: 'Historial'
+                }
             }
-        }
-    });
+        });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/clientelists');
 });
