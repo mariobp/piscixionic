@@ -4,9 +4,9 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-modal-select', 'starter.controllers', 'ionic-native-transitions', 'ngMessages'])
+angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-modal-select', 'starter.controllers', 'ionic-native-transitions', 'ngMessages', 'starter.directives'])
 
-.run(function($ionicPlatform, $ionicPopup, $http, $location, $window, $cordovaStatusbar, $cordovaToast, $cordovaPush, $rootScope, $state) {
+.run(function($ionicPlatform, $ionicPopup, $http, $location, $window, $cordovaStatusbar, $cordovaToast, $cordovaPush, $rootScope, $state, $cordovaLocalNotification) {
     //Project Number: 725278590059
     //API Key: AIzaSyBeuBsMahCuzv7P09GZ69wWbtqDR_4nqGA
 
@@ -63,11 +63,11 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
         // Codigo notificaciones push
         */
         var androidConfig = {
-          "senderID": "AIzaSyBeuBsMahCuzv7P09GZ69wWbtqDR_4nqGA",
+            "senderID": "AIzaSyBeuBsMahCuzv7P09GZ69wWbtqDR_4nqGA",
         };
-        
+
         $cordovaPush.register(androidConfig).then(function(result) {
-              console.log(result);
+            console.log(result);
             // Success
         }, function(err) {
             // Error
@@ -107,7 +107,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
     });
 
     $ionicPlatform.registerBackButtonAction(function() {
-        if ($state.current.name == "app.clientelists" || $state.current.name == "app.acerca" || $state.current.name == "app.historial" ) {
+        if ($state.current.name == "app.clientelists" || $state.current.name == "app.acerca" || $state.current.name == "app.historial") {
             var confirmPopup = $ionicPopup.confirm({
                 //title: 'Confirm',
                 template: 'Seguro que desea salir?'
@@ -127,8 +127,21 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
 
     function onOffline() {
         // Handle the offline event
-        $cordovaToast.show('Su equipo esta desconectado de Internet', 'long', 'center');
-        bandera = true;
+        //$cordovaToast.show('Su equipo esta desconectado de Internet', 'long', 'center');
+        $cordovaLocalNotification.cancel(2).then(function (result) {
+                // ...
+        });
+        $cordovaLocalNotification.schedule({
+            id: 1,
+            title: 'Conexión',
+            text: 'Su equipo esta desconectado de Internet',
+            data: {
+                customProperty: 'custom value'
+            }
+        }).then(function(result) {
+            // ...
+            bandera = true;
+        });
     }
 
     document.addEventListener("online", onOnline, false);
@@ -154,16 +167,42 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
             isLogin();
         }, function failCallbacks(response) {
             if (response.status === 0) {
-                $cordovaToast.show('Servidor fuera de servicio', 'long', 'center');
+                $cordovaLocalNotification.schedule({
+                    id: 3,
+                    title: 'Servidor',
+                    text: 'Servidor fuera de servicio',
+                    data: {
+                        customProperty: 'custom value'
+                    }
+                }).then(function(result) {
+                    // ...
+                });
+                //$cordovaToast.show('Servidor fuera de servicio', 'long', 'center');
             }
         });
 
         if (bandera) {
+            $cordovaLocalNotification.cancel(1).then(function (result) {
+              // ...
+            });
+            $cordovaLocalNotification.schedule({
+                id: 2,
+                title: 'Conexión',
+                text: 'Servidor fuera de servicio',
+                data: {
+                    customProperty: 'custom value'
+                }
+            }).then(function(result) {
+                // ...
+                bandera = false;
+            });
+            /*
             $cordovaToast.show('Su equipo se conecto a internet', 'short', 'center')
                 .then(function(success) {
                     // success
                     bandera = false;
-                });
+            });
+            */
         }
     }
 
@@ -178,8 +217,8 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
     $ionicConfigProvider.spinner.icon('ripple');
     $ionicConfigProvider.scrolling.jsScrolling(false);
     $ionicNativeTransitionsProvider.setDefaultOptions({
-        duration: 300, // in milliseconds (ms), default 400,
-        slowdownfactor: 4, // overlap views (higher number is more) or no overlap (1), default 4
+        duration: 200, // in milliseconds (ms), default 400,
+        slowdownfactor: 2, // overlap views (higher number is more) or no overlap (1), default 4
         iosdelay: -1, // ms to wait for the iOS webview to update before animation kicks in, default -1
         androiddelay: -1, // same as above but for Android, default -1
         winphonedelay: -1, // same as above but for Windows Phone, default -1,
@@ -310,7 +349,17 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
                     controller: 'Historial'
                 }
             }
-        });
+        })
+        .state('app.asignargps', {
+            url: '/asignargps/:clienteId',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/asignar-gps.html',
+                    controller: 'MapCtrl'
+                }
+            }
+        })
+        ;
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/clientelists');
 });

@@ -44,9 +44,22 @@
             "SENDER_ID": "AIzaSyBeuBsMahCuzv7P09GZ69wWbtqDR_4nqGA",
             "PACKAGE_NAME": "com.ionicframework.piscix612347"
         },
-        "cordova-plugin-crosswalk-webview": {
+        "com.phonegap.plugins.PushPlugin": {
+            "PACKAGE_NAME": "com.ionicframework.piscix612347"
+        },
+        "de.appplant.cordova.plugin.local-notification": {
+            "PACKAGE_NAME": "com.ionicframework.piscix612347"
+        },
+        "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.ionicframework.piscix612347"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "cordova-plugin-app-event": {
+            "PACKAGE_NAME": "com.ionicframework.piscix612347"
+        },
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.ionicframework.piscix612347"
+        }
+    }
 }

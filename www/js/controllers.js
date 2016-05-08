@@ -10,8 +10,8 @@ angular.module('starter.controllers', [])
     //});
     // Form data for the login modal
     $scope.loginData = {};
-    $scope.server = "http://104.236.33.228:8040";
-    //  $scope.server = "http://192.168.1.51:8000";
+    //$scope.server = "http://104.236.33.228:8040";
+    $scope.server = "http://192.168.1.51:8000";
     // Create the login modal that we will use later
     $ionicModal.fromTemplateUrl('templates/login.html', {
         scope: $scope
@@ -757,4 +757,49 @@ angular.module('starter.controllers', [])
      $scope.noMoreItemsAvailable = false;
      $scope.items = [];
    };
+})
+
+.controller('MapCtrl', function($scope, $ionicLoading, $stateParams) {
+  var marker = null;
+
+  $scope.mapCreated = function(map) {
+    $scope.map = map;
+  };
+
+  $scope.centerOnMe = function () {
+    if (!$scope.map) {
+      return;
+    }
+
+    $scope.loading = $ionicLoading.show({
+      template: 'Obteniendo la ubicación actual...',
+      noBackdrop: true
+    });
+
+    navigator.geolocation.getCurrentPosition(function (pos) {
+      console.log('Got pos', pos);
+      $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+      var myLatLng = {lat: pos.coords.latitude, lng: pos.coords.longitude};
+      if(marker !== null){
+        marker.setMap(null);
+      }
+      marker = new google.maps.Marker({
+        map: $scope.map,
+        position: myLatLng,
+        animation: google.maps.Animation.DROP,
+        title: 'Estas aquí!'
+      });
+
+      var infowindow = new google.maps.InfoWindow({
+        content: "Ested esta aquí"
+      });
+
+      marker.addListener('click', function() {
+        infowindow.open($scope.map, marker);
+      });
+      $scope.loading.hide();
+    }, function (error) {
+      alert('No se puede obtener la ubicación: ' + error.message);
+    });
+  };
 });
