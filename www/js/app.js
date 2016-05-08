@@ -129,18 +129,17 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
         // Handle the offline event
         //$cordovaToast.show('Su equipo esta desconectado de Internet', 'long', 'center');
         $cordovaLocalNotification.cancel(2).then(function (result) {
+            $cordovaLocalNotification.schedule({
+                id: 1,
+                title: 'Piscix',
+                text: 'No hay conexión a Internet!',
+                data: {
+                    customProperty: 'custom value'
+                }
+            }).then(function(result) {
                 // ...
-        });
-        $cordovaLocalNotification.schedule({
-            id: 1,
-            title: 'Internet',
-            text: 'No hay conexión a Internet!',
-            data: {
-                customProperty: 'custom value'
-            }
-        }).then(function(result) {
-            // ...
-            bandera = true;
+                bandera = true;
+            });
         });
     }
 
@@ -169,7 +168,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
             if (response.status === 0) {
                 $cordovaLocalNotification.schedule({
                     id: 3,
-                    title: 'Servidor',
+                    title: 'Piscix',
                     text: 'Servidor fuera de servicio',
                     data: {
                         customProperty: 'custom value'
@@ -184,17 +183,17 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
         if (bandera) {
             $cordovaLocalNotification.cancel(1).then(function (result) {
               // ...
-            });
-            $cordovaLocalNotification.schedule({
-                id: 2,
-                title: 'Internet',
-                text: 'Conexión a internet recuperada!',
-                data: {
-                    customProperty: 'custom value'
-                }
-            }).then(function(result) {
-                // ...
-                bandera = false;
+              $cordovaLocalNotification.schedule({
+                  id: 2,
+                  title: 'Piscix',
+                  text: 'Conexión a internet recuperada!',
+                  data: {
+                      customProperty: 'custom value'
+                  }
+              }).then(function(result) {
+                  // ...
+                  bandera = false;
+              });
             });
             /*
             $cordovaToast.show('Su equipo se conecto a internet', 'short', 'center')

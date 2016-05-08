@@ -772,8 +772,8 @@ angular.module('starter.controllers', [])
     }
 
     $scope.loading = $ionicLoading.show({
-      template: '<ion-spinner icon="bubbles"></ion-spinner><br/>Obteniendo la ubicación actual...',
-      noBackdrop: true
+      template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Obteniendo la ubicación actual...',
+      noBackdrop: false
     });
     var posOptions = {
         enableHighAccuracy: true,
