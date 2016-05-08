@@ -1,5 +1,10 @@
 <ion-view title="Asignar GPS">
-	<ion-content>
-    Content Here
+  <ion-content scroll="false">
+    <map on-create="mapCreated(map)"></map>
   </ion-content>
+
+  <ion-footer-bar class="bar-assertive">
+    <button type="button" name="Guardar" ng-click="centerOnMe()" class="button button-icon ion-refresh">Actualizar</button>
+    <button type="button" name="Guardar" class="button button-icon ion-android-download">Guardar</button>
+  </ion-footer-bar>
 </ion-view>

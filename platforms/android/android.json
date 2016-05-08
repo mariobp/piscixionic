@@ -63,6 +63,30 @@
                         {
                             "xml": "<feature name=\"Geolocation\"><param name=\"android-package\" value=\"org.apache.cordova.geolocation.Geolocation\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<preference name=\"webView\" value=\"org.crosswalk.engine.XWalkWebViewEngine\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference default=\"xwalk_core_library_beta:18+\" name=\"xwalkVersion\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference default=\"xwalk_core_library_canary:17+\" name=\"xwalkLiteVersion\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference default=\"--disable-pull-to-refresh-effect\" name=\"xwalkCommandLine\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference default=\"embedded\" name=\"xwalkMode\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference default=\"true\" name=\"xwalkMultipleApk\" />",
+                            "count": 1
                         }
                     ]
                 }
@@ -76,7 +100,7 @@
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
-                            "count": 1
+                            "count": 2
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
@@ -84,6 +108,10 @@
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\" />",
                             "count": 1
                         }
                     ],
@@ -273,6 +301,9 @@
         },
         "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.ionicframework.piscix612347"
+        },
+        "cordova-plugin-crosswalk-webview": {
+            "PACKAGE_NAME": "com.ionicframework.piscix612347"
         }
     },
     "dependent_plugins": {},
@@ -447,6 +478,7 @@
         "cordova-plugin-app-event": "1.2.0",
         "de.appplant.cordova.plugin.local-notification": "0.8.4",
         "cordova-plugin-compat": "1.0.0",
-        "cordova-plugin-geolocation": "2.2.0"
+        "cordova-plugin-geolocation": "2.2.0",
+        "cordova-plugin-crosswalk-webview": "1.7.0"
     }
 }

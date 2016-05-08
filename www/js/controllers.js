@@ -10,8 +10,8 @@ angular.module('starter.controllers', [])
     //});
     // Form data for the login modal
     $scope.loginData = {};
-    //$scope.server = "http://104.236.33.228:8040";
-    $scope.server = "http://192.168.1.51:8000";
+    $scope.server = "http://104.236.33.228:8040";
+    //$scope.server = "http://192.168.1.51:8000";
     // Create the login modal that we will use later
     $ionicModal.fromTemplateUrl('templates/login.html', {
         scope: $scope
@@ -759,7 +759,7 @@ angular.module('starter.controllers', [])
    };
 })
 
-.controller('MapCtrl', function($scope, $ionicLoading, $stateParams) {
+.controller('MapCtrl', function($scope, $ionicLoading, $stateParams, $cordovaGeolocation) {
   var marker = null;
 
   $scope.mapCreated = function(map) {
@@ -772,11 +772,15 @@ angular.module('starter.controllers', [])
     }
 
     $scope.loading = $ionicLoading.show({
-      template: 'Obteniendo la ubicación actual...',
+      template: '<ion-spinner icon="bubbles"></ion-spinner><br/>Obteniendo la ubicación actual...',
       noBackdrop: true
     });
-
-    navigator.geolocation.getCurrentPosition(function (pos) {
+    var posOptions = {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0
+    };
+    $cordovaGeolocation.getCurrentPosition(posOptions).then(function (pos) {
       console.log('Got pos', pos);
       $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
       var myLatLng = {lat: pos.coords.latitude, lng: pos.coords.longitude};
@@ -790,7 +794,7 @@ angular.module('starter.controllers', [])
         title: 'Estas aquí!'
       });
 
-      var infowindow = new google.maps.InfoWindow({
+        var infowindow = new google.maps.InfoWindow({
         content: "Ested esta aquí"
       });
 
@@ -799,6 +803,7 @@ angular.module('starter.controllers', [])
       });
       $scope.loading.hide();
     }, function (error) {
+      $scope.loading.hide();
       alert('No se puede obtener la ubicación: ' + error.message);
     });
   };

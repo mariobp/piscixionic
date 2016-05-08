@@ -16,6 +16,7 @@
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
     <script src="lib/ionic-platform-web-client/dist/ionic.io.bundle.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApEmW4KYqbyn2tbtpKHFfhCj26uWriWl4"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
     <!-- Cordova is bootstrapped by ionic-platform-web-client, uncomment this if you remove ionic-platform-web-client... -->
@@ -29,9 +30,10 @@
     <script src="lib/jquery-2.2.2.min.js"></script>
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
+    <script src="js/directives.js"></script>
   </head>
 
-  <body ng-app="starter">
+  <body ng-app="starter" class="platform-android platform-cordova platform-webview">
     <ion-nav-view></ion-nav-view>
   </body>
 </html>

@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-modal-select', 'starter.controllers', 'ionic-native-transitions', 'ngMessages'])
+angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-modal-select', 'starter.controllers', 'ionic-native-transitions', 'ngMessages', 'starter.directives'])
 
 .run(function($ionicPlatform, $ionicPopup, $http, $location, $window, $cordovaStatusbar, $cordovaToast, $cordovaPush, $rootScope, $state, $cordovaLocalNotification) {
     //Project Number: 725278590059
@@ -217,8 +217,8 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
     $ionicConfigProvider.spinner.icon('ripple');
     $ionicConfigProvider.scrolling.jsScrolling(false);
     $ionicNativeTransitionsProvider.setDefaultOptions({
-        duration: 300, // in milliseconds (ms), default 400,
-        slowdownfactor: 4, // overlap views (higher number is more) or no overlap (1), default 4
+        duration: 200, // in milliseconds (ms), default 400,
+        slowdownfactor: 2, // overlap views (higher number is more) or no overlap (1), default 4
         iosdelay: -1, // ms to wait for the iOS webview to update before animation kicks in, default -1
         androiddelay: -1, // same as above but for Android, default -1
         winphonedelay: -1, // same as above but for Windows Phone, default -1,
@@ -349,7 +349,17 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
                     controller: 'Historial'
                 }
             }
-        });
+        })
+        .state('app.asignargps', {
+            url: '/asignargps/:clienteId',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/asignar-gps.html',
+                    controller: 'MapCtrl'
+                }
+            }
+        })
+        ;
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/clientelists');
 });

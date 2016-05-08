@@ -133,8 +133,8 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
         });
         $cordovaLocalNotification.schedule({
             id: 1,
-            title: 'Conexión',
-            text: 'Su equipo esta desconectado de Internet',
+            title: 'Internet',
+            text: 'No hay conexión a Internet!',
             data: {
                 customProperty: 'custom value'
             }
@@ -187,8 +187,8 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
             });
             $cordovaLocalNotification.schedule({
                 id: 2,
-                title: 'Conexión',
-                text: 'Servidor fuera de servicio',
+                title: 'Internet',
+                text: 'Conexión a internet recuperada!',
                 data: {
                     customProperty: 'custom value'
                 }
