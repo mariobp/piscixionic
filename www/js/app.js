@@ -127,7 +127,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
 
     function onOffline() {
         // Handle the offline event
-        //$cordovaToast.show('Su equipo esta desconectado de Internet', 'long', 'center');
+        $cordovaToast.show('No hay conexión a Internet!', 'long', 'center');
         $cordovaLocalNotification.cancel(2).then(function (result) {
             $cordovaLocalNotification.schedule({
                 id: 1,

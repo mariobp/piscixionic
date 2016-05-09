@@ -172,8 +172,7 @@ module.exports.metadata =
     "cordova-plugin-app-event": "1.2.0",
     "de.appplant.cordova.plugin.local-notification": "0.8.4",
     "cordova-plugin-compat": "1.0.0",
-    "cordova-plugin-geolocation": "2.2.0",
-    "cordova-plugin-crosswalk-webview": "1.7.0"
+    "cordova-plugin-geolocation": "2.2.0"
 };
 // BOTTOM OF METADATA
 });
