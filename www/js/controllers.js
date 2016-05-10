@@ -10,8 +10,8 @@ angular.module('starter.controllers', [])
     //});
     // Form data for the login modal
     $scope.loginData = {};
-    $scope.server = "http://104.236.33.228:8040";
-    //$scope.server = "http://192.168.1.51:8000";
+    //$scope.server = "http://104.236.33.228:8040";
+    $scope.server = "http://192.168.1.51:8000";
     // Create the login modal that we will use later
     $ionicModal.fromTemplateUrl('templates/login.html', {
         scope: $scope
@@ -30,7 +30,7 @@ angular.module('starter.controllers', [])
     };
 
     $scope.logout = function() {
-        $http.get($scope.server + "/logout/").success(function() {
+        $http.get($scope.server + "/usuarios/logout/").success(function() {
             $location.path('/app/login/0');
         }).error(function(data) {
             /* Act on the event */
@@ -41,7 +41,7 @@ angular.module('starter.controllers', [])
     $scope.doLogin = function() {
         $http({
             method: 'POST',
-            url: $scope.server + '/login/piscinero/',
+            url: $scope.server + '/usuarios/login/piscinero/',
             data: $.param($scope.loginData),
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -117,7 +117,7 @@ angular.module('starter.controllers', [])
             $scope.loginReady = false;
             $http({
                 method: 'POST',
-                url: $scope.server + '/login/piscinero/',
+                url: $scope.server + '/usuarios/login/piscinero/',
                 data: $.param($scope.loginData),
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -156,7 +156,7 @@ angular.module('starter.controllers', [])
         var num = 1,
             max = 0;
         $scope.loadMore = function() {
-            $http.get($scope.server + '/list/cliente/?page=' + num)
+            $http.get($scope.server + '/usuarios/service/list/cliente/?page=' + num)
                 .then(function successCallback(response) {
                     clientes = response.data.object_list;
                     clientes.forEach(function(cliente) {
@@ -199,7 +199,7 @@ angular.module('starter.controllers', [])
     var id = $stateParams.clienteId;
     $scope.dataReady = false;
     $timeout(function() {
-        $http.get($scope.server + '/single/cliente/' + id + '/')
+        $http.get($scope.server + '/usuarios/single/cliente/' + id + '/')
             .then(function successCallback(response) {
                 $scope.info = response.data;
                 $scope.dataReady = true;
@@ -759,11 +759,47 @@ angular.module('starter.controllers', [])
    };
 })
 
-.controller('MapCtrl', function($scope, $ionicLoading, $stateParams, $cordovaGeolocation) {
-  var marker = null;
+.controller('MapCtrl', function($scope, $ionicLoading, $stateParams, $cordovaGeolocation, $ionicPopup, $timeout) {
+  var latitud = $stateParams.latitud,
+      longitud = $stateParams.longitud,
+      marker = null;
+
+  if(longitud ==="" && latitud===""){
+    var alertPopup = $ionicPopup.alert({
+       title: 'GPS',
+       template: 'No hay ningun gps asignado, precionar la opción <i class="icon ion-refresh"></i> para asignar GPS.'
+     });
+     alertPopup.then(function(res) {
+       console.log('Thank you for not eating my delicious ice cream cone');
+     });
+  }else {
+    $scope.crearmapa(latitud,longitud);
+  }
 
   $scope.mapCreated = function(map) {
     $scope.map = map;
+  };
+
+  $scope.crearmapa = function (latitud, longitud) {
+    $scope.map.setCenter(new google.maps.LatLng(latitud, longitud));
+    var myLatLng = {lat: latitud, lng: longitud};
+    if(marker !== null){
+      marker.setMap(null);
+    }
+    marker = new google.maps.Marker({
+      map: $scope.map,
+      position: myLatLng,
+      animation: google.maps.Animation.DROP,
+      title: 'Estas aquí!'
+    });
+
+    var infowindow = new google.maps.InfoWindow({
+      content: "Ested esta aquí"
+    });
+
+    $timeout(function() {
+      infowindow.open($scope.map, marker);
+    }, 3000);
   };
 
   $scope.centerOnMe = function () {
@@ -775,36 +811,25 @@ angular.module('starter.controllers', [])
       template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Obteniendo la ubicación actual...',
       noBackdrop: true
     });
+
     var posOptions = {
         enableHighAccuracy: true,
         timeout: 10000,
         maximumAge: 0
     };
+
     $cordovaGeolocation.getCurrentPosition(posOptions).then(function (pos) {
-      console.log('Got pos', pos);
-      $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-      var myLatLng = {lat: pos.coords.latitude, lng: pos.coords.longitude};
-      if(marker !== null){
-        marker.setMap(null);
-      }
-      marker = new google.maps.Marker({
-        map: $scope.map,
-        position: myLatLng,
-        animation: google.maps.Animation.DROP,
-        title: 'Estas aquí!'
-      });
-
-        var infowindow = new google.maps.InfoWindow({
-        content: "Ested esta aquí"
-      });
-
-      marker.addListener('click', function() {
-        infowindow.open($scope.map, marker);
-      });
+      latitud = pos.coords.latitude;
+      longitud = pos.coords.longitude;
+      $scope.crearmapa(latitud, longitud);
       $scope.loading.hide();
     }, function (error) {
       $scope.loading.hide();
       alert('No se puede obtener la ubicación: ' + error.message);
     });
+  };
+
+  $scope.guardar = function(){
+
   };
 });

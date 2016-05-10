@@ -16,10 +16,10 @@
        spinner="ripple">
      </ion-refresher
       <ion-list show-delete="false" can-swipe="true">
-        <ion-item ng-repeat="cliente in clientelists|filter:search" item="cliente" href="#/app/info/{{cliente.id}}" class="item-avatar">
-            <img src="{{server}}/media/{{cliente.imagen}}">
-            <h2>{{cliente.nombre}} {{cliente.apellidos}}</h2>
-            <p>Piscina: {{ cliente.piscinac }}</p>
+        <ion-item ng-repeat="cliente in clientelists|filter:search" item="cliente" href="#/app/info/{{cliente.id}}" class="item-icon-left">
+            <i class="icon ion-person"></i>
+            <h2>{{cliente.first_name}} {{cliente.first_name}}</h2>
+            <p>{{cliente.email}}</p>
         </ion-item>
       </ion-list>
       <ion-infinite-scroll ng-if="!noMoreItemsAvailable" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll>

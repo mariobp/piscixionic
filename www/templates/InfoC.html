@@ -4,24 +4,22 @@
       <ion-spinner></ion-spinner>
     </div>
     <div class="list card" ng-if="dataReady">
-      <div class="item item-avatar">
-          <img  src="{{server}}/media/{{info.imagen}}">
-          <h2>{{info.nombre}} {{info.apellidos}}</h2>
-          <p>
-            {{info.piscina__articulo__nombre}}
-          </p>
+      <div class="item item-icon-left">
+          <i class="icon ion-person"></i>
+          <h2>{{info.cliente.first_name}} {{info.cliente.last_name}}</h2>
+          {{info.cliente.direccion}}
       </div>
-      <a href="#/app/asignargps/{{info.id}}" class="item item-icon-left">
+      <a href="#/app/asignargps/{{casa.id}}/{{casa.latitud}}/{{casa.longitud}}" ng-repeat="casa in info.casas" class="item item-icon-left">
         <i class="icon ion-home"></i>
-         {{info.direccion}}
+        {{casa.direccion}}
       </a>
       <div class="item item-icon-left">
         <i class="icon ion-ios-telephone"></i>
-         {{info.telefono}}
+         {{info.cliente.telefono}}
       </div>
       <div class="item item-icon-left">
         <i class="icon ion-email"></i>
-         {{info.email}}
+         {{info.cliente.email}}
       </div>
       <div class="item item-body">
           <a href="#/app/reporte/{{info.id}}" class="button button-block icon-left ion-alert-circled button-assertive">Reporte</a>
