@@ -350,7 +350,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
             }
         })
         .state('app.asignargps', {
-            url: '/asignargps/:clienteId/:latitud/:longitud',
+            url: '/asignargps/:casaId/:latitud/:longitud',
             views: {
                 'menuContent': {
                     templateUrl: 'templates/asignar-gps.html',

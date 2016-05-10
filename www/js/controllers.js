@@ -759,22 +759,32 @@ angular.module('starter.controllers', [])
    };
 })
 
-.controller('MapCtrl', function($scope, $ionicLoading, $stateParams, $cordovaGeolocation, $ionicPopup, $timeout) {
+.controller('MapCtrl', function($scope, $ionicLoading, $stateParams, $cordovaGeolocation, $ionicPopup, $timeout, $http) {
   var latitud = $stateParams.latitud,
       longitud = $stateParams.longitud,
+      id = $stateParams.casaId,
       marker = null;
+  $scope.Ready = true;
 
-  if(longitud ==="" && latitud===""){
-    var alertPopup = $ionicPopup.alert({
-       title: 'GPS',
-       template: 'No hay ningun gps asignado, precionar la opción <i class="icon ion-refresh"></i> para asignar GPS.'
-     });
-     alertPopup.then(function(res) {
-       console.log('Thank you for not eating my delicious ice cream cone');
-     });
-  }else {
-    $scope.crearmapa(latitud,longitud);
+  function validar(metodo){
+    if(longitud ==="" && latitud===""){
+      var alertPopup = $ionicPopup.alert({
+         title: 'GPS',
+         template: 'No hay ningun gps asignado, precionar la opción <i class="icon ion-refresh"></i> para asignar GPS.'
+       });
+       alertPopup.then(function(res) {
+         console.log('Thank you for not eating my delicious ice cream cone');
+       });
+    }else {
+      if(metodo){
+        metodo();
+      }
+    }
   }
+
+  validar(function(){
+    $scope.crearmapa(latitud,longitud);
+  });
 
   $scope.mapCreated = function(map) {
     $scope.map = map;
@@ -794,12 +804,12 @@ angular.module('starter.controllers', [])
     });
 
     var infowindow = new google.maps.InfoWindow({
-      content: "Ested esta aquí"
+      content: "Usted esta aquí"
     });
 
     $timeout(function() {
       infowindow.open($scope.map, marker);
-    }, 3000);
+    }, 2000);
   };
 
   $scope.centerOnMe = function () {
@@ -830,6 +840,38 @@ angular.module('starter.controllers', [])
   };
 
   $scope.guardar = function(){
+    validar(function(){
+      var data = {};
+      data.latitud = latitud;
+      data.longitud = longitud;
+      $scope.Ready = false;
+      $http({
+          method: 'POST',
+          url: $scope.server + '/usuarios/service/asignacion/gps/'+id+'/',
+          data: $.param(data),
+          headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+          },
+      }).then(function doneCallbacks(response) {
+          var data = {};
+          $scope.Ready = true;
+          $scope.crearmapa(latitud,longitud);
 
+      }, function failCallbacks(response) {
+          $scope.Ready = true;
+          if (response.status == 400) {
+              var data = response.data;
+              if (data.error) {
+                  $cordovaToast.show(data.error[0], 'short', 'center');
+              }
+              if (data.username) {
+                  $cordovaToast.show("longitud:" + data.longitud[0], 'short', 'center');
+              }
+              if (data.password) {
+                  $cordovaToast.show("latitud:" + data.latitud[0], 'short', 'center');
+              }
+          }
+      });
+    });
   };
 });
