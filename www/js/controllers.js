@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($http, $scope, $ionicModal, $timeout, $ionicLoading, $ionicPopup, $location) {
+.controller('AppCtrl', function($http, $scope, $timeout, $ionicLoading, $ionicPopup, $location) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -11,24 +11,9 @@ angular.module('starter.controllers', [])
     // Form data for the login modal
     $scope.loginData = {};
     //$scope.server = "http://104.236.33.228:8040";
-    $scope.server = "http://192.168.1.51:8000";
+    //$scope.server = "http://192.168.1.51:8000";
+    $scope.server = "http://192.168.0.105:8000";
     // Create the login modal that we will use later
-    $ionicModal.fromTemplateUrl('templates/login.html', {
-        scope: $scope
-    }).then(function(modal) {
-        $scope.modal = modal;
-    });
-
-    // Triggered in the login modal to close it
-    $scope.closeLogin = function() {
-        $scope.modal.hide();
-    };
-
-    // Open the login modal
-    $scope.login = function() {
-        $scope.modal.show();
-    };
-
     $scope.logout = function() {
         $http.get($scope.server + "/usuarios/logout/").success(function() {
             $location.path('/app/login/0');
@@ -38,53 +23,12 @@ angular.module('starter.controllers', [])
         });
     };
 
-    $scope.doLogin = function() {
-        $http({
-            method: 'POST',
-            url: $scope.server + '/usuarios/login/piscinero/',
-            data: $.param($scope.loginData),
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-        }).then(function doneCallbacks(response) {
-            $timeout(function() {
-                $scope.closeLogin();
-                $scope.logeado = true;
-            }, 500);
-
-        }, function failCallbacks(response) {
-            if (response.status == 400) {
-                var data = response.data;
-                if (data.error) {
-                    $scope.showAlert("Error", data.error[0]);
-                }
-                if (data.username) {
-                    $scope.showAlert("Usuario", data.username[0]);
-                }
-                if (data.password) {
-                    $scope.showAlert("Contraseña", data.password[0]);
-                }
-            }
-        });
-    };
     $scope.showAlert = function(titulo, body) {
         var alertPopup = $ionicPopup.alert({
             title: titulo,
             template: body,
         });
     };
-
-    $scope.validLogin = function() {
-        if (!$scope.loginData.username) {
-            $scope.showAlert('Usuario', 'Campo requerido');
-        }
-        if (!$scope.loginData.password) {
-            $scope.showAlert('Contraseña', 'Campo requerido');
-        } else {
-            return true;
-        }
-    };
-    // Perform the login action when the user submits the login form
 
     //Loading...
     $scope.showLoading = function() {
@@ -198,6 +142,7 @@ angular.module('starter.controllers', [])
 .controller('InfoC', function($http, $scope, $stateParams, $ionicPopup, $location, $timeout, $cordovaToast) {
     var id = $stateParams.clienteId;
     $scope.dataReady = false;
+    $('.tooltipped').tooltip({delay: 50});
     $timeout(function() {
         $http.get($scope.server + '/usuarios/single/cliente/' + id + '/')
             .then(function successCallback(response) {
@@ -770,7 +715,7 @@ angular.module('starter.controllers', [])
     if(longitud ==="" && latitud===""){
       var alertPopup = $ionicPopup.alert({
          title: 'GPS',
-         template: 'No hay ningun gps asignado, precionar la opción <i class="icon ion-refresh"></i> para asignar GPS.'
+         template: 'No hay ningun gps asignado, precionar la opción <i class="icon ion-location icon"></i> para asignar GPS.'
        });
        alertPopup.then(function(res) {
          console.log('Thank you for not eating my delicious ice cream cone');
@@ -782,9 +727,6 @@ angular.module('starter.controllers', [])
     }
   }
 
-  validar(function(){
-    $scope.crearmapa(latitud,longitud);
-  });
 
   $scope.mapCreated = function(map) {
     $scope.map = map;
@@ -808,9 +750,19 @@ angular.module('starter.controllers', [])
     });
 
     $timeout(function() {
-      infowindow.open($scope.map, marker);
+        infowindow.open($scope.map, marker);
     }, 2000);
-  };
+    };
+
+/*
+    google.maps.event.addListenerOnce($scope.map, 'idle', function(){
+    // do something only the first time the map is loaded
+        validar(function(){
+          $scope.crearmapa(latitud,longitud);
+        });
+    });
+
+*/
 
   $scope.centerOnMe = function () {
     if (!$scope.map) {
@@ -841,10 +793,14 @@ angular.module('starter.controllers', [])
 
   $scope.guardar = function(){
     validar(function(){
+      $scope.enviando = $ionicLoading.show({
+        template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Enviando...',
+        noBackdrop: true
+      });
       var data = {};
       data.latitud = latitud;
       data.longitud = longitud;
-      $scope.Ready = false;
+      //$scope.Ready = false;
       $http({
           method: 'POST',
           url: $scope.server + '/usuarios/service/asignacion/gps/'+id+'/',
@@ -854,11 +810,9 @@ angular.module('starter.controllers', [])
           },
       }).then(function doneCallbacks(response) {
           var data = {};
-          $scope.Ready = true;
-          $scope.crearmapa(latitud,longitud);
-
+          $scope.enviando.hide();
       }, function failCallbacks(response) {
-          $scope.Ready = true;
+          $scope.enviando.hide();
           if (response.status == 400) {
               var data = response.data;
               if (data.error) {
