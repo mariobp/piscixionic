@@ -11,8 +11,8 @@ angular.module('starter.controllers', [])
     // Form data for the login modal
     $scope.loginData = {};
     //$scope.server = "http://104.236.33.228:8040";
-    //$scope.server = "http://192.168.1.51:8000";
-    $scope.server = "http://192.168.0.105:8000";
+    $scope.server = "http://192.168.1.51:8000";
+    //$scope.server = "http://192.168.0.105:8000";
     // Create the login modal that we will use later
     $scope.logout = function() {
         $http.get($scope.server + "/usuarios/logout/").success(function() {
@@ -212,20 +212,31 @@ angular.module('starter.controllers', [])
     $scope.data.imagenes = [];
     $scope.total = 0;
     $scope.ready = true;
+    //Angular Document Ready
+    angular.element(document).ready(function(){
+      $('#tipo').material_select();
+    });
+
     $http.get($scope.server + '/list/tiporepor/')
-        .then(function doneCallbacks(response) {
-            $scope.tipolist = response.data.object_list;
-        }, function failCallbacks(response) {
-            if (response.status === 0) {
-                $ionicPopup.alert({
-                    title: "Error",
-                    content: "No se puede acceder a este servicio en este momento.",
-                });
-            } else {
-                var data = response.data;
-                $scope.showAlert("Error", data.error[0]);
-            }
-        });
+    .then(function doneCallbacks(response) {
+        $scope.tipolist = response.data.object_list;
+    }, function failCallbacks(response) {
+        console.log(response);
+        if (response.status === 0) {
+            $ionicPopup.alert({
+                title: "Error",
+                content: "No se puede acceder a este servicio en este momento.",
+            });
+        }else if (response.status === 404) {
+            console.log("error 404");
+        }
+        else {
+            var data = response.data;
+            //$scope.showAlert("Error", data.error[0]);
+        }
+    });
+
+
     $scope.takePicture = function() {
         if ($scope.total < 5) {
             var options = {
@@ -730,14 +741,22 @@ angular.module('starter.controllers', [])
 
   $scope.mapCreated = function(map) {
     $scope.map = map;
+    validar(function(){
+      google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
+      //this part runs when the mapobject is created and rendered
+        $scope.colocarMarker(latitud,longitud);
+      });
+    });
   };
 
-  $scope.crearmapa = function (latitud, longitud) {
-    $scope.map.setCenter(new google.maps.LatLng(latitud, longitud));
-    var myLatLng = {lat: latitud, lng: longitud};
+  $scope.colocarMarker = function (latitude, longitude) {
+    $scope.map.setCenter(new google.maps.LatLng(latitude, longitude));
+      var myLatLng = {lat: parseFloat(latitude), lng: parseFloat(longitude)};
     if(marker !== null){
       marker.setMap(null);
     }
+    console.log(myLatLng);
+
     marker = new google.maps.Marker({
       map: $scope.map,
       position: myLatLng,
@@ -752,17 +771,7 @@ angular.module('starter.controllers', [])
     $timeout(function() {
         infowindow.open($scope.map, marker);
     }, 2000);
-    };
-
-/*
-    google.maps.event.addListenerOnce($scope.map, 'idle', function(){
-    // do something only the first time the map is loaded
-        validar(function(){
-          $scope.crearmapa(latitud,longitud);
-        });
-    });
-
-*/
+  };
 
   $scope.centerOnMe = function () {
     if (!$scope.map) {
@@ -783,7 +792,7 @@ angular.module('starter.controllers', [])
     $cordovaGeolocation.getCurrentPosition(posOptions).then(function (pos) {
       latitud = pos.coords.latitude;
       longitud = pos.coords.longitude;
-      $scope.crearmapa(latitud, longitud);
+      $scope.colocarMarker(latitud, longitud);
       $scope.loading.hide();
     }, function (error) {
       $scope.loading.hide();
@@ -811,6 +820,8 @@ angular.module('starter.controllers', [])
       }).then(function doneCallbacks(response) {
           var data = {};
           $scope.enviando.hide();
+          alert("guardo");
+          cordovaToast.show("Guardado exitoso!", 'short', 'center');
       }, function failCallbacks(response) {
           $scope.enviando.hide();
           if (response.status == 400) {

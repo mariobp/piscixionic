@@ -1,11 +1,10 @@
 <ion-view view-title="Reparacion">
 <ion-content>
-<link rel="stylesheet" href="lib/materialize-css/dist/css/materialize.min.css" charset="utf-8">
 <div class="spin" ng-if="!ready">
   <ion-spinner></ion-spinner>
 </div>
-<div class="row">
-  <form class="col s12" name="form" ng-submit="form.$valid && datosForm()" ng-if="ready" novalidate>
+<div class="row" ng-if="ready">
+  <form class="col s12" name="form" ng-submit="form.$valid && datosForm()" novalidate>
     <div class="row">
       <div class="input-field col s12">
         <input type="text" id="nombre" name="nombre" ng-model="data.nombre" ng-class="{'has-errors':form.nombre.$invalid && form.$submitted,'no-errors':form.nombre.$valid && form.$submitted}" required>
@@ -25,7 +24,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="input-field col s12">
+      <div class="col s12">
         <div class="col s4">
           <button type="button" class="btn-large waves-effect waves-light  light-blue" ng-click="takePicture()">
           <i class="icon ion-camera"></i>
@@ -43,9 +42,16 @@
         </div>
       </div>
     </div>
-    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-      <button class="btn-large waves-effect waves-light blue-grey btn-floating" type="submit"><i class="ion-paper-airplane"></i></button>
+    <div class="row">
+      <div class="col s12">
+        <button class="btn-large waves-effect waves-light light-blue col s12"  type="submit">Enviar
+          <i class="ion-android-send"></i>
+        </button>
+      </div>
     </div>
+    <!--div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+      <button class="btn-large waves-effect waves-light blue-grey btn-floating" type="submit"><i class="ion-paper-airplane"></i></button>
+    </div-->
   </form>
 </div>
 </ion-content>

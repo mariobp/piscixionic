@@ -6,6 +6,7 @@
     <meta http-equiv="Content-Security-Policy" content="default-src *; script-src &apos;self&apos; &apos;unsafe-inline&apos; &apos;unsafe-eval&apos; *; style-src  &apos;self&apos; &apos;unsafe-inline&apos; *">
     <title></title>
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link rel="stylesheet" href="lib/materialize-css/dist/css/materialize.min.css">
     <link href="css/style.css" rel="stylesheet">
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
@@ -14,14 +15,7 @@
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
     <script src="lib/ionic-platform-web-client/dist/ionic.io.bundle.min.js"></script>
-    <script type="text/javascript">
-      function onMapReady(){
-        var event = new CustomEvent('mapaReady', {});
-        document.dispatchEvent(event);
-        console.log("Disparado");
-      }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApEmW4KYqbyn2tbtpKHFfhCj26uWriWl4&callback=onMapReady"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApEmW4KYqbyn2tbtpKHFfhCj26uWriWl4"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
     <!-- Cordova is bootstrapped by ionic-platform-web-client, uncomment this if you remove ionic-platform-web-client... -->
