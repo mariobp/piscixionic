@@ -1,32 +1,38 @@
-<ion-view view-title="Info">
+<ion-view cache-view="false" view-title="Info">
   <ion-content>
+    <link rel="stylesheet" href="lib/materialize-css/dist/css/materialize.min.css">
     <div class="spin" ng-if="!dataReady">
       <ion-spinner></ion-spinner>
     </div>
-    <div class="list card" ng-if="dataReady">
-      <div class="item item-avatar">
-          <img  src="{{server}}/media/{{info.imagen}}">
-          <h2>{{info.nombre}} {{info.apellidos}}</h2>
-          <p>
-            {{info.piscina__articulo__nombre}}
-          </p>
-      </div>
-      <a href="#/app/asignargps/{{info.id}}" class="item item-icon-left">
-        <i class="icon ion-home"></i>
-         {{info.direccion}}
-      </a>
-      <div class="item item-icon-left">
-        <i class="icon ion-ios-telephone"></i>
-         {{info.telefono}}
-      </div>
-      <div class="item item-icon-left">
-        <i class="icon ion-email"></i>
-         {{info.email}}
-      </div>
-      <div class="item item-body">
-          <a href="#/app/reporte/{{info.id}}" class="button button-block icon-left ion-alert-circled button-assertive">Reporte</a>
-          <a href="#/app/reparacion/{{info.id}}" class="button button-block icon-left ion-settings button-positive">Reparación</a>
-          <a href="#/app/mantenimiento/{{info.id}}" class="button button-block icon-left ion-wrench button-balanced">Mantenimiento</a>
+    <div class="row" ng-if="dataReady">
+      <div class="list card col s12 grey lighten-5">
+          <div class="item item-icon-left  grey lighten-5">
+              <i class="icon ion-person"></i>
+              <h2>{{info.cliente.first_name}} {{info.cliente.last_name}}</h2>
+              {{info.cliente.direccion}}
+          </div>
+          <div class="item item-icon-left  grey lighten-5">
+            <i class="icon ion-ios-telephone"></i>
+             {{info.cliente.telefono}}
+          </div>
+          <div class="item item-icon-left  grey lighten-5">
+            <i class="icon ion-email"></i>
+             {{info.cliente.email}}
+          </div>
+          <a href="#/app/asignargps/{{casa.id}}/{{casa.latitud}}/{{casa.longitud}}" ng-repeat="casa in info.casas" class="item item-icon-left  grey lighten-5">
+            <i class="icon ion-home"></i>
+            {{casa.direccion}}
+          </a>
+        </div>
+        <div class="fixed-action-btn click-to-toggle" style="bottom: 45px; right: 24px;">
+        <a class="btn-floating btn-large light-blue">
+          <i class="large ion-plus"></i>
+        </a>
+        <ul>
+          <li><a href="#/app/reporte/{{info.id}}" class="btn-floating red"><i class="ion-alert-circled"></i></a><span class="action-title">Reporte</span></li>
+          <li><a href="#/app/reparacion/{{info.id}}" class="btn-floating light-blue"><i class="ion-settings"></i></a><span class="action-title">Reparación</span></li>
+          <li><a href="#/app/mantenimiento/{{info.id}}" class="btn-floating green"><i class="ion-wrench"></i></a><span class="action-title">Mantenimiento</span></li>
+        </ul>
       </div>
     </div>
   </ion-content>

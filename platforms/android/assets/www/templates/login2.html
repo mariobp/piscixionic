@@ -1,4 +1,4 @@
-<ion-header-bar class="bar-assertive" align-title="center">
+<ion-header-bar class="headerbar" align-title="center">
     <h1 class="title">Iniciar sesión</h1>
 </ion-header-bar>
 <ion-view hide-nav-bar="true">
@@ -6,26 +6,34 @@
     <div class="spin" ng-if="!loginReady">
       <ion-spinner></ion-spinner>
     </div>
-    <form name="form" ng-submit="form.$valid && doLogin()" novalidate ng-if="loginReady">
-      <div class="list">
-        <label class="item item-input" ng-class="{'has-errors':form.username.$invalid && form.$submitted,'no-errors':form.username.$valid && form.$submitted}">
-          <span class="input-label">Usuario</span>
-          <input type="text" name="username" ng-model="loginData.username" required>
-        </label>
-        <div class="error-container" ng-show="form.username.$error && form.$submitted" ng-messages="form.username.$error">
-          <div ng-messages-include="templates/error-list.html"></div>
+    <div class="row" ng-if="loginReady">
+      <form class="col s12" name="form" ng-submit="form.$valid && doLogin()" novalidate>
+        <div class="row">
+          <div class="input-field col s12">
+            <i class="ion-person prefix"></i>
+            <input type="text" id="username" name="username" ng-model="loginData.username" ng-class="{'has-errors':form.username.$invalid && form.$submitted,'no-errors':form.username.$valid && form.$submitted}" required>
+            <label for="username">Nombre Usuario</label>
+            <div class="error-container" ng-show="form.username.$error && form.$submitted" ng-messages="form.username.$error">
+              <div ng-messages-include="templates/error-list.html"></div>
+            </div>
+          </div>
         </div>
-        <label class="item item-input" ng-class="{'has-errors':form.password.$invalid && form.$submitted, 'no-errors':form.password.$valid && form.$submitted}">
-          <span class="input-label">Contraseña</span>
-          <input type="password" name="password" ng-model="loginData.password" required>
-        </label>
-        <div class="error-container" ng-show="form.password.$error && form.$submitted" ng-messages="form.password.$error">
-          <div ng-messages-include="templates/error-list.html"></div>
+        <div class="row">
+          <div class="input-field col s12">
+            <i class="ion-locked prefix"></i>
+            <input id="contraseña" type="password" name="password" ng-model="loginData.password" ng-class="{'has-errors':form.password.$invalid && form.$submitted, 'no-errors':form.password.$valid && form.$submitted}" required>
+            <label for="contraseña">Contraseña</label>
+            <div class="error-container" ng-show="form.password.$error && form.$submitted" ng-messages="form.password.$error">
+              <div ng-messages-include="templates/error-list.html"></div>
+            </div>
+          </div>
         </div>
-        <label class="item">
-          <button class="button button-block button-dark"  type="submit">Entrar</button>
-        </label>
-      </div>
-    </form>
+        <div class="row">
+          <button class="btn-large waves-effect waves-light light-blue col s12"  type="submit">Entrar
+            <i class="ion-android-send"></i>
+          </button>
+        </div>
+      </form>
+    </div>
   </ion-content>
 </ion-view>

@@ -22,7 +22,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
         if (window.StatusBar) {
             // org.apache.cordova.statusbar required
             StatusBar.styleLightContent();
-            StatusBar.backgroundColorByHexString('#ef473a');
+            StatusBar.backgroundColorByHexString('#455A64');
         }
         /*
         var push = new Ionic.Push({
@@ -127,7 +127,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
 
     function onOffline() {
         // Handle the offline event
-        $cordovaToast.show('No hay conexión a Internet!', 'long', 'center');
+        //$cordovaToast.show('No hay conexión a Internet!', 'long', 'center');
         $cordovaLocalNotification.cancel(2).then(function (result) {
             $cordovaLocalNotification.schedule({
                 id: 1,
@@ -228,13 +228,13 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
     });
 
     $ionicNativeTransitionsProvider.setDefaultTransition({
-        type: 'slide',
-        direction: 'left'
+        type: "fade",
+        direction: "up"
     });
 
     $ionicNativeTransitionsProvider.setDefaultBackTransition({
-        type: 'slide',
-        direction: 'right'
+        type: 'fade',
+        direction: 'down'
     });
 
     $stateProvider
@@ -340,25 +340,33 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
                 }
             }
         })
-        .state('app.historial', {
-            url: '/historial',
+        .state('app.piscineros', {
+            url: '/piscineros',
             views: {
                 'menuContent': {
-                    templateUrl: 'templates/historial.html',
-                    controller: 'Historial'
+                    templateUrl: 'templates/piscineros.html',
+                    controller: 'Piscineros'
+                }
+            }
+        })
+        .state('app.asigacionpiscina', {
+            url: '/asignacionpiscina/:piscineroId',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/piscinasAsignacion.html',
+                    controller: ''
                 }
             }
         })
         .state('app.asignargps', {
-            url: '/asignargps/:clienteId',
+            url: '/asignargps/:casaId/:latitud/:longitud',
             views: {
                 'menuContent': {
                     templateUrl: 'templates/asignar-gps.html',
                     controller: 'MapCtrl'
                 }
             }
-        })
-        ;
+        });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/clientelists');
 });

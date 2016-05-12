@@ -1,0 +1,34 @@
+<ion-view view-title="Piscineros">
+  <!--ion-header-bar class="bar-subheader headerbar item-input-inset row">
+      <div class="input-field col s12">
+        <i class="ion-search prefix"></i>
+        <input type="text" name="buscar" placeholder="Buscar" ng-model="search" >
+      </div>
+  </ion-header-bar-->
+	<ion-content>
+		<ul class="collapsible popout" data-collapsible="accordion">
+			<li ng-repeat="piscinero in piscineros|filter:search">
+				<div class="collapsible-header">
+					<ul class="collection">
+						<li class="collection-item avatar">
+							<img src="img/mario.png" alt="" class="circle">
+					      <span class="title">{{piscinero.first_name}} {{piscinero.last_name}}</span>
+								<p>
+									Telefono: {{piscinero.telefono}}
+								</p>
+						</li>
+					</ul>
+				</div>
+      	<div class="collapsible-body">
+						<p>
+							Telefono: {{piscinero.telefono}}
+							Email: {{piscinero.email}} <br>
+							Dirección: {{piscinero.direccion}} <br>
+							Fecha de nacimiento: {{piscinero.fecha_nacimiento}}
+							<a href="#/app/asignacionpiscina/{{piscinero.id}}" class="btn-large waves-effect waves-light light-blue col s12"><i class="ion-waterdrop"></i> Piscinas</a>
+						</p>
+      	</div>
+			</li>
+		</ul>
+	</ion-content>
+</ion-view>

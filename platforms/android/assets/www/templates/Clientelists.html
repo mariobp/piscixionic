@@ -1,25 +1,27 @@
  <ion-view cache-view="false" view-title="Clientes">
-  <ion-header-bar class="bar bar-subheader bar-assertive item-input-inset">
-      <label class="item-input-wrapper">
+  <ion-header-bar class="bar-subheader headerbar item-input-inset row">
+      <!--label class="item-input-wrapper">
         <i class="icon ion-search placeholder-icon"></i>
         <input type="text" placeholder="Buscar" ng-model="search">
-      </label>
-      <button class="button button-clear" ng-click="search=''">
-         Limpiar
-      </button>
+      </label-->
+      <div class="input-field col s12">
+        <i class="ion-search prefix"></i>
+        <input type="text" name="buscar" placeholder="Buscar" ng-model="search" >
+      </div>
   </ion-header-bar>
   <ion-content overflow-scroll=”true”>
-
       <ion-refresher
        pulling-text ="Refrescar"
        on-refresh="reload()"
-       spinner="ripple">
-     </ion-refresher
-      <ion-list show-delete="false" can-swipe="true">
-        <ion-item ng-repeat="cliente in clientelists|filter:search" item="cliente" href="#/app/info/{{cliente.id}}" class="item-avatar">
-            <img src="{{server}}/media/{{cliente.imagen}}">
-            <h2>{{cliente.nombre}} {{cliente.apellidos}}</h2>
-            <p>Piscina: {{ cliente.piscinac }}</p>
+       spinner="ripple"
+       refreshingText="Refrescando"
+       >
+     </ion-refresher>
+      <ion-list>
+        <ion-item ng-repeat="cliente in clientelists|filter:search" item="cliente" href="#/app/info/{{cliente.id}}" class="item-icon-left">
+            <i class="icon ion-person"></i>
+            <h2>{{cliente.first_name}} {{cliente.first_name}}</h2>
+            <p>{{cliente.email}}</p>
         </ion-item>
       </ion-list>
       <ion-infinite-scroll ng-if="!noMoreItemsAvailable" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll>

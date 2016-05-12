@@ -727,7 +727,7 @@ angular.module('starter.controllers', [])
   });
 })
 
-.controller('MapCtrl', function($scope, $ionicLoading, $stateParams, $cordovaGeolocation, $ionicPopup, $timeout, $http) {
+.controller('MapCtrl', function($scope, $ionicLoading, $stateParams, $cordovaGeolocation, $ionicPopup, $timeout, $http, $cordovaToast) {
   var latitud = $stateParams.latitud,
       longitud = $stateParams.longitud,
       id = $stateParams.casaId,
@@ -832,8 +832,7 @@ angular.module('starter.controllers', [])
       }).then(function doneCallbacks(response) {
           var data = {};
           $scope.enviando.hide();
-          alert("guardo");
-          cordovaToast.show("Guardado exitoso!", 'short', 'center');
+          $cordovaToast.show("Guardado exitoso!", 'short', 'center');
       }, function failCallbacks(response) {
           $scope.enviando.hide();
           if (response.status == 400) {

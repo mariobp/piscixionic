@@ -228,13 +228,13 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
     });
 
     $ionicNativeTransitionsProvider.setDefaultTransition({
-        type: 'slide',
-        direction: 'left'
+        type: "fade",
+        direction: "up"
     });
 
     $ionicNativeTransitionsProvider.setDefaultBackTransition({
-        type: 'slide',
-        direction: 'right'
+        type: 'fade',
+        direction: 'down'
     });
 
     $stateProvider
