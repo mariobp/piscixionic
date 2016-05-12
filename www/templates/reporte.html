@@ -3,11 +3,11 @@
     <div class="spin" ng-if="!ready">
       <ion-spinner></ion-spinner>
     </div>
-    <div class="row" ng-if="ready">
+    <div class="row">
       <form class="col s12" name="form" ng-submit="form.$valid && datosForm()" novalidate>
         <div class="row">
           <div class="input-field col s12">
-            <input type="text" id="nombre" name="nombre" ng-model="data.nombre" ng-class="{'has-errors':form.nombre.$invalid && form.$submitted,'no-errors':form.nombre.$valid && form.$submitted}" required>
+            <input type="text" id="nombre" name="nombre" ng-model="data.nombre" ng-class="{'invalid':form.nombre.$invalid && form.$submitted,'valid':form.nombre.$valid && form.$submitted}" required>
             <label for="nombre">Nombre</label>
             <div class="error-container" ng-show="form.nombre.$error && form.$submitted" ng-messages="form.nombre.$error">
               <div ng-messages-include="templates/error-list.html"></div>
@@ -21,7 +21,7 @@
                 <option value="">Tipo 1</option>
                 <option value="">Tipo 2</option>
              </select>
-             <label for="tipo" ng-class="{'has-errors': !data.tipo && form.$submitted,'no-errors':data.tipo && form.$submitted}">Tipo de Reporte</label>
+             <label for="tipo" ng-class="{'invalid': !data.tipo && form.$submitted,'valid':data.tipo && form.$submitted}">Tipo de Reporte</label>
               <div class="error-container" ng-show="!data.tipo && form.$submitted" ng-messages="form.nombre.$error">
                <div ng-messages-include="templates/error-list.html"></div>
              </div>
@@ -29,7 +29,7 @@
          </div>
         <div class="row">
           <div class="input-field col s12">
-            <textarea type="text" id="descripcion"  class="materialize-textarea" ng-model="data.descripcion" name="descripcion" required ng-class="{'has-errors':form.descripcion.$invalid && form.$submitted,'no-errors':form.descripcion.$valid && form.$submitted}"></textarea>
+            <textarea type="text" id="descripcion"  class="materialize-textarea" ng-model="data.descripcion" name="descripcion" required ng-class="{'invalid':form.descripcion.$invalid && form.$submitted,'valid':form.descripcion.$valid && form.$submitted}"></textarea>
             <label for="descripcion">Descricción</label>
             <div class="error-container" ng-show="form.descripcion.$error && form.$submitted" ng-messages="form.descripcion.$error">
               <div ng-messages-include="templates/error-list.html"></div>

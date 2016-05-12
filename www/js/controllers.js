@@ -11,8 +11,8 @@ angular.module('starter.controllers', [])
     // Form data for the login modal
     $scope.loginData = {};
     //$scope.server = "http://104.236.33.228:8040";
-    $scope.server = "http://192.168.1.51:8000";
-    //$scope.server = "http://192.168.0.105:8000";
+    //$scope.server = "http://192.168.1.51:8000";
+    $scope.server = "http://192.168.0.105:8000";
     // Create the login modal that we will use later
     $scope.logout = function() {
         $http.get($scope.server + "/usuarios/logout/").success(function() {
@@ -135,6 +135,7 @@ angular.module('starter.controllers', [])
             max = 0;
             $scope.noMoreItemsAvailable = false;
             $scope.clientelists = [];
+            $scope.$broadcast('scroll.refreshComplete');
         };
     })
 
@@ -694,25 +695,36 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('Historial', function($scope) {
-
-  $scope.noMoreItemsAvailable = false;
-
-    $scope.loadMore = function() {
-      $scope.items.push({ id: $scope.items.length});
-
-      if ( $scope.items.length == 99 ) {
-        $scope.noMoreItemsAvailable = true;
-      }
-      $scope.$broadcast('scroll.infiniteScrollComplete');
-    };
-
-    $scope.items = [];
-
-   $scope.reload = function(){
-     $scope.noMoreItemsAvailable = false;
-     $scope.items = [];
-   };
+.controller('Piscineros', function($scope, $http) {
+  $scope.ready = false;
+  $scope.search = "";
+  $scope.piscineros = [];
+  $http.get($scope.server + '/usuarios/service/list/piscinero/')
+  .then(function successCallback(response) {
+    $scope.piscineros = response.data.object_list;
+    angular.element(document).ready(function(){
+      $('.collapsible').collapsible({
+        accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+      });
+    });
+    $scope.ready = true;
+  }, function errorCallback(response) {
+    if (response.status === 403) {
+      $cordovaToast
+      .show(response.data.error, 'short', 'center')
+      .then(function(success) {
+          $location.path('/app/login/0');
+      }, function(error) {
+          console.log(error);
+      });
+    }
+    if (response.status === 0) {
+      $ionicPopup.alert({
+          title: "Error",
+          content: "No se puede acceder a este servicio en este momento.",
+      });
+    }
+  });
 })
 
 .controller('MapCtrl', function($scope, $ionicLoading, $stateParams, $cordovaGeolocation, $ionicPopup, $timeout, $http) {
@@ -839,4 +851,7 @@ angular.module('starter.controllers', [])
       });
     });
   };
+})
+.controller('PiscinaAsignacion', function($scope, $stateParams, $http ){
+
 });

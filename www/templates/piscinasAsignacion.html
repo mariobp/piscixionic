@@ -1,0 +1,21 @@
+<ion-view title="Asignacion Piscina">
+	  <ion-header-bar class="bar-subheader headerbar item-input-inset row">
+	      <div class="input-field col s12">
+	        <i class="ion-search prefix"></i>
+	        <input type="text" name="buscar" class="white-text" placeholder="Buscar" ng-model="search" >
+	      </div>
+	  </ion-header-bar>
+	<ion-content>
+		<ul class="collection">
+			<li class="collection-item" ng-repeat="n in [1,2,3]">
+					<div class="">
+						Piscina
+						<div class="secondary-content">
+								<input type="checkbox" class="checkbox red" id="filled-in-box{{n}}" checked/>
+	      				<label for="filled-in-box{{n}}"></label>
+						</div>
+					</div>
+			</li>
+		</ul>
+  </ion-content>
+</ion-view>

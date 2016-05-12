@@ -340,12 +340,21 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
                 }
             }
         })
-        .state('app.historial', {
-            url: '/historial',
+        .state('app.piscineros', {
+            url: '/piscineros',
             views: {
                 'menuContent': {
-                    templateUrl: 'templates/historial.html',
-                    controller: 'Historial'
+                    templateUrl: 'templates/piscineros.html',
+                    controller: 'Piscineros'
+                }
+            }
+        })
+        .state('app.asigacionpiscina', {
+            url: '/asignacionpiscina/:piscineroId',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/piscinasAsignacion.html',
+                    controller: ''
                 }
             }
         })
@@ -357,8 +366,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
                     controller: 'MapCtrl'
                 }
             }
-        })
-        ;
+        });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/clientelists');
 });
