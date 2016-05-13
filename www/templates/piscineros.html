@@ -11,7 +11,8 @@
 				<div class="collapsible-header">
 					<ul class="collection">
 						<li class="collection-item avatar">
-							<img src="img/mario.png" alt="" class="circle">
+				        <img src="{{server}}/media/{{piscinero.imagen}}" ng-if="piscinero.imagen !='' || piscinero.imagen !=null" class="circle"/>
+		            <img src="img/user.png" ng-if="piscinero.imagen =='' || piscinero.imagen ==null" class="circle"/>
 					      <span class="title">{{piscinero.first_name}} {{piscinero.last_name}}</span>
 								<p>
 									Telefono: {{piscinero.telefono}}

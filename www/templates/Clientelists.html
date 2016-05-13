@@ -18,9 +18,10 @@
        >
      </ion-refresher>
       <ion-list>
-        <ion-item ng-repeat="cliente in clientelists|filter:search" item="cliente" href="#/app/info/{{cliente.id}}" class="item-icon-left">
-            <i class="icon ion-person"></i>
-            <h2>{{cliente.first_name}} {{cliente.first_name}}</h2>
+        <ion-item ng-repeat="cliente in clientelists|filter:search" item="cliente" href="#/app/info/{{cliente.id}}" class="item item-avatar">
+            <img src="{{server}}/media/{{cliente.imagen}}" ng-if="cliente.imagen !=''">
+            <img src="img/user.png" ng-if="cliente.imagen ==''"/>
+            <h2>{{cliente.first_name}} {{cliente.last_name}}</h2>
             <p>{{cliente.email}}</p>
         </ion-item>
       </ion-list>
