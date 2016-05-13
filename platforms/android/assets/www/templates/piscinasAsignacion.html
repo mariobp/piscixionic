@@ -5,17 +5,32 @@
 	        <input type="text" name="buscar" class="white-text" placeholder="Buscar" ng-model="search" >
 	      </div>
 	  </ion-header-bar>
-	<ion-content>
-		<ul class="collection">
-			<li class="collection-item" ng-repeat="n in [1,2,3]">
-					<div class="">
-						Piscina
-						<div class="secondary-content">
-								<input type="checkbox" class="checkbox red" id="filled-in-box{{n}}" checked/>
-	      				<label for="filled-in-box{{n}}"></label>
-						</div>
+	<ion-content overflow-scroll=”true”>
+      <ion-refresher
+       pulling-text ="Refrescar"
+       on-refresh="reload()"
+       spinner="ripple"
+       refreshingText="Refrescando"
+       >
+     </ion-refresher>
+		<ion-list class="">
+		  <ion-item ng-repeat="piscina in piscinas|filter:search" class="collection-item">
+				<div class="">
+					<h2>{{piscina.nombre}}</h2>
+						<p>
+								<b>Cliente:</b> {{piscina.casa__cliente__first_name}} {{piscina.casa__cliente__last_name}}<br>
+								<b>Casa:</b>  {{piscina.casa__direccion}}<br>
+								<b>Tipo Piscina:</b> {{piscina.tipo__nombre}}<br>
+								<b>Fabricante:</b> {{piscina.fabricante__nombre}}<br>
+								<b>Estado:</b> <b class="light-blue-text" ng-show="{{piscina.estado}}">Buen Estado</b> <b class="red-text" ng-show="!{{piscina.estado}}">Mal Estado</b>
+						</p>
+					<div class="secondary-content">
+							<input type="checkbox" class="checkbox red" id="piscina{{piscina.id}}" ng-model="check" ng-change="asignar(piscina.id, check)"  ng-checked="{{piscina.asignacion==1}}"/>
+							<label for="piscina{{piscina.id}}"></label>
 					</div>
-			</li>
-		</ul>
+				</div>
+		  </ion-item>
+		</ion-list>
+		<ion-infinite-scroll ng-if="!noMoreItemsAvailable" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll>
   </ion-content>
 </ion-view>

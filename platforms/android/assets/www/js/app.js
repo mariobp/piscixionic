@@ -354,7 +354,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
             views: {
                 'menuContent': {
                     templateUrl: 'templates/piscinasAsignacion.html',
-                    controller: ''
+                    controller: 'PiscinaAsignacion'
                 }
             }
         })

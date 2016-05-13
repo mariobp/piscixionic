@@ -11,8 +11,8 @@ angular.module('starter.controllers', [])
     // Form data for the login modal
     $scope.loginData = {};
     //$scope.server = "http://104.236.33.228:8040";
-    //$scope.server = "http://192.168.1.51:8000";
-    $scope.server = "http://192.168.0.105:8000";
+    $scope.server = "http://192.168.1.51:8000";
+    //$scope.server = "http://192.168.0.105:8000";
     // Create the login modal that we will use later
     $scope.logout = function() {
         $http.get($scope.server + "/usuarios/logout/").success(function() {
@@ -102,7 +102,7 @@ angular.module('starter.controllers', [])
         $scope.loadMore = function() {
             $http.get($scope.server + '/usuarios/service/list/cliente/?page=' + num)
                 .then(function successCallback(response) {
-                    clientes = response.data.object_list;
+                    var clientes = response.data.object_list;
                     clientes.forEach(function(cliente) {
                         $scope.clientelists.push(cliente);
                     });
@@ -126,6 +126,11 @@ angular.module('starter.controllers', [])
                         $ionicPopup.alert({
                             title: "Error",
                             content: "No se puede acceder a este servicio en este momento.",
+                        });
+                    }else {
+                        $ionicPopup.alert({
+                            title: "Error",
+                            content: "Algo anda mal, intente mas tarde.",
                         });
                     }
                 });
@@ -851,6 +856,96 @@ angular.module('starter.controllers', [])
     });
   };
 })
-.controller('PiscinaAsignacion', function($scope, $stateParams, $http ){
 
+.controller('PiscinaAsignacion', function($scope, $stateParams, $http, $cordovaToast, $ionicLoading){
+  var id = $stateParams.piscineroId;
+  $scope.piscinas = [];
+  $scope.noMoreItemsAvailable = false;
+  var num = 1,
+      max = 0;
+  $scope.loadMore = function(){
+    $http.get($scope.server + '/usuarios/service/asignacion/piscinero/'+id+'/?page=' + num)
+    .then(function doneCallbacks(response){
+      var data = response.data.object_list;
+      data.forEach(function(data){
+        $scope.piscinas.push(data);
+      });
+      max = response.data.count;
+      if ($scope.piscinas.length === max) {
+          $scope.noMoreItemsAvailable = true;
+      }
+      num++;
+      $scope.$broadcast('scroll.infiniteScrollComplete');
+    }, function failCallbacks(response){
+       if (response.status === 403) {
+           $cordovaToast
+               .show(response.data.error, 'short', 'center')
+               .then(function(success) {
+                   $location.path('/app/login/0');
+               }, function(error) {
+                   console.log(error);
+               });
+       }
+       if (response.status === 0) {
+           $ionicPopup.alert({
+               title: "Error",
+               content: "No se puede acceder a este servicio en este momento.",
+           });
+       }else {
+           $ionicPopup.alert({
+               title: "Error",
+               content: "Algo anda mal, intente mas tarde.",
+           });
+       }
+    });
+  };
+
+  $scope.reload = function() {
+      num = 1;
+      max = 0;
+      $scope.noMoreItemsAvailable = false;
+      $scope.piscinas = [];
+      $scope.$broadcast('scroll.refreshComplete');
+  };
+
+  $scope.asignar = function(piscinaID, check){
+    console.log("entro");
+    console.log(check);
+    var data = {};
+    data.piscina = piscinaID;
+    data.piscinero = id;
+    $scope.loading = $ionicLoading.show({
+      template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Guardando cambios...',
+      noBackdrop: true
+    });
+    if(check){
+      $http({
+        method: 'POST',
+        url: $scope.server + '/usuarios/service/asignacion/form/piscinero/',
+        data: $.param(data),
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+      }).then(function doneCallbacks(response){
+          console.log("Guardo");
+          $scope.loading.hide();
+          $cordovaToast.show("Guardado exitoso!", 'short', 'center');
+      },function failCallbacks(response){
+          $scope.loading.hide();
+          if(response.status == 400){
+            var data = response.data;
+            if(data.piscinero){
+                $cordovaToast.show("Piscinero: "+data.piscinero, 'short', 'center');
+            }if (data.piscina) {
+                $cordovaToast.show("Piscina: "+data.piscina, 'short', 'center');
+            }if(data.__all__){
+                $cordovaToast.show(data.__all__, 'short', 'center');
+            }
+          }
+      });
+    }else{
+      $scope.loading.hide();
+      console.log("Descheck");
+    }
+  };
 });
