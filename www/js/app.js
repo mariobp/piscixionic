@@ -150,19 +150,27 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
         //var server = "http://104.236.33.228:8040";
         var server = "http://192.168.1.51:8000";
         var isLogin = function() {
-            $http.get(server + "/is/login/")
+            $http.get(server + "/usuarios/is/login/")
                 .then(function doneCallbacks(response) {
                     if ($location.path() == "/app/login/0") {
                         $location.path('/app/clientelists');
                     }
                 }, function failCallbacks(response) {
-                    if ($location.path() !== "/app/login/0") {
-                        $location.path("/app/login/0");
-                    }
+                    $cordovaToast
+                    .show(response.data.error, 'short', 'center')
+                    .then(function(success) {
+                        var urlactual = $location.path();
+                        if($state.current.name != 'app.login'){
+                          $location.path('/app/login/?next='+urlactual);
+                        }
+                    }, function(error) {
+                        console.log(error);
+                    });
+
                 });
         };
 
-        $http.get(server + "/serve/on/").then(function doneCallbacks(response) {
+        $http.get(server + "/usuarios/serve/on/").then(function doneCallbacks(response) {
             isLogin();
         }, function failCallbacks(response) {
             if (response.status === 0) {
