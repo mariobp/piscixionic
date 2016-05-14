@@ -5,7 +5,14 @@
         <input type="text" name="buscar" placeholder="Buscar" ng-model="search" >
       </div>
   </ion-header-bar-->
-	<ion-content>
+	<ion-content overflow-scroll=”true”>
+    <ion-refresher
+     pulling-text ="Refrescar"
+     on-refresh="reload()"
+     spinner="ripple"
+     refreshingText="Refrescando"
+     >
+   </ion-refresher>
 		<ul class="collapsible popout" data-collapsible="accordion">
 			<li ng-repeat="piscinero in piscineros|filter:search">
 				<div class="collapsible-header">
@@ -22,7 +29,7 @@
 				</div>
       	<div class="collapsible-body">
 						<p>
-							Telefono: {{piscinero.telefono}}
+							Telefono: {{piscinero.telefono}} <br>
 							Email: {{piscinero.email}} <br>
 							Dirección: {{piscinero.direccion}} <br>
 							Fecha de nacimiento: {{piscinero.fecha_nacimiento}}
@@ -31,5 +38,6 @@
       	</div>
 			</li>
 		</ul>
+		<ion-infinite-scroll ng-if="!noMoreItemsAvailable" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll>
 	</ion-content>
 </ion-view>
