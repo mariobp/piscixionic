@@ -944,8 +944,6 @@ angular.module('starter.controllers', [])
     };
 
     $scope.asignar = function(piscinaID, check) {
-        console.log("entro");
-        console.log(check);
         var data = {};
         data.piscina = piscinaID;
         data.piscinero = id;
@@ -1009,7 +1007,7 @@ angular.module('starter.controllers', [])
   $scope.loadMore = function() {
     $scope.items.push({ id: $scope.items.length});
 
-    if ( $scope.items.length == 50 ) {
+    if ( $scope.items.length == 20 ) {
       $scope.noMoreItemsAvailable = true;
     }
     $scope.$broadcast('scroll.infiniteScrollComplete');
