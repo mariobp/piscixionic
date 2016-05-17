@@ -110,14 +110,14 @@ angular.module('starter.controllers', [])
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                 }, function errorCallback(response) {
                     if (response.status === 403) {
-                        $cordovaToast
-                            .show(response.data.error, 'short', 'center')
-                            .then(function(success) {
-                                var urlactual = $location.path();
-                                $location.path('/app/login/?next=' + urlactual);
-                            }, function(error) {
-                                console.log(error);
-                            });
+                      $cordovaToast
+                      .show(response.data.error, 'short', 'center')
+                      .then(function(success) {
+                          var urlactual = $location.path();
+                          $location.path('/app/login/?next=' + urlactual);
+                      }, function(error) {
+                          console.log(error);
+                      });
                     } else if (response.status === 0) {
                         $ionicPopup.alert({
                             title: "Error",

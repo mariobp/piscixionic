@@ -192,3 +192,6 @@ textarea:focus{
    .popup-container{
      background: rgba(0, 0, 0, 0.4);
    }
+   .bar-footer{
+      height: 56px;
+   }

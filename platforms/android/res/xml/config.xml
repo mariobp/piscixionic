@@ -48,10 +48,6 @@
     <feature name="Geolocation">
         <param name="android-package" value="org.apache.cordova.geolocation.Geolocation" />
     </feature>
-    <preference name="xwalkVersion" value="xwalk_core_library_beta:18+" />
-    <preference name="xwalkCommandLine" value="--disable-pull-to-refresh-effect" />
-    <preference name="xwalkMode" value="embedded" />
-    <preference name="xwalkMultipleApk" value="true" />
     <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
     <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />
     <icon density="hdpi" src="resources/android/icon/drawable-hdpi-icon.png" />

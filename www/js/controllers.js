@@ -43,12 +43,12 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('Login', function($scope, $http, $location, $stateParams, $ionicHistory, $cordovaToast) {
+.controller('Login', function($scope, $http, $ionicHistory, $cordovaToast) {
         $ionicHistory.nextViewOptions({
             //  disableAnimate: true,
             disableBack: true
         });
-        console.log($stateParams.next);
+        console.log($ionicHistory.backView());
         $scope.loginReady = true;
         $scope.doLogin = function() {
             $scope.loginReady = false;
@@ -62,8 +62,9 @@ angular.module('starter.controllers', [])
             }).then(function doneCallbacks(response) {
                 $scope.loginData = {};
                 $scope.loginReady = true;
-                $location.path($stateParams.next);
+                $ionicHistory.goBack(-1);
             }, function failCallbacks(response) {
+                $scope.loginData = {};
                 $scope.loginReady = true;
                 if (response.status == 400) {
                     var data = response.data;
@@ -113,11 +114,11 @@ angular.module('starter.controllers', [])
                       $cordovaToast
                       .show(response.data.error, 'short', 'center')
                       .then(function(success) {
-                          var urlactual = $location.path();
-                          $location.path('/app/login/?next=' + urlactual);
+                          $location.path('/app/login');
                       }, function(error) {
-                          console.log(error);
+                          $location.path('/app/login');
                       });
+
                     } else if (response.status === 0) {
                         $ionicPopup.alert({
                             title: "Error",
@@ -157,10 +158,9 @@ angular.module('starter.controllers', [])
                     $cordovaToast
                         .show(response.data.error, 'short', 'center')
                         .then(function(success) {
-                            var urlactual = $location.path();
-                            $location.path('/app/login/?next=' + urlactual);
+                          $location.path('/app/login');
                         }, function(error) {
-                            console.log(error);
+                          console.log(error);
                         });
                 }else if (response.status === 0) {
                     $ionicPopup.alert({
@@ -336,8 +336,7 @@ angular.module('starter.controllers', [])
                 $cordovaToast
                     .show(response.data.error, 'short', 'center')
                     .then(function(success) {
-                        var urlactual = $location.path();
-                        $location.path('/app/login/?next=' + urlactual);
+                        $location.path('/app/login');
                     }, function(error) {
                         console.log(error);
                     });
@@ -493,8 +492,7 @@ angular.module('starter.controllers', [])
                 $cordovaToast
                     .show(response.data.error, 'short', 'center')
                     .then(function(success) {
-                        var urlactual = $location.path();
-                        $location.path('/app/login/?next=' + urlactual);
+                        $location.path('/app/login');
                     }, function(error) {
                         console.log(error);
                     });
@@ -651,8 +649,7 @@ angular.module('starter.controllers', [])
                 $cordovaToast
                     .show(response.data.error, 'short', 'center')
                     .then(function(success) {
-                        var urlactual = $location.path();
-                        $location.path('/app/login/?next=' + urlactual);
+                        $location.path('/app/login');
                     }, function(error) {
                         console.log(error);
                     });
@@ -823,8 +820,7 @@ angular.module('starter.controllers', [])
                     $cordovaToast
                         .show(response.data.error, 'short', 'center')
                         .then(function(success) {
-                            var urlactual = $location.path();
-                            $location.path('/app/login/?next=' + urlactual);
+                            $location.path('/app/login');
                         }, function(error) {
                             console.log(error);
                         });
@@ -867,7 +863,6 @@ angular.module('starter.controllers', [])
                 }
                 num++;
                 $scope.$broadcast('scroll.infiniteScrollComplete');
-                // $scope.piscineros = response.data.object_list;
                 angular.element(document).ready(function() {
                     $('.collapsible').collapsible({
                         accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
@@ -876,11 +871,11 @@ angular.module('starter.controllers', [])
                 $scope.ready = true;
             }, function errorCallback(response) {
                 if (response.status == 403) {
+                  console.log("Entro a 403");
                     $cordovaToast
                         .show(response.data.error, 'short', 'center')
                         .then(function(success) {
-                            var urlactual = $location.path();
-                            $location.path('/app/login/?next=' + urlactual);
+                            $location.path('/app/login');
                         }, function(error) {
                             console.log(error);
                         });
@@ -926,12 +921,11 @@ angular.module('starter.controllers', [])
                     $cordovaToast
                         .show(response.data.error, 'short', 'center')
                         .then(function(success) {
-                            var urlactual = $location.path();
-                            $location.path('/app/login/?next=' + urlactual);
+                            $location.path('/app/login');
                         }, function(error) {
                             console.log(error);
                         });
-                }else if (response.status == 0) {
+                }else if (response.status === 0) {
                     $ionicPopup.alert({
                         title: "Error",
                         content: "No se puede acceder a este servicio en este momento.",
@@ -981,8 +975,7 @@ angular.module('starter.controllers', [])
                 $cordovaToast
                 .show(response.data.error, 'short', 'center')
                 .then(function(success) {
-                    var urlactual = $location.path();
-                    $location.path('/app/login/?next=' + urlactual);
+                    $location.path('/app/login');
                 }, function(error) {
                     console.log(error);
                 });
@@ -1004,4 +997,77 @@ angular.module('starter.controllers', [])
             }
         });
     };
+})
+.controller('Ruta', function($scope, $http, $stateParams){
+  $scope.noMoreItemsAvailable = false;
+
+  $scope.moveItem = function(item, fromIndex, toIndex) {
+    $scope.items.splice(fromIndex, 1);
+    $scope.items.splice(toIndex, 0, item);
+  };
+
+  $scope.loadMore = function() {
+    $scope.items.push({ id: $scope.items.length});
+
+    if ( $scope.items.length == 50 ) {
+      $scope.noMoreItemsAvailable = true;
+    }
+    $scope.$broadcast('scroll.infiniteScrollComplete');
+  };
+
+  $scope.items = [];
+
+  $scope.items = [
+    { id: 0 },
+    { id: 1 },
+    { id: 2 },
+    { id: 3 },
+    { id: 4 },
+    { id: 5 },
+    { id: 6 },
+    { id: 7 },
+    { id: 8 },
+    { id: 9 },
+    { id: 10 },
+    { id: 11 },
+    { id: 12 },
+    { id: 13 },
+    { id: 14 },
+    { id: 15 },
+    { id: 16 },
+    { id: 17 },
+    { id: 18 },
+    { id: 19 },
+    { id: 20 },
+    { id: 21 },
+    { id: 22 },
+    { id: 23 },
+    { id: 24 },
+    { id: 25 },
+    { id: 26 },
+    { id: 27 },
+    { id: 28 },
+    { id: 29 },
+    { id: 30 },
+    { id: 31 },
+    { id: 32 },
+    { id: 33 },
+    { id: 34 },
+    { id: 35 },
+    { id: 36 },
+    { id: 37 },
+    { id: 38 },
+    { id: 39 },
+    { id: 40 },
+    { id: 41 },
+    { id: 42 },
+    { id: 43 },
+    { id: 44 },
+    { id: 45 },
+    { id: 46 },
+    { id: 47 },
+    { id: 48 },
+    { id: 49 },
+    { id: 50 }
+  ];
 });
