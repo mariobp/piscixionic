@@ -11,8 +11,8 @@ angular.module('starter.controllers', [])
     // Form data for the login modal
     $scope.loginData = {};
     //$scope.server = "http://104.236.33.228:8040";
-    $scope.server = "http://192.168.1.51:8000";
-    //$scope.server = "http://192.168.0.105:8000";
+    //$scope.server = "http://192.168.1.51:8000";
+    $scope.server = "http://192.168.0.106:8000";
     // Create the login modal that we will use later
     $scope.logout = function() {
         $http.get($scope.server + "/usuarios/logout/").success(function() {
@@ -43,12 +43,14 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('Login', function($scope, $http, $location, $stateParams, $ionicHistory, $cordovaToast) {
+.controller('Login', function($scope, $http, $ionicHistory, $cordovaToast) {
         $ionicHistory.nextViewOptions({
             //  disableAnimate: true,
             disableBack: true
         });
-        console.log($stateParams.next);
+        console.log("Log");
+        console.log($ionicHistory.backView());
+        console.log($ionicHistory.viewHistory());
         $scope.loginReady = true;
         $scope.doLogin = function() {
             $scope.loginReady = false;
@@ -60,10 +62,12 @@ angular.module('starter.controllers', [])
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
             }).then(function doneCallbacks(response) {
+              console.log("Esta logeado");
                 $scope.loginData = {};
                 $scope.loginReady = true;
-                $location.path($stateParams.next);
+                $ionicHistory.goBack(-1);
             }, function failCallbacks(response) {
+                $scope.loginData = {};
                 $scope.loginReady = true;
                 if (response.status == 400) {
                     var data = response.data;
@@ -86,10 +90,10 @@ angular.module('starter.controllers', [])
     })
     //Controlador de lista de clientes
     .controller('Clientelists', function($http, $scope, $timeout, $ionicPopup, $location, $cordovaToast, $ionicHistory) {
-        $ionicHistory.nextViewOptions({
+        /*$ionicHistory.nextViewOptions({
             //  disableAnimate: true,
             disableBack: true
-        });
+        });*/
         $scope.search = "";
         $scope.clientelists = [];
         $scope.noMoreItemsAvailable = false;
@@ -113,21 +117,18 @@ angular.module('starter.controllers', [])
                       $cordovaToast
                       .show(response.data.error, 'short', 'center')
                       .then(function(success) {
-                          var urlactual = $location.path();
-                          $location.path('/app/login/?next=' + urlactual);
+                          $location.path('/app/login');
                       }, function(error) {
-                          console.log(error);
+                          $location.path('/app/login');
                       });
+
                     } else if (response.status === 0) {
                         $ionicPopup.alert({
                             title: "Error",
                             content: "No se puede acceder a este servicio en este momento.",
                         });
                     } else {
-                        $ionicPopup.alert({
-                            title: "Error",
-                            content: "Algo anda mal, intente mas tarde.",
-                        });
+                      $scope.loadMore();
                     }
                 });
         };
@@ -157,10 +158,9 @@ angular.module('starter.controllers', [])
                     $cordovaToast
                         .show(response.data.error, 'short', 'center')
                         .then(function(success) {
-                            var urlactual = $location.path();
-                            $location.path('/app/login/?next=' + urlactual);
+                          $location.path('/app/login');
                         }, function(error) {
-                            console.log(error);
+                          console.log(error);
                         });
                 }else if (response.status === 0) {
                     $ionicPopup.alert({
@@ -336,8 +336,7 @@ angular.module('starter.controllers', [])
                 $cordovaToast
                     .show(response.data.error, 'short', 'center')
                     .then(function(success) {
-                        var urlactual = $location.path();
-                        $location.path('/app/login/?next=' + urlactual);
+                        $location.path('/app/login');
                     }, function(error) {
                         console.log(error);
                     });
@@ -493,8 +492,7 @@ angular.module('starter.controllers', [])
                 $cordovaToast
                     .show(response.data.error, 'short', 'center')
                     .then(function(success) {
-                        var urlactual = $location.path();
-                        $location.path('/app/login/?next=' + urlactual);
+                        $location.path('/app/login');
                     }, function(error) {
                         console.log(error);
                     });
@@ -651,8 +649,7 @@ angular.module('starter.controllers', [])
                 $cordovaToast
                     .show(response.data.error, 'short', 'center')
                     .then(function(success) {
-                        var urlactual = $location.path();
-                        $location.path('/app/login/?next=' + urlactual);
+                        $location.path('/app/login');
                     }, function(error) {
                         console.log(error);
                     });
@@ -823,8 +820,7 @@ angular.module('starter.controllers', [])
                     $cordovaToast
                         .show(response.data.error, 'short', 'center')
                         .then(function(success) {
-                            var urlactual = $location.path();
-                            $location.path('/app/login/?next=' + urlactual);
+                            $location.path('/app/login');
                         }, function(error) {
                             console.log(error);
                         });
@@ -844,10 +840,6 @@ angular.module('starter.controllers', [])
 })
 
 .controller('Piscineros', function($scope, $http, $location, $ionicHistory, $cordovaToast) {
-    $ionicHistory.nextViewOptions({
-        //  disableAnimate: true,
-        disableBack: true
-    });
     $scope.ready = false;
     $scope.search = "";
     $scope.noMoreItemsAvailable = false;
@@ -867,7 +859,6 @@ angular.module('starter.controllers', [])
                 }
                 num++;
                 $scope.$broadcast('scroll.infiniteScrollComplete');
-                // $scope.piscineros = response.data.object_list;
                 angular.element(document).ready(function() {
                     $('.collapsible').collapsible({
                         accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
@@ -876,11 +867,11 @@ angular.module('starter.controllers', [])
                 $scope.ready = true;
             }, function errorCallback(response) {
                 if (response.status == 403) {
+                  console.log("Entro a 403");
                     $cordovaToast
                         .show(response.data.error, 'short', 'center')
                         .then(function(success) {
-                            var urlactual = $location.path();
-                            $location.path('/app/login/?next=' + urlactual);
+                            $location.path('/app/login');
                         }, function(error) {
                             console.log(error);
                         });
@@ -926,12 +917,11 @@ angular.module('starter.controllers', [])
                     $cordovaToast
                         .show(response.data.error, 'short', 'center')
                         .then(function(success) {
-                            var urlactual = $location.path();
-                            $location.path('/app/login/?next=' + urlactual);
+                            $location.path('/app/login');
                         }, function(error) {
                             console.log(error);
                         });
-                }else if (response.status == 0) {
+                }else if (response.status === 0) {
                     $ionicPopup.alert({
                         title: "Error",
                         content: "No se puede acceder a este servicio en este momento.",
@@ -959,7 +949,11 @@ angular.module('starter.controllers', [])
         var data = {};
         data.piscina = piscinaID;
         data.piscinero = id;
-        data.asigna = check;
+        if (check) {
+          data.asigna = 'True';
+        }else{
+          data.asigna = 'False';
+        }
         $scope.loading = $ionicLoading.show({
             template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Guardando cambios...',
             noBackdrop: true
@@ -981,8 +975,7 @@ angular.module('starter.controllers', [])
                 $cordovaToast
                 .show(response.data.error, 'short', 'center')
                 .then(function(success) {
-                    var urlactual = $location.path();
-                    $location.path('/app/login/?next=' + urlactual);
+                    $location.path('/app/login');
                 }, function(error) {
                     console.log(error);
                 });
@@ -1004,4 +997,77 @@ angular.module('starter.controllers', [])
             }
         });
     };
+})
+.controller('Ruta', function($scope, $http, $stateParams){
+  $scope.noMoreItemsAvailable = false;
+
+  $scope.moveItem = function(item, fromIndex, toIndex) {
+    $scope.items.splice(fromIndex, 1);
+    $scope.items.splice(toIndex, 0, item);
+  };
+
+  $scope.loadMore = function() {
+    $scope.items.push({ id: $scope.items.length});
+
+    if ( $scope.items.length == 50 ) {
+      $scope.noMoreItemsAvailable = true;
+    }
+    $scope.$broadcast('scroll.infiniteScrollComplete');
+  };
+
+  $scope.items = [];
+
+/*  $scope.items = [
+    { id: 0 },
+    { id: 1 },
+    { id: 2 },
+    { id: 3 },
+    { id: 4 },
+    { id: 5 },
+    { id: 6 },
+    { id: 7 },
+    { id: 8 },
+    { id: 9 },
+    { id: 10 },
+    { id: 11 },
+    { id: 12 },
+    { id: 13 },
+    { id: 14 },
+    { id: 15 },
+    { id: 16 },
+    { id: 17 },
+    { id: 18 },
+    { id: 19 },
+    { id: 20 },
+    { id: 21 },
+    { id: 22 },
+    { id: 23 },
+    { id: 24 },
+    { id: 25 },
+    { id: 26 },
+    { id: 27 },
+    { id: 28 },
+    { id: 29 },
+    { id: 30 },
+    { id: 31 },
+    { id: 32 },
+    { id: 33 },
+    { id: 34 },
+    { id: 35 },
+    { id: 36 },
+    { id: 37 },
+    { id: 38 },
+    { id: 39 },
+    { id: 40 },
+    { id: 41 },
+    { id: 42 },
+    { id: 43 },
+    { id: 44 },
+    { id: 45 },
+    { id: 46 },
+    { id: 47 },
+    { id: 48 },
+    { id: 49 },
+    { id: 50 }
+  ];*/
 });

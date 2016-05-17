@@ -11,8 +11,8 @@ angular.module('starter.controllers', [])
     // Form data for the login modal
     $scope.loginData = {};
     //$scope.server = "http://104.236.33.228:8040";
-    $scope.server = "http://192.168.1.51:8000";
-    //$scope.server = "http://192.168.0.105:8000";
+    //$scope.server = "http://192.168.1.51:8000";
+    $scope.server = "http://192.168.0.106:8000";
     // Create the login modal that we will use later
     $scope.logout = function() {
         $http.get($scope.server + "/usuarios/logout/").success(function() {
@@ -48,7 +48,9 @@ angular.module('starter.controllers', [])
             //  disableAnimate: true,
             disableBack: true
         });
+        console.log("Log");
         console.log($ionicHistory.backView());
+        console.log($ionicHistory.viewHistory());
         $scope.loginReady = true;
         $scope.doLogin = function() {
             $scope.loginReady = false;
@@ -60,6 +62,7 @@ angular.module('starter.controllers', [])
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
             }).then(function doneCallbacks(response) {
+              console.log("Esta logeado");
                 $scope.loginData = {};
                 $scope.loginReady = true;
                 $ionicHistory.goBack(-1);
@@ -87,10 +90,10 @@ angular.module('starter.controllers', [])
     })
     //Controlador de lista de clientes
     .controller('Clientelists', function($http, $scope, $timeout, $ionicPopup, $location, $cordovaToast, $ionicHistory) {
-        $ionicHistory.nextViewOptions({
+        /*$ionicHistory.nextViewOptions({
             //  disableAnimate: true,
             disableBack: true
-        });
+        });*/
         $scope.search = "";
         $scope.clientelists = [];
         $scope.noMoreItemsAvailable = false;
@@ -125,10 +128,7 @@ angular.module('starter.controllers', [])
                             content: "No se puede acceder a este servicio en este momento.",
                         });
                     } else {
-                        $ionicPopup.alert({
-                            title: "Error",
-                            content: "Algo anda mal, intente mas tarde.",
-                        });
+                      $scope.loadMore();
                     }
                 });
         };
@@ -840,10 +840,6 @@ angular.module('starter.controllers', [])
 })
 
 .controller('Piscineros', function($scope, $http, $location, $ionicHistory, $cordovaToast) {
-    $ionicHistory.nextViewOptions({
-        //  disableAnimate: true,
-        disableBack: true
-    });
     $scope.ready = false;
     $scope.search = "";
     $scope.noMoreItemsAvailable = false;
@@ -953,7 +949,11 @@ angular.module('starter.controllers', [])
         var data = {};
         data.piscina = piscinaID;
         data.piscinero = id;
-        data.asigna = check;
+        if (check) {
+          data.asigna = 'True';
+        }else{
+          data.asigna = 'False';
+        }
         $scope.loading = $ionicLoading.show({
             template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Guardando cambios...',
             noBackdrop: true
@@ -1017,7 +1017,7 @@ angular.module('starter.controllers', [])
 
   $scope.items = [];
 
-  $scope.items = [
+/*  $scope.items = [
     { id: 0 },
     { id: 1 },
     { id: 2 },
@@ -1069,5 +1069,5 @@ angular.module('starter.controllers', [])
     { id: 48 },
     { id: 49 },
     { id: 50 }
-  ];
+  ];*/
 });

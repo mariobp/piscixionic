@@ -148,20 +148,20 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
     function onOnline() {
         // Handle the online event
         //var server = "http://104.236.33.228:8040";
-        var server = "http://192.168.1.51:8000";
+        //var server = "http://192.168.1.51:8000";
+        var server = "http://192.168.0.106:8000";
         var isLogin = function() {
             $http.get(server + "/usuarios/is/login/")
                 .then(function doneCallbacks(response) {
-                    if ($location.path() == "/app/login/0") {
+                    if ($state.current.name == "app.login") {
                         $location.path('/app/clientelists');
                     }
                 }, function failCallbacks(response) {
                     $cordovaToast
                     .show(response.data.error, 'short', 'center')
                     .then(function(success) {
-                        var urlactual = $location.path();
                         if($state.current.name != 'app.login'){
-                          $location.path('/app/login/?next='+urlactual);
+                          $location.path('/app/login');
                         }
                     }, function(error) {
                         console.log(error);
@@ -254,15 +254,15 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
         })
 
     .state('app.login', {
-        url: '/login/?next',
-        nativeTransitionsAndroid: {
+        url: '/login',
+    /*    nativeTransitionsAndroid: {
             "type": "fade",
             "direction": "up"
         },
         nativeTransitionsBackAndroid: {
             "type": "fade",
             "direction": "down"
-        },
+        },*/
         views: {
             'menuContent': {
                 templateUrl: 'templates/login2.html',
@@ -372,6 +372,15 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
                 'menuContent': {
                     templateUrl: 'templates/asignar-gps.html',
                     controller: 'MapCtrl'
+                }
+            }
+        })
+        .state('app.ruta', {
+            url: '/ruta/:piscineroId',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/ruta.html',
+                    controller: 'Ruta'
                 }
             }
         });

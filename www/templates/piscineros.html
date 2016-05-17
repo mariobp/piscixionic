@@ -1,4 +1,4 @@
-<ion-view view-title="Piscineros">
+<ion-view cache-view="true" view-title="Piscineros">
   <!--ion-header-bar class="bar-subheader headerbar item-input-inset row">
       <div class="input-field col s12">
         <i class="ion-search prefix"></i>
@@ -19,7 +19,7 @@
 					<ul class="collection">
 						<li class="collection-item avatar">
 				        <img src="{{server}}/media/{{piscinero.imagen}}" ng-if="piscinero.imagen !='' || piscinero.imagen !=null" class="circle"/>
-		            <img src="img/user.png" ng-if="piscinero.imagen =='' || piscinero.imagen ==null" class="circle"/>
+		            <img src="img/mario.png" ng-if="piscinero.imagen =='' || piscinero.imagen ==null" class="circle"/>
 					      <span class="title">{{piscinero.first_name}} {{piscinero.last_name}}</span>
 								<p>
 									Telefono: {{piscinero.telefono}}
