@@ -195,3 +195,6 @@ textarea:focus{
    .bar-footer{
       height: 56px;
    }
+   button:focus{
+     background-color: background-color: #455A64 !important; 
+   }

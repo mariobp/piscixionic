@@ -15,7 +15,12 @@
      </ion-refresher-->
 		<ion-list class="" show-reorder="true">
 		  <ion-item ng-repeat="item in items" item="item" class="collection-item">
-        Asignacion {{ item.id }}
+				<h2>#{{item.orden}} {{ item.nombreP }}</h2>
+				<p>
+					<b>Cliente: </b> {{ item.nombreCF }} {{ item.nombreCL }}<br>
+					<b>Casa: </b> {{ item.nombreCA }}<br>
+					<b>Estado: </b> <b class="light-blue-text" ng-show="{{item.asigna}}">Asignado</b> <b class="red-text" ng-show="!{{item.asigna}}">Desasignado</b>
+				</p>
         <ion-reorder-button class="ion-navicon" on-reorder="moveItem(item, $fromIndex, $toIndex)"></ion-reorder-button>
 		  </ion-item>
 		</ion-list>
@@ -23,11 +28,11 @@
   </ion-content>
   <ion-footer-bar align-title="left" class="headerbar">
     <div class="button-bar row">
-      <button type="button" name="button" class="btn waves-effect waves-light green accent-3  icon-right ion-refresh col s4"> Regresar</button>
+      <!--button type="button" name="button" class="btn waves-effect waves-light light-blue icon-right ion-refresh col col-50"> Regresar</button-->
 
-      <button href="#" class="btn waves-effect waves-light light-blue icon-right col s4 icon-right ion-android-map"> Mapa</button>
+      <a href="#/app/mapa/ruta/piscinero" class="btn waves-effect waves-light green accent-3  icon-right col icon-right ion-android-map">Ver en el Mapa</a>
 
-      <button type="button" name="button" class="btn waves-effect waves-light green accent-3 icon-right ion-upload col s4"> Guardar</button>
+      <!--button type="button" name="button" class="btn waves-effect waves-light light-blue icon-right ion-upload col s4"> Guardar</button-->
     </div>
   </ion-footer-bar>
 </ion-view>
