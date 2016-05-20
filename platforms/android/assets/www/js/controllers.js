@@ -11,8 +11,8 @@ angular.module('starter.controllers', [])
     // Form data for the login modal
     $scope.loginData = {};
     //$scope.server = "http://104.236.33.228:8040";
-    $scope.server = "http://192.168.1.51:8000";
-    //$scope.server = "http://192.168.0.106:8000";
+    //$scope.server = "http://192.168.1.51:8000";
+    $scope.server = "http://192.168.1.60:8001";
     // Create the login modal that we will use later
     $scope.logout = function() {
         $http.get($scope.server + "/usuarios/logout/").success(function() {
@@ -89,7 +89,7 @@ angular.module('starter.controllers', [])
 
     })
     //Controlador de lista de clientes
-    .controller('Clientelists', function($http, $scope, $timeout, $ionicPopup, $location, $cordovaToast, $ionicHistory) {
+    .controller('Clientelists', function($http, $scope, $timeout, $ionicPopup, $location, $cordovaToast, $ionicHistory, $timeout) {
         /*$ionicHistory.nextViewOptions({
             //  disableAnimate: true,
             disableBack: true
@@ -128,7 +128,9 @@ angular.module('starter.controllers', [])
                             content: "No se puede acceder a este servicio en este momento.",
                         });
                     } else {
-                      $scope.loadMore();
+                      $timeout(function(){
+                        $scope.loadMore();
+                      },30000);
                     }
                 });
         };
@@ -839,7 +841,7 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('Piscineros', function($scope, $http, $location, $ionicHistory, $cordovaToast) {
+.controller('Piscineros', function($scope, $http, $location, $ionicHistory, $cordovaToast, $timeout) {
     $scope.ready = false;
     $scope.search = "";
     $scope.noMoreItemsAvailable = false;
@@ -881,7 +883,10 @@ angular.module('starter.controllers', [])
                         content: "No se puede acceder a este servicio en este momento.",
                     });
                 }else {
-                  $scope.loadMore();
+                  console.log("Entro");
+                  $timeout(function(){
+                      $scope.loadMore();
+                  }, 30000);
                 }
             });
     };
@@ -895,7 +900,7 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('PiscinaAsignacion', function($scope, $stateParams, $http, $cordovaToast, $ionicLoading, $location, $ionicPopup) {
+.controller('PiscinaAsignacion', function($scope, $stateParams, $http, $cordovaToast, $ionicLoading, $location, $ionicPopup, $timeout) {
     var id = $stateParams.piscineroId;
     $scope.piscinas = [];
     $scope.checkes = [];
@@ -907,6 +912,11 @@ angular.module('starter.controllers', [])
             .then(function doneCallbacks(response) {
                 var data = response.data.object_list;
                 data.forEach(function(data) {
+                    if(data.asignado==1){
+                     data.check = true;
+                   }else {
+                     data.check = false;
+                   }
                     $scope.piscinas.push(data);
                 });
                 max = response.data.count;
@@ -943,16 +953,17 @@ angular.module('starter.controllers', [])
         $scope.$broadcast('scroll.refreshComplete');
     };
 
-    $scope.asignar = function(piscinaID, index) {
+    $scope.asignar = function(piscinaID, check) {
         var data = {};
         data.piscina = piscinaID;
         data.piscinero = id;
-        var check = $scope.checkes.check[index];
         if (check) {
           data.asigna = 'True';
         }else{
-          data.asigna = 'False';
+          data.asigna = '';
         }
+        console.log("Check");
+        console.log(check);
         $scope.loading = $ionicLoading.show({
             template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Guardando cambios...',
             noBackdrop: true
@@ -965,10 +976,12 @@ angular.module('starter.controllers', [])
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
         }).then(function doneCallbacks(response) {
-            console.log("Guardo");
             $scope.loading.hide();
             $cordovaToast.show("Guardado exitoso!", 'short', 'center');
         }, function failCallbacks(response) {
+            if (check) {
+              $scope.checkes.check[index] = true;
+            }
             $scope.checkes.check[index] = false;
             $scope.loading.hide();
             if (response.status === 403) {
@@ -998,7 +1011,7 @@ angular.module('starter.controllers', [])
         });
     };
 })
-.controller('Ruta', function($scope, $http, $stateParams, $cordovaToast, $ionicPopup){
+.controller('Ruta', function($scope, $http, $stateParams, $cordovaToast, $ionicPopup, $timeout){
   $scope.piscinero = $stateParams.piscineroId;
   $scope.noMoreItemsAvailable = false;
   $scope.items = [];
@@ -1006,7 +1019,7 @@ angular.module('starter.controllers', [])
       max = 0;
 
   $scope.loadMore = function() {
-    $http.get($scope.server + '/usuarios/service/list/asignaciones/?piscinero='+ $scope.piscinero +'&page='+ num)
+    $http.get($scope.server + '/usuarios/service/list/asignaciones/?piscinero='+ $scope.piscinero +'&page='+ num + '&asigna=true')
     .then(function doneCallbacks(response){
       var data = response.data.object_list;
       data.forEach(function(data) {
@@ -1033,7 +1046,10 @@ angular.module('starter.controllers', [])
               content: "No se puede acceder a este servicio en este momento.",
           });
       } else {
-        $scope.loadMore();
+        $timeout(function () {
+          $scope.loadMore();
+        }, 30000);
+
       }
     });
   };
