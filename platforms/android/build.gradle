@@ -245,6 +245,8 @@ dependencies {
     compile "com.android.support:support-v13:23+"
     compile "com.google.android.gms:play-services-gcm:+"
     compile "com.android.support:support-v4:+"
+    compile "com.android.support:support-v4:23.+"
+    compile "com.android.support:appcompat-v7:23.+"
     // SUB-PROJECT DEPENDENCIES END
 }
 

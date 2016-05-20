@@ -7,8 +7,8 @@
     <div class="row" ng-if="dataReady">
       <div class="list card col s12 grey lighten-5">
           <div class="item item-avatar grey lighten-5">
-              <img src="{{server}}/media/{{info.cliente.imagen}}" ng-if="cliente.imagen !=='' || cliente.imagen !== null">
-              <img src="img/mario.png" ng-if="cliente.imagen =='' || cliente.imagen == null"/>
+              <img src="{{server}}/media/{{cliente.imagen}}" ng-if="info.cliente.imagen !=''">
+              <img src="img/mario.png" ng-if="info.cliente.imagen ==''"/>
               <h2>{{info.cliente.first_name}} {{info.cliente.last_name}}</h2>
               {{info.cliente.direccion}}
           </div>

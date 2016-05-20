@@ -25,7 +25,7 @@
 								<b>Estado:</b> <b class="light-blue-text" ng-show="{{piscina.estado}}">Buen Estado</b> <b class="red-text" ng-show="!{{piscina.estado}}">Mal Estado</b>
 						</p>
 					<div class="secondary-content">
-							<input type="checkbox" class="checkbox red" id="piscina{{piscina.id}}" ng-model="data.check" ng-change="asignar(piscina.id, data.check)"/>
+							<input type="checkbox" class="checkbox red" id="piscina{{piscina.id}}" ng-model="piscina.check" ng-change="asignar(piscina.id, piscina)"/>
 							<label for="piscina{{piscina.id}}"></label>
 					</div>
 				</div>

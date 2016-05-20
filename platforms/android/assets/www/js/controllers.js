@@ -11,8 +11,8 @@ angular.module('starter.controllers', [])
     // Form data for the login modal
     $scope.loginData = {};
     //$scope.server = "http://104.236.33.228:8040";
-    //$scope.server = "http://192.168.1.51:8000";
-    $scope.server = "http://192.168.1.60:8001";
+    $scope.server = "http://192.168.1.51:8000";
+    //$scope.server = "http://192.168.1.60:8001";
     // Create the login modal that we will use later
     $scope.logout = function() {
         $http.get($scope.server + "/usuarios/logout/").success(function() {
@@ -89,7 +89,7 @@ angular.module('starter.controllers', [])
 
     })
     //Controlador de lista de clientes
-    .controller('Clientelists', function($http, $scope, $timeout, $ionicPopup, $location, $cordovaToast, $ionicHistory, $timeout) {
+    .controller('Clientelists', function($http, $scope, $timeout, $ionicPopup, $location, $cordovaToast, $ionicHistory) {
         /*$ionicHistory.nextViewOptions({
             //  disableAnimate: true,
             disableBack: true
@@ -714,6 +714,29 @@ angular.module('starter.controllers', [])
         marker = null;
     $scope.Ready = true;
 
+    $scope.validateGps = function (){
+        if (window.cordova) {
+          cordova.plugins.diagnostic.isLocationEnabled(function(enabled) {
+              if(!enabled){
+                $ionicPopup.confirm({
+                    title: "GPS",
+                    content: "Su gps esta desactivado.",
+                    cancelText: 'Cancelar',
+                    cancelType: 'button-assertive',
+                    okText: 'Activar'
+                }).then(function(result) {
+                    if (result) {
+                       cordova.plugins.diagnostic.switchToLocationSettings();
+                    }
+                });
+              }
+          }, function(error) {
+              alert("The following error occurred: " + error);
+          });
+        }
+    };
+
+
     function validar(metodo) {
         if (longitud === "" && latitud === "") {
             var alertPopup = $ionicPopup.alert({
@@ -721,7 +744,7 @@ angular.module('starter.controllers', [])
                 template: 'No hay ningun gps asignado, precionar la opción <i class="icon ion-location icon"></i> para asignar GPS.'
             });
             alertPopup.then(function(res) {
-                console.log('Thank you for not eating my delicious ice cream cone');
+              $scope.validateGps();
             });
         } else {
             if (metodo) {
@@ -791,7 +814,8 @@ angular.module('starter.controllers', [])
             $scope.loading.hide();
         }, function(error) {
             $scope.loading.hide();
-            alert('No se puede obtener la ubicación: ' + error.message);
+            alert('No se puede obtener la ubicación, posiblemente el gps este desactivado: ' + error.message);
+            $scope.validateGps();
         });
     };
 
@@ -912,7 +936,7 @@ angular.module('starter.controllers', [])
             .then(function doneCallbacks(response) {
                 var data = response.data.object_list;
                 data.forEach(function(data) {
-                    if(data.asignado==1){
+                    if(data.asignacion==1){
                      data.check = true;
                    }else {
                      data.check = false;
@@ -953,17 +977,17 @@ angular.module('starter.controllers', [])
         $scope.$broadcast('scroll.refreshComplete');
     };
 
-    $scope.asignar = function(piscinaID, check) {
+    $scope.asignar = function(piscinaID, obj) {
         var data = {};
         data.piscina = piscinaID;
         data.piscinero = id;
-        if (check) {
+        if (obj.check) {
           data.asigna = 'True';
         }else{
           data.asigna = '';
         }
         console.log("Check");
-        console.log(check);
+        console.log(obj);
         $scope.loading = $ionicLoading.show({
             template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Guardando cambios...',
             noBackdrop: true
@@ -979,10 +1003,11 @@ angular.module('starter.controllers', [])
             $scope.loading.hide();
             $cordovaToast.show("Guardado exitoso!", 'short', 'center');
         }, function failCallbacks(response) {
-            if (check) {
-              $scope.checkes.check[index] = true;
+            if (obj.check) {
+              obj.check = false;
+            }else{
+              obj.check = true;
             }
-            $scope.checkes.check[index] = false;
             $scope.loading.hide();
             if (response.status === 403) {
                 $cordovaToast
