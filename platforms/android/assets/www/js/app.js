@@ -148,8 +148,8 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
     function onOnline() {
         // Handle the online event
         //var server = "http://104.236.33.228:8040";
-        var server = "http://192.168.1.51:8000";
-        //var server = "http://192.168.1.60:8001";
+        //var server = "http://192.168.1.51:8000";
+        var server = "http://192.168.0.106:8000";
         var isLogin = function() {
             $http.get(server + "/usuarios/is/login/")
                 .then(function doneCallbacks(response) {

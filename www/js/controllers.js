@@ -11,8 +11,8 @@ angular.module('starter.controllers', [])
     // Form data for the login modal
     $scope.loginData = {};
     //$scope.server = "http://104.236.33.228:8040";
-    $scope.server = "http://192.168.1.51:8000";
-    //$scope.server = "http://192.168.1.60:8001";
+    //$scope.server = "http://192.168.1.51:8000";
+    $scope.server = "http://192.168.0.106:8000";
     // Create the login modal that we will use later
     $scope.logout = function() {
         $http.get($scope.server + "/usuarios/logout/").success(function() {
@@ -936,7 +936,7 @@ angular.module('starter.controllers', [])
             .then(function doneCallbacks(response) {
                 var data = response.data.object_list;
                 data.forEach(function(data) {
-                    if(data.asignacion==1){
+                    if(data.asignacion){
                      data.check = true;
                    }else {
                      data.check = false;
@@ -1036,7 +1036,7 @@ angular.module('starter.controllers', [])
         });
     };
 })
-.controller('Ruta', function($scope, $http, $stateParams, $cordovaToast, $ionicPopup, $timeout){
+.controller('Ruta', function($scope, $http, $stateParams, $cordovaToast, $ionicPopup, $timeout, $ionicLoading){
   $scope.piscinero = $stateParams.piscineroId;
   $scope.noMoreItemsAvailable = false;
   $scope.items = [];
@@ -1080,11 +1080,49 @@ angular.module('starter.controllers', [])
   };
 
   $scope.moveItem = function(item, fromIndex, toIndex) {
-    console.log(item);
-    console.log(fromIndex);
-    console.log(toIndex);
+    var move = toIndex - fromIndex;
     $scope.items.splice(fromIndex, 1);
     $scope.items.splice(toIndex, 0, item);
+    var data = {};
+    if (move>0) {
+      console.log("Bajo");
+      data.orden = $scope.items[toIndex-1].orden;
+      console.log($scope.items[toIndex-1]);
+    }else {
+      console.log("Sube");
+      data.orden = $scope.items[toIndex+1].orden;
+      console.log($scope.items[toIndex+1]);
+    }
+    $scope.loading = $ionicLoading.show({
+        template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Guardando ruta...',
+        noBackdrop: true
+    });
+    $http({
+      method: 'PUT',
+      url: $scope.server + '/usuarios/service/asignacion/form/piscinero/' +item.id + '/',
+      data: data,
+      headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    }).then(function doneCallbacks(response){
+      $scope.loading.hide();
+      $cordovaToast.show("Guardado exitoso!", 'short', 'center');
+    },function errorCallback(response){
+      $scope.loading.hide();
+      if (response.status === 403) {
+          $cordovaToast
+          .show(response.data.error, 'short', 'center')
+          .then(function(success) {
+              $location.path('/app/login');
+          }, function(error) {
+              console.log(error);
+          });
+      }
+      if (response.status == 400) {
+        alert("Error 400");
+        console.log(response);
+      }
+    });
   };
 
 })
