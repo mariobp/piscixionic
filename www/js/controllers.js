@@ -811,9 +811,9 @@ angular.module('starter.controllers', [])
             latitud = pos.coords.latitude;
             longitud = pos.coords.longitude;
             $scope.colocarMarker(latitud, longitud);
-            $scope.loading.hide();
+            $ionicLoading.hide();
         }, function(error) {
-            $scope.loading.hide();
+            $ionicLoading.hide();
             alert('No se puede obtener la ubicación, posiblemente el gps este desactivado: ' + error.message);
             $scope.validateGps();
         });
@@ -1000,7 +1000,7 @@ angular.module('starter.controllers', [])
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
         }).then(function doneCallbacks(response) {
-            $scope.loading.hide();
+            $ionicLoading.hide();
             $cordovaToast.show("Guardado exitoso!", 'short', 'center');
         }, function failCallbacks(response) {
             if (obj.check) {
@@ -1008,7 +1008,7 @@ angular.module('starter.controllers', [])
             }else{
               obj.check = true;
             }
-            $scope.loading.hide();
+            $ionicLoading.hide();
             if (response.status === 403) {
                 $cordovaToast
                 .show(response.data.error, 'short', 'center')
@@ -1093,36 +1093,46 @@ angular.module('starter.controllers', [])
       data.orden = $scope.items[toIndex+1].orden;
       console.log($scope.items[toIndex+1]);
     }
-    $scope.loading = $ionicLoading.show({
-        template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Guardando ruta...',
-        noBackdrop: true
-    });
-    $http({
-      method: 'PUT',
-      url: $scope.server + '/usuarios/service/asignacion/form/piscinero/' +item.id + '/',
-      data: data,
-      headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-      }
-    }).then(function doneCallbacks(response){
-      $scope.loading.hide();
-      $cordovaToast.show("Guardado exitoso!", 'short', 'center');
-    },function errorCallback(response){
-      $scope.loading.hide();
-      if (response.status === 403) {
-          $cordovaToast
-          .show(response.data.error, 'short', 'center')
-          .then(function(success) {
-              $location.path('/app/login');
-          }, function(error) {
-              console.log(error);
-          });
-      }
-      if (response.status == 400) {
-        alert("Error 400");
-        console.log(response);
-      }
-    });
+    if (toIndex !== fromIndex) {
+        $scope.loading = $ionicLoading.show({
+            template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Guardando ruta...',
+            noBackdrop: true
+        });
+        $http({
+          method: 'PUT',
+          url: $scope.server + '/usuarios/service/asignacion/form/piscinero/' +item.pk + '/',
+          data: data,
+          headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        }).then(function doneCallbacks(response){
+          $ionicLoading.hide();
+          $cordovaToast.show("Guardado exitoso!", 'short', 'center');
+        },function errorCallback(response){
+          $ionicLoading.hide();
+          if (response.status === 403) {
+              $cordovaToast
+              .show(response.data.error, 'short', 'center')
+              .then(function(success) {
+                  $location.path('/app/login');
+              }, function(error) {
+                  console.log(error);
+              });
+          }
+          if (response.status == 400) {
+            alert("Error 400");
+            console.log(response);
+          }
+      });
+    }
+  };
+
+  $scope.reload = function(){
+    num = 1;
+    max = 0;
+    $scope.noMoreItemsAvailable = false;
+    $scope.items = [];
+    $scope.$broadcast('scroll.refreshComplete');
   };
 
 })

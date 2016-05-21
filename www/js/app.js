@@ -127,7 +127,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
 
     function onOffline() {
         // Handle the offline event
-        //$cordovaToast.show('No hay conexión a Internet!', 'long', 'center');
+        $cordovaToast.show('No hay conexión a Internet!', 'long', 'center');
         $cordovaLocalNotification.cancel(2).then(function (result) {
             $cordovaLocalNotification.schedule({
                 id: 1,
@@ -174,6 +174,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
             isLogin();
         }, function failCallbacks(response) {
             if (response.status === 0) {
+                $cordovaToast.show('No hay conexión a Internet', 'long', 'center');
                 $cordovaLocalNotification.schedule({
                     id: 3,
                     title: 'Piscix',
@@ -184,7 +185,6 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
                 }).then(function(result) {
                     // ...
                 });
-                //$cordovaToast.show('Servidor fuera de servicio', 'long', 'center');
             }
         });
 

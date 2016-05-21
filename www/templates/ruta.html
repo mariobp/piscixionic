@@ -1,10 +1,4 @@
-<ion-view title="Asignacion Ruta">
-	  <!--ion-header-bar class="bar-subheader headerbar item-input-inset row">
-	      <div class="input-field col s12">
-	        <i class="ion-search prefix"></i>
-	        <input type="text" name="buscar" class="white-text" placeholder="Buscar" ng-model="search" >
-	      </div>
-	  </ion-header-bar-->
+<ion-view cache-view="false" title="Asignacion Ruta">
 	<ion-content>
       <!--ion-refresher
        pulling-text ="Refrescar"
@@ -21,18 +15,13 @@
 					<b>Casa: </b> {{ item.nombreCA }}<br>
 					<b>Estado: </b> <b class="light-blue-text" ng-show="{{item.asigna}}">Asignado</b> <b class="red-text" ng-show="!{{item.asigna}}">Desasignado</b>
 				</p>
-        <ion-reorder-button class="ion-navicon" on-reorder="moveItem(item, $fromIndex, $toIndex)"></ion-reorder-button>
+        <ion-reorder-button class="ion-drag" on-reorder="moveItem(item, $fromIndex, $toIndex)"></ion-reorder-button>
 		  </ion-item>
 		</ion-list>
 		<ion-infinite-scroll ng-if="!noMoreItemsAvailable" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll>
   </ion-content>
   <ion-footer-bar align-title="left" class="headerbar">
     <div class="button-bar row">
-      <!--button type="button" name="button" class="btn waves-effect waves-light light-blue icon-right ion-refresh col col-50"> Regresar</button-->
-
       <a href="#/app/mapa/ruta/piscinero" class="btn waves-effect waves-light green accent-3  icon-right col icon-right ion-android-map">Ver en el Mapa</a>
-
-      <!--button type="button" name="button" class="btn waves-effect waves-light light-blue icon-right ion-upload col s4"> Guardar</button-->
-    </div>
   </ion-footer-bar>
 </ion-view>
