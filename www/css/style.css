@@ -42,11 +42,20 @@ div.spin{
   text-align: center;
 }
 
-.spin svg{
+div.spin2{
+  margin: auto;
+  position: relative;;
+  top: calc(25% + 30px);
+  left: 0; bottom: 0; right: 0;
+  height: 60px;
+  text-align: center;
+}
+.spin svg, .spin2 svg{
   width: 19% !important;
   height: 60px !important;
 }
 
+.
 fancy-select .list {
   margin: -1px 0;
 }
@@ -86,6 +95,11 @@ map {
 .medio{
   height: 50%;
 }
+
+#directions-panel{
+  overflow: scroll;
+}
+
 .scroll {
   height: 100%;
 }

@@ -2,7 +2,14 @@
 	<ion-content>
       <ion-content scroll="false">
         <map class="medio" on-create="mapCreated(map)"></map>
-				<div id="directions-panel" class="medio"></div>
+				<div  class="medio">
+					<ul id="directions-panel" class="list" ng-show="cargado">
+
+					</ul>
+					<div class="spin2" ng-if="!cargado">
+			      <ion-spinner></ion-spinner>
+			    </div>
+				</div>
       </ion-content>
   </ion-content>
 </ion-view>

@@ -1138,12 +1138,13 @@ angular.module('starter.controllers', [])
 })
 
 .controller('MapaRuta', function($scope, $http, $stateParams,  $cordovaToast, $ionicPopup,  $ionicLoading){
-  $scope.loading = $ionicLoading.show({
-      template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Obteniendo la ubicación actual...',
-      noBackdrop: true
-  });
 
+  $scope.cargado = false;
   $scope.mapCreated = function(map) {
+    $scope.loading = $ionicLoading.show({
+        template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Cargando la ruta...',
+        noBackdrop: true
+    });
     var directionsService = new google.maps.DirectionsService;
     var directionsDisplay = new google.maps.DirectionsRenderer;
     $scope.map = map;
@@ -1186,12 +1187,11 @@ angular.module('starter.controllers', [])
             // For each route, display summary information.
             for (var i = 0; i < route.legs.length; i++) {
               var routeSegment = i + 1;
-              summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
-                  '</b><br>';
-              summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-              summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-              summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+              summaryPanel.innerHTML += '<li class="item"><b>Segmento de ruta: ' + routeSegment +
+              '</b><br>' + route.legs[i].start_address + '<br> a <br>' + route.legs[i].end_address + '<br>' +
+               "Distancia: " + route.legs[i].distance.text + '</li>';
             }
+            $scope.cargado = true;
           } else {
             window.alert('Directions request failed due to ' + status);
           }
