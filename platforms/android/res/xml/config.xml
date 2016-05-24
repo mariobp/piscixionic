@@ -69,11 +69,11 @@
     <splash density="port-xhdpi" src="resources/android/splash/drawable-port-xhdpi-screen.png" />
     <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png" />
     <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
-    <name>piscix</name>
+    <name>Piscix</name>
     <description>
-        An Ionic Framework and Cordova project.
+        Piscix by Exile.
     </description>
-    <author email="mariobarrpach@gmail.com" href="http://example.com.com/">
+    <author email="mariobarrpach@gmail.com" href="http://exile.com.co/">
       Mario José Barrios Pacheco
     </author>
     <content src="index.html" />
