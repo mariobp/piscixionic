@@ -18,7 +18,7 @@
             <img src="{{server}}/media/{{cliente.imagen}}" ng-if="cliente.imagen !=''">
             <img src="img/mario.png" ng-if="cliente.imagen ==''"/>
             <h2>{{cliente.first_name}} {{cliente.last_name}}</h2>
-            <p>{{cliente.email}}</p>
+            <p><b>Telefono: </b>{{cliente.telefono}}</p>
         </ion-item>
       </ion-list>
       <ion-infinite-scroll ng-if="!noMoreItemsAvailable" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll>
