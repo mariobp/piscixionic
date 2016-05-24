@@ -986,8 +986,6 @@ angular.module('starter.controllers', [])
         }else{
           data.asigna = '';
         }
-        console.log("Check");
-        console.log(obj);
         $scope.loading = $ionicLoading.show({
             template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Guardando cambios...',
             noBackdrop: true
@@ -1001,7 +999,7 @@ angular.module('starter.controllers', [])
             },
         }).then(function doneCallbacks(response) {
             $ionicLoading.hide();
-            $cordovaToast.show("Guardado exitoso!", 'short', 'center');
+            $cordovaToast.show("Guardado exitoso!", 'short', 'botton');
         }, function failCallbacks(response) {
             if (obj.check) {
               obj.check = false;
@@ -1021,16 +1019,16 @@ angular.module('starter.controllers', [])
             if (response.status == 400) {
                 var data = response.data;
                 if (data.piscinero) {
-                    $cordovaToast.show("Piscinero: " + data.piscinero, 'short', 'center');
+                    $cordovaToast.show("Piscinero: " + data.piscinero, 'short', 'botton');
                 }
                 if (data.piscina) {
-                    $cordovaToast.show("Piscina: " + data.piscina, 'short', 'center');
+                    $cordovaToast.show("Piscina: " + data.piscina, 'short', 'botton');
                 }
                 if (data.asigna) {
-                    $cordovaToast.show("Asigna: " + data.asigna, 'short', 'center');
+                    $cordovaToast.show("Asigna: " + data.asigna, 'short', 'botton');
                 }
                 if (data.__all__) {
-                    $cordovaToast.show(data.__all__, 'short', 'center');
+                    $cordovaToast.show(data.__all__, 'short', 'botton');
                 }
             }
         });
@@ -1137,26 +1135,24 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('MapaRuta', function($scope, $http, $stateParams,  $cordovaToast, $ionicPopup,  $ionicLoading){
+.controller('MapaRuta', function($scope, $http, $stateParams,  $cordovaToast, $ionicPopup,  $ionicLoading, $timeout){
   $scope.cargado = false;
+  $scope.items = [];
   $scope.mapCreated = function(map) {
-    $scope.loading = $ionicLoading.show({
-        template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Cargando la ruta...',
-        noBackdrop: true
-    });
     var directionsService = new google.maps.DirectionsService;
     var directionsDisplay = new google.maps.DirectionsRenderer;
     $scope.map = map;
     directionsDisplay.setMap(map);
-    calculateAndDisplayRoute(directionsService, directionsDisplay);
-    $ionicLoading.hide();
+    $scope.calculate(directionsService, directionsDisplay);
   };
 
-  function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+  $scope.calculate = function calculateAndDisplayRoute(directionsService, directionsDisplay) {
     var waypts = [];
     $http.get($scope.server + '/usuarios/service/list/asignaciones/?piscinero='+ $stateParams.piscineroId + '&asigna=true')
     .then(function doneCallbacks(response){
       var data = response.data.object_list;
+      $scope.items = data;
+      $scope.cargado = true;
       if (data.length===0) {
         $ionicPopup.alert({
             title: "Ruta",
@@ -1179,22 +1175,11 @@ angular.module('starter.controllers', [])
           travelMode: google.maps.TravelMode.DRIVING
         }, function(response, status) {
           if (status === google.maps.DirectionsStatus.OK) {
-            directionsDisplay.setDirections(response);
-            var route = response.routes[0];
-            var summaryPanel = document.getElementById('directions-panel');
-            summaryPanel.innerHTML = '';
-            // For each route, display summary information.
-            for (var i = 0; i < route.legs.length; i++) {
-              var routeSegment = i + 1;
-              summaryPanel.innerHTML += '<li class="item"><b>Segmento de ruta: ' + routeSegment +
-              '</b><br>' + route.legs[i].start_address + '<br> a <br>' + route.legs[i].end_address + '<br>' +
-               "Distancia: " + route.legs[i].distance.text + '</li>';
-            }
-            console.log("Cargadoo");
-            $scope.cargado = true;
-            console.log($scope.cargado);
+              directionsDisplay.setDirections(response);
+            //var route = response.routes[0];
+            //console.log("End");
           } else {
-            window.alert('Directions request failed due to ' + status);
+            alert('Directions request failed due to ' + status);
           }
         });
       }
@@ -1216,5 +1201,5 @@ angular.module('starter.controllers', [])
           });
       }
     });
-  }
+  };
 });
