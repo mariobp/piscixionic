@@ -1136,8 +1136,84 @@ angular.module('starter.controllers', [])
   };
 
 })
+
 .controller('MapaRuta', function($scope, $http, $stateParams,  $cordovaToast, $ionicPopup,  $ionicLoading){
+  $scope.loading = $ionicLoading.show({
+      template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Obteniendo la ubicación actual...',
+      noBackdrop: true
+  });
+
   $scope.mapCreated = function(map) {
+    var directionsService = new google.maps.DirectionsService;
+    var directionsDisplay = new google.maps.DirectionsRenderer;
     $scope.map = map;
+    directionsDisplay.setMap(map);
+    calculateAndDisplayRoute(directionsService, directionsDisplay);
+    $ionicLoading.hide();
   };
+
+  function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+    var waypts = [];
+    $http.get($scope.server + '/usuarios/service/list/asignaciones/?piscinero='+ $stateParams.piscineroId + '&asigna=true')
+    .then(function doneCallbacks(response){
+      var data = response.data.object_list;
+      if (data.length===0) {
+        $ionicPopup.alert({
+            title: "Ruta",
+            content: "No tiene ninguna ruta asignada.",
+        });
+      }else if (data.length>2) {
+        for (var i = 0; i < data.length; i++) {
+          if (i>0 && i<data.length - 1) {
+            waypts.push({
+              location: {lat: parseFloat(data[i].latitud), lng: parseFloat(data[i].longitud)},
+              stopover: true
+            });
+          }
+        }
+        directionsService.route({
+          origin:  {lat: parseFloat(data[0].latitud), lng: parseFloat(data[0].longitud)},
+          destination:  {lat: parseFloat(data[data.length-1].latitud), lng: parseFloat(data[data.length-1].longitud)},
+          waypoints: waypts,
+          optimizeWaypoints: true,
+          travelMode: google.maps.TravelMode.DRIVING
+        }, function(response, status) {
+          if (status === google.maps.DirectionsStatus.OK) {
+            directionsDisplay.setDirections(response);
+            var route = response.routes[0];
+            var summaryPanel = document.getElementById('directions-panel');
+            summaryPanel.innerHTML = '';
+            // For each route, display summary information.
+            for (var i = 0; i < route.legs.length; i++) {
+              var routeSegment = i + 1;
+              summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+                  '</b><br>';
+              summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+              summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+              summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+            }
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
+      }
+    },
+    function errorCallback(response){
+      if (response.status == 403) {
+        console.log("Entro a 403");
+          $cordovaToast
+              .show(response.data.error, 'short', 'center')
+              .then(function(success) {
+                  $location.path('/app/login');
+              }, function(error) {
+                  console.log(error);
+              });
+      }else if (response.status === 0) {
+          $ionicPopup.alert({
+              title: "Error",
+              content: "No se puede acceder a este servicio en este momento.",
+          });
+      }
+    });
+  }
 });
