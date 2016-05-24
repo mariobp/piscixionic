@@ -1138,7 +1138,6 @@ angular.module('starter.controllers', [])
 })
 
 .controller('MapaRuta', function($scope, $http, $stateParams,  $cordovaToast, $ionicPopup,  $ionicLoading){
-
   $scope.cargado = false;
   $scope.mapCreated = function(map) {
     $scope.loading = $ionicLoading.show({
@@ -1191,7 +1190,9 @@ angular.module('starter.controllers', [])
               '</b><br>' + route.legs[i].start_address + '<br> a <br>' + route.legs[i].end_address + '<br>' +
                "Distancia: " + route.legs[i].distance.text + '</li>';
             }
+            console.log("Cargadoo");
             $scope.cargado = true;
+            console.log($scope.cargado);
           } else {
             window.alert('Directions request failed due to ' + status);
           }

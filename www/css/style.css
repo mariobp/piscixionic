@@ -96,7 +96,7 @@ map {
   height: 50%;
 }
 
-#directions-panel{
+.over{
   overflow: scroll;
 }
 
