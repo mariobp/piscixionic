@@ -63,6 +63,10 @@
                         {
                             "xml": "<feature name=\"Geolocation\"><param name=\"android-package\" value=\"org.apache.cordova.geolocation.Geolocation\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"BarcodeScanner\"><param name=\"android-package\" value=\"com.phonegap.plugins.barcodescanner.BarcodeScanner\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -155,6 +159,18 @@
                         {
                             "xml": "<activity android:exported=\"false\" android:launchMode=\"singleInstance\" android:name=\"de.appplant.cordova.plugin.notification.ClickActivity\" android:theme=\"@android:style/Theme.NoDisplay\" />",
                             "count": 1
+                        },
+                        {
+                            "xml": "<activity android:clearTaskOnLaunch=\"true\" android:configChanges=\"orientation|keyboardHidden|screenSize\" android:exported=\"false\" android:name=\"com.google.zxing.client.android.CaptureActivity\" android:theme=\"@android:style/Theme.NoTitleBar.Fullscreen\" android:windowSoftInputMode=\"stateAlwaysHidden\"><intent-filter><action android:name=\"com.google.zxing.client.android.SCAN\" /><category android:name=\"android.intent.category.DEFAULT\" /></intent-filter></activity>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<activity android:label=\"Share\" android:name=\"com.google.zxing.client.android.encode.EncodeActivity\"><intent-filter><action android:name=\"com.phonegap.plugins.barcodescanner.ENCODE\" /><category android:name=\"android.intent.category.DEFAULT\" /></intent-filter></activity>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<activity android:label=\"Share\" android:name=\"com.google.zxing.client.android.HelpActivity\"><intent-filter><action android:name=\"android.intent.action.VIEW\" /><category android:name=\"android.intent.category.DEFAULT\" /></intent-filter></activity>",
+                            "count": 1
                         }
                     ],
                     "/manifest": [
@@ -204,6 +220,18 @@
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.RECEIVE_BOOT_COMPLETED\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.CAMERA\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.FLASHLIGHT\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-feature android:name=\"android.hardware.camera\" android:required=\"false\" />",
                             "count": 1
                         }
                     ]
@@ -285,6 +313,9 @@
             "PACKAGE_NAME": "com.ionicframework.piscix612347"
         },
         "cordova.plugins.diagnostic": {
+            "PACKAGE_NAME": "com.ionicframework.piscix612347"
+        },
+        "phonegap-plugin-barcodescanner": {
             "PACKAGE_NAME": "com.ionicframework.piscix612347"
         }
     },
@@ -448,6 +479,13 @@
             "clobbers": [
                 "cordova.plugins.diagnostic"
             ]
+        },
+        {
+            "file": "plugins/phonegap-plugin-barcodescanner/www/barcodescanner.js",
+            "id": "phonegap-plugin-barcodescanner.BarcodeScanner",
+            "clobbers": [
+                "cordova.plugins.barcodeScanner"
+            ]
         }
     ],
     "plugin_metadata": {
@@ -468,6 +506,7 @@
         "de.appplant.cordova.plugin.local-notification": "0.8.4",
         "cordova-plugin-compat": "1.0.0",
         "cordova-plugin-geolocation": "2.2.0",
-        "cordova.plugins.diagnostic": "2.3.17"
+        "cordova.plugins.diagnostic": "2.3.17",
+        "phonegap-plugin-barcodescanner": "5.0.0"
     }
 }

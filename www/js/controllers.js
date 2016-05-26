@@ -1202,4 +1202,27 @@ angular.module('starter.controllers', [])
       }
     });
   };
+})
+
+.controller('Lector', function($scope, $cordovaBarcodeScanner,  $cordovaToast){
+  console.log("Lector");
+  $scope.scanearCodigo = function() {
+    $cordovaBarcodeScanner
+     .scan()
+     .then(function(barcodeData) {
+       // Success! Barcode data is here
+        console.log(barcodeData);
+        $cordovaToast
+        .show('Operación exitosa', 'short', 'center')
+        .then(function(success) {
+            $location.path('/app/info/1');
+        }, function(error) {
+            console.log(error);
+        });
+     }, function(error) {
+       // An error occurred
+        console.log(error);
+        alert("Ah ocurrido un error" + error);
+     });
+  };
 });

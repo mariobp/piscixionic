@@ -55,6 +55,9 @@
         },
         "cordova.plugins.diagnostic": {
             "PACKAGE_NAME": "com.ionicframework.piscix612347"
+        },
+        "phonegap-plugin-barcodescanner": {
+            "PACKAGE_NAME": "com.ionicframework.piscix612347"
         }
     },
     "dependent_plugins": {
