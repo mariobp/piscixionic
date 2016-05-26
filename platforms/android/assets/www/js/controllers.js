@@ -164,6 +164,11 @@ angular.module('starter.controllers', [])
                         }, function(error) {
                           console.log(error);
                         });
+                }else if (response.status === 400) {
+                    $ionicPopup.alert({
+                        title: "Cliente error",
+                        content: "No se exise un cliente con ese codigo.",
+                    });
                 }else if (response.status === 0) {
                     $ionicPopup.alert({
                         title: "Error",
@@ -1204,7 +1209,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('Lector', function($scope, $cordovaBarcodeScanner,  $cordovaToast){
+.controller('Lector', function($scope, $cordovaBarcodeScanner,  $cordovaToast, $location){
   console.log("Lector");
   $scope.scanearCodigo = function() {
     $cordovaBarcodeScanner
