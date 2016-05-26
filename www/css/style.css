@@ -215,3 +215,6 @@ textarea:focus{
    button:focus{
      background-color: background-color: #455A64 !important;
    }
+   .centrar{
+     text-align: center !important;
+   }

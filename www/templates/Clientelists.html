@@ -1,10 +1,15 @@
- <ion-view cache-view="false" view-title="Clientes">
+ <ion-view  view-title="Clientes">
   <ion-header-bar class="bar-subheader headerbar item-input-inset row">
       <div class="input-field col s12">
         <i class="ion-search prefix"></i>
         <input type="text" name="buscar" placeholder="Buscar" ng-model="search" >
       </div>
   </ion-header-bar>
+  <div class="fixed-action-btn click-to-toggle" style="bottom: 45px; right: 24px;">
+    <a class="btn-floating btn-large light-blue waves-effect" ng-click="scanearCodigo()">
+      <i class="material-icons">crop_free</i>
+    </a>
+  </div>
   <ion-content overflow-scroll=”true”>
       <ion-refresher
        pulling-text ="Refrescar"
@@ -18,7 +23,10 @@
             <img src="{{server}}/media/{{cliente.imagen}}" ng-if="cliente.imagen !=''">
             <img src="img/mario.png" ng-if="cliente.imagen ==''"/>
             <h2>{{cliente.first_name}} {{cliente.last_name}}</h2>
-            <p><b>Telefono: </b>{{cliente.telefono}}</p>
+            <p>
+              <b>Telefono: </b>{{cliente.telefono}}<br>
+              <b>Dirección: </b>{{cliente.direccion}}
+            </p>
         </ion-item>
       </ion-list>
       <ion-infinite-scroll ng-if="!noMoreItemsAvailable" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll>

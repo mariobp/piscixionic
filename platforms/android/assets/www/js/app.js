@@ -255,14 +255,6 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
 
     .state('app.login', {
         url: '/login',
-    /*    nativeTransitionsAndroid: {
-            "type": "fade",
-            "direction": "up"
-        },
-        nativeTransitionsBackAndroid: {
-            "type": "fade",
-            "direction": "down"
-        },*/
         views: {
             'menuContent': {
                 templateUrl: 'templates/login2.html',
@@ -273,10 +265,6 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
 
     .state('app.reporte', {
         url: '/reporte/:clienteId',
-        /*nativeTransitionsAndroid: {
-            "type": "fade",
-            "duration": 500
-        },*/
         views: {
             'menuContent': {
                 templateUrl: 'templates/reporte.html',
@@ -390,15 +378,6 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
                 'menuContent': {
                     templateUrl: 'templates/maparuta.html',
                     controller: 'MapaRuta'
-                }
-            }
-        })
-        .state('app.lector', {
-            url: '/lector',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/lector.html',
-                    controller: 'Lector'
                 }
             }
         });

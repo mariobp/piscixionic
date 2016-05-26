@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($http, $scope, $timeout, $ionicLoading, $ionicPopup, $location) {
+.controller('AppCtrl', function($http, $scope, $timeout, $ionicLoading, $cordovaDialogs, $location) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -24,10 +24,7 @@ angular.module('starter.controllers', [])
     };
 
     $scope.showAlert = function(titulo, body) {
-        var alertPopup = $ionicPopup.alert({
-            title: titulo,
-            template: body,
-        });
+        $cordovaDialogs.alert(body, titulo);
     };
 
     //Loading...
@@ -44,13 +41,11 @@ angular.module('starter.controllers', [])
 })
 
 .controller('Login', function($scope, $http, $ionicHistory, $cordovaToast) {
+        console.log("Entro a el login");
         $ionicHistory.nextViewOptions({
             //  disableAnimate: true,
             disableBack: true
         });
-        console.log("Log");
-        console.log($ionicHistory.backView());
-        console.log($ionicHistory.viewHistory());
         $scope.loginReady = true;
         $scope.doLogin = function() {
             $scope.loginReady = false;
@@ -62,7 +57,6 @@ angular.module('starter.controllers', [])
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
             }).then(function doneCallbacks(response) {
-              console.log("Esta logeado");
                 $scope.loginData = {};
                 $scope.loginReady = true;
                 $ionicHistory.goBack(-1);
@@ -89,7 +83,7 @@ angular.module('starter.controllers', [])
 
     })
     //Controlador de lista de clientes
-    .controller('Clientelists', function($http, $scope, $timeout, $ionicPopup, $location, $cordovaToast, $ionicHistory) {
+    .controller('Clientelists', function($http, $scope, $timeout, $cordovaDialogs, $location, $cordovaToast, $ionicHistory, $cordovaBarcodeScanner) {
         /*$ionicHistory.nextViewOptions({
             //  disableAnimate: true,
             disableBack: true
@@ -123,14 +117,13 @@ angular.module('starter.controllers', [])
                       });
 
                     } else if (response.status === 0) {
-                        $ionicPopup.alert({
-                            title: "Error",
-                            content: "No se puede acceder a este servicio en este momento.",
-                        });
+                        $cordovaDialogs.alert('No se puede acceder a este servicio en este momento.', 'Error');
                     } else {
                       $timeout(function(){
+                        $cordovaToast
+                        .show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center');
                         $scope.loadMore();
-                      },30000);
+                      },10000);
                     }
                 });
         };
@@ -141,42 +134,66 @@ angular.module('starter.controllers', [])
             $scope.clientelists = [];
             $scope.$broadcast('scroll.refreshComplete');
         };
+
+        $scope.scanearCodigo = function() {
+          $cordovaBarcodeScanner
+           .scan()
+           .then(function(barcodeData) {
+             // Success! Barcode data is here
+              if(barcodeData.text !== ""){
+                $cordovaToast
+                .show('Operación exitosa', 'short', 'center')
+                .then(function(success) {
+                    $location.path('/app/info/1');
+                }, function(error) {
+                    console.log(error);
+                });
+              }
+           }, function(error) {
+             // An error occurred
+              alert("Ah ocurrido un error" + error);
+           });
+        };
     })
 
 //Controlador de informacion de cliente
-.controller('InfoC', function($http, $scope, $stateParams, $ionicPopup, $location, $timeout, $cordovaToast) {
-    var id = $stateParams.clienteId;
-    $scope.dataReady = false;
-    $('.tooltipped').tooltip({
-        delay: 50
-    });
-    $timeout(function() {
-        $http.get($scope.server + '/usuarios/single/cliente/' + id + '/')
-            .then(function successCallback(response) {
-                $scope.info = response.data;
-                $scope.dataReady = true;
-            }, function errorCallback(response) {
-                if (response.status === 403) {
-                    $cordovaToast
-                        .show(response.data.error, 'short', 'center')
-                        .then(function(success) {
-                          $location.path('/app/login');
-                        }, function(error) {
-                          console.log(error);
-                        });
-                }else if (response.status === 400) {
-                    $ionicPopup.alert({
-                        title: "Cliente error",
-                        content: "No se exise un cliente con ese codigo.",
-                    });
-                }else if (response.status === 0) {
-                    $ionicPopup.alert({
-                        title: "Error",
-                        content: "No se puede acceder a este servicio en este momento.",
-                    });
-                }
-            });
-    }, 500);
+.controller('InfoC', function($http, $scope, $stateParams, $location, $timeout, $cordovaToast, $ionicHistory, $cordovaDialogs) {
+var id = $stateParams.clienteId;
+$scope.dataReady = false;
+$('.tooltipped').tooltip({
+    delay: 50
+});
+$scope.single = function () {
+  $http.get($scope.server + '/usuarios/single/cliente/' + id + '/')
+      .then(function successCallback(response) {
+          $scope.info = response.data;
+          $scope.dataReady = true;
+      }, function errorCallback(response) {
+          if (response.status === 403) {
+              $cordovaToast
+                  .show(response.data.error, 'short', 'center')
+                  .then(function(success) {
+                    $location.path('/app/login');
+                  }, function(error) {
+                    console.log(error);
+                  });
+          }else if (response.status === 400) {
+              $cordovaDialogs.alert('No se exise un cliente con ese codigo.', 'Error', 'Regresar')
+              .then(function(res){
+                  $ionicHistory.goBack(-1);
+              });
+          }else if (response.status === 0) {
+              $cordovaDialogs.alert('No se puede acceder a este servicio en este momento.', 'Error', 'Ok');
+          }else{
+            $timeout(function(){
+              $cordovaToast
+              .show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center');
+              $scope.single();
+            },10000);
+          }
+      });
+    };
+    $scope.single();
 })
 
 .factory('Camera', function($q) {
@@ -218,7 +235,7 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('Reporte', function($http, $scope, $stateParams, $ionicPopup, Camera, $cordovaToast, Galeria, $cordovaImagePicker, $location) {
+.controller('Reporte', function($http, $scope, $stateParams, $cordovaDialogs, Camera, $cordovaToast, Galeria, $cordovaImagePicker, $location) {
     $scope.data = {};
     $scope.data.imagenes = [];
     $scope.total = 0;
@@ -232,15 +249,10 @@ angular.module('starter.controllers', [])
         .then(function doneCallbacks(response) {
             $scope.tipolist = response.data.object_list;
         }, function failCallbacks(response) {
-            console.log(response);
             if (response.status === 0) {
-                $ionicPopup.alert({
-                    title: "Error",
-                    content: "No se puede acceder a este servicio en este momento.",
-                });
+                $cordovaDialogs.alert('No se puede acceder a este servicio en este momento.', 'Error');
             }
             if (response.status === 404) {
-                console.log("error 404");
             } else {
                 var data = response.data;
                 //$scope.showAlert("Error", data.error[0]);
@@ -382,25 +394,20 @@ angular.module('starter.controllers', [])
             }
             enviar(dataSend); //Se formatea la informacion y se envia.
         } else {
-            $ionicPopup.confirm({
-                title: "Fotos",
-                content: "Esta seguro que quiere enviar sin fotos?",
-                cancelText: 'Tomar Foto',
-                cancelType: 'button-calm',
-                okText: 'Si, Enviar!'
-            }).then(function(result) {
-                if (result) {
-                    enviar(dataSend); //Se envia sin fotos
-                } else {
-                    $scope.takePicture();
-                }
-            });
+          $cordovaDialogs.confirm('Esta seguro que quiere enviar sin fotos?', 'Fotos', ['Si, Enviar!','Tomar Foto'])
+          .then(function(result) {
+              if (result === 1) {
+                  enviar(dataSend); //Se envia sin fotos
+              }else if(result === 2){
+                  $scope.takePicture();
+              }
+          });
         }
 
     };
 })
 
-.controller('Mantenimiento', function($http, $scope, $stateParams, Camera, Galeria, $cordovaImagePicker, $cordovaToast, $location) {
+.controller('Mantenimiento', function($http, $scope, $stateParams, Camera, Galeria, $cordovaImagePicker, $cordovaToast, $location, $cordovaDialogs) {
     $scope.data = {};
     $scope.data.imagenes = [];
     $scope.total = 0;
@@ -541,25 +548,20 @@ angular.module('starter.controllers', [])
             }
             enviar(dataSend); //Se formatea la informacion y se envia.
         } else {
-            $ionicPopup.confirm({
-                title: "Fotos",
-                content: "Esta seguro que quiere enviar sin fotos?",
-                cancelText: 'Tomar Foto',
-                cancelType: 'button-calm',
-                okText: 'Si, Enviar!'
-            }).then(function(result) {
-                if (result) {
-                    enviar(dataSend); //Se envia sin fotos
-                } else {
-                    $scope.takePicture();
-                }
-            });
+          $cordovaDialogs.confirm('Esta seguro que quiere enviar sin fotos?', 'Fotos', ['Si, Enviar!','Tomar Foto'])
+          .then(function(result) {
+              if (result === 1) {
+                  enviar(dataSend); //Se envia sin fotos
+              }else if(result === 2){
+                  $scope.takePicture();
+              }
+          });
         }
 
     };
 })
 
-.controller('Reparacion', function($http, $scope, $stateParams, Camera, Galeria, $cordovaImagePicker, $location, $cordovaToast) {
+.controller('Reparacion', function($http, $scope, $stateParams, Camera, Galeria, $cordovaImagePicker, $location, $cordovaToast, $cordovaDialogs) {
     $scope.data = {};
     $scope.data.imagenes = [];
     $scope.total = 0;
@@ -694,25 +696,20 @@ angular.module('starter.controllers', [])
             }
             enviar(dataSend); //Se formatea la informacion y se envia.
         } else {
-            $ionicPopup.confirm({
-                title: "Fotos",
-                content: "Esta seguro que quiere enviar sin fotos?",
-                cancelText: 'Tomar Foto',
-                cancelType: 'button-calm',
-                okText: 'Si, Enviar!'
-            }).then(function(result) {
-                if (result) {
-                    enviar(dataSend); //Se envia sin fotos
-                } else {
-                    $scope.takePicture();
-                }
-            });
+          $cordovaDialogs.confirm('Esta seguro que quiere enviar sin fotos?', 'Fotos', ['Si, Enviar!','Tomar Foto'])
+          .then(function(result) {
+              if (result === 1) {
+                  enviar(dataSend); //Se envia sin fotos
+              }else if(result === 2){
+                  $scope.takePicture();
+              }
+          });
         }
 
     };
 })
 
-.controller('MapCtrl', function($scope, $ionicLoading, $stateParams, $cordovaGeolocation, $ionicPopup, $timeout, $http, $cordovaToast, $location) {
+.controller('MapCtrl', function($scope, $ionicLoading, $stateParams, $cordovaGeolocation, $cordovaDialogs, $timeout, $http, $cordovaToast, $location) {
     var latitud = $stateParams.latitud,
         longitud = $stateParams.longitud,
         id = $stateParams.casaId,
@@ -723,15 +720,10 @@ angular.module('starter.controllers', [])
         if (window.cordova) {
           cordova.plugins.diagnostic.isLocationEnabled(function(enabled) {
               if(!enabled){
-                $ionicPopup.confirm({
-                    title: "GPS",
-                    content: "Su gps esta desactivado.",
-                    cancelText: 'Cancelar',
-                    cancelType: 'button-assertive',
-                    okText: 'Activar'
-                }).then(function(result) {
-                    if (result) {
-                       cordova.plugins.diagnostic.switchToLocationSettings();
+                $cordovaDialogs.confirm('Su gps esta desactivado.', 'Gps', ['Activar','Cancelar'])
+                .then(function(result) {
+                    if (result === 1) {
+                      cordova.plugins.diagnostic.switchToLocationSettings();
                     }
                 });
               }
@@ -744,11 +736,8 @@ angular.module('starter.controllers', [])
 
     function validar(metodo) {
         if (longitud === "" && latitud === "") {
-            var alertPopup = $ionicPopup.alert({
-                title: 'GPS',
-                template: 'No hay ningun gps asignado, precionar la opción <i class="icon ion-location icon"></i> para asignar GPS.'
-            });
-            alertPopup.then(function(res) {
+            $cordovaDialogs.alert('No hay ningun gps asignado, precionar la opción <i class="icon ion-location icon"></i> para asignar GPS.', 'Gps')
+            .then(function(res) {
               $scope.validateGps();
             });
         } else {
@@ -778,7 +767,6 @@ angular.module('starter.controllers', [])
         if (marker !== null) {
             marker.setMap(null);
         }
-        console.log(myLatLng);
 
         marker = new google.maps.Marker({
             map: $scope.map,
@@ -800,7 +788,7 @@ angular.module('starter.controllers', [])
         if (!$scope.map) {
             return;
         }
-
+        $scope.validateGps();
         $scope.loading = $ionicLoading.show({
             template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Obteniendo la ubicación actual...',
             noBackdrop: true
@@ -843,10 +831,10 @@ angular.module('starter.controllers', [])
                 },
             }).then(function doneCallbacks(response) {
                 var data = {};
-                $scope.enviando.hide();
+                $ionicLoading.hide();
                 $cordovaToast.show("Guardado exitoso!", 'short', 'center');
             }, function failCallbacks(response) {
-                $scope.enviando.hide();
+                $ionicLoading.hide();
                 if (response.status === 403) {
                     $cordovaToast
                         .show(response.data.error, 'short', 'center')
@@ -898,7 +886,6 @@ angular.module('starter.controllers', [])
                 $scope.ready = true;
             }, function errorCallback(response) {
                 if (response.status == 403) {
-                  console.log("Entro a 403");
                     $cordovaToast
                         .show(response.data.error, 'short', 'center')
                         .then(function(success) {
@@ -907,15 +894,13 @@ angular.module('starter.controllers', [])
                             console.log(error);
                         });
                 }else if (response.status === 0) {
-                    $ionicPopup.alert({
-                        title: "Error",
-                        content: "No se puede acceder a este servicio en este momento.",
-                    });
+                    $cordovaDialogs.confirm('No se puede acceder a este servicio en este momento.', 'Error');
                 }else {
-                  console.log("Entro");
                   $timeout(function(){
+                    $cordovaToast
+                    .show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center');
                       $scope.loadMore();
-                  }, 30000);
+                  }, 10000);
                 }
             });
     };
@@ -929,7 +914,7 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('PiscinaAsignacion', function($scope, $stateParams, $http, $cordovaToast, $ionicLoading, $location, $ionicPopup, $timeout) {
+.controller('PiscinaAsignacion', function($scope, $stateParams, $http, $cordovaToast, $ionicLoading, $location, $cordovaDialogs, $timeout) {
     var id = $stateParams.piscineroId;
     $scope.piscinas = [];
     $scope.checkes = [];
@@ -964,10 +949,7 @@ angular.module('starter.controllers', [])
                             console.log(error);
                         });
                 }else if (response.status === 0) {
-                    $ionicPopup.alert({
-                        title: "Error",
-                        content: "No se puede acceder a este servicio en este momento.",
-                    });
+                    $cordovaDialogs.alert("No se puede acceder a este servicio en este momento.", "Error");
                 } else {
                   $scope.loadMore();
                 }
@@ -1039,7 +1021,7 @@ angular.module('starter.controllers', [])
         });
     };
 })
-.controller('Ruta', function($scope, $http, $stateParams, $cordovaToast, $ionicPopup, $timeout, $ionicLoading){
+.controller('Ruta', function($scope, $http, $stateParams, $cordovaToast, $cordovaDialogs, $timeout, $ionicLoading){
   $scope.piscinero = $stateParams.piscineroId;
   $scope.noMoreItemsAvailable = false;
   $scope.items = [];
@@ -1069,14 +1051,11 @@ angular.module('starter.controllers', [])
                   console.log(error);
               });
       }else if (response.status === 0) {
-          $ionicPopup.alert({
-              title: "Error",
-              content: "No se puede acceder a este servicio en este momento.",
-          });
+          $cordovaDialogs('No se puede acceder a este servicio en este momento.', 'Error');
       } else {
         $timeout(function () {
           $scope.loadMore();
-        }, 30000);
+        }, 10000);
 
       }
     });
@@ -1088,13 +1067,9 @@ angular.module('starter.controllers', [])
     $scope.items.splice(toIndex, 0, item);
     var data = {};
     if (move>0) {
-      console.log("Bajo");
       data.orden = $scope.items[toIndex-1].orden;
-      console.log($scope.items[toIndex-1]);
     }else {
-      console.log("Sube");
       data.orden = $scope.items[toIndex+1].orden;
-      console.log($scope.items[toIndex+1]);
     }
     if (toIndex !== fromIndex) {
         $scope.loading = $ionicLoading.show({
@@ -1123,7 +1098,6 @@ angular.module('starter.controllers', [])
               });
           }
           if (response.status == 400) {
-            alert("Error 400");
             console.log(response);
           }
       });
@@ -1140,7 +1114,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('MapaRuta', function($scope, $http, $stateParams,  $cordovaToast, $ionicPopup,  $ionicLoading, $timeout){
+.controller('MapaRuta', function($scope, $http, $stateParams,  $cordovaToast, $cordovaDialogs,  $ionicLoading, $timeout){
   $scope.cargado = false;
   $scope.items = [];
   $scope.mapCreated = function(map) {
@@ -1159,10 +1133,7 @@ angular.module('starter.controllers', [])
       $scope.items = data;
       $scope.cargado = true;
       if (data.length===0) {
-        $ionicPopup.alert({
-            title: "Ruta",
-            content: "No tiene ninguna ruta asignada.",
-        });
+        $cordovaDialogs.alert('No tiene ninguna ruta asignada.', 'Ruta');
       }else if (data.length>1) {
         for (var i = 0; i < data.length; i++) {
           if (i>0 && i<data.length - 1) {
@@ -1182,7 +1153,6 @@ angular.module('starter.controllers', [])
           if (status === google.maps.DirectionsStatus.OK) {
               directionsDisplay.setDirections(response);
             //var route = response.routes[0];
-            //console.log("End");
           } else {
             alert('Directions request failed due to ' + status);
           }
@@ -1191,7 +1161,6 @@ angular.module('starter.controllers', [])
     },
     function errorCallback(response){
       if (response.status == 403) {
-        console.log("Entro a 403");
           $cordovaToast
               .show(response.data.error, 'short', 'center')
               .then(function(success) {
@@ -1200,34 +1169,8 @@ angular.module('starter.controllers', [])
                   console.log(error);
               });
       }else if (response.status === 0) {
-          $ionicPopup.alert({
-              title: "Error",
-              content: "No se puede acceder a este servicio en este momento.",
-          });
+        $cordovaDialogs.alert('No se puede acceder a este servicio en este momento.', 'Error');
       }
     });
-  };
-})
-
-.controller('Lector', function($scope, $cordovaBarcodeScanner,  $cordovaToast, $location){
-  console.log("Lector");
-  $scope.scanearCodigo = function() {
-    $cordovaBarcodeScanner
-     .scan()
-     .then(function(barcodeData) {
-       // Success! Barcode data is here
-        console.log(barcodeData);
-        $cordovaToast
-        .show('Operación exitosa', 'short', 'center')
-        .then(function(success) {
-            $location.path('/app/info/1');
-        }, function(error) {
-            console.log(error);
-        });
-     }, function(error) {
-       // An error occurred
-        console.log(error);
-        alert("Ah ocurrido un error" + error);
-     });
   };
 });
