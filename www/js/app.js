@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-modal-select', 'starter.controllers', 'ionic-native-transitions', 'ngMessages', 'starter.directives'])
 
-.run(function($ionicPlatform, $ionicPopup, $http, $location, $window, $cordovaStatusbar, $cordovaToast, $cordovaPush, $rootScope, $state, $cordovaLocalNotification) {
+.run(function($ionicPlatform, $ionicPopup, $http, $window, $cordovaStatusbar, $cordovaToast, $cordovaPush, $rootScope, $state, $cordovaLocalNotification) {
     //Project Number: 725278590059
     //API Key: AIzaSyBeuBsMahCuzv7P09GZ69wWbtqDR_4nqGA
 
@@ -154,14 +154,14 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
             $http.get(server + "/usuarios/is/login/")
                 .then(function doneCallbacks(response) {
                     if ($state.current.name == "app.login") {
-                        $location.path('/app/clientelists');
+                        $state.go('app.clientelists');
                     }
                 }, function failCallbacks(response) {
                     $cordovaToast
                     .show(response.data.error, 'short', 'center')
                     .then(function(success) {
                         if($state.current.name != 'app.login'){
-                          $location.path('/app/login');
+                          $state.go('app.login');
                         }
                     }, function(error) {
                         console.log(error);
@@ -255,6 +255,14 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
 
     .state('app.login', {
         url: '/login',
+        nativeTransitionsAndroid:{
+          "type": "slide",
+          "direction" : "up"
+        },
+        nativeTransitionsBackAndroid: {
+            "type": "slider",
+            "direction": "down"
+        },
         views: {
             'menuContent': {
                 templateUrl: 'templates/login2.html',
@@ -275,10 +283,6 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
 
     .state('app.mantenimiento', {
         url: '/mantenimiento/:clienteId',
-        /*nativeTransitionsAndroid: {
-            "type": "fade",
-            "duration": 500
-        },*/
         views: {
             'menuContent': {
                 templateUrl: 'templates/mantenimiento.html',
@@ -289,10 +293,6 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
 
     .state('app.reparacion', {
         url: '/reparacion/:clienteId',
-        /*nativeTransitionsAndroid: {
-            "type": "fade",
-            "duration": 500
-        },*/
         views: {
             'menuContent': {
                 templateUrl: 'templates/reparacion.html',
@@ -303,10 +303,6 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
 
     .state('app.clientelists', {
         url: '/clientelists',
-        /*  nativeTransitionsBackAndroid: {
-              "type": "slider",
-              "direction": "right"
-          },*/
         views: {
             'menuContent': {
                 templateUrl: 'templates/Clientelists.html',
@@ -317,10 +313,6 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
 
     .state('app.info', {
             url: '/info/:clienteId',
-            /*nativeTransitionsBackAndroid: {
-                "type": "fade",
-                "duration": 500
-            },*/
             views: {
                 'menuContent': {
                     templateUrl: 'templates/InfoC.html',

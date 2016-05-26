@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($http, $scope, $timeout, $ionicLoading, $cordovaDialogs, $location) {
+.controller('AppCtrl', function($http, $scope, $timeout, $ionicLoading, $cordovaDialogs, $state) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -16,7 +16,7 @@ angular.module('starter.controllers', [])
     // Create the login modal that we will use later
     $scope.logout = function() {
         $http.get($scope.server + "/usuarios/logout/").success(function() {
-            $location.path('/app/login/0');
+            $state.go('app.login');
         }).error(function(data) {
             /* Act on the event */
             console.log(data);
@@ -83,7 +83,7 @@ angular.module('starter.controllers', [])
 
     })
     //Controlador de lista de clientes
-    .controller('Clientelists', function($http, $scope, $timeout, $cordovaDialogs, $location, $cordovaToast, $ionicHistory, $cordovaBarcodeScanner) {
+    .controller('Clientelists', function($http, $scope, $timeout, $cordovaDialogs, $state, $cordovaToast, $ionicHistory, $cordovaBarcodeScanner) {
         /*$ionicHistory.nextViewOptions({
             //  disableAnimate: true,
             disableBack: true
@@ -111,9 +111,9 @@ angular.module('starter.controllers', [])
                       $cordovaToast
                       .show(response.data.error, 'short', 'center')
                       .then(function(success) {
-                          $location.path('/app/login');
+                          $state.go('app.login');
                       }, function(error) {
-                          $location.path('/app/login');
+                          $state.go('app.login');
                       });
 
                     } else if (response.status === 0) {
@@ -144,7 +144,7 @@ angular.module('starter.controllers', [])
                 $cordovaToast
                 .show('Operación exitosa', 'short', 'center')
                 .then(function(success) {
-                    $location.path('/app/info/1');
+                    $location.path('/app/info/'+ barcodeData.text);
                 }, function(error) {
                     console.log(error);
                 });
