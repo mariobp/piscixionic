@@ -11,8 +11,8 @@ angular.module('starter.controllers', [])
     // Form data for the login modal
     $scope.loginData = {};
     //$scope.server = "http://104.236.33.228:8040";
-    //$scope.server = "http://192.168.1.51:8000";
-    $scope.server = "http://192.168.0.106:8000";
+    $scope.server = "http://192.168.1.51:8000";
+    //$scope.server = "http://192.168.0.106:8000";
     // Create the login modal that we will use later
     $scope.logout = function() {
         $http.get($scope.server + "/usuarios/logout/").success(function() {
@@ -83,11 +83,7 @@ angular.module('starter.controllers', [])
 
     })
     //Controlador de lista de clientes
-    .controller('Clientelists', function($http, $scope, $timeout, $cordovaDialogs, $state, $cordovaToast, $ionicHistory, $cordovaBarcodeScanner) {
-        /*$ionicHistory.nextViewOptions({
-            //  disableAnimate: true,
-            disableBack: true
-        });*/
+    .controller('Clientelists', function($http, $scope, $timeout, $cordovaDialogs, $state, $cordovaToast, $ionicHistory, $cordovaBarcodeScanner, $location) {
         $scope.search = "";
         $scope.clientelists = [];
         $scope.noMoreItemsAvailable = false;
@@ -108,6 +104,7 @@ angular.module('starter.controllers', [])
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                 }, function errorCallback(response) {
                     if (response.status === 403) {
+                      $location.path('/app/login');
                       $cordovaToast
                       .show(response.data.error, 'short', 'center')
                       .then(function(success) {

@@ -148,8 +148,8 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
     function onOnline() {
         // Handle the online event
         //var server = "http://104.236.33.228:8040";
-        //var server = "http://192.168.1.51:8000";
-        var server = "http://192.168.0.106:8000";
+        var server = "http://192.168.1.51:8000";
+        //var server = "http://192.168.0.106:8000";
         var isLogin = function() {
             $http.get(server + "/usuarios/is/login/")
                 .then(function doneCallbacks(response) {
@@ -255,6 +255,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
 
     .state('app.login', {
         url: '/login',
+        cache: false,
         nativeTransitionsAndroid:{
           "type": "slide",
           "direction" : "up"
@@ -303,6 +304,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
 
     .state('app.clientelists', {
         url: '/clientelists',
+        cache: false,
         views: {
             'menuContent': {
                 templateUrl: 'templates/Clientelists.html',
