@@ -255,7 +255,6 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
 
     .state('app.login', {
         url: '/login',
-        cache: false,
         nativeTransitionsAndroid:{
           "type": "slide",
           "direction" : "up"
@@ -304,7 +303,6 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
 
     .state('app.clientelists', {
         url: '/clientelists',
-        cache: false,
         views: {
             'menuContent': {
                 templateUrl: 'templates/Clientelists.html',

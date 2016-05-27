@@ -41,11 +41,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('Login', function($scope, $http, $ionicHistory, $cordovaToast) {
-        console.log("Entro a el login");
-        $ionicHistory.nextViewOptions({
-            //  disableAnimate: true,
-            disableBack: true
-        });
+        console.log($ionicHistory.backView());
         $scope.loginReady = true;
         $scope.doLogin = function() {
             $scope.loginReady = false;
@@ -83,7 +79,11 @@ angular.module('starter.controllers', [])
 
     })
     //Controlador de lista de clientes
-    .controller('Clientelists', function($http, $scope, $timeout, $cordovaDialogs, $state, $cordovaToast, $ionicHistory, $cordovaBarcodeScanner, $location) {
+    .controller('Clientelists', function($http, $scope, $timeout, $cordovaDialogs, $state, $cordovaToast, $ionicHistory, $cordovaBarcodeScanner) {
+        $ionicHistory.nextViewOptions({
+            //  disableAnimate: true,
+          //  disableBack: true
+        });
         $scope.search = "";
         $scope.clientelists = [];
         $scope.noMoreItemsAvailable = false;
@@ -104,7 +104,6 @@ angular.module('starter.controllers', [])
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                 }, function errorCallback(response) {
                     if (response.status === 403) {
-                      $location.path('/app/login');
                       $cordovaToast
                       .show(response.data.error, 'short', 'center')
                       .then(function(success) {
