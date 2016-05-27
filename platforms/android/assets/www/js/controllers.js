@@ -40,7 +40,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('Login', function($scope, $http, $ionicHistory, $cordovaToast) {
+.controller('Login', function($scope, $http, $ionicHistory, $cordovaToast, $state) {
         console.log($ionicHistory.backView());
         $scope.loginReady = true;
         $scope.doLogin = function() {
@@ -55,7 +55,11 @@ angular.module('starter.controllers', [])
             }).then(function doneCallbacks(response) {
                 $scope.loginData = {};
                 $scope.loginReady = true;
-                $ionicHistory.goBack(-1);
+                if ($ionicHistory.backView()===null) {
+                  $state.go('app.clientelists');
+                }else {
+                  $ionicHistory.goBack(-1);
+                }
             }, function failCallbacks(response) {
                 $scope.loginData = {};
                 $scope.loginReady = true;
