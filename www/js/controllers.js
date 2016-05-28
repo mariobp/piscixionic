@@ -11,8 +11,8 @@ angular.module('starter.controllers', [])
     // Form data for the login modal
     $scope.loginData = {};
     //$scope.server = "http://104.236.33.228:8040";
-    $scope.server = "http://192.168.1.51:8000";
-    //$scope.server = "http://192.168.0.106:8000";
+    //$scope.server = "http://192.168.1.51:8000";
+    $scope.server = "http://192.168.0.106:8000";
     // Create the login modal that we will use later
     $scope.logout = function() {
         $http.get($scope.server + "/usuarios/logout/").success(function() {
@@ -40,8 +40,8 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('Login', function($scope, $http, $ionicHistory, $cordovaToast, $state) {
-        console.log($ionicHistory.backView());
+.controller('Login', function($scope, $http, $ionicHistory, $cordovaToast, $state, $ionicSideMenuDelegate) {
+        $ionicSideMenuDelegate.canDragContent(false);
         $scope.loginReady = true;
         $scope.doLogin = function() {
             $scope.loginReady = false;

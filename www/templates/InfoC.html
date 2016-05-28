@@ -1,4 +1,4 @@
-<ion-view view-title="Info">
+<ion-view cache-view="false" view-title="Info">
   <ion-header-bar class="bar bar-subheader light-blue " ng-show="dataReady">
      <h2 class="title centrar white-text">{{info.cliente.first_name}} {{info.cliente.last_name}}</h2>
   </ion-header-bar>
@@ -9,12 +9,12 @@
     </div>
     <div class="fixed-action-btn click-to-toggle" style="bottom: 45px; right: 24px;">
       <a class="btn-floating btn-large light-blue waves-effect">
-        <i class="material-icons">apps</i>
+        <i class="micon">apps</i>
       </a>
       <ul>
-        <li><a href="#/app/reporte/{{info.id}}" class="btn-floating red"><i class="material-icons">report</i></a><span class="action-title">Reporte</span></li>
-        <li><a href="#/app/reparacion/{{info.id}}" class="btn-floating light-blue"><i class="material-icons">build</i></a><span class="action-title">Reparación</span></li>
-        <li><a href="#/app/mantenimiento/{{info.id}}" class="btn-floating green"><i class="material-icons">done_all</i></a><span class="action-title">Mantenimiento</span></li>
+        <li><a href="#/app/reporte/{{info.id}}" class="btn-floating red"><i class="micon">report</i></a><span class="action-title">Reporte</span></li>
+        <li><a href="#/app/reparacion/{{info.id}}" class="btn-floating light-blue"><i class="micon">build</i></a><span class="action-title">Reparación</span></li>
+        <li><a href="#/app/mantenimiento/{{info.id}}" class="btn-floating green"><i class="micon">done_all</i></a><span class="action-title">Mantenimiento</span></li>
       </ul>
     </div>
     <div class="row" ng-if="dataReady">
