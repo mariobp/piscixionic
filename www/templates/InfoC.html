@@ -1,6 +1,6 @@
 <ion-view cache-view="false" view-title="Info">
-  <ion-header-bar class="bar bar-subheader light-blue " ng-show="dataReady">
-     <h2 class="title centrar white-text">{{info.cliente.first_name}} {{info.cliente.last_name}}</h2>
+  <ion-header-bar align-title="center" class="bar bar-subheader light-blue " ng-show="dataReady">
+     <h2 class="title white-text">{{info.cliente.first_name}} {{info.cliente.last_name}}</h2>
   </ion-header-bar>
   <ion-content>
     <link rel="stylesheet" href="lib/materialize-css/dist/css/materialize.min.css">
@@ -40,9 +40,12 @@
         </div>
     </div>
   </ion-content>
-  <ion-footer-bar align-title="center" class="headerbar row">
+  <ion-footer-bar  class="headerbar footer-b">
+    <div class="row row-p">
       <a href="#/app/reporte/{{info.id}}" class="btn waves-effect waves-light red col s6"><i class="micon">report</i> Reporte</a>
-      <a href="#/app/reparacion/{{info.id}}" class="btn waves-effect waves-light light-blue cols6"><i class="micon">build</i> Manteimiento</a>
-      <a href="#/app/mantenimiento/{{info.id}}" class="btn waves-effect waves-light light-blue col s12"><i class="micon">done_all</i> Reparación</a>
+      <a href="#/app/reparacion/{{info.id}}" class="btn waves-effect waves-light orange  col s6"><i class="micon">build</i> Reparación</a>
+      <a href="#/app/mantenimiento/{{info.id}}" class="btn waves-effect waves-light green accent-3 col s12"><i class="micon">done_all</i> Manteimiento</a>
+    </div>
+
   </ion-footer-bar>
 </ion-view>

@@ -218,3 +218,10 @@ textarea:focus{
    .centrar{
      text-align: center !important;
    }
+   .footer-b{
+     padding: 0px;
+     height: 85px;
+   }
+   .row-p{
+     display: block;
+   }
