@@ -1,4 +1,10 @@
 <ion-view cache-view="true" view-title="Piscineros">
+  <ion-header-bar class="bar-subheader headerbar item-input-inset row">
+      <div class="input-field col s12">
+        <i class="ion-search prefix"></i>
+        <input type="text" name="buscar" placeholder="Buscar" ng-model="search" >
+      </div>
+  </ion-header-bar>
 	<ion-content overflow-scroll=”true”>
     <ion-refresher
      pulling-text ="Refrescar"
