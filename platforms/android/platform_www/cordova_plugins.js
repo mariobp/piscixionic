@@ -203,7 +203,8 @@ module.exports.metadata =
     "cordova-plugin-geolocation": "2.2.0",
     "cordova.plugins.diagnostic": "2.3.17",
     "phonegap-plugin-barcodescanner": "5.0.0",
-    "cordova-plugin-dialogs": "1.2.1"
+    "cordova-plugin-dialogs": "1.2.1",
+    "cordova-plugin-crosswalk-webview": "1.7.0"
 };
 // BOTTOM OF METADATA
 });

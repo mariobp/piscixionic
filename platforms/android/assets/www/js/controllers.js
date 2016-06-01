@@ -1,7 +1,7 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($http, $scope, $timeout, $ionicLoading, $cordovaDialogs, $state) {
-
+.controller('AppCtrl', function($http, $scope, $timeout, $ionicLoading, $cordovaDialogs, $state, $rootScope) {
+    console.log($rootScope.server);
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
@@ -11,8 +11,8 @@ angular.module('starter.controllers', [])
     // Form data for the login modal
     $scope.loginData = {};
     //$scope.server = "http://104.236.33.228:8040";
-    $scope.server = "http://192.168.1.51:8000";
-    //$scope.server = "http://192.168.0.106:8000";
+    //$scope.server = "http://192.168.1.51:8000";
+    $scope.server = "http://192.168.0.111:8000";
     // Create the login modal that we will use later
     $scope.logout = function() {
         $http.get($scope.server + "/usuarios/logout/").success(function() {
@@ -235,30 +235,50 @@ $scope.single = function () {
     };
 })
 
-.controller('Reporte', function($http, $scope, $stateParams, $cordovaDialogs, Camera, $cordovaToast, Galeria, $cordovaImagePicker, $location) {
+.controller('Reporte', function($http, $scope, $stateParams, $cordovaDialogs, Camera, $cordovaToast, Galeria, $cordovaImagePicker, $location, $timeout) {
     $scope.data = {};
     $scope.data.imagenes = [];
     $scope.total = 0;
     $scope.ready = true;
+    $scope.info = [];
+    var id = $stateParams.clienteId;
     //Angular Document Ready
     angular.element(document).ready(function() {
-        $('#tipo').material_select();
+        $('.select').material_select();
     });
 
-    $http.get($scope.server + '/list/tiporepor/')
-        .then(function doneCallbacks(response) {
-            $scope.tipolist = response.data.object_list;
-        }, function failCallbacks(response) {
-            if (response.status === 0) {
-                $cordovaDialogs.alert('No se puede acceder a este servicio en este momento.', 'Error');
-            }
-            if (response.status === 404) {
-            } else {
-                var data = response.data;
-                //$scope.showAlert("Error", data.error[0]);
+    $scope.single =  function(){
+        $http.get($scope.server + '/usuarios/single/cliente/' + id + '/')
+        .then(function successCallback(response) {
+            $scope.info = response.data;
+            $scope.ready = true;
+        }, function errorCallback(response) {
+            if (response.status === 403) {
+                $cordovaToast
+                    .show(response.data.error, 'short', 'center')
+                    .then(function(success) {
+                      $location.path('/app/login');
+                    }, function(error) {
+                      console.log(error);
+                    });
+            }else if (response.status === 400) {
+                $cordovaDialogs.alert('No se exise un cliente con ese codigo.', 'Error', 'Regresar')
+                .then(function(res){
+                    $ionicHistory.goBack(-1);
+                });
+            }else if (response.status === 0) {
+                $cordovaDialogs.alert('No se puede acceder a este servicio en este momento.', 'Error', 'Ok');
+            }else{
+              $timeout(function(){
+                $cordovaToast
+                .show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center');
+                $scope.single();
+              },10000);
             }
         });
+    };
 
+    $scope.single();
 
     $scope.takePicture = function() {
         if ($scope.total < 5) {

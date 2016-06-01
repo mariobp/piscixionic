@@ -2,21 +2,11 @@
   <ion-header-bar align-title="center" class="bar bar-subheader light-blue " ng-show="dataReady">
      <h2 class="title white-text">{{info.cliente.first_name}} {{info.cliente.last_name}}</h2>
   </ion-header-bar>
-  <ion-content>
+  <ion-content overflow-scroll=”true” class="content-b">
     <link rel="stylesheet" href="lib/materialize-css/dist/css/materialize.min.css">
     <div class="spin" ng-if="!dataReady">
       <ion-spinner></ion-spinner>
     </div>
-    <!--div class="fixed-action-btn click-to-toggle" style="bottom: 45px; right: 24px;">
-      <a class="btn-floating btn-large light-blue waves-effect">
-        <i class="micon">apps</i>
-      </a>
-      <ul>
-        <li><a href="#/app/reporte/{{info.id}}" class="btn-floating red"><i class="micon">report</i></a><span class="action-title">Reporte</span></li>
-        <li><a href="#/app/reparacion/{{info.id}}" class="btn-floating light-blue"><i class="micon">build</i></a><span class="action-title">Reparación</span></li>
-        <li><a href="#/app/mantenimiento/{{info.id}}" class="btn-floating green"><i class="micon">done_all</i></a><span class="action-title">Mantenimiento</span></li>
-      </ul>
-    </div-->
     <div class="row" ng-if="dataReady">
       <div class="list card col s12 grey lighten-5">
           <div class="item item-avatar grey lighten-5">
@@ -27,7 +17,7 @@
           </div>
           <div class="item item-icon-left  grey lighten-5">
             <i class="icon ion-android-call"></i>
-             {{info.cliente.telefono}}
+             <a ng-href="tel:{{info.cliente.telefono}}">{{info.cliente.telefono}}</a>
           </div>
           <div class="item item-icon-left  grey lighten-5">
             <i class="icon ion-email"></i>
@@ -40,12 +30,11 @@
         </div>
     </div>
   </ion-content>
-  <ion-footer-bar  class="headerbar footer-b">
+  <ion-footer-bar  class="headerbar footer-b" ng-show="dataReady">
     <div class="row row-p">
-      <a href="#/app/reporte/{{info.id}}" class="btn waves-effect waves-light red col s6"><i class="micon">report</i> Reporte</a>
-      <a href="#/app/reparacion/{{info.id}}" class="btn waves-effect waves-light orange  col s6"><i class="micon">build</i> Reparación</a>
-      <a href="#/app/mantenimiento/{{info.id}}" class="btn waves-effect waves-light green accent-3 col s12"><i class="micon">done_all</i> Manteimiento</a>
+      <a href="#/app/reporte/{{ info.cliente.id }}" class="btn btn-large waves-effect waves-light red lighten-2 col s6"><i class="micon">report</i> Reporte</a>
+      <a href="#/app/reparacion/{{ info.cliente.id }}" class="btn btn-large waves-effect waves-light orange lighten-2 col s6"><i class="micon">build</i> Reparación</a>
+      <a href="#/app/mantenimiento/{{ info.cliente.id }}" class="btn btn-large waves-effect waves-light green lighten-2 col s12 "><i class="micon">done_all</i> Manteimiento</a>
     </div>
-
   </ion-footer-bar>
 </ion-view>

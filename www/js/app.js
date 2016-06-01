@@ -106,6 +106,51 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
         */
     });
 
+    //$rootScope.server = "http://104.236.33.228:8040";
+    //$rootScope.server = "http://192.168.1.51:8000";
+    $rootScope.server = "http://192.168.0.111:8000";
+
+    function isLogin() {
+        $http.get($rootScope.server + "/usuarios/is/login/")
+            .then(function doneCallbacks(response) {
+                if ($state.current.name == "app.login") {
+                    $state.go('app.clientelists');
+                }
+            }, function failCallbacks(response) {
+                $cordovaToast
+                .show("Debe iniciar sesión", 'short', 'center')
+                .then(function(success) {
+                    if($state.current.name != 'app.login'){
+                      $state.go('app.login');
+                    }
+                }, function(error) {
+                    console.log(error);
+                });
+
+            });
+    }
+
+    function serverOn(){
+        $http.get($rootScope.server + "/usuarios/serve/on/").then(function doneCallbacks(response) {
+            isLogin();
+        }, function failCallbacks(response) {
+            if (response.status === 0) {
+                $cordovaToast.show('Servidor fuera de servicio', 'long', 'center');
+                $cordovaLocalNotification.schedule({
+                    id: 3,
+                    title: 'Piscix',
+                    text: 'Servidor fuera de servicio',
+                    data: {
+                        customProperty: 'custom value'
+                    }
+                }).then(function(result) {
+                    // ...
+                });
+            }
+        });
+    }
+
+    serverOn();
     $ionicPlatform.registerBackButtonAction(function() {
         if ($state.current.name == "app.clientelists" || $state.current.name == "app.acerca" || $state.current.name == "app.historial") {
             var confirmPopup = $ionicPopup.confirm({
@@ -147,47 +192,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
 
     function onOnline() {
         // Handle the online event
-        //var server = "http://104.236.33.228:8040";
-        var server = "http://192.168.1.51:8000";
-        //var server = "http://192.168.0.106:8000";
-        var isLogin = function() {
-            $http.get(server + "/usuarios/is/login/")
-                .then(function doneCallbacks(response) {
-                    if ($state.current.name == "app.login") {
-                        $state.go('app.clientelists');
-                    }
-                }, function failCallbacks(response) {
-                    $cordovaToast
-                    .show(response.data.error, 'short', 'center')
-                    .then(function(success) {
-                        if($state.current.name != 'app.login'){
-                          $state.go('app.login');
-                        }
-                    }, function(error) {
-                        console.log(error);
-                    });
-
-                });
-        };
-
-        $http.get(server + "/usuarios/serve/on/").then(function doneCallbacks(response) {
-            isLogin();
-        }, function failCallbacks(response) {
-            if (response.status === 0) {
-                $cordovaToast.show('No hay conexión a Internet', 'long', 'center');
-                $cordovaLocalNotification.schedule({
-                    id: 3,
-                    title: 'Piscix',
-                    text: 'Servidor fuera de servicio',
-                    data: {
-                        customProperty: 'custom value'
-                    }
-                }).then(function(result) {
-                    // ...
-                });
-            }
-        });
-
+        serverOn();
         if (bandera) {
             $cordovaLocalNotification.cancel(1).then(function (result) {
               // ...

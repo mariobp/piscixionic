@@ -1,123 +1,124 @@
 /* Empty. Add your own CSS if you like */
-.error-container {
-  margin: 5px 0;
-}
 
+.error-container {
+    margin: 5px 0;
+}
 .error-container:last-child {
     margin: 5px 0 0;
 }
-
 .error {
-  padding: 10px 16px;
-  font-family: "Arial Black", Gadget, sans-serif;
-  font-size: 11px;
-  text-transform: uppercase;
-  color: #B83E2C;
-  vertical-align: middle;
+    padding: 10px 16px;
+    font-family: "Arial Black", Gadget, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #B83E2C;
+    vertical-align: middle;
 }
-
 .error i {
-  font-size: 24px;
-  color: #B83E2C;
-  vertical-align: middle;
+    font-size: 24px;
+    color: #B83E2C;
+    vertical-align: middle;
 }
-
 .last-error-container > .error {
-  padding: 10px 16px 0;
+    padding: 10px 16px 0;
 }
-
 .has-errors {
-  border-bottom: 3px solid #B83E2C !important;
+    border-bottom: 3px solid #B83E2C !important;
 }
-
 .no-errors {
-  border-bottom: 3px solid #00e676 !important;
+    border-bottom: 3px solid #00e676 !important;
 }
-
-div.spin{
-  margin: auto;
-  position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
-  height: 85px;
-  text-align: center;
+div.spin {
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 85px;
+    text-align: center;
 }
-
-div.spin2{
-  margin: auto;
-  position: relative;;
-  top: calc(25% + 30px);
-  left: 0; bottom: 0; right: 0;
-  height: 60px;
-  text-align: center;
+div.spin2 {
+    margin: auto;
+    position: relative;
+    ;
+    top: calc(25% + 30px);
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 60px;
+    text-align: center;
 }
-.spin svg, .spin2 svg{
-  width: 19% !important;
-  height: 60px !important;
+.spin svg, .spin2 svg {
+    width: 19% !important;
+    height: 60px !important;
 }
-
-.
-fancy-select .list {
-  margin: -1px 0;
+. fancy-select .list {
+    margin: -1px 0;
 }
 
 /* Items */
+
+
 /* line 13, ../scss/modules/_fancy-select.scss */
+
 .fancy-select-items {
-  position: fixed;
-  left: 0;
-  width: 100%;
-  height: 100%; }
-  /* line 19, ../scss/modules/_fancy-select.scss */
-  .fancy-select-items .item {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* line 19, ../scss/modules/_fancy-select.scss */
+
+.fancy-select-items .item {
     overflow: hidden;
     /* Clearfix */
-  }
+}
 
 /* line 24, ../scss/modules/_fancy-select.scss */
+
 .fancy-select-items label p {
-  height: 32px;
-  line-height: 32px;
+    height: 32px;
+    line-height: 32px;
 }
 
 /* line 29, ../scss/modules/_fancy-select.scss */
+
 .fancy-select-icon {
-  float: left;
-  margin-right: 10px;
-  width: 30px;
-  text-align: center;
+    float: left;
+    margin-right: 10px;
+    width: 30px;
+    text-align: center;
 }
-
 map {
-  display: block;
-  width: 100%;
-  height: 100%;
+    display: block;
+    width: 100%;
+    height: 100%;
 }
-.medio{
-  height: 50%;
+.medio {
+    height: 50%;
 }
-
-.over{
-  overflow: scroll;
+.over {
+    overflow: scroll;
 }
-
 .scroll {
-  height: 100%;
+    height: 100%;
 }
-.icon{
-  font-size: 20pt;
+.icon {
+    font-size: 20pt;
 }
-.headerbar{
-  background-color: #607D8B;
-  color: white !important;
+.headerbar {
+    background-color: #607D8B;
+    color: white !important;
 }
-.headerbar button, h1{
-  color: white !important;
+.headerbar button, h1 {
+    color: white !important;
 }
-.full{
-  width: 100%;
-  margin-bottom: 5px;
+.full {
+    width: 100%;
+    margin-bottom: 5px;
 }
-
 .action-title {
     position: absolute;
     margin-top: 5px;
@@ -130,8 +131,7 @@ map {
     color: #607D8B;
     transition: .3s;
 }
-
-.badge-x{
+.badge-x {
     position: absolute;
     color: #fff;
     background-color: #ef473a;
@@ -148,80 +148,105 @@ map {
     line-height: 16px;
     right: 1px;
 }
-.active{
+.active {
     color: #455A64 !important;
 }
-
-input[type=text]:focus{
+input[type=text]:focus {
+    border-bottom: 1px #455A64 !important;
+    box-shadow: 0 1px 0 0 #455A64 !important;
+}
+textarea:focus {
     border-bottom: 1px #455A64 !important;
     box-shadow: 0 1px 0 0 #455A64 !important;
 }
 
-textarea:focus{
-    border-bottom: 1px #455A64 !important;
-    box-shadow: 0 1px 0 0 #455A64 !important;
-}
+/* label color */
 
-
-
-  /* label color */
-   .input-field label {
-     color: #455A64;
-   }
-   /* label focus color */
-   .input-field input[type=text]:focus + label {
-     color: #455A64;
-   }
-   /* label underline focus color */
-   .input-field input[type=text]:focus {
-     border-bottom: 1px solid #455A64;
-     box-shadow: 0 1px 0 0 #455A64;
-   }
-  .input-field textarea:focus + label {
+.input-field label {
     color: #455A64;
-  }
-   .input-field textarea:focus{
-     border-bottom: 1px solid #455A64;
-     box-shadow: 0 1px 0 0 #455A64;
-   }
-   /* valid color */
-   .input-field input[type=text].valid {
-     border-bottom: 1px solid #00e676;
-     box-shadow: 0 1px 0 0 #00e676;
-   }
-    .input-field textarea.valid {
-      border-bottom: 1px solid #00e676;
-      box-shadow: 0 1px 0 0 #00e676;
-    }
-   /* invalid color */
-   .input-field input[type=text].invalid {
-     border-bottom: 1px solid #B83E2C;
-     box-shadow: 0 1px 0 0 #B83E2C;
-   }
-   .input-field textarea.invalid {
-     border-bottom: 1px solid #B83E2C;
-     box-shadow: 0 1px 0 0 #B83E2C;
-   }
-   /* icon prefix focus color */
-   .input-field .prefix.active {
-     color: #212121;
-   }
-   .popup-container{
-     background: rgba(0, 0, 0, 0.4);
-   }
-   .bar-footer{
-      height: 56px;
-   }
-   button:focus{
-     background-color: background-color: #455A64 !important;
-   }
-   .centrar{
-     text-align: center !important;
-   }
-   .footer-b{
-     padding: 0px;
-     height: 85px;
-   }
-   .row-p{
-     display: block;
-   }
+}
+
+/* label focus color */
+
+.input-field input[type=text]:focus + label {
+    color: #455A64;
+}
+
+/* label underline focus color */
+
+.input-field input[type=text]:focus {
+    border-bottom: 1px solid #455A64;
+    box-shadow: 0 1px 0 0 #455A64;
+}
+.input-field textarea:focus + label {
+    color: #455A64;
+}
+.input-field textarea:focus {
+    border-bottom: 1px solid #455A64;
+    box-shadow: 0 1px 0 0 #455A64;
+}
+
+/* valid color */
+
+.input-field input[type=text].valid {
+    border-bottom: 1px solid #00e676;
+    box-shadow: 0 1px 0 0 #00e676;
+}
+.input-field textarea.valid {
+    border-bottom: 1px solid #00e676;
+    box-shadow: 0 1px 0 0 #00e676;
+}
+
+/* invalid color */
+
+.input-field input[type=text].invalid {
+    border-bottom: 1px solid #B83E2C;
+    box-shadow: 0 1px 0 0 #B83E2C;
+}
+.input-field textarea.invalid {
+    border-bottom: 1px solid #B83E2C;
+    box-shadow: 0 1px 0 0 #B83E2C;
+}
+
+/* icon prefix focus color */
+
+.input-field .prefix.active {
+    color: #212121;
+}
+.popup-container {
+    background: rgba(0, 0, 0, 0.4);
+}
+.bar-footer {
+    height: 56px;
+}
+button:focus {
+    background-color: background-color: #455A64 !important;
+}
+.centrar {
+    text-align: center !important;
+}
+.footer-b {
+    padding: 0px;
+    height: 117px;
+}
+
+.footer-f {
+    padding: 0px;
+    height: 62px;
+}
+.row-p {
+    display: block;
+    padding: 0px;
+}
+.content-b {
+    height: calc(100% - 203px);
+}
+.foto-cont {
+    height: 53px;
+    display: table;
+}
+.foto-cont p {
+    vertical-align: middle;
+    display: table-cell;
+    height: 30px;
+}
