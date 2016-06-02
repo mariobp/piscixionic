@@ -1,13 +1,13 @@
 <ion-view view-title="Reporte">
-<ion-header-bar align-title="center" class="bar bar-subheader light-blue " ng-show="ready">
-   <h2 class="title white-text">{{info.cliente.first_name}} {{info.cliente.last_name}}</h2>
+<ion-header-bar align-title="center" class="bar bar-subheader light-blue " ng-show="ready1 && ready2 && ready3">
+  <h2 class="title white-text">{{info.cliente.first_name}} {{info.cliente.last_name}}</h2>
 </ion-header-bar>
   <ion-content>
-    <div class="spin" ng-show="!ready">
+    <div class="spin" ng-show="!ready1 && ready2 && ready3">
       <ion-spinner></ion-spinner>
     </div>
-    <div class="row">
-      <form class="col s12" name="form" ng-submit="form.$valid && datosForm()" novalidate>
+    <div class="row" ng-show="ready1 && ready2 && ready3">
+      <form class="col s12" id="reporte" name="form" ng-submit="form.$valid && datosForm()" novalidate>
         <div class="row">
           <div class="input-field col s12">
             <input type="text" id="nombre" name="nombre" ng-model="data.nombre" ng-class="{'invalid':form.nombre.$invalid && form.$submitted,'valid':form.nombre.$valid && form.$submitted}" required>
@@ -30,8 +30,7 @@
           <div class="input-field col s12">
             <select id="tipo" class="select" ng-model="data.tipo">
                <option value="" disabled selected>Elegir tipo de Reporte</option>
-               <option value="">Tipo 1</option>
-               <option value="">Tipo 2</option>
+               <option value="{{tipo.id}}" ng-repeat="tipo in tipos">{{tipo.nombre}}</option>
             </select>
             <label for="tipo" ng-class="{'invalid': !data.tipo && form.$submitted,'valid':data.tipo && form.$submitted}">Tipo de Reporte</label>
              <div class="error-container" ng-show="!data.tipo && form.$submitted" ng-messages="form.nombre.$error">
@@ -43,8 +42,7 @@
           <div class="input-field col s12">
             <select id="piscina" class="select" ng-model="data.piscina">
                <option value="" disabled selected>Elegir Piscina</option>
-               <option value="">Casa 1</option>
-               <option value="">Casa 2</option>
+               <option value="{{piscina.id}}" ng-repeat="piscina in piscinas">{{piscina.nombre}}</option>
             </select>
             <label for="piscina" ng-class="{'invalid': !data.piscina && form.$submitted,'valid':data.piscina && form.$submitted}">Piscina</label>
              <div class="error-container" ng-show="!data.piscina && form.$submitted" ng-messages="form.nombre.$error">
@@ -59,7 +57,7 @@
               </button>
             </div>
             <div class="col s8 foto-cont">
-                <p>Tomar una foto.</p>
+                <p>Tomar una foto</p>
             </div>
         </div>
         <div class="row row-p">
@@ -95,10 +93,10 @@
       </form>
     </div>
   </ion-content>
-  <ion-footer-bar class="headerbar footer-f">
+  <ion-footer-bar class="headerbar footer-f" ng-show="ready1 && ready2 && ready3">
     <div class="row row-p">
       <button class="btn btn-large waves-effect waves-light red lighten-2 col s6">Cancelar <i class="micon">cancel</i></button>
-     <button class="btn btn-large waves-effect waves-light green lighten-2 col s6">Enviar <i class="micon">done_all</i></button>
+     <button class="btn btn-large waves-effect waves-light green lighten-2 col s6" ng-click="submitR()" >Enviar <i class="micon">done_all</i></button>
     </div>
   </ion-footer-bar>
 </ion-view>

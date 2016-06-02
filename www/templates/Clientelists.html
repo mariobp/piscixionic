@@ -5,11 +5,11 @@
         <input type="text" name="buscar" placeholder="Buscar" ng-model="search" >
       </div>
   </ion-header-bar>
-  <div class="fixed-action-btn click-to-toggle" style="bottom: 45px; right: 24px;">
+  <!--div class="fixed-action-btn click-to-toggle" style="bottom: 45px; right: 24px;">
     <a class="btn-floating btn-large light-blue waves-effect" ng-click="scanearCodigo()">
       <i class="micon">crop_free</i>
     </a>
-  </div>
+  </div-->
   <ion-content overflow-scroll=”true”>
       <ion-refresher
        pulling-text ="Refrescar"
@@ -30,4 +30,9 @@
       </ion-list>
       <ion-infinite-scroll ng-if="!noMoreItemsAvailable" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll>
   </ion-content>
+  <ion-footer-bar class="headerbar footer-f">
+    <div class="row row-p ">
+      <button ng-click="scanearCodigo()" class="btn btn-large waves-effect waves-light light-blue waves-effect col s12"><i class="micon">crop_free</i> <span>Escanear codigo QR</span></button>
+    </div>
+  </ion-footer-bar>
 </ion-view>

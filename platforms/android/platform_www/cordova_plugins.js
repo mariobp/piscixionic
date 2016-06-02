@@ -1,6 +1,13 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
     {
+        "file": "plugins/com.phonegap.plugins.PushPlugin/www/PushNotification.js",
+        "id": "com.phonegap.plugins.PushPlugin.PushNotification",
+        "clobbers": [
+            "PushNotification"
+        ]
+    },
+    {
         "file": "plugins/com.telerik.plugins.nativepagetransitions/www/NativePageTransitions.js",
         "id": "com.telerik.plugins.nativepagetransitions.NativePageTransitions",
         "clobbers": [
@@ -41,6 +48,32 @@ module.exports = [
         "clobbers": [
             "device"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-dialogs/www/notification.js",
+        "id": "cordova-plugin-dialogs.notification",
+        "merges": [
+            "navigator.notification"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-dialogs/www/android/notification.js",
+        "id": "cordova-plugin-dialogs.notification_android",
+        "merges": [
+            "navigator.notification"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-geolocation/www/android/geolocation.js",
+        "id": "cordova-plugin-geolocation.geolocation",
+        "clobbers": [
+            "navigator.geolocation"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
+        "id": "cordova-plugin-geolocation.PositionError",
+        "runs": true
     },
     {
         "file": "plugins/cordova-plugin-image-picker/www/imagepicker.js",
@@ -95,25 +128,10 @@ module.exports = [
         "id": "cordova-plugin-x-toast.tests"
     },
     {
-        "file": "plugins/ionic-plugin-keyboard/www/android/keyboard.js",
-        "id": "ionic-plugin-keyboard.keyboard",
+        "file": "plugins/cordova.plugins.diagnostic/www/android/diagnostic.js",
+        "id": "cordova.plugins.diagnostic.Diagnostic",
         "clobbers": [
-            "cordova.plugins.Keyboard"
-        ],
-        "runs": true
-    },
-    {
-        "file": "plugins/phonegap-plugin-push/www/push.js",
-        "id": "phonegap-plugin-push.PushNotification",
-        "clobbers": [
-            "PushNotification"
-        ]
-    },
-    {
-        "file": "plugins/com.phonegap.plugins.PushPlugin/www/PushNotification.js",
-        "id": "com.phonegap.plugins.PushPlugin.PushNotification",
-        "clobbers": [
-            "PushNotification"
+            "cordova.plugins.diagnostic"
         ]
     },
     {
@@ -141,23 +159,12 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/cordova-plugin-geolocation/www/android/geolocation.js",
-        "id": "cordova-plugin-geolocation.geolocation",
+        "file": "plugins/ionic-plugin-keyboard/www/android/keyboard.js",
+        "id": "ionic-plugin-keyboard.keyboard",
         "clobbers": [
-            "navigator.geolocation"
-        ]
-    },
-    {
-        "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
-        "id": "cordova-plugin-geolocation.PositionError",
+            "cordova.plugins.Keyboard"
+        ],
         "runs": true
-    },
-    {
-        "file": "plugins/cordova.plugins.diagnostic/www/android/diagnostic.js",
-        "id": "cordova.plugins.diagnostic.Diagnostic",
-        "clobbers": [
-            "cordova.plugins.diagnostic"
-        ]
     },
     {
         "file": "plugins/phonegap-plugin-barcodescanner/www/barcodescanner.js",
@@ -167,44 +174,36 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/cordova-plugin-dialogs/www/notification.js",
-        "id": "cordova-plugin-dialogs.notification",
-        "merges": [
-            "navigator.notification"
-        ]
-    },
-    {
-        "file": "plugins/cordova-plugin-dialogs/www/android/notification.js",
-        "id": "cordova-plugin-dialogs.notification_android",
-        "merges": [
-            "navigator.notification"
+        "file": "plugins/phonegap-plugin-push/www/push.js",
+        "id": "phonegap-plugin-push.PushNotification",
+        "clobbers": [
+            "PushNotification"
         ]
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
+    "com.phonegap.plugins.PushPlugin": "2.5.0",
     "com.telerik.plugins.nativepagetransitions": "0.6.4",
+    "cordova-plugin-app-event": "1.2.0",
     "cordova-plugin-camera": "2.1.1",
+    "cordova-plugin-compat": "1.0.0",
     "cordova-plugin-console": "1.0.2",
     "cordova-plugin-device": "1.1.1",
+    "cordova-plugin-dialogs": "1.2.1",
+    "cordova-plugin-geolocation": "2.2.0",
     "cordova-plugin-image-picker": "1.0.8",
     "cordova-plugin-network-information": "1.2.0",
     "cordova-plugin-splashscreen": "3.1.0",
     "cordova-plugin-statusbar": "2.1.2",
     "cordova-plugin-whitelist": "1.2.1",
     "cordova-plugin-x-toast": "2.5.0",
-    "ionic-plugin-keyboard": "2.0.1",
-    "phonegap-plugin-push": "1.6.3",
-    "com.phonegap.plugins.PushPlugin": "2.5.0",
-    "cordova-plugin-app-event": "1.2.0",
-    "de.appplant.cordova.plugin.local-notification": "0.8.4",
-    "cordova-plugin-compat": "1.0.0",
-    "cordova-plugin-geolocation": "2.2.0",
     "cordova.plugins.diagnostic": "2.3.17",
+    "de.appplant.cordova.plugin.local-notification": "0.8.4",
+    "ionic-plugin-keyboard": "2.0.1",
     "phonegap-plugin-barcodescanner": "5.0.0",
-    "cordova-plugin-dialogs": "1.2.1",
-    "cordova-plugin-crosswalk-webview": "1.7.0"
+    "phonegap-plugin-push": "1.6.3"
 };
 // BOTTOM OF METADATA
 });

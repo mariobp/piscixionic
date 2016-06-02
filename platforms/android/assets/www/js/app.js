@@ -6,10 +6,10 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-modal-select', 'starter.controllers', 'ionic-native-transitions', 'ngMessages', 'starter.directives'])
 
-.run(function($ionicPlatform, $ionicPopup, $http, $window, $cordovaStatusbar, $cordovaToast, $cordovaPush, $rootScope, $state, $cordovaLocalNotification) {
+.run(function($ionicPlatform, $ionicPopup, $http, $window, $cordovaStatusbar, $cordovaToast, $cordovaPush, $rootScope, $state, $cordovaSplashscreen, $cordovaLocalNotification) {
     //Project Number: 725278590059
     //API Key: AIzaSyBeuBsMahCuzv7P09GZ69wWbtqDR_4nqGA
-
+    //$cordovaSplashscreen.show();
     $ionicPlatform.ready(function() {
         $cordovaStatusbar.overlaysWebView(true);
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -108,7 +108,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
 
     //$rootScope.server = "http://104.236.33.228:8040";
     //$rootScope.server = "http://192.168.1.51:8000";
-    $rootScope.server = "http://192.168.0.111:8000";
+    $rootScope.server = "http://192.168.0.102:8000";
 
     function isLogin() {
         $http.get($rootScope.server + "/usuarios/is/login/")
@@ -297,7 +297,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
     })
 
     .state('app.reparacion', {
-        url: '/reparacion/:clienteId',
+        url: '/reparacion/:clienteId/:nombre/:apellidos',
         views: {
             'menuContent': {
                 templateUrl: 'templates/reparacion.html',
