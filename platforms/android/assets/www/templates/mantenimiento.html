@@ -16,42 +16,49 @@
      </div>
     <div class="row">
       <div class="input-field col s12">
-        <textarea type="text" id="descripcion"  class="materialize-textarea" ng-model="data.descripcion" name="descripcion" required ng-class="{'invalid':form.descripcion.$invalid && form.$submitted,'valid':form.descripcion.$valid && form.$submitted}"></textarea>
+        <textarea type="text" id="descripcion" maxlength="200" rows="5" class="materialize-textarea" ng-model="data.descripcion" name="descripcion" required ng-class="{'invalid':form.descripcion.$invalid && form.$submitted,'valid':form.descripcion.$valid && form.$submitted}"></textarea>
         <label for="descripcion">Descricción</label>
         <div class="error-container" ng-show="form.descripcion.$error && form.$submitted" ng-messages="form.descripcion.$error">
           <div ng-messages-include="templates/error-list.html"></div>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col s12">
+    <div class="row row-p">
         <div class="col s4">
           <button type="button" class="btn-large waves-effect waves-light  light-blue" ng-click="takePicture()">
-          <i class="icon ion-camera"></i>
+          <i class="micon">camera</i>
           </button>
         </div>
+        <div class="col s8 foto-cont">
+            <p>Tomar una foto</p>
+        </div>
+    </div>
+    <div class="row row-p">
         <div class="col s4">
           <button type="button" class="btn-large waves-effect waves-light light-blue" ng-click="getPicture()">
-          <i class="icon ion-images"></i>
+          <i class="micon">add_to_photos</i>
           </button>
         </div>
+        <div class="col s8 foto-cont">
+            <p>Agregar foto desde la galeria.</p>
+        </div>
+    </div>
+    <div class="row row-p">
         <div class="col s4">
           <button type="button" class="btn-large waves-effect waves-light light-blue" ng-disabled="total==0" ng-class="{'disabled':total==0}" ng-click="verGaleria()">
-          <i class="icon ion-image"></i><span class="badge-x" ng-show="total>0">{{total}}</span>
+          <i class="micon">collections</i><span class="badge-x" ng-show="total>0">{{total}}</span>
           </button>
         </div>
+        <div class="col s8 foto-cont">
+            <p>Fotos Seleccionadas.</p>
+        </div>
+    </div>
+    <div class="bar headerbar footer-f">
+      <div class="row row-p">
+       <button type="button" class="btn btn-large waves-effect waves-light red lighten-2 col s6" ng-click="back()">Cancelar <i class="micon">cancel</i></button>
+       <button type="submit" class="btn btn-large waves-effect waves-light green lighten-2 col s6" >Enviar <i class="micon">done_all</i></button>
       </div>
     </div>
-    <div class="row">
-      <div class="col s12">
-        <button class="btn-large waves-effect waves-light light-blue col s12"  type="submit">Enviar
-          <i class="ion-android-send"></i>
-        </button>
-      </div>
-    </div>
-    <!--div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-      <button class="btn-large waves-effect waves-light blue-grey btn-floating" type="submit"><i class="ion-paper-airplane"></i></button>
-    </div-->
   </form>
 </div>
 </ion-content>

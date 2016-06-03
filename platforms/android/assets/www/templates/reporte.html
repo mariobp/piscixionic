@@ -1,12 +1,12 @@
 <ion-view view-title="Reporte">
-<ion-header-bar align-title="center" class="bar bar-subheader light-blue " ng-show="ready1 && ready2 && ready3">
-  <h2 class="title white-text">{{info.cliente.first_name}} {{info.cliente.last_name}}</h2>
+<ion-header-bar align-title="center" class="bar bar-subheader light-blue " ng-show="ready1 && ready2">
+  <h2 class="title white-text">{{piscinas[0].nombreC}} {{piscinas[0].apellidosC}}</h2>
 </ion-header-bar>
   <ion-content>
-    <div class="spin" ng-show="!ready1 && ready2 && ready3">
+    <div class="spin" ng-show="!ready1 && ready2">
       <ion-spinner></ion-spinner>
     </div>
-    <div class="row" ng-show="ready1 && ready2 && ready3">
+    <div class="row" ng-show="ready1 && ready2">
       <form class="col s12" id="reporte" name="form" ng-submit="form.$valid && datosForm()" novalidate>
         <div class="row">
           <div class="input-field col s12">
@@ -19,7 +19,7 @@
          </div>
         <div class="row">
           <div class="input-field col s12">
-            <textarea type="text" id="descripcion"  class="materialize-textarea" ng-model="data.descripcion" name="descripcion" required ng-class="{'invalid':form.descripcion.$invalid && form.$submitted,'valid':form.descripcion.$valid && form.$submitted}"></textarea>
+            <textarea type="text" id="descripcion"  rows="5" class="materialize-textarea" ng-model="data.descripcion" maxlength="200" max name="descripcion" required ng-class="{'invalid':form.descripcion.$invalid && form.$submitted,'valid':form.descripcion.$valid && form.$submitted}"></textarea>
             <label for="descripcion">Descricción</label>
             <div class="error-container" ng-show="form.descripcion.$error && form.$submitted" ng-messages="form.descripcion.$error">
               <div ng-messages-include="templates/error-list.html"></div>
@@ -29,8 +29,13 @@
         <div class="row">
           <div class="input-field col s12">
             <select id="tipo" class="select" ng-model="data.tipo">
-               <option value="" disabled selected>Elegir tipo de Reporte</option>
-               <option value="{{tipo.id}}" ng-repeat="tipo in tipos">{{tipo.nombre}}</option>
+               <option value="" disabled selected>Tipo de Reporte</option>
+               <option value="{{tipo.id}}" ng-repeat="tipo in tipos" >
+                 {{tipo.nombre}} Cierre:
+                 <b ng-if="tipo.tipo_de_cierre===1" >Automatico</b>
+                 <b ng-if="tipo.tipo_de_cierre===2" >Parcial</b>
+                 <b ng-if="tipo.tipo_de_cierre===3" >A satisfación</b>
+               </option>
             </select>
             <label for="tipo" ng-class="{'invalid': !data.tipo && form.$submitted,'valid':data.tipo && form.$submitted}">Tipo de Reporte</label>
              <div class="error-container" ng-show="!data.tipo && form.$submitted" ng-messages="form.nombre.$error">
@@ -41,8 +46,8 @@
         <div class="row">
           <div class="input-field col s12">
             <select id="piscina" class="select" ng-model="data.piscina">
-               <option value="" disabled selected>Elegir Piscina</option>
-               <option value="{{piscina.id}}" ng-repeat="piscina in piscinas">{{piscina.nombre}}</option>
+               <option value="" disabled selected>Piscina</option>
+               <option value="{{piscina.pk}}" ng-repeat="piscina in piscinas" >{{piscina.nombre}}</option>
             </select>
             <label for="piscina" ng-class="{'invalid': !data.piscina && form.$submitted,'valid':data.piscina && form.$submitted}">Piscina</label>
              <div class="error-container" ng-show="!data.piscina && form.$submitted" ng-messages="form.nombre.$error">
@@ -80,23 +85,19 @@
                 <p>Fotos Seleccionadas.</p>
             </div>
         </div>
-        <!--div class="row">
-          <div class="col s12">
-            <button class="btn-large waves-effect waves-light light-blue col s12"  type="submit">Enviar
-              <i class="ion-android-send"></i>
-            </button>
+        <div class="bar headerbar footer-f">
+          <div class="row row-p">
+           <button type="button" class="btn btn-large waves-effect waves-light red lighten-2 col s6" ng-click="back()">Cancelar <i class="micon">cancel</i></button>
+           <button type="submit" class="btn btn-large waves-effect waves-light green lighten-2 col s6" >Enviar <i class="micon">done_all</i></button>
           </div>
         </div>
-        <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-          <button class="btn-large waves-effect waves-light blue-grey btn-floating" type="submit"><i class="ion-paper-airplane"></i></button>
-        </div-->
       </form>
     </div>
   </ion-content>
-  <ion-footer-bar class="headerbar footer-f" ng-show="ready1 && ready2 && ready3">
+  <!--ion-footer-bar class="headerbar footer-f" ng-show="ready1 && ready2">
     <div class="row row-p">
-      <button class="btn btn-large waves-effect waves-light red lighten-2 col s6">Cancelar <i class="micon">cancel</i></button>
+      <button class="btn btn-large waves-effect waves-light red lighten-2 col s6" ng-click="back()">Cancelar <i class="micon">cancel</i></button>
      <button class="btn btn-large waves-effect waves-light green lighten-2 col s6" ng-click="submitR()" >Enviar <i class="micon">done_all</i></button>
     </div>
-  </ion-footer-bar>
+  </ion-footer-bar-->
 </ion-view>

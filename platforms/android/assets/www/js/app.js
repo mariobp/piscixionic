@@ -297,7 +297,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
     })
 
     .state('app.reparacion', {
-        url: '/reparacion/:clienteId/:nombre/:apellidos',
+        url: '/reparacion/:clienteId',
         views: {
             'menuContent': {
                 templateUrl: 'templates/reparacion.html',
