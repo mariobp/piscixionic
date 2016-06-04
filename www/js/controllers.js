@@ -242,7 +242,7 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('Reporte', function($http, $scope, $stateParams, $cordovaDialogs, $cordovaToast, Galeria, $cordovaImagePicker, $location, $timeout, $ionicHistory, $cordovaCamera) {
+.controller('Reporte', function($http, $scope, $stateParams, $cordovaDialogs, $cordovaToast, Galeria, $cordovaImagePicker, $location, $timeout, $ionicHistory, $cordovaCamera, $ionicLoading) {
         $scope.data = {};
         $scope.data.imagenes = [];
         $scope.total = 0;
@@ -337,11 +337,11 @@ angular.module('starter.controllers', [])
 
         $scope.piscinas();
         $scope.tiposReporte();
-
+        /*
         angular.element(document).ready(function() {
             $('#tipo').material_select();
             $('#piscina').material_select();
-        });
+        });*/
         /*
             $scope.submitR = function() {
                 var enviar = document.querySelector('#enviar');
@@ -350,35 +350,22 @@ angular.module('starter.controllers', [])
         */
         $scope.takePicture = function() {
             if ($scope.total < 5) {
-                /*
-                  var options = {
-                      quality: 75,
-                      targetWidth: 1280,
-                      targetHeight: 720,
-                      sourceType: 1
-                  };
-                  Camera.getPicture(options).then(function(imageData) {
-                      $scope.data.imagenes.push(imageData);
-                      $scope.total = $scope.data.imagenes.length;
-                  }, function(err) {
-                      console.log("Error", err);
-                  });
-                  */
+
                 var options = {
                     quality: 75,
-                    destinationType: Camera.DestinationType.DATA_URL,
+                    destinationType: Camera.DestinationType.FILE_URI,
                     sourceType: Camera.PictureSourceType.CAMERA,
                     allowEdit: true,
                     encodingType: Camera.EncodingType.JPEG,
                     targetWidth: 1280,
                     targetHeight: 720,
-                    popoverOptions: CameraPopoverOptions,
+                    //popoverOptions: CameraPopoverOptions,
                     saveToPhotoAlbum: false,
                     correctOrientation: true
                 };
                 $cordovaCamera.getPicture(options).then(function(imageData) {
-                    var image = "data:image/jpeg;base64," + imageData;
-                    $scope.data.imagenes.push(image);
+                    console.log(imageData);
+                    $scope.data.imagenes.push(imageData);
                     $scope.total = $scope.data.imagenes.length;
                 }, function(err) {
                     // error
@@ -398,36 +385,21 @@ angular.module('starter.controllers', [])
 
         $scope.getPicture = function() {
             if ($scope.total < 5) {
-                /*
-                  var options = {
-                      quality: 75,
-                      targetWidth: 1280,
-                      targetHeight: 720,
-                      sourceType: 0
-                  };
-                  Camera.getPicture(options).then(function(imageData) {
-                      console.log(imageData);
-                      $scope.data.imagenes.push(imageData);
-                      $scope.total = $scope.data.imagenes.length;
-                  }, function(err) {
-                      console.log("Error", err);
-                  });
-                  */
                 var options = {
                     quality: 75,
-                    destinationType: Camera.DestinationType.DATA_URL,
+                    destinationType: Camera.DestinationType.FILE_URI,
                     sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
                     allowEdit: true,
                     encodingType: Camera.EncodingType.JPEG,
                     targetWidth: 1280,
                     targetHeight: 720,
-                    popoverOptions: CameraPopoverOptions,
+                    //popoverOptions: CameraPopoverOptions,
                     saveToPhotoAlbum: false,
                     correctOrientation: true
                 };
                 $cordovaCamera.getPicture(options).then(function(imageData) {
-                    var image = "data:image/jpeg;base64," + imageData;
-                    $scope.data.imagenes.push(image);
+                    console.log(imageData);
+                    $scope.data.imagenes.push(imageData);
                     $scope.total = $scope.data.imagenes.length;
                 }, function(err) {
                     // error
@@ -471,22 +443,28 @@ angular.module('starter.controllers', [])
         };
 
         var enviar = function(data) {
+            $scope.loading = $ionicLoading.show({
+                template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Guardando...',
+                noBackdrop: true
+            });
             $scope.ready = false;
             $http({
                 method: 'POST',
                 url: $scope.server + '/reportes/reporte/form/',
-                data: data,
+                data:  $.param(data),
                 //transformRequest: formDataObject, // this sends your data to the formDataObject provider that we are defining below.
                 headers: {
-                    'Content-Type': 'multipart/form-data',
+                    //'Content-Type': 'multipart/form-data',
                     //'Content-Type': 'application/x-www-form-urlencoded',
+                    'Content-Type': undefined
                 },
             }).then(function doneCallbacks(response) {
                 $scope.data = {};
+                $ionicLoading.hide();
                 $cordovaToast.show("Enviado exitoso", 'long', 'center');
-                $scope.ready = true;
+                //$scope.ready = true;
             }, function failCallbacks(response) {
-                $scope.ready = true;
+                $ionicLoading.hide();
                 if (response.status === 403) {
                     $cordovaToast
                         .show(response.data.error, 'short', 'center')
@@ -514,8 +492,12 @@ angular.module('starter.controllers', [])
             });
         };
 
-        $scope.datosForm = function() {
+        $scope.mostrar = function(item){
+            console.log(item);
+        };
 
+        $scope.datosForm = function() {
+            console.log($scope.data);
             var dataSend = {};
             dataSend.nombre = $scope.data.nombre;
             dataSend.descripcion = $scope.data.descripcion;
@@ -555,6 +537,11 @@ angular.module('starter.controllers', [])
         var num = 1,
             max = 0;
         $scope.reportes = [];
+        $scope.collap = function() {
+            $('.collapsible').collapsible({
+                accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+            });
+        };
         $scope.loadMore = function() {
             $http.get($scope.server + '/reportes/reporte/list/?page=' + num)
                 .then(function successCallback(response) {
@@ -571,11 +558,6 @@ angular.module('starter.controllers', [])
                     }
                     num++;
                     $scope.$broadcast('scroll.infiniteScrollComplete');
-                    angular.element(document).ready(function() {
-                        $('.collapsible').collapsible({
-                            accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
-                        });
-                    });
                     $scope.ready = true;
                 }, function errorCallback(response) {
                     if (response.status == 403) {
@@ -936,7 +918,7 @@ angular.module('starter.controllers', [])
 
     function validar(metodo) {
         if (longitud === "" && latitud === "") {
-            $cordovaDialogs.alert('No hay ningún gps asignado, precionar la opción <i class="icon ion-location icon"></i> para asignar GPS.', 'Gps')
+            $cordovaDialogs.alert('No hay ningún gps asignado.', 'Gps')
                 .then(function(res) {
                     $scope.validateGps();
                 });
@@ -1065,6 +1047,11 @@ angular.module('starter.controllers', [])
     var num = 1,
         max = 0;
     $scope.piscineros = [];
+    $scope.collap = function() {
+        $('.collapsible').collapsible({
+            accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+        });
+    };
     $scope.loadMore = function() {
         $http.get($scope.server + '/usuarios/service/list/piscinero/?page=' + num)
             .then(function successCallback(response) {
@@ -1081,11 +1068,6 @@ angular.module('starter.controllers', [])
                 }
                 num++;
                 $scope.$broadcast('scroll.infiniteScrollComplete');
-                angular.element(document).ready(function() {
-                    $('.collapsible').collapsible({
-                        accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
-                    });
-                });
                 $scope.ready = true;
             }, function errorCallback(response) {
                 if (response.status == 403) {

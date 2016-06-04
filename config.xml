@@ -9,6 +9,11 @@
     </author>
   <content src="index.html"/>
   <access origin="*"/>
+  <allow-navigation href="*"/>
+  <allow-navigation href="http://*/*"/>
+  <allow-navigation href="https://*/*"/>
+  <allow-navigation href="data:*"/>
+  <allow-intent href="*"/>
   <access launch-external="yes" origin="tel:*"/>
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>

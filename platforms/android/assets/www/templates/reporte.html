@@ -28,14 +28,9 @@
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <select id="tipo" class="select" ng-model="data.tipo">
+            <select id="tipo" class="select" ng-model="data.tipo" ng-change="mostrar(tipo)">
                <option value="" disabled selected>Tipo de Reporte</option>
-               <option value="{{tipo.id}}" ng-repeat="tipo in tipos" >
-                 {{tipo.nombre}} Cierre:
-                 <b ng-if="tipo.tipo_de_cierre===1" >Automatico</b>
-                 <b ng-if="tipo.tipo_de_cierre===2" >Parcial</b>
-                 <b ng-if="tipo.tipo_de_cierre===3" >A satisfación</b>
-               </option>
+               <option value="{{tipo.id}}" ng-repeat="tipo in tipos">{{tipo.nombre}}</option>
             </select>
             <label for="tipo" ng-class="{'invalid': !data.tipo && form.$submitted,'valid':data.tipo && form.$submitted}">Tipo de Reporte</label>
              <div class="error-container" ng-show="!data.tipo && form.$submitted" ng-messages="form.nombre.$error">
@@ -47,7 +42,7 @@
           <div class="input-field col s12">
             <select id="piscina" class="select" ng-model="data.piscina">
                <option value="" disabled selected>Piscina</option>
-               <option value="{{piscina.pk}}" ng-repeat="piscina in piscinas" >{{piscina.nombre}}</option>
+               <option value="{{piscina.pk}}" ng-repeat="piscina in piscinas" repeat-end="selecP()">{{piscina.nombre}}</option>
             </select>
             <label for="piscina" ng-class="{'invalid': !data.piscina && form.$submitted,'valid':data.piscina && form.$submitted}">Piscina</label>
              <div class="error-container" ng-show="!data.piscina && form.$submitted" ng-messages="form.nombre.$error">

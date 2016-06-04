@@ -13,7 +13,7 @@
      >
    </ion-refresher>
 		<ul class="collapsible popout" data-collapsible="accordion">
-			<li ng-repeat="piscinero in piscineros|filter:search">
+			<li ng-repeat="piscinero in piscineros|filter:search" repeat-end="collap()">
 				<div class="collapsible-header grey lighten-5">
 					<ul class="collection grey lighten-5">
 						<li class="collection-item avatar grey lighten-5">
