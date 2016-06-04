@@ -1,4 +1,4 @@
-<ion-view cache-view="false" view-title="Info">
+<ion-view cache-view="true" view-title="Info">
   <ion-header-bar align-title="center" class="bar bar-subheader light-blue " ng-show="dataReady">
      <h2 class="title white-text">{{info.cliente.first_name}} {{info.cliente.last_name}}</h2>
   </ion-header-bar>
@@ -11,7 +11,7 @@
       <div class="list card col s12 grey lighten-5">
           <div class="item item-avatar grey lighten-5">
               <img src="{{server}}/media/{{info.cliente.imagen}}" ng-if="info.cliente.imagen !=''">
-              <img src="img/mario.png" ng-if="info.cliente.imagen ==''"/>
+              <img src="img/user.png" ng-if="info.cliente.imagen ==''"/>
               <b>Nombre: </b><h2>{{info.cliente.first_name}} {{info.cliente.last_name}}</h2>
               <b>Dirección: </b>{{info.cliente.direccion}}
           </div>

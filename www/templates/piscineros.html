@@ -14,9 +14,9 @@
    </ion-refresher>
 		<ul class="collapsible popout" data-collapsible="accordion">
 			<li ng-repeat="piscinero in piscineros|filter:search">
-				<div class="collapsible-header">
-					<ul class="collection">
-						<li class="collection-item avatar">
+				<div class="collapsible-header grey lighten-5">
+					<ul class="collection grey lighten-5">
+						<li class="collection-item avatar grey lighten-5">
 				        <img src="{{server}}/media/{{piscinero.imagen}}" ng-if="piscinero.imagen !='' || piscinero.imagen !=null" class="circle"/>
 		            <img src="img/mario.png" ng-if="piscinero.imagen =='' || piscinero.imagen ==null" class="circle"/>
 					      <span class="title">{{piscinero.first_name}} {{piscinero.last_name}}</span>
@@ -26,15 +26,15 @@
 						</li>
 					</ul>
 				</div>
-      	<div class="collapsible-body row">
+      	<div class="collapsible-body row row-p">
 						<p class="col s12">
 							Telefono: {{piscinero.telefono}} <br>
 							Email: {{piscinero.email}} <br>
 							Dirección: {{piscinero.direccion}} <br>
 							Fecha de nacimiento: {{piscinero.fecha_nacimiento}}
 						</p>
-							<a href="#/app/ruta/{{piscinero.id}}" class="btn-large waves-effect waves-light green accent-3 col s6"><i class="ion-ios-location"></i> Ruta</a>
-							<a href="#/app/asignacionpiscina/{{piscinero.id}}" class="btn-large waves-effect waves-light light-blue col s6"><i class="ion-waterdrop"></i> Piscinas</a>
+							<a href="#/app/ruta/{{piscinero.id}}" class="btn-large waves-effect waves-light green accent-3 col s6"><i class="micon">directions</i> Ruta</a>
+							<a href="#/app/asignacionpiscina/{{piscinero.id}}" class="btn-large waves-effect waves-light light-blue col s6"><i class="micon">pool</i> Piscinas</a>
       	</div>
 			</li>
 		</ul>

@@ -377,6 +377,15 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
                     controller: 'MapaRuta'
                 }
             }
+        })
+        .state('app.historialR', {
+            url: '/historial/reportes',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/historialR.html',
+                    controller: 'HistorialR'
+                }
+            }
         });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/clientelists');

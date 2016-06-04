@@ -1,4 +1,4 @@
- <ion-view cache-view="false" view-title="Clientes">
+ <ion-view cache-view="true" view-title="Clientes">
   <ion-header-bar class="bar-subheader headerbar item-input-inset row">
       <div class="input-field col s12">
         <i class="ion-search prefix"></i>
@@ -20,7 +20,7 @@
       <ion-list>
         <ion-item ng-repeat="cliente in clientelists|filter:search" item="cliente" href="#/app/info/{{cliente.id}}" class="item item-avatar">
             <img src="{{server}}/media/{{cliente.imagen}}" ng-if="cliente.imagen !=''">
-            <img src="img/mario.png" ng-if="cliente.imagen ==''"/>
+            <img src="img/user.png" ng-if="cliente.imagen ==''"/>
             <h2>{{cliente.first_name}} {{cliente.last_name}}</h2>
             <p>
               <b>Telefono: </b>{{cliente.telefono}}<br>
@@ -32,7 +32,7 @@
   </ion-content>
   <ion-footer-bar class="headerbar footer-f">
     <div class="row row-p ">
-      <button ng-click="scanearCodigo()" class="btn btn-large waves-effect waves-light light-blue waves-effect col s12"><i class="micon">crop_free</i> <span>Escanear codigo QR</span></button>
+      <button ng-click="scanearCodigo()" class="btn btn-large waves-effect waves-light light-blue waves-effect col s12"><i class="micon">crop_free</i> Escanear codigo QR</button>
     </div>
   </ion-footer-bar>
 </ion-view>
