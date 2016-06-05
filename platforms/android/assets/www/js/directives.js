@@ -3,9 +3,13 @@ angular.module('starter.directives', [])
         return {
             restrict: "A",
             link: function(scope, element, attrs) {
-                if (scope.$last) {
+                console.log(scope);
+                console.log(element);
+                console.log(attrs);
+                scope.$eval(attrs.repeatEnd);
+                /*if (scope.$last) {
                     scope.$eval(attrs.repeatEnd);
-                }
+                }*/
             }
         };
     })

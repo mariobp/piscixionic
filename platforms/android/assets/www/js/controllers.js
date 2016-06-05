@@ -528,12 +528,6 @@ angular.module('starter.controllers', [])
                 accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
             });
         };
-        angular.element(document).ready(function () {
-            console.log("entro");
-            $('.collapsible').collapsible({
-                accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
-            });
-        });
         $scope.loadMore = function() {
             $http.get($scope.server + '/reportes/reporte/list/?page=' + num)
                 .then(function successCallback(response) {
@@ -1054,12 +1048,6 @@ angular.module('starter.controllers', [])
             accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
         });
     };
-    angular.element(document).ready(function () {
-        console.log("entro");
-        $('.collapsible').collapsible({
-            accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
-        });
-    });
     $scope.loadMore = function() {
         $http.get($scope.server + '/mantenimiento/service/reparacion/list/?page=' + num)
             .then(function successCallback(response) {
@@ -1266,6 +1254,19 @@ angular.module('starter.controllers', [])
             accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
         });
     };
+
+    $scope.toggleGroup = function(group) {
+      if ($scope.isGroupShown(group)) {
+        $scope.shownGroup = null;
+      } else {
+        $scope.shownGroup = group;
+      }
+    };
+
+    $scope.isGroupShown = function(group) {
+      return $scope.shownGroup === group;
+    };
+
     $scope.loadMore = function() {
         $http.get($scope.server + '/usuarios/service/list/piscinero/?page=' + num)
             .then(function successCallback(response) {
@@ -1301,8 +1302,6 @@ angular.module('starter.controllers', [])
                     }, 10000);
                 }
             });
-            console.log($scope.collap());
-            $scope.collap();
     };
 
     $scope.reload = function() {

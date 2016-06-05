@@ -21,7 +21,7 @@
 								<b>Casa:</b>  {{piscina.casa__direccion}}<br>
 								<b>Tipo Piscina:</b> {{piscina.tipo__nombre}}<br>
 								<b>Fabricante:</b> {{piscina.fabricante__nombre}}<br>
-								<b>Estado:</b> <b class="light-blue-text" ng-show="{{piscina.estado}}">Buen Estado</b> <b class="red-text" ng-show="!{{piscina.estado}}">Mal Estado</b>
+								<b>Estado:</b> <b class="light-blue-text" ng-show="piscina.estado">Buen Estado</b> <b class="red-text" ng-show="!piscina.estado">Reportada</b>
 						</p>
 					<div class="secondary-content">
 							<input type="checkbox" class="checkbox red" id="piscina{{piscina.id}}" ng-model="piscina.check" ng-change="asignar(piscina.id, piscina)"/>

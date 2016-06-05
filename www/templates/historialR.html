@@ -1,6 +1,6 @@
 <ion-view title="Historial de Reportes">
     <ion-header-bar class="bar-subheader headerbar item-input-inset row">
-        <div class="input-field col s12">
+        <div class="input-field col s12 white-text">
             <i class="ion-search prefix"></i>
             <input type="text" name="buscar" placeholder="Buscar" ng-model="search">
         </div>
@@ -8,7 +8,7 @@
     <ion-content overflow-scroll=”true”>
         <ion-refresher pulling-text="Refrescar" on-refresh="reload()" refreshingText="Refrescando"></ion-refresher>
         <ul class="collapsible popout" data-collapsible="accordion">
-            <li collection-repeat="reporte in reportes|filter:search" >
+            <li ng-repeat="reporte in reportes|filter:search track by reporte.pk" repeat-end="collap()">
                 <div class="collapsible-header grey lighten-5">
                     <ul class="collection grey lighten-5">
                         <li class="collection-item  grey lighten-5">

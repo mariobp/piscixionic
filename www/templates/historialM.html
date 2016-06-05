@@ -1,6 +1,6 @@
 <ion-view title="Historial de Mantenimiento">
 	<ion-header-bar class="bar-subheader headerbar item-input-inset row">
-		<div class="input-field col s12">
+		<div class="input-field col s12 white-text">
 			<i class="ion-search prefix"></i>
 			<input type="text" name="buscar" placeholder="Buscar" ng-model="search">
 		</div>
@@ -8,7 +8,7 @@
 	<ion-content overflow-scroll=”true”>
 		<ion-refresher pulling-text="Refrescar" on-refresh="reload()" refreshingText="Refrescando"></ion-refresher>
 		<ul class="collapsible popout" data-collapsible="accordion">
-			<li collection-repeat="item in lista|filter:search" >
+			<li ng-repeat="item in lista|filter:search track by item.pk" repeat-end="collap()">
 				<div class="collapsible-header grey lighten-5">
 					<ul class="collection grey lighten-5">
 						<li class="collection-item  grey lighten-5">
