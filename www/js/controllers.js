@@ -110,6 +110,7 @@ angular.module('starter.controllers', [])
                     num++;
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                 }, function errorCallback(response) {
+                    console.log(response);
                     if (response.status === 403) {
                         $cordovaToast
                             .show(response.data.error, 'short', 'center')
@@ -523,11 +524,6 @@ angular.module('starter.controllers', [])
         var num = 1,
             max = 0;
         $scope.reportes = [];
-        $scope.collap = function() {
-            $('.collapsible').collapsible({
-                accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
-            });
-        };
         $scope.loadMore = function() {
             $http.get($scope.server + '/reportes/reporte/list/?page=' + num)
                 .then(function successCallback(response) {
@@ -786,11 +782,6 @@ angular.module('starter.controllers', [])
     var num = 1,
         max = 0;
     $scope.lista = [];
-    $scope.collap = function() {
-        $('.collapsible').collapsible({
-            accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
-        });
-    };
     $scope.loadMore = function() {
         $http.get($scope.server + '/mantenimiento/service/mantanimiento/list/?page=' + num)
             .then(function successCallback(response) {
@@ -1043,11 +1034,6 @@ angular.module('starter.controllers', [])
     var num = 1,
         max = 0;
     $scope.lista = [];
-    $scope.collap = function() {
-        $('.collapsible').collapsible({
-            accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
-        });
-    };
     $scope.loadMore = function() {
         $http.get($scope.server + '/mantenimiento/service/reparacion/list/?page=' + num)
             .then(function successCallback(response) {
@@ -1249,12 +1235,6 @@ angular.module('starter.controllers', [])
     var num = 1,
         max = 0;
     $scope.piscineros = [];
-    $scope.collap = function() {
-        $('.collapsible').collapsible({
-            accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
-        });
-    };
-
     $scope.toggleGroup = function(group) {
       if ($scope.isGroupShown(group)) {
         $scope.shownGroup = null;

@@ -13,6 +13,26 @@ angular.module('starter.directives', [])
             }
         };
     })
+    .directive("collapsible", function ($timeout) {
+          return {
+              link: function (scope, element, attrs) {
+                  $timeout(function () {
+                      element.collapsible();
+                  });
+                  if ("watch" in attrs) {
+                      scope.$watch(function () {
+                          return element[0].innerHTML;
+                      }, function (oldVal, newVal) {
+                          if (oldVal !== newVal) {
+                              $timeout(function () {
+                                  element.collapsible();
+                              });
+                          }
+                      });
+                  }
+              }
+          };
+      })
     .directive('map', function() {
         return {
             restrict: 'E',
