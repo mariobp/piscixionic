@@ -7,7 +7,7 @@
   </ion-header-bar>
   <ion-content>
     <div class="list card">
-      <div collection-repeat="imagen in imagenes" class="item item-body">
+      <div ng-repeat="imagen in imagenes" class="item item-body">
         <img class="full-image" ng-src="{{imagen}}">
       </div>
     </div>

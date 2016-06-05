@@ -1,11 +1,14 @@
 <ion-view cache-view="false" view-title="Mantenimiento">
+<ion-header-bar align-title="center" class="bar bar-subheader light-blue " ng-show="ready">
+  <h2 class="title white-text">{{piscinas[0].nombreC}} {{piscinas[0].apellidosC}}</h2>
+</ion-header-bar>
 <ion-content>
 <div class="spin" ng-if="!ready">
   <ion-spinner></ion-spinner>
 </div>
-<div class="row" ng-if="ready">
+<div class="row row-p" ng-if="ready">
   <form class="col s12" name="form" ng-submit="form.$valid && datosForm()" novalidate>
-    <div class="row">
+    <div class="row row-p">
       <div class="input-field col s12">
         <input type="text" id="nombre" name="nombre" ng-model="data.nombre" ng-class="{'invalid':form.nombre.$invalid && form.$submitted,'valid':form.nombre.$valid && form.$submitted}" required>
         <label for="nombre">Nombre</label>
@@ -14,11 +17,23 @@
         </div>
       </div>
      </div>
-    <div class="row">
+    <div class="row row-p">
       <div class="input-field col s12">
         <textarea type="text" id="descripcion" maxlength="200" rows="5" class="materialize-textarea" ng-model="data.descripcion" name="descripcion" required ng-class="{'invalid':form.descripcion.$invalid && form.$submitted,'valid':form.descripcion.$valid && form.$submitted}"></textarea>
         <label for="descripcion">Descricción</label>
         <div class="error-container" ng-show="form.descripcion.$error && form.$submitted" ng-messages="form.descripcion.$error">
+          <div ng-messages-include="templates/error-list.html"></div>
+        </div>
+      </div>
+    </div>
+    <div class="row row-p">
+      <div class="input-field col s12">
+        <select id="piscina" class="ion-input-select" ng-model="data.piscina">
+           <option value="" disabled selected>Piscina</option>
+           <option value="{{piscina.pk}}" ng-repeat="piscina in piscinas">{{piscina.nombre}}</option>
+        </select>
+        <label for="piscina" class="label-select" ng-class="{'invalid': !data.piscina && form.$submitted,'valid':data.piscina && form.$submitted}">Piscina</label>
+         <div class="error-container" ng-show="!data.piscina && form.$submitted" ng-messages="form.nombre.$error">
           <div ng-messages-include="templates/error-list.html"></div>
         </div>
       </div>

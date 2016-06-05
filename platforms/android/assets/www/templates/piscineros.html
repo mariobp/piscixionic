@@ -8,7 +8,7 @@
     <ion-content overflow-scroll=”true”>
         <ion-refresher pulling-text="Refrescar" on-refresh="reload()" refreshingText="Refrescando"></ion-refresher>
         <ul class="collapsible popout" data-collapsible="accordion">
-            <li collection-repeat="piscinero in piscineros|filter:search" repeat-end="collap()">
+            <li collection-repeat="piscinero in piscineros|filter:search">
                 <div class="collapsible-header grey lighten-5">
                     <ul class="collection grey lighten-5">
                         <li class="collection-item avatar grey lighten-5">

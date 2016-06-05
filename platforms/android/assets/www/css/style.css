@@ -277,11 +277,15 @@ select {
 }
 
 .ion-input-select {
-  width:200px;
+  width:100%;
   font-size:1rem;
  /* background-image: url(http://i.imgur.com/nA9xx1X.png);*/
   text-indent:20px;
   padding:.5rem 0;
+}
+
+.label-select {
+    top: -2rem !important;
 }
 
 option {
