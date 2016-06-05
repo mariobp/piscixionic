@@ -438,8 +438,8 @@ angular.module('starter.controllers', [])
                 data:  $.param(data),
                 //transformRequest: formDataObject, // this sends your data to the formDataObject provider that we are defining below.
                 headers: {
-                    'Content-Type': 'multipart/form-data',
-                    //'Content-Type': 'application/x-www-form-urlencoded',
+                    //'Content-Type': 'multipart/form-data',
+                    'Content-Type': 'application/x-www-form-urlencoded',
                     //'Content-Type': undefined
                 },
             }).then(function doneCallbacks(response) {
@@ -488,7 +488,7 @@ angular.module('starter.controllers', [])
             var dataSend = {};
             dataSend.nombre = $scope.data.nombre;
             dataSend.descripcion = $scope.data.descripcion;
-            dataSend.tipo = $scope.data.tipo;
+            dataSend.tipo_de_reporte = $scope.data.tipo;
             dataSend.piscina = $scope.data.piscina;
             dataSend["fotoreporte_set-TOTAL_FORMS"] = $scope.total;
             dataSend["fotoreporte_set-INITIAL_FORMS"] = 0;
