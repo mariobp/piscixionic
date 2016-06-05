@@ -1,5 +1,39 @@
 <ion-view title="Historial de Mantenimiento">
-	<ion-content>
-    Content Here
-  </ion-content>
+	<ion-header-bar class="bar-subheader headerbar item-input-inset row">
+		<div class="input-field col s12">
+			<i class="ion-search prefix"></i>
+			<input type="text" name="buscar" placeholder="Buscar" ng-model="search">
+		</div>
+	</ion-header-bar>
+	<ion-content overflow-scroll=”true”>
+		<ion-refresher pulling-text="Refrescar" on-refresh="reload()" refreshingText="Refrescando"></ion-refresher>
+		<ul class="collapsible popout" data-collapsible="accordion">
+			<li collection-repeat="item in lista|filter:search" >
+				<div class="collapsible-header grey lighten-5">
+					<ul class="collection grey lighten-5">
+						<li class="collection-item  grey lighten-5">
+							<span class="title">Manteniemiento:{{item.nombre}}</span>
+							<p>
+								Fecha: {{item.fecha}}
+								<br>
+								Cliente: {{item.nombreC}} {{item.apellidosC}}
+							</p>
+						</li>
+					</ul>
+				</div>
+				<div class="collapsible-body row row-p grey lighten-5">
+					<p class="col s12 ">
+						Piscina: {{item.piscina__nombre}}
+						<br>
+						Descripción: {{item.descripcion}}
+						<br>
+					</p>
+					<a href="" class="btn-large waves-effect waves-light green accent-3 col s12">
+						<i class="micon">collections</i>
+						Fotos</a>
+				</div>
+			</li>
+		</ul>
+		<ion-infinite-scroll ng-if="!noMoreItemsAvailable" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll>
+	</ion-content>
 </ion-view>

@@ -386,6 +386,24 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
                     controller: 'HistorialR'
                 }
             }
+        })
+        .state('app.historialRe', {
+            url: '/historial/reparaciones',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/historialRe.html',
+                    controller: 'HistorialRe'
+                }
+            }
+        })
+        .state('app.historialM', {
+            url: '/historial/mantenimientos',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/historialM.html',
+                    controller: 'HistorialM'
+                }
+            }
         });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/clientelists');

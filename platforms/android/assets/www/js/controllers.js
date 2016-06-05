@@ -786,7 +786,65 @@ angular.module('starter.controllers', [])
 
         };
     })
+.controller('HistorialM', function($scope, $http, $location, $ionicHistory, $cordovaToast, $timeout, $cordovaDialogs){
+    $scope.search = "";
+    $scope.noMoreItemsAvailable = false;
+    var num = 1,
+        max = 0;
+    $scope.lista = [];
+    $scope.collap = function() {
+        $('.collapsible').collapsible({
+            accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+        });
+    };
+    $scope.loadMore = function() {
+        $http.get($scope.server + '/mantenimiento/service/mantanimiento/list/?page=' + num)
+            .then(function successCallback(response) {
+                var data = response.data.object_list;
+                if (response.data.num_rows === 0) {
+                    $cordovaDialogs.alert('No hay ningún reporte registrado.', 'Información');
+                }
+                data.forEach(function(data) {
+                    $scope.lista.push(data);
+                });
+                max = response.data.count;
+                console.log(max);
+                console.log($scope.lista.length);
+                if ($scope.lista.length === max) {
+                    $scope.noMoreItemsAvailable = true;
+                }
+                num++;
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            }, function errorCallback(response) {
+                console.log(response);
+                if (response.status == 403) {
+                    $cordovaToast
+                        .show(response.data.error, 'short', 'center')
+                        .then(function(success) {
+                            $location.path('/app/login');
+                        }, function(error) {
+                            console.log(error);
+                        });
+                } else if (response.status === 0) {
+                    $cordovaDialogs.confirm('No se puede acceder a este servicio en este momento.', 'Error');
+                } else {
+                    $timeout(function() {
+                        $cordovaToast
+                            .show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center');
+                        $scope.loadMore();
+                    }, 10000);
+                }
+            });
+    };
 
+    $scope.reload = function() {
+        $scope.lista = [];
+        num = 1;
+        max = 0;
+        $scope.noMoreItemsAvailable = false;
+        $scope.$broadcast('scroll.refreshComplete');
+    };
+})
 .controller('Reparacion', function($http, $scope, $stateParams, Camera, Galeria, $cordovaImagePicker, $location, $cordovaToast, $cordovaDialogs, $ionicHistory, $timeout, $ionicLoading) {
     $scope.data = {};
     $scope.data.imagenes = [];
@@ -985,7 +1043,69 @@ angular.module('starter.controllers', [])
 
     };
 })
+.controller('HistorialRe', function($scope, $http, $location, $ionicHistory, $cordovaToast, $timeout, $cordovaDialogs){
+    $scope.search = "";
+    $scope.noMoreItemsAvailable = false;
+    var num = 1,
+        max = 0;
+    $scope.lista = [];
+    $scope.collap = function() {
+        $('.collapsible').collapsible({
+            accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+        });
+    };
+    angular.element(document).ready(function () {
+        console.log("entro");
+        $('.collapsible').collapsible({
+            accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+        });
+    });
+    $scope.loadMore = function() {
+        $http.get($scope.server + '/mantenimiento/service/reparacion/list/?page=' + num)
+            .then(function successCallback(response) {
+                var data = response.data.object_list;
+                if (response.data.num_rows === 0) {
+                    $cordovaDialogs.alert('No hay ningún reporte registrado.', 'Información');
+                }
+                data.forEach(function(data) {
+                    $scope.lista.push(data);
+                });
+                max = response.data.count;
+                if ($scope.lista.length === max) {
+                    $scope.noMoreItemsAvailable = true;
+                }
+                num++;
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            }, function errorCallback(response) {
+                console.log(response);
+                if (response.status == 403) {
+                    $cordovaToast
+                        .show(response.data.error, 'short', 'center')
+                        .then(function(success) {
+                            $location.path('/app/login');
+                        }, function(error) {
+                            console.log(error);
+                        });
+                } else if (response.status === 0) {
+                    $cordovaDialogs.confirm('No se puede acceder a este servicio en este momento.', 'Error');
+                } else {
+                    $timeout(function() {
+                        $cordovaToast
+                            .show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center');
+                        $scope.loadMore();
+                    }, 10000);
+                }
+            });
+    };
 
+    $scope.reload = function() {
+        $scope.lista = [];
+        num = 1;
+        max = 0;
+        $scope.noMoreItemsAvailable = false;
+        $scope.$broadcast('scroll.refreshComplete');
+    };
+})
 .controller('MapCtrl', function($scope, $ionicLoading, $stateParams, $cordovaGeolocation, $cordovaDialogs, $timeout, $http, $cordovaToast, $location) {
     var latitud = $stateParams.latitud,
         longitud = $stateParams.longitud,
