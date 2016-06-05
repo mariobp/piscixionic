@@ -1,7 +1,7 @@
 <ion-view cache-view="false" title="Asignacion Ruta">
 	<ion-content>
 		<ion-list class="" show-reorder="true">
-		  <ion-item ng-repeat="item in items" item="item" class="collection-item">
+		  <ion-item collection-repeat="item in items" item="item" class="collection-item">
 				<h2> <b class="light-blue-text">{{$index + 1}}</b> {{ item.nombreP }}</h2>
 				<p>
 					<b>Cliente: </b> {{ item.nombreCF }} {{ item.nombreCL }}<br>

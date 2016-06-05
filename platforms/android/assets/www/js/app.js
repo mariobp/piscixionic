@@ -108,7 +108,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
 
     //$rootScope.server = "http://104.236.33.228:8040";
     //$rootScope.server = "http://192.168.1.51:8000";
-    $rootScope.server = "http://192.168.0.102:8000";
+    $rootScope.server = "http://192.168.0.108:8000";
 
     function isLogin() {
         $http.get($rootScope.server + "/usuarios/is/login/")

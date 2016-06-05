@@ -12,7 +12,7 @@ angular.module('starter.controllers', [])
     $scope.loginData = {};
     //$scope.server = "http://104.236.33.228:8040";
     //$scope.server = "http://192.168.1.51:8000";
-    $scope.server = "http://192.168.0.102:8000";
+    $scope.server = "http://192.168.0.108:8000";
     // Create the login modal that we will use later
     $scope.logout = function() {
         $http.get($scope.server + "/usuarios/logout/").success(function() {
@@ -42,6 +42,7 @@ angular.module('starter.controllers', [])
 
 .controller('Login', function($scope, $http, $ionicHistory, $cordovaToast, $state, $ionicSideMenuDelegate) {
         $ionicSideMenuDelegate.canDragContent(false);
+        $scope.loginData = {};
         $scope.loginReady = true;
         $scope.doLogin = function() {
             $scope.loginReady = false;
@@ -80,7 +81,6 @@ angular.module('starter.controllers', [])
             // code if using a login system
 
         };
-
     })
     //Controlador de lista de clientes
     .controller('Clientelists', function($http, $scope, $timeout, $cordovaDialogs, $state, $cordovaToast, $ionicHistory, $cordovaBarcodeScanner) {
@@ -224,7 +224,7 @@ angular.module('starter.controllers', [])
     var scope = $rootScope;
     $ionicModal.fromTemplateUrl('templates/galeria.html', {
         scope: scope,
-        animation: 'fade'
+        animation: 'slide-in-up'
     }).then(function(modal) {
         scope.modal = modal;
     });
@@ -232,6 +232,10 @@ angular.module('starter.controllers', [])
     scope.closeGaleria = function() {
         scope.modal.hide();
     };
+
+    scope.$on('$destroy', function() {
+       scope.modal.remove();
+     });
 
     return {
         openGaleria: function(imagenes) {

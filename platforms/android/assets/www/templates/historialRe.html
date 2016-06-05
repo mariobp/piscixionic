@@ -1,39 +1,45 @@
 <ion-view title="Historial de Reparaciones">
-  <ion-header-bar class="bar-subheader headerbar item-input-inset row">
-      <div class="input-field col s12">
-        <i class="ion-search prefix"></i>
-        <input type="text" name="buscar" placeholder="Buscar" ng-model="search" >
-      </div>
-  </ion-header-bar>
-	<ion-content overflow-scroll=”true”>
-    <ion-refresher
-     pulling-text ="Refrescar"
-     on-refresh="reload()"
-     refreshingText="Refrescando"
-     >
-   </ion-refresher>
-		<ul class="collapsible popout" data-collapsible="accordion">
-			<li ng-repeat="reporte in reportes|filter:search">
-				<div class="collapsible-header">
-					<ul class="collection">
-						<li class="collection-item">
-					      <span class="title">Reporte: {{reporte.nombre}}</span>
-								<p>
-									Fecha: {{reporte.fecha}} <br>
-                  Cliente: {{reporte.nombreC}} {{reporte.apellidosC}}
-                </p>
-						</li>
-					</ul>
-				</div>
-      	<div class="collapsible-body row row-p">
-						<p class="col s12">
-							Tipo: {{reporte.tipon}} <br>
-							Cierre: {{reporte.cierre}} <br>
-							Descripción: {{reporte.descripcion}} <br>
-						</p>
-      	</div>
-			</li>
-		</ul>
-		<ion-infinite-scroll ng-if="!noMoreItemsAvailable" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll>
-  </ion-content>
+    <ion-header-bar class="bar-subheader headerbar item-input-inset row">
+        <div class="input-field col s12">
+            <i class="ion-search prefix"></i>
+            <input type="text" name="buscar" placeholder="Buscar" ng-model="search">
+        </div>
+    </ion-header-bar>
+    <ion-content overflow-scroll=”true”>
+        <ion-refresher pulling-text="Refrescar" on-refresh="reload()" refreshingText="Refrescando"></ion-refresher>
+        <ul class="collapsible popout" data-collapsible="accordion">
+            <li collection-repeat="reporte in reportes|filter:search">
+                <div class="collapsible-header">
+                    <ul class="collection">
+                        <li class="collection-item">
+                            <span class="title">Reporte:
+                                {{reporte.nombre}}</span>
+                            <p>
+                                Fecha:
+                                {{reporte.fecha}}
+                                <br>
+                                Cliente:
+                                {{reporte.nombreC}}
+                                {{reporte.apellidosC}}
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="collapsible-body row row-p">
+                    <p class="col s12">
+                        Tipo:
+                        {{reporte.tipon}}
+                        <br>
+                        Cierre:
+                        {{reporte.cierre}}
+                        <br>
+                        Descripción:
+                        {{reporte.descripcion}}
+                        <br>
+                    </p>
+                </div>
+            </li>
+        </ul>
+        <ion-infinite-scroll ng-if="!noMoreItemsAvailable" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll>
+    </ion-content>
 </ion-view>

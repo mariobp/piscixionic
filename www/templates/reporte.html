@@ -27,11 +27,28 @@
           </div>
         </div>
         <div class="row">
-          <div class="input-field col s12">
-            <select id="tipo" class="select" ng-model="data.tipo" ng-change="mostrar(tipo)">
+          <!--div class="input-field col s12">
+              <label class="" ng-class="{'has-errors': !data.tipo && form.$submitted,'no-errors':data.tipo && form.$submitted}">
+               <span class="input-label">Tipo de novedad</span>
+               <br>
+               <button type="button" class="btn-flat" modal-select ng-model="data.tipo" options="tipos">
+                   Seleccionar
+                   <div class="option">
+                       <h2>{{option.nombre}}</h2>
+                       <p>
+                           Cierre:{{option.cierre}}
+                       </p>
+                   </div>
+               </button>
+             </label>
+            <label class="item item-input item-stacked-label">
+            <div class="error-container" ng-show="!data.tipo && form.$submitted" ng-messages="form.nombre.$error">
+              <div ng-messages-include="templates/error-list.html"></div>
+          </div-->
+            <select id="tipo" class="ion-input-select" ng-model="data.tipo" ng-change="mostrar(tipo)">
                <option value="" disabled selected>Tipo de Reporte</option>
                <option value="{{tipo.id}}" ng-repeat="tipo in tipos">{{tipo.nombre}}</option>
-            </select>
+           </select>
             <label for="tipo" ng-class="{'invalid': !data.tipo && form.$submitted,'valid':data.tipo && form.$submitted}">Tipo de Reporte</label>
              <div class="error-container" ng-show="!data.tipo && form.$submitted" ng-messages="form.nombre.$error">
               <div ng-messages-include="templates/error-list.html"></div>
@@ -40,16 +57,16 @@
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <select id="piscina" class="select" ng-model="data.piscina">
+            <select id="piscina" class="ion-input-select" ng-model="data.piscina">
                <option value="" disabled selected>Piscina</option>
-               <option value="{{piscina.pk}}" ng-repeat="piscina in piscinas" repeat-end="selecP()">{{piscina.nombre}}</option>
+               <option value="{{piscina.pk}}" ng-repeat="piscina in piscinas">{{piscina.nombre}}</option>
             </select>
             <label for="piscina" ng-class="{'invalid': !data.piscina && form.$submitted,'valid':data.piscina && form.$submitted}">Piscina</label>
              <div class="error-container" ng-show="!data.piscina && form.$submitted" ng-messages="form.nombre.$error">
               <div ng-messages-include="templates/error-list.html"></div>
             </div>
           </div>
-        </div>
+      </div>
         <div class="row row-p">
             <div class="col s4">
               <button type="button" class="btn-large waves-effect waves-light  light-blue" ng-click="takePicture()">
