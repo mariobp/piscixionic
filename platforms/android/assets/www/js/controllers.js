@@ -164,9 +164,6 @@ angular.module('starter.controllers', [])
 .controller('InfoC', function($http, $scope, $stateParams, $location, $timeout, $cordovaToast, $ionicHistory, $cordovaDialogs) {
     var id = $stateParams.clienteId;
     $scope.dataReady = false;
-    $('.tooltipped').tooltip({
-        delay: 50
-    });
     $scope.single = function() {
         $http.get($scope.server + '/usuarios/single/cliente/' + id + '/')
             .then(function successCallback(response) {
@@ -223,9 +220,10 @@ angular.module('starter.controllers', [])
 
 .factory('Galeria', function($rootScope, $ionicModal) {
     var scope = $rootScope;
+    scope.imagenes = [];
     $ionicModal.fromTemplateUrl('templates/galeria.html', {
         scope: scope,
-        animation: 'slide-in-up'
+        animation: 'fade-g'
     }).then(function(modal) {
         scope.modal = modal;
     });
@@ -238,16 +236,19 @@ angular.module('starter.controllers', [])
        scope.modal.remove();
      });
 
+     scope.$on('modal.shown', function() {
+     // Execute action
+        $('.materialboxed').materialbox();
+    });
     return {
         openGaleria: function(imagenes) {
-            console.log("entro a modal");
             scope.imagenes = imagenes;
             scope.modal.show();
         }
     };
 })
 
-.controller('Reporte', function($http, $scope, $stateParams, $cordovaDialogs, $cordovaToast, Galeria, $cordovaImagePicker, $location, $timeout, $ionicHistory, $cordovaCamera, $ionicLoading) {
+.controller('Reporte', function($http, $scope, $stateParams, $cordovaDialogs, $cordovaToast, Galeria, $cordovaImagePicker, $location, $timeout, $ionicHistory, $cordovaCamera, $ionicLoading, $ionicModal) {
         $scope.data = {};
         $scope.data.imagenes = [];
         $scope.total = 0;
@@ -404,6 +405,18 @@ angular.module('starter.controllers', [])
         };
 
         $scope.verGaleria = function() {
+            $ionicModal.fromTemplateUrl('my-modal.html', {
+              scope: $scope,
+              animation: 'slide-in-up'
+            }).then(function(modal) {
+              $scope.modal = modal;
+            });
+            $scope.openModal = function() {
+              $scope.modal.show();
+            };
+            $scope.closeModal = function() {
+              $scope.modal.hide();
+            };
             Galeria.openGaleria($scope.data.imagenes);
         };
 

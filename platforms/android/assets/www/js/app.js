@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-modal-select', 'starter.controllers', 'ionic-native-transitions', 'ngMessages', 'starter.directives'])
+angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.controllers', 'ionic-native-transitions', 'ngMessages', 'starter.directives'])
 
 .run(function($ionicPlatform, $ionicPopup, $http, $window, $cordovaStatusbar, $cordovaToast, $cordovaPush, $rootScope, $state, $cordovaSplashscreen, $cordovaLocalNotification) {
     //Project Number: 725278590059
@@ -140,11 +140,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
                     id: 3,
                     title: 'Piscix',
                     text: 'Servidor fuera de servicio',
-                    data: {
-                        customProperty: 'custom value'
-                    }
-                }).then(function(result) {
-                    // ...
+                    icon: 'img/icon.png'
                 });
             }
         });
@@ -178,12 +174,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
                 id: 1,
                 title: 'Piscix',
                 text: 'No hay conexión a Internet!',
-                data: {
-                    customProperty: 'custom value'
-                }
-            }).then(function(result) {
-                // ...
-                bandera = true;
+                icon: 'img/icon.png'
             });
         });
     }
@@ -200,12 +191,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
                   id: 2,
                   title: 'Piscix',
                   text: 'Conexión a internet recuperada!',
-                  data: {
-                      customProperty: 'custom value'
-                  }
-              }).then(function(result) {
-                  // ...
-                  bandera = false;
+                  icon: 'img/icon.png'
               });
             });
             /*
@@ -229,7 +215,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'ionic-mo
     //$ionicConfigProvider.spinner.icon('ripple');
     $ionicConfigProvider.scrolling.jsScrolling(false);
     $ionicNativeTransitionsProvider.setDefaultOptions({
-        duration: 200, // in milliseconds (ms), default 400,
+        duration: 375, // in milliseconds (ms), default 400,
         slowdownfactor: 2, // overlap views (higher number is more) or no overlap (1), default 4
         iosdelay: -1, // ms to wait for the iOS webview to update before animation kicks in, default -1
         androiddelay: -1, // same as above but for Android, default -1

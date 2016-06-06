@@ -5340,13 +5340,13 @@ ion-tabs.tabs-striped.tabs-color-active-dark .tab-item.tab-item-active, ion-tabs
   pointer-events: none; }
 
 .modal {
-  display: block;
-  position: absolute;
+  display: block !important;
+  position: absolute !important;
   top: 0;
   z-index: 10;
   overflow: hidden;
-  min-height: 100%;
-  width: 100%;
+  min-height: 100% !important;
+  width: 100% !important;
   background-color: #fff; }
 
 @media (min-width: 680px) {
