@@ -1,0 +1,14 @@
+<ion-view title="Galeria Reportes">
+	<ion-content>
+    <div class="spin" ng-show="!ready">
+      <ion-spinner></ion-spinner>
+    </div>
+    <div class="carousel" ng-show="ready && imagenes">
+        <a class="carousel-item" href="" ng-repeat="imagen in imagenes" repeat-end="carusel()"><img ng-src="{{server}}/media/{{imagen.url}}"></a>
+    </div>
+    <div class="center" ng-show="ready && !imagenes">
+        <i class="large micon">broken_imagen</i>
+        <h3 class=>No tiene ninguna imagen</h3>
+    </div>
+  </ion-content>
+</ion-view>

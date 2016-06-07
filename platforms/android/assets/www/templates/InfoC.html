@@ -4,10 +4,10 @@
   </ion-header-bar>
   <ion-content overflow-scroll=”true” class="content-b">
     <link rel="stylesheet" href="lib/materialize-css/dist/css/materialize.min.css">
-    <div class="spin" ng-if="!dataReady">
+    <div class="spin" ng-show="!dataReady">
       <ion-spinner></ion-spinner>
     </div>
-    <div class="row" ng-if="dataReady">
+    <div class="row" ng-show="dataReady">
       <div class="list card col s12 grey lighten-5">
           <div class="item item-avatar grey lighten-5">
               <img src="{{server}}/media/{{info.cliente.imagen}}" ng-if="info.cliente.imagen !=''">

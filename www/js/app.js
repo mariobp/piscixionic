@@ -390,6 +390,15 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
                     controller: 'HistorialM'
                 }
             }
+        })
+        .state('app.galeriaR', {
+            url: '/galeria/reportes/:reporteId',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/galeriaR.html',
+                    controller: 'GaleriaR'
+                }
+            }
         });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/clientelists');

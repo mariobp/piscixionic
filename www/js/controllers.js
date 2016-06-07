@@ -262,7 +262,6 @@ angular.module('starter.controllers', [])
         $scope.back = function() {
             $ionicHistory.goBack(-1);
         };
-
         $scope.piscinas = function() {
             $http.get($scope.server + '/usuarios/service/list/piscina/?casa__cliente=' + id)
                 .then(function successCallback(response) {
@@ -405,18 +404,6 @@ angular.module('starter.controllers', [])
         };
 
         $scope.verGaleria = function() {
-            $ionicModal.fromTemplateUrl('my-modal.html', {
-              scope: $scope,
-              animation: 'slide-in-up'
-            }).then(function(modal) {
-              $scope.modal = modal;
-            });
-            $scope.openModal = function() {
-              $scope.modal.show();
-            };
-            $scope.closeModal = function() {
-              $scope.modal.hide();
-            };
             Galeria.openGaleria($scope.data.imagenes);
         };
 
@@ -583,6 +570,37 @@ angular.module('starter.controllers', [])
             $scope.$broadcast('scroll.refreshComplete');
         };
 
+    })
+    .controller('GaleriaR', function($http, $scope, $stateParams, $cordovaToast, $location, $cordovaDialogs, $ionicHistory, $timeout, $ionicLoading){
+        var id = $stateParams.reporteId;
+        $scope.imagenes = [];
+        $scope.ready = false;
+        $http.get($scope.server + '/reportes/fotoreporte/list/?report=' + id)
+            .then(function successCallback(response) {
+                $scope.imagenes = response.data.object_list;
+                $scope.ready = true;
+            }, function errorCallback(response) {
+                if (response.status === 403) {
+                    $cordovaToast
+                        .show(response.data.error, 'short', 'center')
+                        .then(function(success) {
+                            $location.path('/app/login');
+                        }, function(error) {
+                            console.log(error);
+                        });
+                } else if (response.status === 0) {
+                    $cordovaDialogs.alert('No se puede acceder a este servicio en este momento.', 'Error', 'Ok');
+                } else {
+                    $timeout(function() {
+                        $cordovaToast
+                            .show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center');
+                        $scope.piscinas();
+                    }, 10000);
+                }
+            });
+        $scope.carusel =  function(){
+            $('.carousel').carousel();
+        }
     })
     .controller('Mantenimiento', function($http, $scope, $stateParams, Camera, Galeria, $cordovaImagePicker, $cordovaToast, $location, $cordovaDialogs, $ionicHistory, $timeout, $ionicLoading) {
         $scope.data = {};

@@ -22,22 +22,23 @@
                         </li>
                     </ul>
                 </div>
-                <div class="collapsible-body row row-p">
-                    <p class="col s12">
-                        Telefono: {{piscinero.telefono}}
-                        <br>
-                        Email: {{piscinero.email}}
-                        <br>
-                        Dirección: {{piscinero.direccion}}
-                        <br>
-                        Fecha de nacimiento: {{piscinero.fecha_nacimiento}}
-                    </p>
-                    <a href="#/app/ruta/{{piscinero.id}}" class="btn-large waves-effect waves-light green accent-3 col s6">
-                        <i class="micon">directions</i>
-                        Ruta</a>
-                    <a href="#/app/asignacionpiscina/{{piscinero.id}}" class="btn-large waves-effect waves-light light-blue col s6">
-                        <i class="micon">pool</i>
-                        Piscinas</a>
+                <div class="collapsible-body grey lighten-5">
+                    <ul class="collection">
+                        <li class="collection-item">Telefono: {{piscinero.telefono}}</li>
+                        <li class="collection-item">Email: {{piscinero.email}}</li>
+                        <li class="collection-item">Dirección: {{piscinero.direccion}}</li>
+                        <li class="collection-item">Fecha de nacimiento: {{piscinero.fecha_nacimiento}}</li>
+                        <li class="collection-item">
+                            <div class="row row-p">
+                                <a href="#/app/ruta/{{piscinero.id}}" class="btn-large waves-effect waves-light green accent-3 col s6">
+                                    <i class="micon">directions</i>
+                                    Ruta</a>
+                                <a href="#/app/asignacionpiscina/{{piscinero.id}}" class="btn-large waves-effect waves-light light-blue col s6">
+                                    <i class="micon">pool</i>
+                                    Piscinas</a>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </li>
         </ul>

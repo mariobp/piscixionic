@@ -13,6 +13,9 @@
         "com.telerik.plugins.nativepagetransitions": {
             "PACKAGE_NAME": "com.ionicframework.piscix612347"
         },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.ionicframework.piscix612347"
+        },
         "cordova-plugin-console": {
             "PACKAGE_NAME": "com.ionicframework.piscix612347"
         },
@@ -57,9 +60,6 @@
         },
         "phonegap-plugin-push": {
             "SENDER_ID": "AIzaSyBeuBsMahCuzv7P09GZ69wWbtqDR_4nqGA",
-            "PACKAGE_NAME": "com.ionicframework.piscix612347"
-        },
-        "cordova-plugin-camera": {
             "PACKAGE_NAME": "com.ionicframework.piscix612347"
         }
     },
