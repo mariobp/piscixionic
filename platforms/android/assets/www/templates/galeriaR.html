@@ -7,8 +7,8 @@
 		<div class="card galeria-up" ng-if="ready && count>0">
 			<img class="full-image" ng-src="{{server}}/media/{{actual}}"/>
 		</div>
-		<ks-swiper-container ng-if="ready && count>0" initial-slide="0" speed="2000" loop="true" show-nav-buttons="false" slides-per-view="3" space-between="0" pagination-clickable="false" show-nav-buttons="true" on-ready="onReadySwiper(swiper)">
-			<ks-swiper-slide class="swiper-slide galeria-down" ng-repeat="imagen in imagenes" on-tap="selecion(imagen)" on-touch="selecion(imagen)">
+		<ks-swiper-container ng-if="ready && count>0" initial-slide="0" speed="2000" loop="false" slides-per-view="3" space-between="0" pagination-clickable="false" show-nav-buttons="true">
+			<ks-swiper-slide class="swiper-slide galeria-down" ng-repeat="imagen in imagenes" on-touch="selecion(imagen)">
 				<img ng-src="{{server}}/media/{{imagen.url}}" width="100%">
 			</ks-swiper-slide>
 		</ks-swiper-container>
