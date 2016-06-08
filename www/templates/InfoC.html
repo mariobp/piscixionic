@@ -12,19 +12,21 @@
           <div class="item item-avatar grey lighten-5">
               <img src="{{server}}/media/{{info.cliente.imagen}}" ng-if="info.cliente.imagen !=''">
               <img src="img/user.png" ng-if="info.cliente.imagen ==''"/>
-              <b>Nombre: </b><h2>{{info.cliente.first_name}} {{info.cliente.last_name}}</h2>
+              <b>Nombre: </b>{{info.cliente.first_name}} {{info.cliente.last_name}}<br>
               <b>Dirección: </b>{{info.cliente.direccion}}
           </div>
           <div class="item item-icon-left  grey lighten-5">
-            <i class="icon ion-android-call"></i>
-             <a ng-href="tel:{{info.cliente.telefono}}">{{info.cliente.telefono}}</a>
+             <a ng-href="tel:{{info.cliente.telefono}}">
+                 <i class="micon">call</i>
+                {{info.cliente.telefono}}
+            </a>
           </div>
           <div class="item item-icon-left  grey lighten-5">
-            <i class="icon ion-email"></i>
+            <i class="micon">email</i>
              {{info.cliente.email}}
           </div>
           <a  class="item item-icon-left  grey lighten-5" collection-repeat="casa in info.casas" href="#/app/asignargps/{{casa.id}}/{{casa.latitud}}/{{casa.longitud}}">
-            <i class="icon ion-home"></i>
+            <i class="micon">home</i>
             {{casa.direccion}}
           </a>
         </div>

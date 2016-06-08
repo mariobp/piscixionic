@@ -1,15 +1,10 @@
  <ion-view cache-view="false" view-title="Clientes">
-  <ion-header-bar class="bar-subheader headerbar item-input-inset row">
-      <div class="input-field col s12 white-text">
-        <i class="ion-search prefix"></i>
-        <input type="text" name="buscar" placeholder="Buscar" ng-model="search" >
+  <ion-header-bar class="bar-subheader headerbar item-input-inset row row-p">
+      <div class="input-field col s12 input-header">
+        <i class="micon prefix">search</i>
+        <input type="text" name="buscar" class="white-text" placeholder="Buscar" ng-model="search" >
       </div>
   </ion-header-bar>
-  <!--div class="fixed-action-btn click-to-toggle" style="bottom: 45px; right: 24px;">
-    <a class="btn-floating btn-large light-blue waves-effect" ng-click="scanearCodigo()">
-      <i class="micon">crop_free</i>
-    </a>
-  </div-->
   <ion-content overflow-scroll=”true”>
       <ion-refresher
        pulling-text ="Refrescar"

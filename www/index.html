@@ -3,11 +3,12 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <meta http-equiv="Content-Security-Policy" content="default-src *; script-src &apos;self&apos; &apos;unsafe-inline&apos; &apos;unsafe-eval&apos; *; style-src  &apos;self&apos; &apos;unsafe-inline&apos; *">
+    <meta http-equiv="Content-Security-Policy" content="default-src *; script-src &apos;self&apos; &apos;unsafe-inline&apos; &apos;unsafe-eval&apos; *; img-src  &apos;self&apos; data: *; style-src  &apos;self&apos; &apos;unsafe-inline&apos; *">
     <title></title>
     <!--link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"-->
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link rel="stylesheet" href="lib/materialize-css/dist/css/materialize.min.css">
+    <link href="lib/swiper/dist/css/swiper.min.css" rel="stylesheet"/>
     <link href="css/style.css" rel="stylesheet">
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
@@ -26,9 +27,10 @@
 
     <!-- your app's js -->
     <script src="js/ng-cordova.min.js"></script>
-    <script src="lib/ionic-modal-select.js"></script>
     <script src="lib/ionic-native-transitions/dist/ionic-native-transitions.min.js"></script>
     <script src="lib/bower_components/angular-messages/angular-messages.min.js"></script>
+    <script src="lib/swiper/dist/js/swiper.js"></script>
+    <script src="lib/angular-swiper/dist/angular-swiper.js"></script>
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/directives.js"></script>

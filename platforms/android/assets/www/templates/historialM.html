@@ -1,8 +1,8 @@
 <ion-view title="Historial de Mantenimiento">
-	<ion-header-bar class="bar-subheader headerbar item-input-inset row">
-		<div class="input-field col s12 white-text">
-			<i class="ion-search prefix"></i>
-			<input type="text" name="buscar" placeholder="Buscar" ng-model="search">
+	<ion-header-bar class="bar-subheader headerbar item-input-inset row row-p">
+		<div class="input-field col s12 input-header">
+			<i class="micon prefix">search</i>
+			<input type="text" name="buscar" class="white-text" placeholder="Buscar" ng-model="search">
 		</div>
 	</ion-header-bar>
 	<ion-content overflow-scroll=”true”>
@@ -12,25 +12,31 @@
 				<div class="collapsible-header grey lighten-5">
 					<ul class="collection grey lighten-5">
 						<li class="collection-item  grey lighten-5">
-							<span class="title">Manteniemiento:{{item.nombre}}</span>
+							<span class="title"><b>Manteniemiento:</b> {{item.nombre}}</span>
 							<p>
-								Fecha: {{item.fecha}}
+								<b>Fecha:</b> {{item.fecha}}
 								<br>
-								Cliente: {{item.nombreC}} {{item.apellidosC}}
+								<b>Cliente:</b> {{item.nombreC}} {{item.apellidosC}}
 							</p>
 						</li>
 					</ul>
 				</div>
 				<div class="collapsible-body row row-p grey lighten-5">
-					<p class="col s12 ">
-						Piscina: {{item.piscina__nombre}}
-						<br>
-						Descripción: {{item.descripcion}}
-						<br>
-					</p>
-					<a href="" class="btn-large waves-effect waves-light green accent-3 col s12">
-						<i class="micon">collections</i>
-						Fotos</a>
+					<ul class="collection">
+						<li class="collection-item">
+							<b>Piscina:</b> {{item.piscina__nombre}}
+						</li>
+						<li class="collection-item">
+							<b>Descripción:</b> {{item.descripcion}}
+						</li>
+						<li class="collection-item">
+							<div class="row row-p">
+								<a href="" class="btn-large waves-effect waves-light green accent-3 col s12">
+									<i class="micon">collections</i>
+									Fotos</a>
+							</div>
+						</li>
+					</ul>
 				</div>
 			</li>
 		</ul>

@@ -237,6 +237,7 @@ button:focus {
 .row-p {
     display: block;
     padding: 0px;
+    margin-bottom: 0px;
 }
 .content-b {
     height: calc(100% - 203px);
@@ -350,4 +351,25 @@ select::-ms-expand {
     -webkit-animation-duration:0.3s;
     -moz-animation-duration:0.3s;
     animation-duration:0.3s;
+}
+
+.input-header{
+    top: -15px;
+}
+.galeria-up{
+    height: 360px;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    align-self: center;
+    justify-content: center;
+}
+
+.galeria-down{
+    height:  calc(100% - 360px);
+    display: flex;
+    align-items: center;
+    align-content: center;
+    align-self: center;
+    justify-content: center;
 }

@@ -1,7 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($http, $scope, $timeout, $ionicLoading, $cordovaDialogs, $state, $rootScope) {
-    console.log($rootScope.server);
+.controller('AppCtrl', function($http, $scope, $state) {
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
@@ -9,7 +8,6 @@ angular.module('starter.controllers', [])
     //$scope.$on('$ionicView.enter', function(e) {
     //});
     // Form data for the login modal
-    $scope.loginData = {};
     //$scope.server = "http://104.236.33.228:8040";
     //$scope.server = "http://192.168.1.51:8000";
     $scope.server = "http://192.168.0.108:8000";
@@ -21,21 +19,6 @@ angular.module('starter.controllers', [])
             /* Act on the event */
             console.log(data);
         });
-    };
-
-    $scope.showAlert = function(titulo, body) {
-        $cordovaDialogs.alert(body, titulo);
-    };
-
-    //Loading...
-    $scope.showLoading = function() {
-        $ionicLoading.show({
-            template: 'Cargando...'
-        });
-    };
-
-    $scope.hideLoading = function() {
-        $ionicLoading.hide();
     };
 
 })
@@ -575,32 +558,62 @@ angular.module('starter.controllers', [])
         var id = $stateParams.reporteId;
         $scope.imagenes = [];
         $scope.ready = false;
-        $http.get($scope.server + '/reportes/fotoreporte/list/?report=' + id)
-            .then(function successCallback(response) {
-                $scope.imagenes = response.data.object_list;
-                $scope.ready = true;
-            }, function errorCallback(response) {
-                if (response.status === 403) {
-                    $cordovaToast
-                        .show(response.data.error, 'short', 'center')
-                        .then(function(success) {
-                            $location.path('/app/login');
-                        }, function(error) {
-                            console.log(error);
-                        });
-                } else if (response.status === 0) {
-                    $cordovaDialogs.alert('No se puede acceder a este servicio en este momento.', 'Error', 'Ok');
-                } else {
-                    $timeout(function() {
+        $scope.count = 0;
+        $scope.actual = "";
+        $scope.swiper = {};
+
+        $scope.galeria = function() {
+            $http.get($scope.server + '/reportes/fotoreporte/list/?reporte=' + id)
+                .then(function successCallback(response) {
+                    $scope.imagenes = response.data.object_list;
+                    $scope.count = $scope.imagenes.length;
+                    if($scope.count>0){
+                        $scope.actual = $scope.imagenes[0].url;
+                    }
+                    $scope.ready = true;
+                }, function errorCallback(response) {
+                    if (response.status === 403) {
                         $cordovaToast
-                            .show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center');
-                        $scope.piscinas();
-                    }, 10000);
-                }
-            });
+                            .show(response.data.error, 'short', 'center')
+                            .then(function(success) {
+                                $location.path('/app/login');
+                            }, function(error) {
+                                console.log(error);
+                            });
+                    } else if (response.status === 0) {
+                        $cordovaDialogs.alert('No se puede acceder a este servicio en este momento.', 'Error', 'Ok');
+                    } else {
+                        $timeout(function() {
+                            $cordovaToast
+                                .show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center');
+                            $scope.galeria();
+                        }, 10000);
+                    }
+                });
+        };
+
+        $scope.galeria();
+
+        $scope.selecion = function(imagen){
+            if ($scope.actual !== imagen.url) {
+                $scope.actual = imagen.url;
+            }
+        };
+
+       $scope.onReadySwiper = function (swiper) {
+
+           swiper.on('slideChangeStart', function () {
+               console.log('slide start');
+           });
+
+           swiper.on('onSlideChangeEnd', function () {
+               console.log('slide end');
+           });
+       };
+
         $scope.carusel =  function(){
             $('.carousel').carousel();
-        }
+        };
     })
     .controller('Mantenimiento', function($http, $scope, $stateParams, Camera, Galeria, $cordovaImagePicker, $cordovaToast, $location, $cordovaDialogs, $ionicHistory, $timeout, $ionicLoading) {
         $scope.data = {};
