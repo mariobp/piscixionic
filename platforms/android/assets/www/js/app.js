@@ -62,53 +62,54 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
 
         // Codigo notificaciones push
         */
+
         var androidConfig = {
             "senderID": "AIzaSyBeuBsMahCuzv7P09GZ69wWbtqDR_4nqGA",
         };
 
-        $cordovaPush.register(androidConfig).then(function(result) {
-            console.log(result);
-            // Success
-        }, function(err) {
-            // Error
-        });
-
-        $rootScope.$on('$cordovaPush:notificationReceived', function(event, notification) {
-            switch (notification.event) {
-                case 'registered':
-                    if (notification.regid.length > 0) {
-                        console.log('registration ID = ' + notification.regid);
-                    }
-                    break;
-
-                case 'message':
-                    // this is the actual push notification. its format depends on the data model from the push server
-                    console.log('message = ' + notification.message + ' msgCount = ' + notification.msgcnt);
-                    break;
-
-                case 'error':
-                    console.log('GCM error = ' + notification.msg);
-                    break;
-
-                default:
-                    console.log('An unknown GCM event has occurred');
-                    break;
-            }
-
-        });
-
-        // WARNING: dangerous to unregister (results in loss of tokenID)
-        /*$cordovaPush.unregister(options).then(function(result) {
-            // Success!
-        }, function(err) {
-            // Error
-        });
-        */
+        // $cordovaPush.register(androidConfig).then(function(result) {
+        //     console.log(result);
+        //     // Success
+        // }, function(err) {
+        //     // Error
+        // });
+        //
+        // $rootScope.$on('$cordovaPush:notificationReceived', function(event, notification) {
+        //     switch (notification.event) {
+        //         case 'registered':
+        //             if (notification.regid.length > 0) {
+        //                 console.log('registration ID = ' + notification.regid);
+        //             }
+        //             break;
+        //
+        //         case 'message':
+        //             // this is the actual push notification. its format depends on the data model from the push server
+        //             console.log('message = ' + notification.message + ' msgCount = ' + notification.msgcnt);
+        //             break;
+        //
+        //         case 'error':
+        //             console.log('GCM error = ' + notification.msg);
+        //             break;
+        //
+        //         default:
+        //             console.log('An unknown GCM event has occurred');
+        //             break;
+        //     }
+        //
+        // });
+        //
+        // // WARNING: dangerous to unregister (results in loss of tokenID)
+        // /*$cordovaPush.unregister(options).then(function(result) {
+        //     // Success!
+        // }, function(err) {
+        //     // Error
+        // });
+        // */
     });
 
     //$rootScope.server = "http://104.236.33.228:8040";
     //$rootScope.server = "http://192.168.1.51:8000";
-    $rootScope.server = "http://192.168.0.108:8000";
+    $rootScope.server = "http://192.168.0.113:8000";
 
     function isLogin() {
         $http.get($rootScope.server + "/usuarios/is/login/")
