@@ -30,17 +30,20 @@
                             <b>Tipo:</b> {{reporte.tipo_n}}
                         </li>
                         <li class="collection-item">
-                            <b>Cierre:</b> {{reporte.cierre}}
+                            <b ng-show="reporte.cierre == 1">Cierre: Automático</b><b ng-show="reporte.cierre == 2">Cierre: Parcial</b><b ng-show="reporte.cierre == 3">Cierre: A satisfacción</b>
                         </li>
                         <li class="collection-item">
                             <b>Descripción:</b> {{reporte.descripcion}}
                         </li>
                         <li class="collection-item">
+                            <b>Estado:</b><b class="light-blue-text" ng-show="reporte.estado"> Cerrado</b> <b class="red-text" ng-show="!reporte.estado"> Abierto</b>
+                        </li>
+                        <li class="collection-item">
                             <div class="row row-p">
-                                <a href="#/app/galeria/reportes/{{reporte.pk}}" class="btn-large waves-effect waves-light green accent-3 col s6">
+                                <a href="#/app/galeria/reportes/{{reporte.pk}}" class="btn-large waves-effect waves-light green accent-3 col" ng-class="{'s6': !reporte.estado, 's12':reporte.estado}">
                                     <i class="micon">collections</i>
                                     Fotos</a>
-                                <a href="" class="btn-large waves-effect waves-light light-blue col s6">
+                                <a href="" class="btn-large waves-effect waves-light light-blue col s6" ng-show="!reporte.estado">
                                     <i class="micon">question_answer</i>
                                     Respuestas</a>
                             </div>
