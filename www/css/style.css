@@ -232,12 +232,26 @@ button:focus {
 
 .footer-f {
     padding: 0px;
-    height: 62px;
+    height: 63px;
+    bottom: 0;
+    border-top-width: 1px;
+    border-bottom-width: 0;
+    background-position: top;
+}
+
+.scroll2{
+    overflow: auto;
+    width: 94%;
+    /* height: 300px; */
+    position: fixed;
+    bottom: 0px;
+    top: 0px;
+    padding-bottom: 60px;
 }
 .row-p {
     display: block;
     padding: 0px;
-    margin-bottom: 0px;
+    /*margin-bottom: 0px;*/
 }
 .content-b {
     height: calc(100% - 203px);

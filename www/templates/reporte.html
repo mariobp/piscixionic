@@ -1,84 +1,86 @@
 <ion-view view-title="Reporte">
-<ion-header-bar align-title="center" class="bar bar-subheader light-blue " ng-show="ready1 && ready2">
+<ion-header-bar align-title="center" class="bar bar-subheader light-blue " ng-class="{'white': !ready1 && ready2}">
   <h2 class="title white-text">{{piscinas[0].nombreC}} {{piscinas[0].apellidosC}}</h2>
 </ion-header-bar>
-  <ion-content>
+  <ion-content >
     <div class="spin" ng-show="!ready1 && ready2">
       <ion-spinner></ion-spinner>
     </div>
     <div class="row row-p" ng-show="ready1 && ready2">
       <form class="col s12" id="reporte" name="form" ng-submit="form.$valid && datosForm()" novalidate>
-        <div class="row row-p">
-          <div class="input-field col s12">
-            <input type="text" id="nombre" name="nombre" ng-model="data.nombre" ng-class="{'invalid':form.nombre.$invalid && form.$submitted,'valid':form.nombre.$valid && form.$submitted}" required>
-            <label for="nombre">Nombre</label>
-            <div class="error-container" ng-show="form.nombre.$error && form.$submitted" ng-messages="form.nombre.$error">
-              <div ng-messages-include="templates/error-list.html"></div>
+        <div class="scroll2">
+            <div class="row row-p">
+              <div class="input-field col s12">
+                <input type="text" id="nombre" name="nombre" ng-model="data.nombre" ng-class="{'invalid':form.nombre.$invalid && form.$submitted,'valid':form.nombre.$valid && form.$submitted}" required>
+                <label for="nombre">Nombre</label>
+                <div class="error-container" ng-show="form.nombre.$error && form.$submitted" ng-messages="form.nombre.$error">
+                  <div ng-messages-include="templates/error-list.html"></div>
+                </div>
+              </div>
+             </div>
+            <div class="row row-p">
+              <div class="input-field col s12">
+                <textarea type="text" id="descripcion"  rows="5" class="materialize-textarea" ng-model="data.descripcion" maxlength="200" max name="descripcion" required ng-class="{'invalid':form.descripcion.$invalid && form.$submitted,'valid':form.descripcion.$valid && form.$submitted}"></textarea>
+                <label for="descripcion">Descricción</label>
+                <div class="error-container" ng-show="form.descripcion.$error && form.$submitted" ng-messages="form.descripcion.$error">
+                  <div ng-messages-include="templates/error-list.html"></div>
+                </div>
+              </div>
             </div>
-          </div>
-         </div>
-        <div class="row row-p">
-          <div class="input-field col s12">
-            <textarea type="text" id="descripcion"  rows="5" class="materialize-textarea" ng-model="data.descripcion" maxlength="200" max name="descripcion" required ng-class="{'invalid':form.descripcion.$invalid && form.$submitted,'valid':form.descripcion.$valid && form.$submitted}"></textarea>
-            <label for="descripcion">Descricción</label>
-            <div class="error-container" ng-show="form.descripcion.$error && form.$submitted" ng-messages="form.descripcion.$error">
-              <div ng-messages-include="templates/error-list.html"></div>
+            <div class="row row-p">
+             <div class="input-field col s12">
+                <select id="tipo" class="ion-input-select" ng-model="data.tipo" >
+                   <option value="" disabled selected>Tipo de Reporte</option>
+                   <option value="{{tipo.id}}" ng-repeat="tipo in tipos">{{tipo.nombre}}</option>
+               </select>
+                <label for="tipo"  class="label-select" ng-class="{'invalid': !data.tipo && form.$submitted,'valid':data.tipo && form.$submitted}">Tipo de Reporte
+                </label>
+                 <div class="error-container" ng-show="!data.tipo && form.$submitted" ng-messages="form.nombre.$error">
+                  <div ng-messages-include="templates/error-list.html"></div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="row row-p">
-         <div class="input-field col s12">
-            <select id="tipo" class="ion-input-select" ng-model="data.tipo" >
-               <option value="" disabled selected>Tipo de Reporte</option>
-               <option value="{{tipo.id}}" ng-repeat="tipo in tipos">{{tipo.nombre}}</option>
-           </select>
-            <label for="tipo"  class="label-select" ng-class="{'invalid': !data.tipo && form.$submitted,'valid':data.tipo && form.$submitted}">Tipo de Reporte
-            </label>
-             <div class="error-container" ng-show="!data.tipo && form.$submitted" ng-messages="form.nombre.$error">
-              <div ng-messages-include="templates/error-list.html"></div>
+            <div class="row row-p">
+              <div class="input-field col s12">
+                <select id="piscina" class="ion-input-select" ng-model="data.piscina">
+                   <option value="" disabled selected>Piscina</option>
+                   <option value="{{piscina.pk}}" ng-repeat="piscina in piscinas">{{piscina.nombre}}</option>
+                </select>
+                <label for="piscina" class="label-select" ng-class="{'invalid': !data.piscina && form.$submitted,'valid':data.piscina && form.$submitted}">Piscina</label>
+                 <div class="error-container" ng-show="!data.piscina && form.$submitted" ng-messages="form.nombre.$error">
+                  <div ng-messages-include="templates/error-list.html"></div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="row row-p">
-          <div class="input-field col s12">
-            <select id="piscina" class="ion-input-select" ng-model="data.piscina">
-               <option value="" disabled selected>Piscina</option>
-               <option value="{{piscina.pk}}" ng-repeat="piscina in piscinas">{{piscina.nombre}}</option>
-            </select>
-            <label for="piscina" class="label-select" ng-class="{'invalid': !data.piscina && form.$submitted,'valid':data.piscina && form.$submitted}">Piscina</label>
-             <div class="error-container" ng-show="!data.piscina && form.$submitted" ng-messages="form.nombre.$error">
-              <div ng-messages-include="templates/error-list.html"></div>
+            <div class="row row-p">
+                <div class="col s4">
+                  <button type="button" class="btn-large waves-effect waves-light  light-blue" ng-click="takePicture()">
+                  <i class="micon">photo_camera</i>
+                  </button>
+                </div>
+                <div class="col s8 foto-cont">
+                    <p>Tomar una foto</p>
+                </div>
             </div>
-          </div>
-      </div>
-        <div class="row row-p">
-            <div class="col s4">
-              <button type="button" class="btn-large waves-effect waves-light  light-blue" ng-click="takePicture()">
-              <i class="micon">photo_camera</i>
-              </button>
+            <div class="row row-p">
+                <div class="col s4">
+                  <button type="button" class="btn-large waves-effect waves-light light-blue" ng-click="getPicture()">
+                  <i class="micon">add_to_photos</i>
+                  </button>
+                </div>
+                <div class="col s8 foto-cont">
+                    <p>Agregar foto desde la galeria.</p>
+                </div>
             </div>
-            <div class="col s8 foto-cont">
-                <p>Tomar una foto</p>
-            </div>
-        </div>
-        <div class="row row-p">
-            <div class="col s4">
-              <button type="button" class="btn-large waves-effect waves-light light-blue" ng-click="getPicture()">
-              <i class="micon">add_to_photos</i>
-              </button>
-            </div>
-            <div class="col s8 foto-cont">
-                <p>Agregar foto desde la galeria.</p>
-            </div>
-        </div>
-        <div class="row row-p">
-            <div class="col s4">
-              <button type="button" class="btn-large waves-effect waves-light light-blue" ng-disabled="total==0" ng-class="{'disabled':total==0}" ng-click="verGaleria()">
-              <i class="micon">collections</i><span class="badge-x" ng-show="total>0">{{total}}</span>
-              </button>
-            </div>
-            <div class="col s8 foto-cont">
-                <p>Fotos Seleccionadas.</p>
+            <div class="row row-p">
+                <div class="col s4">
+                  <button type="button" class="btn-large waves-effect waves-light light-blue" ng-disabled="total==0" ng-class="{'disabled':total==0}" ng-click="verGaleria()">
+                  <i class="micon">collections</i><span class="badge-x" ng-show="total>0">{{total}}</span>
+                  </button>
+                </div>
+                <div class="col s8 foto-cont">
+                    <p>Fotos Seleccionadas.</p>
+                </div>
             </div>
         </div>
         <div class="bar headerbar footer-f">
