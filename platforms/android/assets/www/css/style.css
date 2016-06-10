@@ -387,3 +387,16 @@ select::-ms-expand {
     align-self: center;
     justify-content: center;
 }
+
+.scrollR {
+    overflow: auto;
+    width: 100%;
+    position: fixed;
+    bottom: 0px;
+    top: 0px;
+    padding-bottom: 60px;
+}
+.fecha-font{
+    font-size: 10px;
+    color: #9e9e9e;
+}

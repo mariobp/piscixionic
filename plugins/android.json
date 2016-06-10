@@ -57,10 +57,6 @@
         },
         "phonegap-plugin-barcodescanner": {
             "PACKAGE_NAME": "com.ionicframework.piscix612347"
-        },
-        "phonegap-plugin-push": {
-            "SENDER_ID": "AIzaSyBeuBsMahCuzv7P09GZ69wWbtqDR_4nqGA",
-            "PACKAGE_NAME": "com.ionicframework.piscix612347"
         }
     },
     "dependent_plugins": {

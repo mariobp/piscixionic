@@ -87,7 +87,6 @@ ext {
 
 // PLUGIN GRADLE EXTENSIONS START
 apply from: "phonegap-plugin-barcodescanner/piscix612347-barcodescanner.gradle"
-apply from: "phonegap-plugin-push/piscix612347-push.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
 def hasBuildExtras = file('build-extras.gradle').exists()
@@ -246,8 +245,6 @@ dependencies {
     compile "com.android.support:support-v4:+"
     compile "com.android.support:support-v4:23.+"
     compile "com.android.support:appcompat-v7:23.+"
-    compile "com.android.support:support-v13:23+"
-    compile "com.google.android.gms:play-services-gcm:+"
     // SUB-PROJECT DEPENDENCIES END
 }
 

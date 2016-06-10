@@ -24,87 +24,10 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
             StatusBar.styleLightContent();
             StatusBar.backgroundColorByHexString('#455A64');
         }
-        /*
-        var push = new Ionic.Push({
-          "onNotification": function(notification){
-            alert("Received Notification!");
-          },
-          "pluginConfig": {
-            "android":{
-              "iconColor": "#ef473a"
-            }
-          }
-        });
-
-        Ionic.io();
-
-        // this will give you a fresh user or the previously saved 'current user'
-        var user = Ionic.User.current();
-
-        // if the user doesn't have an id, you'll need to give it one.
-        if (!user.id) {
-          user.id = Ionic.User.anonymousId();
-          // user.id = 'your-custom-user-id';
-        }
-
-        //persist the user
-
-        user.set('name','Mario');
-        user.set('bio','Desarrollaor');
-        user.save();
-
-        var callback = function() {
-          push.addTokenToUser(user);
-          user.save();
-        };
-
-        push.register(callback);
-
-        // Codigo notificaciones push
-        */
 
         var androidConfig = {
             "senderID": "AIzaSyBeuBsMahCuzv7P09GZ69wWbtqDR_4nqGA",
         };
-
-        // $cordovaPush.register(androidConfig).then(function(result) {
-        //     console.log(result);
-        //     // Success
-        // }, function(err) {
-        //     // Error
-        // });
-        //
-        // $rootScope.$on('$cordovaPush:notificationReceived', function(event, notification) {
-        //     switch (notification.event) {
-        //         case 'registered':
-        //             if (notification.regid.length > 0) {
-        //                 console.log('registration ID = ' + notification.regid);
-        //             }
-        //             break;
-        //
-        //         case 'message':
-        //             // this is the actual push notification. its format depends on the data model from the push server
-        //             console.log('message = ' + notification.message + ' msgCount = ' + notification.msgcnt);
-        //             break;
-        //
-        //         case 'error':
-        //             console.log('GCM error = ' + notification.msg);
-        //             break;
-        //
-        //         default:
-        //             console.log('An unknown GCM event has occurred');
-        //             break;
-        //     }
-        //
-        // });
-        //
-        // // WARNING: dangerous to unregister (results in loss of tokenID)
-        // /*$cordovaPush.unregister(options).then(function(result) {
-        //     // Success!
-        // }, function(err) {
-        //     // Error
-        // });
-        // */
     });
 
     //$rootScope.server = "http://104.236.33.228:8040";
@@ -135,13 +58,13 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
         $http.get($rootScope.server + "/usuarios/serve/on/").then(function doneCallbacks(response) {
             isLogin();
         }, function failCallbacks(response) {
-            if (response.status === 0) {
-                $cordovaToast.show('Servidor fuera de servicio', 'long', 'center');
+            if (response.status == -1) {
+                $cordovaToast.show('No se puede conectar al servidor', 'short', 'center');
                 $cordovaLocalNotification.schedule({
                     id: 3,
                     title: 'Piscix',
-                    text: 'Servidor fuera de servicio',
-                    icon: 'img/icon.png'
+                    text: 'No se puede conectar al servidor',
+                    //icon: 'img/icon.png'
                 });
             }
         });
@@ -175,7 +98,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
                 id: 1,
                 title: 'Piscix',
                 text: 'No hay conexión a Internet!',
-                icon: 'img/icon.png'
+                //icon: 'img/icon.png'
             });
         });
     }
@@ -192,7 +115,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
                   id: 2,
                   title: 'Piscix',
                   text: 'Conexión a internet recuperada!',
-                  icon: 'img/icon.png'
+                  //icon: 'img/icon.png'
               });
             });
             /*
@@ -416,6 +339,14 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
                 'menuContent': {
                     templateUrl: 'templates/galeriaRe.html',
                     controller: 'GaleriaRe'
+                }
+            }
+        }).state('app.respuestas', {
+            url: '/respuestas/:reporteId',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/respuestas.html',
+                    controller: 'Repuesta'
                 }
             }
         });

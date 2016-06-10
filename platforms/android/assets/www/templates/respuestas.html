@@ -1,0 +1,28 @@
+<ion-view title="Respuestas">
+    <ion-content>
+    <div class="spin" ng-show="!ready">
+      <ion-spinner></ion-spinner>
+    </div>
+    <div class="" ng-show="ready">
+        <div class="scrollR" >
+            <div class="row row-p">
+                <div class="col s10" ng-class="{'left': respuesta.user == user, 'green':respuesta.user == user,'lighten-2':respuesta.user == user, 'right': respuesta.user !== user}" ng-repeat="respuesta in respuestas">
+                    <div class="card-panel" >
+                        <b class="light-blue-text">{{respuesta.user}}</b><br>
+                        <span class="">{{respuesta.mensaje}}</span>
+                        <span class="fecha-font right">{{respuesta.fecha}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bar footer-f">
+          <div class="row row-p">
+              <div class="input-field">
+                   <input type="text" name="name" class="col s10 m4" ng-model=(data.mensaje)>
+                   <button type="button" ng-click="enviar()" class="btn waves-effect waves-light  light-blue col s2" ng-class="{'disabled':!data.mensaje}" ng-disabled="!data.mensaje"><i class="micon">send</i></button>
+              </div>
+          </div>
+        </div>
+    </div>
+  </ion-content>
+</ion-view>
