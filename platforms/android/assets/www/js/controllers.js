@@ -664,7 +664,7 @@ angular.module('starter.controllers', [])
         };
 
     })
-    .controller('GaleriaR', function($http, $scope, $stateParams, $cordovaToast, $state, $cordovaDialogs, $timeout, $ionicLoading) {
+    .controller('GaleriaR', function($http, $scope, $stateParams, $cordovaToast, $state, $cordovaDialogs, $timeout, $ionicLoading, $location) {
         $scope.posicion($location.path());
         var id = $stateParams.reporteId;
         $scope.imagenes = [];
