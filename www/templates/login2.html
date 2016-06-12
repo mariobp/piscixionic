@@ -2,25 +2,26 @@
   <ion-header-bar class="headerbar" align-title="center">
       <h1 class="title">Iniciar sesión</h1>
   </ion-header-bar>
-	<ion-content>
+	<ion-content class="">
     <div class="spin" ng-if="!loginReady">
       <ion-spinner></ion-spinner>
     </div>
-    <div class="row" ng-if="loginReady">
-      <form class="col s12" name="form" ng-submit="form.$valid && doLogin()" novalidate>
-        <div class="row">
+    <div class="row row-p content-logo" ng-if="loginReady">
+    <div class="logo"></div>
+      <form class="col s9 col-p" name="form" ng-submit="form.$valid && doLogin()" novalidate>
+        <div class="row row-p">
           <div class="input-field col s12">
-            <i class="ion-person prefix"></i>
+            <!-- <i class="ion-person prefix"></i> -->
             <input type="text" id="username" name="username" ng-model="loginData.username" ng-class="{'has-errors':form.username.$invalid && form.$submitted,'no-errors':form.username.$valid && form.$submitted}" required>
-            <label for="username">Nombre Usuario</label>
+            <label for="username">Usuario</label>
             <div class="error-container" ng-show="form.username.$error && form.$submitted" ng-messages="form.username.$error">
               <div ng-messages-include="templates/error-list.html"></div>
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class="row row-p">
           <div class="input-field col s12">
-            <i class="ion-locked prefix"></i>
+            <!-- <i class="ion-locked prefix"></i> -->
             <input id="contraseña" type="password" name="password" ng-model="loginData.password" ng-class="{'has-errors':form.password.$invalid && form.$submitted, 'no-errors':form.password.$valid && form.$submitted}" required>
             <label for="contraseña">Contraseña</label>
             <div class="error-container" ng-show="form.password.$error && form.$submitted" ng-messages="form.password.$error">
@@ -28,8 +29,8 @@
             </div>
           </div>
         </div>
-        <div class="row">
-          <button class="btn-large waves-effect waves-light light-blue col s12"  type="submit">Entrar
+        <div class="row row-p">
+          <button class="btn-large waves-effect waves-light light-blue col s12"  type="submit">Ingresar
             <i class="micon">send</i>
           </button>
         </div>

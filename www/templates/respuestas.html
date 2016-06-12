@@ -6,11 +6,11 @@
     <div class="" ng-show="ready">
         <div class="scrollR" >
             <div class="row row-p">
-                <div class="col s10" ng-class="{'left': respuesta.user == user, 'green':respuesta.user == user,'lighten-2':respuesta.user == user, 'right': respuesta.user !== user}" ng-repeat="respuesta in respuestas">
-                    <div class="card-panel" >
+                <div class="col s10" ng-class="{'left': respuesta.tu == 0,  'right': respuesta.tu == 1}" ng-repeat="respuesta in respuestas">
+                    <div class="card-panel" ng-class="{'green':respuesta.tu == 1,'lighten-2':respuesta.tu == 1}">
                         <b class="light-blue-text">{{respuesta.user}}</b><br>
-                        <span class="">{{respuesta.mensaje}}</span>
-                        <span class="fecha-font right">{{respuesta.fecha}}</span>
+                        <span >{{respuesta.mensaje}}</span>
+                        <span class="fecha-font right" ng-class="{'white-text':respuesta.tu == 1}">{{respuesta.fecha}}</span>
                     </div>
                 </div>
             </div>

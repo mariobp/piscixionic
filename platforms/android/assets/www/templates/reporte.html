@@ -7,7 +7,7 @@
       <ion-spinner></ion-spinner>
     </div>
     <div class="row row-p" ng-show="ready1 && ready2">
-      <form class="col s12" id="reporte" name="form" ng-submit="form.$valid && datosForm()" novalidate>
+      <form class="col s12" id="reporte" method="post" name="form" enctype="multipart/form-data" ng-submit="form.$valid && datosForm()" novalidate>
         <div class="scroll2">
             <div class="row row-p">
               <div class="input-field col s12">
@@ -21,7 +21,7 @@
             <div class="row row-p">
               <div class="input-field col s12">
                 <textarea type="text" id="descripcion"  rows="5" class="materialize-textarea" ng-model="data.descripcion" maxlength="200" max name="descripcion" required ng-class="{'invalid':form.descripcion.$invalid && form.$submitted,'valid':form.descripcion.$valid && form.$submitted}"></textarea>
-                <label for="descripcion">Descricción</label>
+                <label for="descripcion">Descripción</label>
                 <div class="error-container" ng-show="form.descripcion.$error && form.$submitted" ng-messages="form.descripcion.$error">
                   <div ng-messages-include="templates/error-list.html"></div>
                 </div>
@@ -29,8 +29,8 @@
             </div>
             <div class="row row-p">
              <div class="input-field col s12">
-                <select id="tipo" class="ion-input-select" ng-model="data.tipo" >
-                   <option value="" disabled selected>Tipo de Reporte</option>
+                <select id="tipo" class="ion-input-select" name="tipo_de_reporte" ng-model="data.tipo" >
+                   <option value="" disabled selected>Elegir tipo de Reporte</option>
                    <option value="{{tipo.id}}" ng-repeat="tipo in tipos">{{tipo.nombre}}</option>
                </select>
                 <label for="tipo"  class="label-select" ng-class="{'invalid': !data.tipo && form.$submitted,'valid':data.tipo && form.$submitted}">Tipo de Reporte
@@ -42,8 +42,8 @@
             </div>
             <div class="row row-p">
               <div class="input-field col s12">
-                <select id="piscina" class="ion-input-select" ng-model="data.piscina">
-                   <option value="" disabled selected>Piscina</option>
+                <select id="piscina" class="ion-input-select" name="piscina" ng-model="data.piscina">
+                   <option value="" disabled selected>Elegir piscina</option>
                    <option value="{{piscina.pk}}" ng-repeat="piscina in piscinas">{{piscina.nombre}}</option>
                 </select>
                 <label for="piscina" class="label-select" ng-class="{'invalid': !data.piscina && form.$submitted,'valid':data.piscina && form.$submitted}">Piscina</label>
@@ -54,7 +54,7 @@
             </div>
             <div class="row row-p">
                 <div class="col s4">
-                  <button type="button" class="btn-large waves-effect waves-light  light-blue" ng-click="takePicture()">
+                  <button type="button" class="btn-large waves-effect waves-light  light-blue">
                   <i class="micon">photo_camera</i>
                   </button>
                 </div>
@@ -64,17 +64,7 @@
             </div>
             <div class="row row-p">
                 <div class="col s4">
-                  <button type="button" class="btn-large waves-effect waves-light light-blue" ng-click="getPicture()">
-                  <i class="micon">add_to_photos</i>
-                  </button>
-                </div>
-                <div class="col s8 foto-cont">
-                    <p>Agregar foto desde la galeria.</p>
-                </div>
-            </div>
-            <div class="row row-p">
-                <div class="col s4">
-                  <button type="button" class="btn-large waves-effect waves-light light-blue" ng-disabled="total==0" ng-class="{'disabled':total==0}" ng-click="verGaleria()">
+                  <button type="button" class="btn-large waves-effect waves-light light-blue" ng-disabled="total==0" ng-class="{'disabled':total==0}">
                   <i class="micon">collections</i><span class="badge-x" ng-show="total>0">{{total}}</span>
                   </button>
                 </div>
@@ -82,6 +72,15 @@
                     <p>Fotos Seleccionadas.</p>
                 </div>
             </div>
+            <!--input id="id_fotoreporte_set-0-url" name="fotoreporte_set-0-url" onchange="count()" type="file" style="opacity: 0" capture="camera" accept="image/*"/>
+            <input id="id_fotoreporte_set-1-url" name="fotoreporte_set-1-url" onchange="count()" type="file" style="opacity: 0" capture="camera" accept="image/*"/>
+            <input id="id_fotoreporte_set-2-url" name="fotoreporte_set-2-url" onchange="count()" type="file" style="opacity: 0" capture="camera" accept="image/*"/>
+            <input id="id_fotoreporte_set-3-url" name="fotoreporte_set-3-url" onchange="count()" type="file" style="opacity: 0" capture="camera" accept="image/*"/>
+            <input id="id_fotoreporte_set-4-url" name="fotoreporte_set-4-url" onchange="count()" type="file" style="opacity: 0" capture="camera" accept="image/*"/>
+            <input id="id_fotoreporte_set-TOTAL_FORMS" name="fotoreporte_set-TOTAL_FORMS" type="hidden" value="{{total}}" />
+            <input id="id_fotoreporte_set-INITIAL_FORMS" name="fotoreporte_set-INITIAL_FORMS" type="hidden" value="0" />
+            <input id="id_fotoreporte_set-MIN_NUM_FORMS" name="fotoreporte_set-MIN_NUM_FORMS" type="hidden" value="0" />
+            <input id="id_fotoreporte_set-MAX_NUM_FORMS" name="fotoreporte_set-MAX_NUM_FORMS" type="hidden" value="1000" /-->
         </div>
         <div class="bar headerbar footer-f">
           <div class="row row-p">

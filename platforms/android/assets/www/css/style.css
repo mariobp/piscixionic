@@ -11,22 +11,22 @@
     font-family: "Arial Black", Gadget, sans-serif;
     font-size: 11px;
     text-transform: uppercase;
-    color: #B83E2C;
+    color: #E57373;
     vertical-align: middle;
 }
 .error i {
     font-size: 24px;
-    color: #B83E2C;
+    color: #E57373;
     vertical-align: middle;
 }
 .last-error-container > .error {
     padding: 10px 16px 0;
 }
 .has-errors {
-    border-bottom: 3px solid #B83E2C !important;
+    border-bottom: 3px solid #E57373 !important;
 }
 .no-errors {
-    border-bottom: 3px solid #00e676 !important;
+    border-bottom: 3px solid #81C784 !important;
 }
 div.spin {
     margin: auto;
@@ -102,9 +102,9 @@ map {
 .over {
     overflow: scroll;
 }
-.scroll {
+/*.scroll {
     height: 100%;
-}
+}*/
 .icon {
     font-size: 20pt;
 }
@@ -189,23 +189,23 @@ textarea:focus {
 /* valid color */
 
 .input-field input[type=text].valid {
-    border-bottom: 1px solid #00e676;
-    box-shadow: 0 1px 0 0 #00e676;
+    border-bottom: 1px solid #81C784;
+    box-shadow: 0 1px 0 0 #81C784;
 }
 .input-field textarea.valid {
-    border-bottom: 1px solid #00e676;
-    box-shadow: 0 1px 0 0 #00e676;
+    border-bottom: 1px solid #81C784;
+    box-shadow: 0 1px 0 0 #81C784;
 }
 
 /* invalid color */
 
 .input-field input[type=text].invalid {
-    border-bottom: 1px solid #B83E2C;
-    box-shadow: 0 1px 0 0 #B83E2C;
+    border-bottom: 1px solid #E57373;
+    box-shadow: 0 1px 0 0 #E57373;
 }
 .input-field textarea.invalid {
-    border-bottom: 1px solid #B83E2C;
-    box-shadow: 0 1px 0 0 #B83E2C;
+    border-bottom: 1px solid #E57373;
+    box-shadow: 0 1px 0 0 #E57373;
 }
 
 /* icon prefix focus color */
@@ -253,6 +253,12 @@ button:focus {
     padding: 0px;
     /*margin-bottom: 0px;*/
 }
+
+.col-p {
+    margin: 0 auto;
+    float: none !important;
+}
+
 .content-b {
     height: calc(100% - 203px);
 }
@@ -399,4 +405,51 @@ select::-ms-expand {
 .fecha-font{
     font-size: 10px;
     color: #9e9e9e;
+}
+
+.logo{
+    background-image: url('../img/icon.png');
+    width: 100%;
+    height: 170px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    padding-top: 1px;
+}
+
+.logo-t{
+    background-image: url('../img/Icono-f-t.png');
+    width: 100%;
+    height: 270px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    padding-top: 1px;
+}
+.logo-e{
+    background-image: url('../img/EXILE-small.png');
+    width: 100%;
+    height: 100px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    padding-top: 1px;
+}
+
+.login-content{
+    padding-top: 70px;
+}
+
+.content-center{
+    width: 90%;
+    align-items: center;
+    align-content: center;
+    height: 100%;
+    align-self: center;
+    justify-content: center;
+}
+
+.content-logo{
+    position: relative;
+    top: calc( 50% - 209px);
 }
