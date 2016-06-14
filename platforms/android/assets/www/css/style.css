@@ -453,3 +453,6 @@ select::-ms-expand {
     position: relative;
     top: calc( 50% - 209px);
 }
+.no-scroll{
+    overflow: hidden;
+}

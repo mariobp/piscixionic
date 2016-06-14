@@ -11,8 +11,8 @@
           <div class="item item-avatar grey lighten-5">
               <img src="{{server}}/media/{{info.cliente.imagen}}" ng-if="info.cliente.imagen !=''">
               <img src="img/user.png" ng-if="info.cliente.imagen ==''"/>
-              <b>Nombre: </b>{{info.cliente.first_name}} {{info.cliente.last_name}}<br>
-              <b>Dirección: </b>{{info.cliente.direccion}}
+              <b>Nombre: </b>{{info.cliente.first_name}}<br>
+              <b>Apellidos: </b>{{info.cliente.last_name}}
           </div>
           <div class="item item-icon-left  grey lighten-5">
              <a ng-href="tel:{{info.cliente.telefono}}">
@@ -25,8 +25,7 @@
              {{info.cliente.email}}
           </div>
           <a  class="item item-icon-left  grey lighten-5" ng-repeat="casa in info.casas" href="#/app/asignargps/{{casa.id}}/{{casa.latitud}}/{{casa.longitud}}">
-            <i class="micon">home</i>
-            {{casa.direccion}}
+            <b><i class="micon">home</i> {{casa.direccion}}</b>
           </a>
         </div>
     </div>

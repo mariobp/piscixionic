@@ -29,7 +29,6 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
             "senderID": "AIzaSyBeuBsMahCuzv7P09GZ69wWbtqDR_4nqGA",
         };
     });
-
     //$rootScope.server = "http://104.236.33.228:8040";
     //$rootScope.server = "http://192.168.1.51:8000";
     $rootScope.server = "http://192.168.0.113:8000";
@@ -71,22 +70,6 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
     }
 
     serverOn();
-    $ionicPlatform.registerBackButtonAction(function() {
-        if ($state.current.name == "app.clientelists" || $state.current.name == "app.acerca" || $state.current.name == "app.historial") {
-            var confirmPopup = $ionicPopup.confirm({
-                //title: 'Confirm',
-                template: 'Seguro que desea salir?'
-            });
-            confirmPopup.then(function(res) {
-                if (res) {
-                    navigator.app.exitApp();
-                }
-            });
-        } else {
-            navigator.app.backHistory();
-        }
-    }, 100);
-
     var bandera = false;
     document.addEventListener("offline", onOffline, false);
 
