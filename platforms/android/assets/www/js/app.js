@@ -31,7 +31,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
     });
     //$rootScope.server = "http://104.236.33.228:8040";
     //$rootScope.server = "http://192.168.1.51:8000";
-    $rootScope.server = "http://192.168.0.113:8000";
+    $rootScope.server = "http://192.168.1.59:8000";
 
     function isLogin() {
         $http.get($rootScope.server + "/usuarios/is/login/")
@@ -41,19 +41,19 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
                 }
             }, function failCallbacks(response) {
                 $cordovaToast
-                .show("Debe iniciar sesión", 'short', 'center')
-                .then(function(success) {
-                    if($state.current.name != 'app.login'){
-                      $state.go('app.login');
-                    }
-                }, function(error) {
-                    console.log(error);
-                });
+                    .show("Debe iniciar sesión", 'short', 'center')
+                    .then(function(success) {
+                        if ($state.current.name != 'app.login') {
+                            $state.go('app.login');
+                        }
+                    }, function(error) {
+                        console.log(error);
+                    });
 
             });
     }
 
-    function serverOn(){
+    function serverOn() {
         $http.get($rootScope.server + "/usuarios/serve/on/").then(function doneCallbacks(response) {
             isLogin();
         }, function failCallbacks(response) {
@@ -76,7 +76,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
     function onOffline() {
         // Handle the offline event
         $cordovaToast.show('No hay conexión a Internet!', 'long', 'center');
-        $cordovaLocalNotification.cancel(2).then(function (result) {
+        $cordovaLocalNotification.cancel(2).then(function(result) {
             $cordovaLocalNotification.schedule({
                 id: 1,
                 title: 'Piscix',
@@ -92,14 +92,14 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
         // Handle the online event
         serverOn();
         if (bandera) {
-            $cordovaLocalNotification.cancel(1).then(function (result) {
-              // ...
-              $cordovaLocalNotification.schedule({
-                  id: 2,
-                  title: 'Piscix',
-                  text: 'Conexión a internet recuperada!',
-                  //icon: 'img/icon.png'
-              });
+            $cordovaLocalNotification.cancel(1).then(function(result) {
+                // ...
+                $cordovaLocalNotification.schedule({
+                    id: 2,
+                    title: 'Piscix',
+                    text: 'Conexión a internet recuperada!',
+                    //icon: 'img/icon.png'
+                });
             });
             /*
             $cordovaToast.show('Su equipo se conecto a internet', 'short', 'center')
@@ -153,9 +153,9 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
 
     .state('app.login', {
         url: '/login',
-        nativeTransitionsAndroid:{
-          "type": "slide",
-          "direction" : "up"
+        nativeTransitionsAndroid: {
+            "type": "slide",
+            "direction": "up"
         },
         nativeTransitionsBackAndroid: {
             "type": "slider",
@@ -189,16 +189,6 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
         }
     })
 
-    .state('app.reparacion', {
-        url: '/reparacion/:clienteId',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/reparacion.html',
-                controller: 'Reparacion'
-            }
-        }
-    })
-
     .state('app.clientelists', {
         url: '/clientelists',
         views: {
@@ -210,129 +200,132 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
     })
 
     .state('app.info', {
-            url: '/info/:clienteId',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/InfoC.html',
-                    controller: 'InfoC'
-                }
+        url: '/info/:clienteId',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/InfoC.html',
+                controller: 'InfoC'
             }
-        })
-        .state('app.acerca', {
-            url: '/acerca',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/acerca.html',
-                }
+        }
+    })
+
+    .state('app.acerca', {
+        url: '/acerca',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/acerca.html',
             }
-        })
-        .state('app.piscineros', {
-            url: '/piscineros',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/piscineros.html',
-                    controller: 'Piscineros'
-                }
+        }
+    })
+
+    .state('app.piscineros', {
+        url: '/piscineros',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/piscineros.html',
+                controller: 'Piscineros'
             }
-        })
-        .state('app.asigacionpiscina', {
-            url: '/asignacionpiscina/:piscineroId',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/piscinasAsignacion.html',
-                    controller: 'PiscinaAsignacion'
-                }
+        }
+    })
+
+    .state('app.asigacionpiscina', {
+        url: '/asignacionpiscina/:piscineroId',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/piscinasAsignacion.html',
+                controller: 'PiscinaAsignacion'
             }
-        })
-        .state('app.asignargps', {
-            url: '/asignargps/:casaId/:latitud/:longitud',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/asignar-gps.html',
-                    controller: 'MapCtrl'
-                }
+        }
+    })
+
+    .state('app.asignargps', {
+        url: '/asignargps/:casaId/:latitud/:longitud',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/asignar-gps.html',
+                controller: 'MapCtrl'
             }
-        })
-        .state('app.ruta', {
-            url: '/ruta/:piscineroId',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/ruta.html',
-                    controller: 'Ruta'
-                }
+        }
+    })
+
+    .state('app.ruta', {
+        url: '/ruta/:piscineroId',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/ruta.html',
+                controller: 'Ruta'
             }
-        })
-        .state('app.maparuta', {
-            url: '/mapa/ruta/:piscineroId',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/maparuta.html',
-                    controller: 'MapaRuta'
-                }
+        }
+    })
+
+    .state('app.maparuta', {
+        url: '/mapa/ruta/:piscineroId',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/maparuta.html',
+                controller: 'MapaRuta'
             }
-        })
-        .state('app.historialR', {
-            url: '/historial/reportes',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/historialR.html',
-                    controller: 'HistorialR'
-                }
+        }
+    })
+
+    .state('app.historialR', {
+        url: '/historial/reportes',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/historialR.html',
+                controller: 'HistorialR'
             }
-        })
-        .state('app.historialRe', {
-            url: '/historial/reparaciones',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/historialRe.html',
-                    controller: 'HistorialRe'
-                }
+        }
+    })
+
+    .state('app.historialM', {
+        url: '/historial/mantenimientos',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/historialM.html',
+                controller: 'HistorialM'
             }
-        })
-        .state('app.historialM', {
-            url: '/historial/mantenimientos',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/historialM.html',
-                    controller: 'HistorialM'
-                }
+        }
+    })
+
+    .state('app.galeriaR', {
+        url: '/galeria/reportes/:reporteId',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/galeriaR.html',
+                controller: 'GaleriaR'
             }
-        })
-        .state('app.galeriaR', {
-            url: '/galeria/reportes/:reporteId',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/galeriaR.html',
-                    controller: 'GaleriaR'
-                }
+        }
+    })
+
+    .state('app.galeriaM', {
+        url: '/galeria/mantenimientos/:mantenimientoId',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/galeriaM.html',
+                controller: 'GaleriaM'
             }
-        })
-        .state('app.galeriaM', {
-            url: '/galeria/mantenimientos/:mantenimientoId',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/galeriaM.html',
-                    controller: 'GaleriaM'
-                }
+        }
+    })
+
+    .state('app.respuestas', {
+        url: '/respuestas/:reporteId',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/respuestas.html',
+                controller: 'Repuesta'
             }
-        })
-        .state('app.galeriaRe', {
-            url: '/galeria/reparaciones/:reparacionId',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/galeriaRe.html',
-                    controller: 'GaleriaRe'
-                }
+        }
+    })
+    .state('app.planilla', {
+        url: '/planilla/:clienteId',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/planilla.html',
+                controller: 'Planilla'
             }
-        }).state('app.respuestas', {
-            url: '/respuestas/:reporteId',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/respuestas.html',
-                    controller: 'Repuesta'
-                }
-            }
-        });
+        }
+    });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/clientelists');
 });
