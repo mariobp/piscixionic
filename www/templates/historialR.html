@@ -12,11 +12,11 @@
                 <div class="collapsible-header grey lighten-5">
                     <ul class="collection grey lighten-5">
                         <li class="collection-item  grey lighten-5">
-                            <span class="title"><b>Reporte:</b> {{reporte.nombre}}</span>
+                            <span class="title"><b ng-class="{'light-blue-text':reporte.pk == actual}">Reporte:</b> {{reporte.nombre}}</span>
                             <p>
-                                <b>Fecha:</b> {{reporte.fecha}}
+                                <b ng-class="{'light-blue-text':reporte.pk == actual}">Fecha:</b> {{reporte.fecha}}
                                 <br>
-                                <b>Cliente:</b> {{reporte.nombreC}} {{reporte.apellidosC}}
+                                <b ng-class="{'light-blue-text':reporte.pk == actual}">Cliente:</b> {{reporte.nombreC}} {{reporte.apellidosC}}
                             </p>
                         </li>
                     </ul>

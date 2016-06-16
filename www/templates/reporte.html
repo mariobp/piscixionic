@@ -7,7 +7,7 @@
       <ion-spinner></ion-spinner>
     </div>
     <div class="row row-p" ng-show="ready1 && ready2">
-      <form class="col s12" id="reporte" method="post" name="form" enctype="multipart/form-data" ng-submit="form.$valid && datosForm()" novalidate>
+      <form class="col s12" id="reporte" method="post" name="form" enctype="multipart/form-data" ng-submit="form.$valid && enviar()" novalidate>
         <div class="scroll2">
             <div class="row row-p">
               <div class="input-field col s12">
@@ -29,7 +29,7 @@
             </div>
             <div class="row row-p">
              <div class="input-field col s12">
-                <select id="tipo" class="ion-input-select" name="tipo_de_reporte" ng-model="data.tipo" >
+                <select id="tipo" class="ion-input-select" name="tipo_de_reporte" ng-model="data.tipo_de_reporte" >
                    <option value="" disabled selected>Elegir tipo de Reporte</option>
                    <option value="{{tipo.id}}" ng-repeat="tipo in tipos">{{tipo.nombre}}</option>
                </select>

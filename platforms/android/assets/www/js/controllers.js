@@ -262,7 +262,7 @@ angular.module('starter.controllers', [])
 .controller('Reporte', function($http, $scope, $stateParams, $cordovaDialogs, $cordovaToast, Galeria, $cordovaImagePicker, $state, $timeout, $ionicHistory, Camera, $ionicLoading, $location, $cordovaGeolocation) {
         $scope.posicion($location.path());
         $scope.data = {};
-        $scope.data.imagenes = [];
+        $scope.imagenes = [];
         $scope.total = 0;
         $scope.ready1 = false;
         $scope.ready2 = false;
@@ -373,9 +373,15 @@ angular.module('starter.controllers', [])
         /*
             Obteniendo el gps.
         */
+        var posOptions = {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0
+        };
+
         $cordovaGeolocation.getCurrentPosition(posOptions).then(function(pos) {
-            data.latitud = pos.coords.latitude;
-            data.longitud = pos.coords.longitude;
+            $scope.data.latitud = pos.coords.latitude;
+            $scope.data.longitud = pos.coords.longitude;
             $ionicLoading.hide();
         }, function(error) {
             $cordovaDialogs.alert('No se puede obtener la ubicación, posiblemente el gps este desactivado: ' + error.message, 'Gps')
@@ -393,8 +399,8 @@ angular.module('starter.controllers', [])
                     sourceType: 1
                 };
                 Camera.getPicture(options).then(function(imageData) {
-                    $scope.data.imagenes.push(imageData);
-                    $scope.total = $scope.data.imagenes.length;
+                    $scope.imagenes.push(imageData);
+                    $scope.total = $scope.imagenes.length;
                 }, function(err) {
                     console.log("Error", err);
                 });
@@ -425,9 +431,9 @@ angular.module('starter.controllers', [])
                     sourceType: 0
                 };
                 Camera.getPicture(options).then(function(imageData) {
-                    $scope.data.imagenes.push(imageData);
+                    $scope.imagenes.push(imageData);
                     console.log($scope.file);
-                    $scope.total = $scope.data.imagenes.length;
+                    $scope.total = $scope.imagenes.length;
                 }, function(err) {
                     console.log("Error", err);
                 });
@@ -436,111 +442,42 @@ angular.module('starter.controllers', [])
             }
         };
 
-        // $scope.getPicture = function() {
-        //     if ($scope.total < 5) {
-        //         var options = {
-        //             quality: 75,
-        //             destinationType: Camera.DestinationType.NATIVE_URI,
-        //             sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-        //             allowEdit: true,
-        //             encodingType: Camera.EncodingType.JPEG,
-        //             targetWidth: 1280,
-        //             targetHeight: 720,
-        //             //popoverOptions: CameraPopoverOptions,
-        //             saveToPhotoAlbum: false,
-        //             correctOrientation: true
-        //         };
-        //         $cordovaCamera.getPicture(options).then(function(imageData) {
-        //             console.log(imageData);
-        //             $scope.data.imagenes.push(imageData);
-        //             $scope.total = $scope.data.imagenes.length;
-        //         }, function(err) {
-        //             // error
-        //             console.log("Error", err);
-        //         });
-        //     } else {
-        //         $cordovaToast
-        //             .show('El maximo es 5 fotos', 'short', 'center')
-        //             .then(function(success) {
-        //                 // success
-        //             }, function(error) {
-        //                 // error
-        //             });
-        //     }
-        // };
-        //
-        //
-        //
-        // //$cordovaImagePicker
-        // $scope.getGallery = function() {
-        //     var options2 = {
-        //         maximumImagesCount: 5,
-        //         targetWidth: 1280,
-        //         targetHeight: 720,
-        //         quality: 80
-        //     };
-        //
-        //     $cordovaImagePicker.getPictures(options2)
-        //         .then(function(results) {
-        //             results.forEach(function(data) {
-        //                 $scope.data.imagenes.push(data);
-        //                 $scope.total = $scope.data.imagenes.length;
-        //             });
-        //         }, function(error) {
-        //             console.log('Error: ' + JSON.stringify(error)); // In case of error
-        //         });
-        // };
-        // angular.element(document).ready(function () {
-        //     var opciones = {
-        //         type: 'POST',
-        //         url: 'http://192.168.0.109:1190/reporte/form/',
-        //         clearForm: true,
-        //         dataType: 'json',
-        //         success: doneCallbacks,
-        //         beforeSubmit: function(){
-        //             $scope.loading = $ionicLoading.show({
-        //                 template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Guardando...',
-        //                 noBackdrop: true
-        //             });
-        //         }
-        //     };
-        //     $("#reporte").ajaxForm(opciones);
-        //     function doneCallbacks(responseText, statusText){
-        //         $ionicLoading.hide();
-        //         console.log(responseText);
-        //         console.log(statusText);
-        //     }
-        // });
-        $scope.enviar = function(data) {
-            // var opciones = {
-            //     type: 'POST',
-            //     url: $scope.server + '/reportes/reporte/form/',
-            //     dataType: 'json',
-            //     success: doneCallbacks,
-            //     beforeSubmit: function(){
-            //         $scope.loading = $ionicLoading.show({
-            //             template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Guardando...',
-            //             noBackdrop: true
-            //         });
-            //     }
-            // };
-            // $("#reporte").ajaxForm(opciones);
-            // function doneCallbacks(responseText, statusText){
-            //     $ionicLoading.hide();
-            //     console.log(responseText);
-            //     console.log(statusText);
-            // }
+        $scope.enviar = function() {
             $scope.loading = $ionicLoading.show({
                 template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Guardando...',
                 noBackdrop: true
             });
 
+            $scope.data["fotoreporte_set-TOTAL_FORMS"] = $scope.total;
+            $scope.data["fotoreporte_set-INITIAL_FORMS"] = 0;
+            $scope.data["fotoreporte_set-MIN_NUM_FORMS"] = 0;
+            $scope.data["fotoreporte_set-MAX_NUM_FORMS"] = 1000;
+            if ($scope.imagenes.length > 0) {
+                $scope.imagenes.forEach(function(imagen, index) {
+                    $scope.data["fotoreporte_set-" + index + "-url"] = imagen;
+                });
+                $cordovaDialogs.confirm('Esta seguro que quiere enviar?', 'Enviar', ['Si, Enviar!', 'Cancelar'])
+                    .then(function(result) {
+                        if (result === 1) {
+                            send(); //Se formatea la informacion y se envia.
+                        }
+                    });
+            } else {
+                $cordovaDialogs.confirm('Esta seguro que quiere enviar sin fotos?', 'Fotos', ['Si, Enviar!', 'Tomar Foto'])
+                    .then(function(result) {
+                        if (result === 1) {
+                            send(); //Se envia sin fotos
+                        } else if (result === 2) {
+                            $scope.takePicture();
+                        }
+                    });
+            }
+
             function send() {
                 $http({
                     method: 'POST',
                     url: $scope.server + '/reportes/reporte/form/',
-                    //url: 'http://192.168.0.109:1190/reporte/form/',
-                    data: $.param(data),
+                    data: $.param($scope.data),
                     headers: {
                         //'Content-Type': 'multipart/form-data',
                         'Content-Type': 'application/x-www-form-urlencoded',
@@ -558,10 +495,11 @@ angular.module('starter.controllers', [])
                     //     return formData;
                     // }
                 }).then(function doneCallbacks(response) {
-                    $scope.data = {};
-                    $scope.total = 0;
                     $ionicLoading.hide();
-                    $cordovaToast.show("Guardando exitoso", 'short', 'center');
+                    $cordovaToast.show("Guardando exitoso", 'long', 'center')
+                    .then(function(success){
+                        $state.go('app.historialR',{clienteId: id, actual: response.data[0].pk});
+                    });
                 }, function failCallbacks(response) {
                     if (response.status === 403) {
                         $ionicLoading.hide();
@@ -607,54 +545,25 @@ angular.module('starter.controllers', [])
                     }
                 });
             }
-            send();
-
-        };
-
-        //$scope.enviar();
-
-        $scope.datosForm = function() {
-            var dataSend = {};
-            dataSend.nombre = $scope.data.nombre;
-            dataSend.descripcion = $scope.data.descripcion;
-            dataSend.tipo_de_reporte = $scope.data.tipo;
-            dataSend.piscina = $scope.data.piscina;
-            dataSend["fotoreporte_set-TOTAL_FORMS"] = $scope.total;
-            dataSend["fotoreporte_set-INITIAL_FORMS"] = 0;
-            dataSend["fotoreporte_set-MIN_NUM_FORMS"] = 0;
-            dataSend["fotoreporte_set-MAX_NUM_FORMS"] = 1000;
-            if ($scope.data.imagenes.length > 0) {
-                $scope.data.imagenes.forEach(function(imagen, index) {
-                    dataSend["fotoreporte_set-" + index + "-url"] = imagen;
-                });
-                $cordovaDialogs.confirm('Esta seguro que quiere enviar?', 'Enviar', ['Si, Enviar!', 'Cancelar'])
-                    .then(function(result) {
-                        if (result === 1) {
-                            $scope.enviar(dataSend); //Se formatea la informacion y se envia.
-                        }
-                    });
-            } else {
-                $cordovaDialogs.confirm('Esta seguro que quiere enviar sin fotos?', 'Fotos', ['Si, Enviar!', 'Tomar Foto'])
-                    .then(function(result) {
-                        if (result === 1) {
-                            $scope.enviar(dataSend); //Se envia sin fotos
-                        } else if (result === 2) {
-                            $scope.takePicture();
-                        }
-                    });
-            }
-
         };
     })
-    .controller('HistorialR', function($scope, $http, $state, $location, $cordovaToast, $timeout, $cordovaDialogs) {
+    .controller('HistorialR', function($scope, $http, $state, $location, $cordovaToast, $timeout, $cordovaDialogs,  $stateParams) {
         $scope.posicion($location.path());
         $scope.search = "";
         $scope.noMoreItemsAvailable = false;
+        $scope.actual = $stateParams.actual;
         var num = 1,
-            max = 0;
+            max = 0,
+            id = $stateParams.clienteId,
+            url = '';
         $scope.reportes = [];
+        if (id===0) {
+            url = '/reportes/reporte/list/?';
+        } else {
+            url = '/reportes/reporte/list/?piscina__casa__cliente=' + id + '&';
+        }
         $scope.loadMore = function() {
-            $http.get($scope.server + '/reportes/reporte/list/?page=' + num)
+            $http.get($scope.server + url +'page=' + num)
                 .then(function successCallback(response) {
                     var data = response.data.object_list;
                     if (response.data.num_rows === 0) {
@@ -805,8 +714,11 @@ angular.module('starter.controllers', [])
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
             }).then(function successCallback(response) {
-                $scope.data.tu = 1;
-                $scope.respuestas.push($scope.data);
+                var mensaje = {};
+                mensaje = response.data[0].fields;
+                mensaje.tu = 1;
+                console.log(response);
+                $scope.respuestas.push(mensaje);
                 $ionicLoading.hide();
             }, function errorCallback(response) {
                 $ionicLoading.hide();
@@ -1639,7 +1551,7 @@ angular.module('starter.controllers', [])
 
     })
 
-.controller('MapaRuta', function($scope, $http, $stateParams, $cordovaToast, $cordovaDialogs, $ionicLoading, $timeout, $state, $location) {
+.controller('MapaRuta', function($scope, $http, $stateParams, $cordovaToast, $cordovaDialogs, $ionicLoading, $timeout, $state, $location, $ionicHistory) {
     $scope.cargado = false;
     var gpsnull = true,
         casanull = null,
@@ -1731,7 +1643,10 @@ angular.module('starter.controllers', [])
                                 }
                             });
                         } else {
-                            $cordovaDialogs.alert('No se puede mostrar la ruta porque la piscina: ' + casanull.nombreP + ' en la casa con dirección ' + casanull.nombreCA + ' del cliente ' + casanull.nombreCF + ' ' + casanull.nombreCL + ' no tiene asignado el gps. ');
+                            $cordovaDialogs.alert('No se puede mostrar la ruta porque la piscina: ' + casanull.nombreP + ' en la casa con dirección ' + casanull.nombreCA + ' del cliente ' + casanull.nombreCF + ' ' + casanull.nombreCL + ' no tiene asignado el gps. ', 'gps')
+                            .then(function(success){
+                                $ionicHistory.goBack();
+                            });
                         }
 
                     }
