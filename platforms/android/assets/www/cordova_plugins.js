@@ -337,6 +337,13 @@ module.exports = [
         "clobbers": [
             "window.FileTransfer"
         ]
+    },
+    {
+        "file": "plugins/org.pbernasconi.progressindicator/www/progressIndicator.js",
+        "id": "org.pbernasconi.progressindicator.ProgressIndicator",
+        "clobbers": [
+            "ProgressIndicator"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -362,7 +369,8 @@ module.exports.metadata =
     "ionic-plugin-keyboard": "2.0.1",
     "phonegap-plugin-barcodescanner": "5.0.0",
     "cordova-plugin-file": "4.2.0",
-    "cordova-plugin-file-transfer": "1.5.1"
+    "cordova-plugin-file-transfer": "1.5.1",
+    "org.pbernasconi.progressindicator": "1.1.0"
 };
 // BOTTOM OF METADATA
 });

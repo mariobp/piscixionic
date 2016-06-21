@@ -58,6 +58,9 @@
     <feature name="FileTransfer">
         <param name="android-package" value="org.apache.cordova.filetransfer.FileTransfer" />
     </feature>
+    <feature name="ProgressIndicator">
+        <param name="android-package" value="org.apache.cordova.progressindicator.ProgressIndicator" />
+    </feature>
     <feature name="Diagnostic">
         <param name="android-package" value="cordova.plugins.Diagnostic" />
     </feature>

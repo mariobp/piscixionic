@@ -4,12 +4,11 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.controllers', 'ionic-native-transitions', 'ngMessages', 'starter.directives', 'ksSwiper', 'ngCookies'])
+angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.controllers', 'ionic-native-transitions', 'ngMessages', 'starter.directives', 'ksSwiper'])
 
-.run(function($ionicPlatform, $ionicPopup, $http, $window, $cordovaStatusbar, $cordovaToast, $cordovaPush, $rootScope, $state, $cordovaSplashscreen, $cordovaLocalNotification, $cookies) {
+.run(function($ionicPlatform, $ionicPopup, $http, $window, $cordovaStatusbar, $cordovaToast, $rootScope, $state, $cordovaLocalNotification, $cordovaDialogs) {
     //Project Number: 725278590059
     //API Key: AIzaSyBeuBsMahCuzv7P09GZ69wWbtqDR_4nqGA
-    //$cordovaSplashscreen.show();
     $ionicPlatform.ready(function() {
         $cordovaStatusbar.overlaysWebView(true);
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -68,7 +67,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
             }
         });
     }
-    console.log($cookies);
+
     serverOn();
     var bandera = false;
     document.addEventListener("offline", onOffline, false);
@@ -111,13 +110,20 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
         }
     }
 
-    //Codigo Notifiaciones Push
-
-
+    $ionicPlatform.onHardwareBackButton(function() {
+        if($state.current.name=="app.clientelists" || $state.current.name=="app.login" || $state.current.name=="app.acerca" || $state.current.name=="app.piscineros" || $state.current.name=="app.historialR" || $state.current.name=="app.historialM"){
+            $cordovaDialogs.confirm('Seguro que desea salir?', 'Salir', ['Si', 'No'])
+            .then(function(result) {
+                if (result === 1) {
+                    navigator.app.exitApp();
+                }
+            });
+        }
+    }, 100);
 })
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $ionicNativeTransitionsProvider) {
-    $ionicConfigProvider.views.maxCache(5);
+    $ionicConfigProvider.views.maxCache(3);
     $ionicConfigProvider.views.transition('none');
     //$ionicConfigProvider.spinner.icon('ripple');
     $ionicConfigProvider.scrolling.jsScrolling(false);
