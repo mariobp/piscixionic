@@ -57,6 +57,9 @@
         },
         "phonegap-plugin-barcodescanner": {
             "PACKAGE_NAME": "com.ionicframework.piscix612347"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "com.ionicframework.piscix612347"
         }
     },
     "dependent_plugins": {
@@ -64,6 +67,9 @@
             "PACKAGE_NAME": "com.ionicframework.piscix612347"
         },
         "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.ionicframework.piscix612347"
+        },
+        "cordova-plugin-file": {
             "PACKAGE_NAME": "com.ionicframework.piscix612347"
         }
     }

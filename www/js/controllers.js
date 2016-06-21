@@ -10,7 +10,7 @@ angular.module('starter.controllers', [])
     // Form data for the login modal
     //$scope.server = "http://104.236.33.228:8040";
     //$scope.server = "http://192.168.1.51:8000";
-    $scope.server = "http://192.168.1.59:8000";
+    $scope.server = "http://192.168.1.65:8000";
     $scope.posicion = function(path) {
         if (path) {
             $scope.anterior = path;
@@ -413,11 +413,6 @@ angular.module('starter.controllers', [])
             Galeria.openGaleria($scope.data.imagenes);
         };
 
-        $scope.tomarFoto = function() {
-            var query = "#id_fotoreporte_set-" + $scope.max + "-url";
-            $(query).click();
-        };
-
         $scope.count = function() {
             $scope.max += 1;
         };
@@ -445,7 +440,6 @@ angular.module('starter.controllers', [])
         $scope.enviar = function() {
             $scope.loading = $ionicLoading.show({
                 template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Guardando...',
-                noBackdrop: true
             });
 
             $scope.data["fotoreporte_set-TOTAL_FORMS"] = $scope.total;
@@ -483,17 +477,6 @@ angular.module('starter.controllers', [])
                         'Content-Type': 'application/x-www-form-urlencoded',
                         //'Content-Type': undefined
                     },
-                    // transformRequest: function (data, headersGetter) {
-                    //     var formData = new FormData();
-                    //     angular.forEach(data, function (value, key) {
-                    //         console.log(key);
-                    //         console.log(value);
-                    //         formData.append(key, value);
-                    //     });
-                    //     var headers = headersGetter();
-                    //     delete headers['Content-Type'];
-                    //     return formData;
-                    // }
                 }).then(function doneCallbacks(response) {
                     $ionicLoading.hide();
                     $cordovaToast.show("Guardando exitoso", 'long', 'center')
@@ -547,7 +530,7 @@ angular.module('starter.controllers', [])
             }
         };
     })
-    .controller('HistorialR', function($scope, $http, $state, $location, $cordovaToast, $timeout, $cordovaDialogs,  $stateParams) {
+    .controller('HistorialR', function($scope, $rootScope, $http, $state, $location, $cordovaToast, $timeout, $cordovaDialogs,  $stateParams, $ionicHistory) {
         $scope.posicion($location.path());
         $scope.search = "";
         $scope.noMoreItemsAvailable = false;
@@ -561,6 +544,11 @@ angular.module('starter.controllers', [])
             url = '/reportes/reporte/list/?';
         } else {
             url = '/reportes/reporte/list/?piscina__casa__cliente=' + id + '&';
+        }
+        if ($scope.actual > 0) {
+            $rootScope.$ionicGoBack = function() {
+                $ionicHistory.goBack(-2);
+            };
         }
         $scope.loadMore = function() {
             $http.get($scope.server + url +'page=' + num)
@@ -715,9 +703,9 @@ angular.module('starter.controllers', [])
                 },
             }).then(function successCallback(response) {
                 var mensaje = {};
+                $scope.data = {};
                 mensaje = response.data[0].fields;
                 mensaje.tu = 1;
-                console.log(response);
                 $scope.respuestas.push(mensaje);
                 $ionicLoading.hide();
             }, function errorCallback(response) {

@@ -54,12 +54,22 @@
             </div>
             <div class="row row-p">
                 <div class="col s4">
-                  <button type="button" class="btn-large waves-effect waves-light  light-blue">
+                  <button type="button" class="btn-large waves-effect waves-light  light-blue" ng-click="takePicture()">
                   <i class="micon">photo_camera</i>
                   </button>
                 </div>
                 <div class="col s8 foto-cont">
                     <p>Tomar una foto</p>
+                </div>
+            </div>
+            <div class="row row-p">
+                <div class="col s4">
+                  <button type="button" class="btn-large waves-effect waves-light light-blue" ng-click="getPicture()">
+                  <i class="micon">add_to_photos</i>
+                  </button>
+                </div>
+                <div class="col s8 foto-cont">
+                    <p>Agregar foto desde la galeria.</p>
                 </div>
             </div>
             <div class="row row-p">
@@ -72,15 +82,6 @@
                     <p>Fotos Seleccionadas.</p>
                 </div>
             </div>
-            <!--input id="id_fotoreporte_set-0-url" name="fotoreporte_set-0-url" onchange="count()" type="file" style="opacity: 0" capture="camera" accept="image/*"/>
-            <input id="id_fotoreporte_set-1-url" name="fotoreporte_set-1-url" onchange="count()" type="file" style="opacity: 0" capture="camera" accept="image/*"/>
-            <input id="id_fotoreporte_set-2-url" name="fotoreporte_set-2-url" onchange="count()" type="file" style="opacity: 0" capture="camera" accept="image/*"/>
-            <input id="id_fotoreporte_set-3-url" name="fotoreporte_set-3-url" onchange="count()" type="file" style="opacity: 0" capture="camera" accept="image/*"/>
-            <input id="id_fotoreporte_set-4-url" name="fotoreporte_set-4-url" onchange="count()" type="file" style="opacity: 0" capture="camera" accept="image/*"/>
-            <input id="id_fotoreporte_set-TOTAL_FORMS" name="fotoreporte_set-TOTAL_FORMS" type="hidden" value="{{total}}" />
-            <input id="id_fotoreporte_set-INITIAL_FORMS" name="fotoreporte_set-INITIAL_FORMS" type="hidden" value="0" />
-            <input id="id_fotoreporte_set-MIN_NUM_FORMS" name="fotoreporte_set-MIN_NUM_FORMS" type="hidden" value="0" />
-            <input id="id_fotoreporte_set-MAX_NUM_FORMS" name="fotoreporte_set-MAX_NUM_FORMS" type="hidden" value="1000" /-->
         </div>
         <div class="bar headerbar footer-f">
           <div class="row row-p">

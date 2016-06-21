@@ -4,9 +4,9 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.controllers', 'ionic-native-transitions', 'ngMessages', 'starter.directives', 'ksSwiper'])
+angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.controllers', 'ionic-native-transitions', 'ngMessages', 'starter.directives', 'ksSwiper', 'ngCookies'])
 
-.run(function($ionicPlatform, $ionicPopup, $http, $window, $cordovaStatusbar, $cordovaToast, $cordovaPush, $rootScope, $state, $cordovaSplashscreen, $cordovaLocalNotification) {
+.run(function($ionicPlatform, $ionicPopup, $http, $window, $cordovaStatusbar, $cordovaToast, $cordovaPush, $rootScope, $state, $cordovaSplashscreen, $cordovaLocalNotification, $cookies) {
     //Project Number: 725278590059
     //API Key: AIzaSyBeuBsMahCuzv7P09GZ69wWbtqDR_4nqGA
     //$cordovaSplashscreen.show();
@@ -31,7 +31,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
     });
     //$rootScope.server = "http://104.236.33.228:8040";
     //$rootScope.server = "http://192.168.1.51:8000";
-    $rootScope.server = "http://192.168.1.59:8000";
+    $rootScope.server = "http://192.168.1.65:8000";
 
     function isLogin() {
         $http.get($rootScope.server + "/usuarios/is/login/")
@@ -68,7 +68,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
             }
         });
     }
-
+    console.log($cookies);
     serverOn();
     var bandera = false;
     document.addEventListener("offline", onOffline, false);
