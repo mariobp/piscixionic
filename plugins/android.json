@@ -25,6 +25,9 @@
         "cordova-plugin-dialogs": {
             "PACKAGE_NAME": "com.ionicframework.piscix612347"
         },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "com.ionicframework.piscix612347"
+        },
         "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.ionicframework.piscix612347"
         },
@@ -55,13 +58,10 @@
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.ionicframework.piscix612347"
         },
-        "phonegap-plugin-barcodescanner": {
-            "PACKAGE_NAME": "com.ionicframework.piscix612347"
-        },
-        "cordova-plugin-file-transfer": {
-            "PACKAGE_NAME": "com.ionicframework.piscix612347"
-        },
         "org.pbernasconi.progressindicator": {
+            "PACKAGE_NAME": "com.ionicframework.piscix612347"
+        },
+        "phonegap-plugin-barcodescanner": {
             "PACKAGE_NAME": "com.ionicframework.piscix612347"
         }
     },

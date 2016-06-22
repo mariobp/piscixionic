@@ -1,6 +1,6 @@
 angular.module('starter.socket', [])
 
-.factory('notix', function($rootScope, $cordovaLocalNotification) {
+.factory('notix', function($rootScope, $cordovaLocalNotification, $state) {
 	var scope = $rootScope;
 	scope.socket = scope.socket || io('http://192.168.0.113:1196');
 	scope.recive = true;
@@ -28,7 +28,6 @@ angular.module('starter.socket', [])
 	        }.bind(this));
 
 	        scope.socket.on('success-login', function(message) {
-	            console.log("Ok");
 	            this.do_event();
 	        }.bind(this));
 
@@ -37,14 +36,86 @@ angular.module('starter.socket', [])
 	        });
 
 	        scope.socket.on('notix', function(message) {
-	            console.log(message);
-	            if (recive) {
-	                var noti = notification(message.data.html);
-	                noti.onclick = function() {
-	                    this.visit(message._id, function() {
-	                        window.location = message.data.url;
-	                    });
-	                }.bind(this);
+				console.log(message.data);
+	            if (scope.recive) {
+					if (message.data.data.tipo == "Reporte"){
+						$cordovaLocalNotification.schedule({
+				           id: 3,
+				           title: 'Reporte',
+				           text: message.data.html,
+						   data: {
+							   reporte: message.data.data.reporte_id,
+							   cliente: message.data.data.cliente_id
+						   }
+				         });
+					}else if(message.data.data.tipo == "Actividad"){
+						$cordovaLocalNotification.schedule({
+						   id: 4,
+						   title: 'Actividad',
+						   text: message.data.html
+						 });
+					}else if(message.data.data.tipo == "Respuesta"){
+						$cordovaLocalNotification.schedule({
+						   id: 5,
+						   title: 'Respuesta',
+						   text: message.data.html,
+						   data: { reporte: message.data.data.reporte_id}
+						 });
+					}else if(message.data.data.tipo == "Recordatorio"){
+						$cordovaLocalNotification.schedule({
+						   id: 6,
+						   title: 'Recordatorio',
+						   text: message.data.html,
+						   data: { reporte: message.data.data.reporte_id}
+						 });
+					}else if(message.data.data.tipo == "Solucion"){
+						$cordovaLocalNotification.schedule({
+						   id: 7,
+						   title: 'Solución de Reporte',
+						   text: message.data.html,
+						   data: {
+							   reporte: message.data.data.reporte_id,
+							   cliente: message.data.data.cliente_id
+						   }
+						});
+					}else if(message.data.data.tipo == "Asignacion"){
+						$cordovaLocalNotification.schedule({
+						   id: 8,
+						   title: 'Asignación',
+						   text: message.data.html,
+						   data: { reporte: message.data.data.piscinero_id}
+						});
+					}
+					$rootScope.$on('$cordovaLocalNotification:click',
+				    function (event, notification, state) {
+						var data = JSON.parse(notification.data)
+						this.visit(message._id, function() {
+						  	if(notification.id === 3){
+								$state.go('app.historialR', {
+	                                clienteId: data.cliente,
+	                                actual: data.reporte
+	                            });
+							}else if(notification.id === 5){
+								$state.go('app.respuestas', {
+									reporteId: data.reporte
+								});
+							}else if(notification.id === 6){
+								$state.go('app.historialR', {
+	                                clienteId: 0,
+	                                actual: data.reporte
+	                            });
+							}else if(notification.id === 7){
+								$state.go('app.historialR', {
+									clienteId: data.cliente,
+									actual: data.reporte
+								});
+							}else if(notification.id === 8){
+								$state.go('app.ruta', {
+									piscineroId: data.piscinero_id
+								});
+							}
+					  	});
+				    }.bind(this));
 	            }
 	        }.bind(this));
 

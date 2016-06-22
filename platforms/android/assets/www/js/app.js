@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.controllers', 'ionic-native-transitions', 'ngMessages', 'starter.directives', 'ksSwiper', 'starter.socket'])
 
-.run(function($ionicPlatform, $ionicPopup, $http, $window, $cordovaStatusbar, $cordovaToast, $rootScope, $state, $cordovaLocalNotification, $cordovaDialogs, notix) {
+.run(function($ionicPlatform, $cordovaStatusbar, $cordovaToast, $state, $cordovaLocalNotification) {
     //Project Number: 725278590059
     //API Key: AIzaSyBeuBsMahCuzv7P09GZ69wWbtqDR_4nqGA
     $ionicPlatform.ready(function() {
@@ -23,74 +23,14 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
             StatusBar.styleLightContent();
             StatusBar.backgroundColorByHexString('#455A64');
         }
-
-        var androidConfig = {
-            "senderID": "AIzaSyBeuBsMahCuzv7P09GZ69wWbtqDR_4nqGA",
-        };
     });
-    //$rootScope.server = "http://104.236.33.228:8040";
-    //$rootScope.server = "http://192.168.1.51:8000";
-    $rootScope.server = "http://192.168.0.113:8000";
 
-    function isLogin() {
-        $http.get($rootScope.server + "/usuarios/is/login/")
-            .then(function doneCallbacks(response) {
-                notix.setup(response.data.session, response.data.username, 'supervisor');
-                if ($state.current.name == "app.login") {
-                    $state.go('app.clientelists');
-                }
-            }, function failCallbacks(response) {
-                if(response.status === 400){
-                    $cordovaToast
-                    .show("Debe iniciar sesión", 'short', 'center')
-                    .then(function(success) {
-                        if ($state.current.name != 'app.login') {
-                            $state.go('app.login');
-                        }
-                    }, function(error) {
-                        console.log(error);
-                    });
-                }else if (response.status == 500) {
-                    $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
-                } else {
-                    $timeout(function() {
-                        $cordovaToast.show('Verificando sesión.', 'short', 'bottom').then(function(success) {
-                            isLogin();
-                        });
-                    }, 5000);
-                }
-            });
-    }
-
-    function serverOn() {
-        $http.get($rootScope.server + "/usuarios/serve/on/").then(function doneCallbacks(response) {
-            isLogin();
-        }, function failCallbacks(response) {
-            if (response.status == 500) {
-                $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
-            } else {
-                $timeout(function() {
-                    $cordovaToast.show('No se puede conectar al servidor', 'short', 'center').then(function(success) {
-                        serverOn();
-                    });
-                    $cordovaLocalNotification.schedule({
-                        id: 3,
-                        title: 'Piscix',
-                        text: 'No se puede conectar al servidor',
-                        //icon: 'img/icon.png'
-                    });
-                }, 5000);
-            }
-        });
-    }
-
-    serverOn();
     var bandera = false;
+
     document.addEventListener("offline", onOffline, false);
 
     function onOffline() {
         // Handle the offline event
-        $cordovaToast.show('No hay conexión a Internet!', 'long', 'center');
         $cordovaLocalNotification.cancel(2).then(function(result) {
             $cordovaLocalNotification.schedule({
                 id: 1,
@@ -99,13 +39,16 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
                 //icon: 'img/icon.png'
             });
         });
+        $cordovaToast.show('No hay conexión a Internet!', 'short', 'bottom')
+            .then(function(success){
+                bandera = true;
+            });
     }
 
     document.addEventListener("online", onOnline, false);
 
     function onOnline() {
         // Handle the online event
-        serverOn();
         if (bandera) {
             $cordovaLocalNotification.cancel(1).then(function(result) {
                 // ...
@@ -116,26 +59,14 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
                     //icon: 'img/icon.png'
                 });
             });
-            /*
-            $cordovaToast.show('Su equipo se conecto a internet', 'short', 'center')
+            $cordovaToast.show('Su equipo se conecto a internet', 'short', 'bottom')
                 .then(function(success) {
                     // success
                     bandera = false;
             });
-            */
         }
     }
 
-    $ionicPlatform.onHardwareBackButton(function() {
-        if($state.current.name=="app.clientelists" || $state.current.name=="app.login" || $state.current.name=="app.acerca" || $state.current.name=="app.piscineros" || $state.current.name=="app.historialR" || $state.current.name=="app.historialM"){
-            $cordovaDialogs.confirm('Seguro que desea salir?', 'Salir', ['Si', 'No'])
-            .then(function(result) {
-                if (result === 1) {
-                    navigator.app.exitApp();
-                }
-            });
-        }
-    }, 100);
 })
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $ionicNativeTransitionsProvider) {
@@ -301,7 +232,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
     })
 
     .state('app.historialM', {
-        url: '/historial/mantenimientos',
+        url: '/historial/mantenimientos/:clienteId/:actual',
         views: {
             'menuContent': {
                 templateUrl: 'templates/historialM.html',
