@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($http, $scope, $state) {
+.controller('AppCtrl', function($http, $scope, $state, $cordovaDialogs, $cordovaToast, $timeout, notix) {
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
@@ -10,7 +10,7 @@ angular.module('starter.controllers', [])
     // Form data for the login modal
     //$scope.server = "http://104.236.33.228:8040";
     //$scope.server = "http://192.168.1.51:8000";
-    $scope.server = "http://192.168.1.65:8000";
+    $scope.server = "http://192.168.0.113:8000";
     $scope.posicion = function(path) {
         if (path) {
             $scope.anterior = path;
@@ -26,6 +26,36 @@ angular.module('starter.controllers', [])
             /* Act on the event */
             console.log(data);
         });
+    };
+
+    $scope.isLogin = function() {
+        $http.get($rootScope.server + "/usuarios/is/login/")
+            .then(function doneCallbacks(response) {
+                notix.setup(response.data.session, response.data.username, 'supervisor');
+                if ($state.current.name == "app.login") {
+                    $state.go('app.clientelists');
+                }
+            }, function failCallbacks(response) {
+                if(response.status === 400){
+                    $cordovaToast
+                    .show("Debe iniciar sesión", 'short', 'center')
+                    .then(function(success) {
+                        if ($state.current.name != 'app.login') {
+                            $state.go('app.login');
+                        }
+                    }, function(error) {
+                        console.log(error);
+                    });
+                }else if (response.status == 500) {
+                    $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
+                } else {
+                    $timeout(function() {
+                        $cordovaToast.show('Verificando sesión.', 'short', 'bottom').then(function(success) {
+                            $scope.isLogin();
+                        });
+                    }, 5000);
+                }
+            });
     };
 
 })
@@ -47,6 +77,7 @@ angular.module('starter.controllers', [])
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
             }).then(function doneCallbacks(response) {
+                $scope.isLogin();
                 $scope.loginData = {};
                 $scope.loginReady = true;
                 if ($scope.anterior === null) {
@@ -431,6 +462,20 @@ angular.module('starter.controllers', [])
                     .then(function(result) {
                         if (result === 1) {
                             send(); //Se formatea la informacion y se envia.
+                        }else {
+                            var serve = encodeURI($scope.server + "/reportes/foto/form/");
+                            var options = new FileUploadOptions();
+                            options.fileKey = "url";
+                            options.httpMethod = "POST";
+                            options.params = {
+                                "reporte": 17
+                            };
+                            var ft = new FileTransfer();
+                            $scope.imagenes.forEach(function(imagen) {
+                                console.log(imagen);
+                                options.fileName = imagen.substr(imagen.lastIndexOf('/') + 1);
+                                ft.upload(imagen, serve, win, fail, options);
+                            });
                         }
                     });
             } else {
@@ -456,6 +501,7 @@ angular.module('starter.controllers', [])
                 console.log("upload error source " + error.source);
                 console.log("upload error target " + error.target);
             }
+
 
             function send() {
                 $scope.loading = $ionicLoading.show({
@@ -550,7 +596,7 @@ angular.module('starter.controllers', [])
             id = $stateParams.clienteId,
             url = '';
         $scope.reportes = [];
-        if (id === 0) {
+        if (id === '0') {
             url = '/reportes/reporte/list/?';
         } else {
             url = '/reportes/reporte/list/?piscina__casa__cliente=' + id + '&';

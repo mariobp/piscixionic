@@ -4,9 +4,9 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.controllers', 'ionic-native-transitions', 'ngMessages', 'starter.directives', 'ksSwiper'])
+angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.controllers', 'ionic-native-transitions', 'ngMessages', 'starter.directives', 'ksSwiper', 'starter.socket'])
 
-.run(function($ionicPlatform, $ionicPopup, $http, $window, $cordovaStatusbar, $cordovaToast, $rootScope, $state, $cordovaLocalNotification, $cordovaDialogs) {
+.run(function($ionicPlatform, $ionicPopup, $http, $window, $cordovaStatusbar, $cordovaToast, $rootScope, $state, $cordovaLocalNotification, $cordovaDialogs, notix) {
     //Project Number: 725278590059
     //API Key: AIzaSyBeuBsMahCuzv7P09GZ69wWbtqDR_4nqGA
     $ionicPlatform.ready(function() {
@@ -30,16 +30,18 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
     });
     //$rootScope.server = "http://104.236.33.228:8040";
     //$rootScope.server = "http://192.168.1.51:8000";
-    $rootScope.server = "http://192.168.1.65:8000";
+    $rootScope.server = "http://192.168.0.113:8000";
 
     function isLogin() {
         $http.get($rootScope.server + "/usuarios/is/login/")
             .then(function doneCallbacks(response) {
+                notix.setup(response.data.session, response.data.username, 'supervisor');
                 if ($state.current.name == "app.login") {
                     $state.go('app.clientelists');
                 }
             }, function failCallbacks(response) {
-                $cordovaToast
+                if(response.status === 400){
+                    $cordovaToast
                     .show("Debe iniciar sesión", 'short', 'center')
                     .then(function(success) {
                         if ($state.current.name != 'app.login') {
@@ -48,7 +50,15 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
                     }, function(error) {
                         console.log(error);
                     });
-
+                }else if (response.status == 500) {
+                    $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
+                } else {
+                    $timeout(function() {
+                        $cordovaToast.show('Verificando sesión.', 'short', 'bottom').then(function(success) {
+                            isLogin();
+                        });
+                    }, 5000);
+                }
             });
     }
 
@@ -56,14 +66,20 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
         $http.get($rootScope.server + "/usuarios/serve/on/").then(function doneCallbacks(response) {
             isLogin();
         }, function failCallbacks(response) {
-            if (response.status == -1) {
-                $cordovaToast.show('No se puede conectar al servidor', 'short', 'center');
-                $cordovaLocalNotification.schedule({
-                    id: 3,
-                    title: 'Piscix',
-                    text: 'No se puede conectar al servidor',
-                    //icon: 'img/icon.png'
-                });
+            if (response.status == 500) {
+                $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
+            } else {
+                $timeout(function() {
+                    $cordovaToast.show('No se puede conectar al servidor', 'short', 'center').then(function(success) {
+                        serverOn();
+                    });
+                    $cordovaLocalNotification.schedule({
+                        id: 3,
+                        title: 'Piscix',
+                        text: 'No se puede conectar al servidor',
+                        //icon: 'img/icon.png'
+                    });
+                }, 5000);
             }
         });
     }
@@ -123,7 +139,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
 })
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $ionicNativeTransitionsProvider) {
-    $ionicConfigProvider.views.maxCache(3);
+    $ionicConfigProvider.views.maxCache(1);
     $ionicConfigProvider.views.transition('none');
     //$ionicConfigProvider.spinner.icon('ripple');
     $ionicConfigProvider.scrolling.jsScrolling(false);
