@@ -420,39 +420,6 @@ angular.module('starter.controllers', [])
         /*
             Obteniendo el gps.
         */
-        var posOptions = {
-            enableHighAccuracy: true,
-            timeout: 10000,
-            maximumAge: 0
-        };
-
-        $scope.validateGps = function() {
-            if (window.cordova) {
-                cordova.plugins.diagnostic.isLocationEnabled(function(enabled) {
-                    if (!enabled) {
-                        $cordovaDialogs.confirm('Su gps esta desactivado.', 'Gps', ['Activar', 'Cancelar'])
-                            .then(function(result) {
-                                if (result === 1) {
-                                    cordova.plugins.diagnostic.switchToLocationSettings();
-                                }
-                            });
-                    }
-                }, function(error) {
-                    $cordovaDialogs.alert("Ah ocurrido un error" + error, 'Error');
-                });
-            }
-        };
-
-        $scope.validateGps();
-        $cordovaGeolocation.getCurrentPosition(posOptions).then(function(pos) {
-            $scope.data.latitud = pos.coords.latitude;
-            $scope.data.longitud = pos.coords.longitude;
-        }, function(error) {
-            $cordovaDialogs.alert('No se puede obtener la ubicación, posiblemente el gps este desactivado: ' + error.message, 'Gps')
-                .then(function(res) {
-                    $scope.validateGps();
-                });
-        });
 
         $scope.takePicture = function() {
             if ($scope.total < 5) {
@@ -499,6 +466,41 @@ angular.module('starter.controllers', [])
                 $cordovaToast.show('El maximo es 5 fotos', 'short', 'center');
             }
         };
+
+        var posOptions = {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0
+        };
+
+        $scope.validateGps = function() {
+            if (window.cordova) {
+                cordova.plugins.diagnostic.isLocationEnabled(function(enabled) {
+                    if (!enabled) {
+                        $cordovaDialogs.confirm('Su gps esta desactivado.', 'Gps', ['Activar', 'Cancelar'])
+                            .then(function(result) {
+                                if (result === 1) {
+                                    cordova.plugins.diagnostic.switchToLocationSettings();
+                                }
+                            });
+                    }
+                }, function(error) {
+                    $cordovaDialogs.alert("Ah ocurrido un error" + error, 'Error');
+                });
+            }
+        };
+
+        $scope.validateGps();
+        $cordovaGeolocation.getCurrentPosition(posOptions).then(function(pos) {
+            $scope.data.latitud = pos.coords.latitude;
+            $scope.data.longitud = pos.coords.longitude;
+        }, function(error) {
+            $cordovaDialogs.alert('No se puede obtener la ubicación, posiblemente el gps este desactivado: ' + error.message, 'Gps')
+                .then(function(res) {
+                    $scope.validateGps();
+                });
+        });
+
 
         $scope.enviar = function() {
             if ($scope.imagenes.length > 0) {
@@ -551,15 +553,12 @@ angular.module('starter.controllers', [])
                         console.log();
                     }
                 };
-                $timeout(function() {
-                    $scope.imagenes.forEach(function(imagen, index) {
-                        $scope.numImage = index + 1;
-                        options.fileName = imagen.substr(imagen.lastIndexOf('/') + 1);
-                        ft.upload(imagen, serve, win, fail, options);
-                    });
-                    $scope.cargando = false;
-                }, 5000);
-
+                $scope.imagenes.forEach(function(imagen, index) {
+                    $scope.numImage = index + 1;
+                    options.fileName = imagen.substr(imagen.lastIndexOf('/') + 1);
+                    ft.upload(imagen, serve, win, fail, options);
+                });
+                $scope.cargando = false;
             }
 
             function send() {
@@ -844,15 +843,16 @@ angular.module('starter.controllers', [])
         };
 
     })
-    .controller('Mantenimiento', function($http, $scope, $stateParams, Camera, Galeria, $cordovaImagePicker, $cordovaToast, $state, $cordovaDialogs, $ionicHistory, $timeout, $ionicLoading, $location) {
+    .controller('Mantenimiento', function($http, $scope, $stateParams, Camera, Galeria, $cordovaImagePicker, $cordovaToast, $state, $cordovaDialogs, $ionicHistory, $timeout, $ionicLoading, $location, $cordovaGeolocation) {
         $scope.posicion($location.path());
         $scope.data = {};
         $scope.imagenes = [];
         $scope.tipos = [];
         $scope.total = 0;
         $scope.ready = false;
+        $scope.cargando = false;
+        $scope.carga = 0;
         var id = $stateParams.clienteId;
-
         $scope.back = function() {
             $ionicHistory.goBack(-1);
         };
@@ -978,6 +978,13 @@ angular.module('starter.controllers', [])
         };
 
         $scope.validateGps();
+
+        var posOptions = {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0
+        };
+
         $cordovaGeolocation.getCurrentPosition(posOptions).then(function(pos) {
             $scope.data.latitud = pos.coords.latitude;
             $scope.data.longitud = pos.coords.longitude;
@@ -994,19 +1001,82 @@ angular.module('starter.controllers', [])
                 noBackdrop: true
             });
 
+            if ($scope.imagenes.length > 0) {
+                $cordovaDialogs.confirm('Esta seguro que quiere enviar?', 'Enviar', ['Si, Enviar!', 'Cancelar'])
+                    .then(function(result) {
+                        if (result === 1) {
+                            enviando(); //Se formatea la informacion y se envia.
+                        }
+                    });
+            } else {
+                $cordovaDialogs.confirm('Esta seguro que quiere enviar sin fotos?', 'Fotos', ['Si, Enviar!', 'Tomar Foto'])
+                    .then(function(result) {
+                        if (result === 1) {
+                            enviando(); //Se envia sin fotos
+                        } else if (result === 2) {
+                            $scope.takePicture();
+                        }
+                    });
+            }
+
+            function win(r) {
+                console.log("Code = " + r.responseCode);
+                console.log("Response = " + r.response);
+                console.log("Sent = " + r.bytesSent);
+            }
+
+            function fail(error) {
+                $cordovaDialogs.alert("Se ha producido un error: Code = " + error.code, 'Error');
+                console.log(console.error);
+                console.log("upload error source " + error.source);
+                console.log("upload error target " + error.target);
+            }
+
+            function enviarFotos(mantenimientoId) {
+                $ionicLoading.hide();
+                $scope.cargando = true;
+                var serve = encodeURI($scope.server + "/mantenimiento/service/foto/form/");
+                var options = new FileUploadOptions();
+                options.fileKey = "url";
+                options.httpMethod = "POST";
+                options.params = {
+                    "mantenimiento": mantenimientoId
+                };
+                var ft = new FileTransfer();
+                ft.onprogress = function(progressEvent) {
+                    console.log(progressEvent);
+                    if (progressEvent.lengthComputable) {
+                        var num = (progressEvent.loaded / progressEvent.total) * 100;
+                        $scope.carga = num.toFixed();
+                        console.log();
+                    }
+                };
+                $scope.imagenes.forEach(function(imagen, index) {
+                    $scope.numImage = index + 1;
+                    options.fileName = imagen.substr(imagen.lastIndexOf('/') + 1);
+                    ft.upload(imagen, serve, win, fail, options);
+                });
+                $scope.cargando = false;
+            }
+
             function enviando() {
+                $scope.data.reporte = id;
                 $http({
                     method: 'POST',
                     url: $scope.server + '/mantenimiento/service/mantanimiento/form/',
-                    data: $.param(data),
+                    data: $.param($scope.data),
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
                     },
                 }).then(function doneCallbacks(response) {
-                    $scope.data = {};
-                    $scope.total = 0;
-                    $ionicLoading.hide();
-                    $cordovaToast.show("Enviado exitoso", 'long', 'center');
+                    enviarFotos(response.data[0].pk);
+                    $cordovaToast.show("Guardando exitoso", 'long', 'center')
+                        .then(function(success) {
+                            $state.go('app.historialM', {
+                                clienteId: id,
+                                actual: response.data[0].pk
+                            });
+                        });
                 }, function failCallbacks(response) {
                     if (response.status === 403) {
                         $ionicLoading.hide();
@@ -1050,51 +1120,30 @@ angular.module('starter.controllers', [])
                     }
                 });
             }
-            enviando();
-        };
-
-        $scope.datosForm = function() {
-            var dataSend = {};
-            dataSend.nombre = $scope.data.nombre;
-            dataSend.descripcion = $scope.data.descripcion;
-            dataSend.reporte = id;
-            dataSend.tipo = $scope.data.tipo;
-            dataSend["fotomantenimiento_set-TOTAL_FORMS"] = $scope.total;
-            dataSend["fotomantenimiento_set-INITIAL_FORMS"] = 0;
-            dataSend["fotomantenimiento_set-MIN_NUM_FORMS"] = 0;
-            dataSend["fotomantenimiento_set-MAX_NUM_FORMS"] = 1000;
-            if ($scope.data.imagenes.length > 0) {
-                $scope.data.imagenes.forEach(function(imagen, index) {
-                    dataSend["fotomantenimiento_set-" + index + "-url"] = imagen;
-                });
-                $cordovaDialogs.confirm('Esta seguro que quiere enviar?', 'Enviar', ['Si, Enviar!', 'Cancelar'])
-                    .then(function(result) {
-                        if (result === 1) {
-                            $scope.enviar(dataSend); //Se formatea la informacion y se envia.
-                        }
-                    });
-            } else {
-                $cordovaDialogs.confirm('Esta seguro que quiere enviar sin fotos?', 'Fotos', ['Si, Enviar!', 'Tomar Foto'])
-                    .then(function(result) {
-                        if (result === 1) {
-                            $scope.enviar(dataSend); //Se envia sin fotos
-                        } else if (result === 2) {
-                            $scope.takePicture();
-                        }
-                    });
-            }
-
         };
     })
     .controller('HistorialM', function($scope, $http, $state, $cordovaToast, $timeout, $cordovaDialogs, $location) {
         $scope.posicion($location.path());
         $scope.search = "";
         $scope.noMoreItemsAvailable = false;
-        var num = 1,
-            max = 0;
         $scope.lista = [];
+        $scope.actual = $stateParams.actual;
+        var num = 1,
+            max = 0,
+            id = $stateParams.clienteId,
+            url = '';
+        if (id === '0') {
+            url = '/mantenimiento/service/mantanimiento/list/?';
+        } else {
+            url = '/mantenimiento/service/mantanimiento/list/?cliente_id=' + id + '&';
+        }
+        if ($scope.actual > 0) {
+            $rootScope.$ionicGoBack = function() {
+                $ionicHistory.goBack(-2);
+            };
+        }
         $scope.loadMore = function() {
-            $http.get($scope.server + '/mantenimiento/service/mantanimiento/list/?page=' + num)
+            $http.get($scope.server + url + 'page=' + num)
                 .then(function successCallback(response) {
                     var data = response.data.object_list;
                     if (response.data.num_rows === 0) {

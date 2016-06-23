@@ -88,7 +88,7 @@ angular.module('starter.socket', [])
 					}
 					$rootScope.$on('$cordovaLocalNotification:click',
 				    function (event, notification, state) {
-						var data = JSON.parse(notification.data)
+						var data = JSON.parse(notification.data);
 						this.visit(message._id, function() {
 						  	if(notification.id === 3){
 								$state.go('app.historialR', {

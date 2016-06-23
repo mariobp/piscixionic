@@ -3,11 +3,16 @@
   <h2 class="title white-text">{{piscinas[0].nombreC}} {{piscinas[0].apellidosC}}</h2>
 </ion-header-bar>
 <ion-content>
+<div class="center" ng-show="cargando">
+    <img width="100%" src="img/file_upload.svg"/>
+    <h4 class="blue-grey-text">Subiendo Foto #{{numImage}}</h4>
+    <progress value="{{carga}}" max="100"></progress>
+</div>
 <div class="spin" ng-show="!ready">
   <ion-spinner></ion-spinner>
 </div>
-<div class="row row-p" ng-show="ready">
-  <form class="col s12" name="form" ng-submit="form.$valid && datosForm()" novalidate>
+<div class="row row-p" ng-show="ready && !cargando">
+  <form class="col s12" name="form" ng-submit="form.$valid && enviar()" novalidate>
     <div class="scroll2">
         <div class="row row-p">
           <div class="input-field col s12">
