@@ -83,7 +83,7 @@ angular.module('starter.socket', [])
                             text: message.data.html,
                             data: {
                                 solucion: message.data.data.solucion_id,
-                                cliente: message.data.data.cliente_id
+                                reporte: message.data.data.reporte_id
                             }
                         });
                     } else if (message.data.data.tipo == "Asignacion") {
@@ -117,7 +117,7 @@ angular.module('starter.socket', [])
                                     });
                                 } else if (notification.id === 7) {
                                     $state.go('app.historialM', {
-                                        clienteId: data.cliente,
+                                        clienteId: data.reporte,
                                         actual: data.solucion
                                     });
                                 } else if (notification.id === 8) {
