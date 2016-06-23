@@ -45,7 +45,7 @@ angular.module('starter.controllers', [])
                         });
                 } else if (response.status == 500) {
                     $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
-                } else if (notix.username == null) {
+                } else if (notix.username === null) {
                     $timeout(function() {
                         $scope.isLogin();
                     }, 5000);
@@ -853,10 +853,6 @@ angular.module('starter.controllers', [])
         $scope.cargando = false;
         $scope.carga = 0;
         var id = $stateParams.clienteId;
-        $scope.back = function() {
-            $ionicHistory.goBack(-1);
-        };
-
         $scope.tipos = function() {
             $http.get($scope.server + '/mantenimiento/service/tiposolucion/list/')
                 .then(function successCallback(response) {
@@ -917,7 +913,7 @@ angular.module('starter.controllers', [])
         };
 
         $scope.verGaleria = function() {
-            Galeria.openGaleria($scope.data.imagenes);
+            Galeria.openGaleria($scope.imagenes);
         };
 
 
@@ -1122,7 +1118,7 @@ angular.module('starter.controllers', [])
             }
         };
     })
-    .controller('HistorialM', function($scope, $http, $state, $cordovaToast, $timeout, $cordovaDialogs, $location) {
+    .controller('HistorialM', function($scope, $http, $state, $cordovaToast, $timeout, $cordovaDialogs, $location, $stateParams, $rootScope, $ionicHistory) {
         $scope.posicion($location.path());
         $scope.search = "";
         $scope.noMoreItemsAvailable = false;
@@ -1135,7 +1131,7 @@ angular.module('starter.controllers', [])
         if (id === '0') {
             url = '/mantenimiento/service/mantanimiento/list/?';
         } else {
-            url = '/mantenimiento/service/mantanimiento/list/?cliente_id=' + id + '&';
+            url = '/mantenimiento/service/mantanimiento/list/?reporte=' + id + '&';
         }
         if ($scope.actual > 0) {
             $rootScope.$ionicGoBack = function() {
@@ -1147,14 +1143,15 @@ angular.module('starter.controllers', [])
                 .then(function successCallback(response) {
                     var data = response.data.object_list;
                     if (response.data.num_rows === 0) {
-                        $cordovaDialogs.alert('No hay ningún reporte registrado.', 'Información');
+                        $cordovaDialogs.alert('No hay ninguna solución.', 'Información')
+                        .then(function(){
+                            $ionicHistory.goBack(-1);
+                        });
                     }
                     data.forEach(function(data) {
                         $scope.lista.push(data);
                     });
                     max = response.data.count;
-                    console.log(max);
-                    console.log($scope.lista.length);
                     if ($scope.lista.length === max) {
                         $scope.noMoreItemsAvailable = true;
                     }
