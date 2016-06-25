@@ -10,7 +10,7 @@ angular.module('starter.controllers', [])
     // Form data for the login modal
     //$scope.server = "http://104.236.33.228:8040";
     //$scope.server = "http://192.168.1.51:8000";
-    $scope.server = "http://192.168.0.113:8000";
+    $scope.server = "http://192.168.0.100:8000";
     $scope.posicion = function(path) {
         if (path) {
             $scope.anterior = path;
