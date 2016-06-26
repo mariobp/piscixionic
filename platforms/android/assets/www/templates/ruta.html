@@ -1,20 +1,25 @@
 <ion-view cache-view="false" title="Ruta de piscinero">
 	<ion-content>
-		<ion-list class="" show-reorder="true">
+    <ion-refresher
+     pulling-text ="Refrescar"
+     on-refresh="reload()"
+     refreshingText="Refrescando"
+     >
+   </ion-refresher>
+		<ion-list>
 		  <ion-item ng-repeat="item in items" item="item" class="collection-item">
 				<h2> <b class="light-blue-text">{{$index + 1}}</b> {{ item.nombreP }}</h2>
 				<p>
 					<b>Cliente: </b> {{ item.nombreCF }} {{ item.nombreCL }}<br>
 					<b>Casa: </b> {{ item.nombreCA }}<br>
 				</p>
-        <ion-reorder-button class="ion-drag" on-reorder="moveItem(item, $fromIndex, $toIndex)"></ion-reorder-button>
 		  </ion-item>
 		</ion-list>
 		<ion-infinite-scroll ng-if="!noMoreItemsAvailable" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll>
   </ion-content>
   <ion-footer-bar class="headerbar footer-f">
     <div class="row row-p">
-      <a href="#/app/mapa/ruta/{{piscinero}}" class="btn btn-large waves-effect waves-light green  lighten-2 icon-right col icon-right ion-android-map"> Ver en el Mapa</a>
+      <a href="#/app/mapa/ruta" class="btn btn-large waves-effect waves-light green  lighten-2 icon-right col icon-right ion-android-map"> Ver en el Mapa</a>
 		</div>
   </ion-footer-bar>
 </ion-view>

@@ -10,7 +10,7 @@ angular.module('starter.controllers', [])
     // Form data for the login modal
     //$scope.server = "http://104.236.33.228:8040";
     //$scope.server = "http://192.168.1.51:8000";
-    $scope.server = "http://192.168.0.100:8000";
+    $scope.server = "http://192.168.0.102:8000";
     $scope.posicion = function(path) {
         if (path) {
             $scope.anterior = path;
@@ -1399,73 +1399,6 @@ angular.module('starter.controllers', [])
         };
     })
 
-.controller('Piscineros', function($scope, $http, $state, $location, $cordovaToast, $timeout, $cordovaDialogs) {
-    $scope.posicion($location.path());
-    $scope.search = "";
-    $scope.noMoreItemsAvailable = false;
-    var num = 1,
-        max = 0;
-    $scope.piscineros = [];
-    $scope.toggleGroup = function(group) {
-        if ($scope.isGroupShown(group)) {
-            $scope.shownGroup = null;
-        } else {
-            $scope.shownGroup = group;
-        }
-    };
-
-    $scope.isGroupShown = function(group) {
-        return $scope.shownGroup === group;
-    };
-
-    $scope.loadMore = function() {
-        $http.get($scope.server + '/usuarios/service/list/piscinero/?page=' + num)
-            .then(function successCallback(response) {
-                var data = response.data.object_list;
-                if (response.data.num_rows === 0) {
-                    $cordovaDialogs.alert('No hay ningún piscinero registrado.', 'Información');
-                }
-                data.forEach(function(data) {
-                    $scope.piscineros.push(data);
-                });
-                max = response.data.count;
-                if ($scope.piscineros.length === max) {
-                    $scope.noMoreItemsAvailable = true;
-                }
-                num++;
-                $scope.$broadcast('scroll.infiniteScrollComplete');
-            }, function errorCallback(response) {
-                if (response.status == 403) {
-                    $cordovaToast
-                        .show(response.data.error, 'short', 'center')
-                        .then(function(success) {
-                            $state.go('app.login');
-                        }, function(error) {
-                            console.log(error);
-                        });
-                } else if (response.status == 500) {
-                    $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
-                } else if (response.status === 0) {
-                    $cordovaDialogs.confirm('No se puede acceder a este servicio en este momento.', 'Error');
-                } else {
-                    $timeout(function() {
-                        $cordovaToast.show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center').then(function(success) {
-                            $scope.loadMore();
-                        });
-                    }, 10000);
-                }
-            });
-    };
-
-    $scope.reload = function() {
-        $scope.piscineros = [];
-        num = 1;
-        max = 0;
-        $scope.noMoreItemsAvailable = false;
-        $scope.$broadcast('scroll.refreshComplete');
-    };
-})
-
 .controller('PiscinaAsignacion', function($scope, $stateParams, $http, $cordovaToast, $ionicLoading, $state, $cordovaDialogs, $timeout, $location) {
         var id = $stateParams.piscineroId;
         $scope.piscinas = [];
@@ -1595,15 +1528,14 @@ angular.module('starter.controllers', [])
             asignando();
         };
     })
-    .controller('Ruta', function($scope, $http, $stateParams, $cordovaToast, $cordovaDialogs, $timeout, $ionicLoading, $state, $location) {
-        $scope.piscinero = $stateParams.piscineroId;
+    .controller('Ruta', function($scope, $http, $cordovaToast, $cordovaDialogs, $timeout, $ionicLoading, $state, $location) {
         $scope.noMoreItemsAvailable = false;
         $scope.items = [];
         var num = 1,
             max = 0;
         $scope.posicion($location.path());
         $scope.loadMore = function() {
-            $http.get($scope.server + '/usuarios/service/list/asignaciones/?piscinero=' + $scope.piscinero + '&page=' + num + '&asigna=true')
+            $http.get($scope.server + '/usuarios/service/list/asignaciones/?page=' + num + '&asigna=true')
                 .then(function doneCallbacks(response) {
                     if (response.data.num_rows === 0) {
                         $cordovaDialogs.alert('Este piscinero no tiene ninguna ruta asignada.', 'Información');
@@ -1641,60 +1573,6 @@ angular.module('starter.controllers', [])
                 });
         };
 
-        $scope.moveItem = function(item, fromIndex, toIndex) {
-            $scope.items.splice(fromIndex, 1);
-            $scope.items.splice(toIndex, 0, item);
-            var move = toIndex - fromIndex;
-            var data = {};
-            if (move > 0) {
-                data.orden = $scope.items[toIndex - 1].orden;
-            } else if (move < 0) {
-                data.orden = $scope.items[toIndex + 1].orden;
-            }
-            if (toIndex !== fromIndex) {
-                cambio();
-            }
-
-            function cambio() {
-                $scope.loading = $ionicLoading.show({
-                    template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Guardando ruta...',
-                    noBackdrop: true
-                });
-                $http({
-                    method: 'PUT',
-                    url: $scope.server + '/usuarios/service/asignacion/form/piscinero/' + item.pk + '/',
-                    data: data,
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    }
-                }).then(function doneCallbacks(response) {
-                    $ionicLoading.hide();
-                    $cordovaToast.show("Guardado exitoso!", 'short', 'center');
-                }, function errorCallback(response) {
-                    $ionicLoading.hide();
-                    if (response.status === 403) {
-                        $cordovaToast
-                            .show(response.data.error, 'short', 'center')
-                            .then(function(success) {
-                                $state.go('app.login');
-                            }, function(error) {
-                                $state.go('app.login');
-                            });
-                    } else if (response.status == 400) {
-                        console.log(response);
-                    } else if (response.status == 500) {
-                        $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
-                    } else {
-                        $timeout(function() {
-                            $cordovaToast.show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center').then(function(success) {
-                                cambio();
-                            });
-                        }, 10000);
-                    }
-                });
-            }
-        };
-
         $scope.reload = function() {
             num = 1;
             max = 0;
@@ -1705,7 +1583,7 @@ angular.module('starter.controllers', [])
 
     })
 
-.controller('MapaRuta', function($scope, $http, $stateParams, $cordovaToast, $cordovaDialogs, $ionicLoading, $timeout, $state, $location, $ionicHistory) {
+.controller('MapaRuta', function($scope, $http, $cordovaToast, $cordovaDialogs, $ionicLoading, $timeout, $state, $location, $ionicHistory) {
         $scope.cargado = false;
         var gpsnull = true,
             casanull = null,
@@ -1723,7 +1601,7 @@ angular.module('starter.controllers', [])
         $scope.calculate = function calculateAndDisplayRoute(directionsService, directionsDisplay) {
             var waypts = [];
 
-            $http.get($scope.server + '/usuarios/service/list/asignaciones/?piscinero=' + $stateParams.piscineroId + '&asigna=true')
+            $http.get($scope.server + '/usuarios/service/list/asignaciones/?asigna=true')
                 .then(function doneCallbacks(response) {
                         if (response.data.num_rows === 0) {
                             $cordovaDialogs.alert('No hay ninguna ruta que mostrar.', 'Información');
