@@ -92,9 +92,6 @@ angular.module('starter.socket', [])
                             id: 8,
                             title: 'Asignación',
                             text: message.data.html,
-                            data: {
-                                reporte: message.data.data.piscinero_id
-                            }
                         });
                     }
                     $rootScope.$on('$cordovaLocalNotification:click',
@@ -121,9 +118,7 @@ angular.module('starter.socket', [])
                                         actual: data.solucion
                                     });
                                 } else if (notification.id === 8) {
-                                    $state.go('app.ruta', {
-                                        piscineroId: data.piscinero_id
-                                    });
+                                    $state.go('app.ruta');
                                 }
                             });
                         }.bind(this));
