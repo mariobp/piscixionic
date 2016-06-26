@@ -17,7 +17,7 @@
        under the License.
  */
 
-package com.ionicframework.piscix612347;
+package com.ionicframework.piscixs814642;
 
 import android.os.Bundle;
 import org.apache.cordova.*;
