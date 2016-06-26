@@ -11,18 +11,14 @@
           <div class="item item-avatar grey lighten-5">
               <img src="{{server}}/media/{{info.cliente.imagen}}" ng-if="info.cliente.imagen !=''">
               <img src="img/user.png" ng-if="info.cliente.imagen ==''"/>
-              <b>Nombre: </b>{{info.cliente.first_name}}<br>
-              <b>Apellidos: </b>{{info.cliente.last_name}}
+              <i class="micon">person</i> {{info.cliente.first_name}} {{info.cliente.last_name}}<br>
+              <i class="micon">email</i> {{info.cliente.email}}
           </div>
           <div class="item item-icon-left  grey lighten-5">
              <a ng-href="tel:{{info.cliente.telefono}}">
                  <i class="micon">call</i>
                 {{info.cliente.telefono}}
             </a>
-          </div>
-          <div class="item item-icon-left  grey lighten-5">
-            <i class="micon">email</i>
-             {{info.cliente.email}}
           </div>
           <a href="#/app/historial/reportes/{{ info.cliente.id }}/0" class="item item-icon-left  grey lighten-5">
               <i class="micon red-text lighten-2-text">report</i> Historial de Reportes
@@ -35,9 +31,7 @@
   </ion-content>
   <ion-footer-bar  class="headerbar footer-f" ng-show="dataReady">
     <div class="row row-p">
-      <a href="#/app/reporte/{{ info.cliente.id }}" class="btn btn-large waves-effect waves-light red lighten-2 col s6"><i class="micon">report</i> Reporte</a>
-       <a href="#/app/planilla/{{ info.cliente.id }}" class="btn btn-large waves-effect waves-light green lighten-2 col s6"><i class="micon">content_paste
-</i> Planilla</a>
+      <a href="#/app/reporte/{{ info.cliente.id }}" class="btn btn-large waves-effect waves-light red lighten-2 col s12"><i class="micon">report</i> Reporte</a>
     </div>
   </ion-footer-bar>
 </ion-view>

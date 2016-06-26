@@ -269,15 +269,6 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
                 controller: 'Repuesta'
             }
         }
-    })
-    .state('app.planilla', {
-        url: '/planilla/:clienteId',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/planilla.html',
-                controller: 'Planilla'
-            }
-        }
     });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/clientelists');

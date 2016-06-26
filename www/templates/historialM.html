@@ -17,6 +17,8 @@
 								<b ng-class="{'light-blue-text':item.pk == actual}">Fecha:</b> {{item.fecha}}
 								<br>
 								<b ng-class="{'light-blue-text':item.pk == actual}">Cliente:</b> {{item.nombreC}} {{item.apellidosC}}
+								<br>
+									<b ng-class="{'light-blue-text':item.pk == actual}">Emitido por:</b> {{item.emisor__username}}
 							</p>
 						</li>
 					</ul>
