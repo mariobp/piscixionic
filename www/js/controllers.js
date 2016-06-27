@@ -76,7 +76,7 @@ angular.module('starter.controllers', [])
                         $scope.serverOn();
                     });
                     $cordovaLocalNotification.schedule({
-                        id: 3,
+                        id: 57,
                         title: 'Piscix',
                         text: 'No se puede conectar al servidor',
                         //icon: 'img/icon.png'

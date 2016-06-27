@@ -14,7 +14,7 @@
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-                <category android:name="com.ionicframework.piscix612347" />
+                <category android:name="com.ionicframework.piscixs814642" />
             </intent-filter>
         </receiver>
         <service android:name="com.plugin.gcm.GCMIntentService" />
@@ -55,9 +55,10 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <permission android:name="com.ionicframework.piscix612347.permission.C2D_MESSAGE" android:protectionLevel="signature" />
-    <uses-permission android:name="com.ionicframework.piscix612347.permission.C2D_MESSAGE" />
+    <permission android:name="com.ionicframework.piscixs814642.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+    <uses-permission android:name="com.ionicframework.piscixs814642.permission.C2D_MESSAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
