@@ -31,9 +31,9 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
 
     function onOffline() {
         // Handle the offline event
-        $cordovaLocalNotification.cancel(2).then(function(result) {
+        $cordovaLocalNotification.cancel(56).then(function(result) {
             $cordovaLocalNotification.schedule({
-                id: 1,
+                id: 55,
                 title: 'Piscix',
                 text: 'No hay conexión a Internet!',
                 //icon: 'img/icon.png'
@@ -50,10 +50,10 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
     function onOnline() {
         // Handle the online event
         if (bandera) {
-            $cordovaLocalNotification.cancel(1).then(function(result) {
+            $cordovaLocalNotification.cancel(55).then(function(result) {
                 // ...
                 $cordovaLocalNotification.schedule({
-                    id: 2,
+                    id: 56,
                     title: 'Piscix',
                     text: 'Conexión a internet recuperada!',
                     //icon: 'img/icon.png'

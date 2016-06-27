@@ -68,6 +68,7 @@ angular.module('starter.controllers', [])
     $scope.serverOn = function() {
         $http.get($scope.server + "/usuarios/serve/on/").then(function doneCallbacks(response) {
             $scope.isLogin();
+            $cordovaLocalNotification.cancel(57);
         }, function failCallbacks(response) {
             if (response.status == 500) {
                 $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
@@ -77,7 +78,7 @@ angular.module('starter.controllers', [])
                         $scope.serverOn();
                     });
                     $cordovaLocalNotification.schedule({
-                        id: 3,
+                        id: 57,
                         title: 'Piscix',
                         text: 'No se puede conectar al servidor',
                         //icon: 'img/icon.png'
