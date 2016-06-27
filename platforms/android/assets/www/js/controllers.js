@@ -28,9 +28,14 @@ angular.module('starter.controllers', [])
         });
     };
 
+    $scope.user = function(username){
+        $scope.username =  username;
+    };
+
     $scope.isLogin = function() {
         $http.get($scope.server + "/usuarios/is/login/")
             .then(function doneCallbacks(response) {
+              $scope.user(response.data.username);
                 notix.setup(response.data.session, response.data.username, response.data.type);
             }, function failCallbacks(response) {
                 if (response.status === 400) {
@@ -804,6 +809,7 @@ angular.module('starter.controllers', [])
                 var mensaje = {};
                 $scope.data = {};
                 mensaje = response.data[0].fields;
+                mensaje.user = $scope.username;
                 mensaje.tu = 1;
                 $scope.respuestas.push(mensaje);
                 $ionicLoading.hide();
