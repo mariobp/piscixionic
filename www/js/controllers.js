@@ -18,6 +18,11 @@ angular.module('starter.controllers', [])
             $scope.anterior = null;
         }
     };
+
+    $scope.user = function(username){
+        $scope.username =  username;
+    };
+
     // Create the login modal that we will use later
     $scope.logout = function() {
         $http.get($scope.server + "/usuarios/logout/").success(function() {
@@ -31,6 +36,7 @@ angular.module('starter.controllers', [])
     $scope.isLogin = function() {
         $http.get($scope.server + "/usuarios/is/login/")
             .then(function doneCallbacks(response) {
+                $scope.user(response.data.username);
                 notix.setup(response.data.session, response.data.username, response.data.type);
             }, function failCallbacks(response) {
                 if (response.status === 400) {
@@ -756,7 +762,9 @@ angular.module('starter.controllers', [])
         $scope.respuestas = function() {
             $http.get($scope.server + '/reportes/respuesta/list/?reporte=' + id)
                 .then(function successCallback(response) {
-                    $scope.respuestas = response.data.object_list;
+                    var  nuevo = response.data.object_list;
+                    nuevo.user = $scope.username;
+                    $scope.respuestas = nuevo;
                     $scope.ready = true;
                 }, function errorCallback(response) {
                     if (response.status === 403) {
