@@ -61,6 +61,12 @@
     <feature name="BarcodeScanner">
         <param name="android-package" value="com.phonegap.plugins.barcodescanner.BarcodeScanner" />
     </feature>
+    <preference name="webView" value="org.crosswalk.engine.XWalkWebViewEngine" />
+    <preference default="18+" name="xwalkVersion" />
+    <preference default="xwalk_core_library_canary:17+" name="xwalkLiteVersion" />
+    <preference default="--disable-pull-to-refresh-effect" name="xwalkCommandLine" />
+    <preference default="embedded" name="xwalkMode" />
+    <preference default="true" name="xwalkMultipleApk" />
     <feature name="Diagnostic">
         <param name="android-package" value="cordova.plugins.Diagnostic" />
     </feature>
@@ -107,4 +113,8 @@
     <preference name="CrosswalkAnimatable" value="true" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
+    <preference name="xwalkVersion" value="18+" />
+    <preference name="xwalkCommandLine" value="--disable-pull-to-refresh-effect" />
+    <preference name="xwalkMode" value="embedded" />
+    <preference name="xwalkMultipleApk" value="true" />
 </widget>

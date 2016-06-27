@@ -79,6 +79,30 @@
                         {
                             "xml": "<feature name=\"BarcodeScanner\"><param name=\"android-package\" value=\"com.phonegap.plugins.barcodescanner.BarcodeScanner\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<preference name=\"webView\" value=\"org.crosswalk.engine.XWalkWebViewEngine\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference default=\"18+\" name=\"xwalkVersion\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference default=\"xwalk_core_library_canary:17+\" name=\"xwalkLiteVersion\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference default=\"--disable-pull-to-refresh-effect\" name=\"xwalkCommandLine\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference default=\"embedded\" name=\"xwalkMode\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference default=\"true\" name=\"xwalkMultipleApk\" />",
+                            "count": 1
                         }
                     ]
                 }
@@ -208,6 +232,10 @@
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
+                            "count": 2
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\" />",
                             "count": 1
                         }
                     ]
@@ -291,6 +319,9 @@
         },
         "phonegap-plugin-barcodescanner": {
             "PACKAGE_NAME": "com.ionicframework.piscix612347"
+        },
+        "cordova-plugin-crosswalk-webview": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
         }
     },
     "dependent_plugins": {},
@@ -663,6 +694,7 @@
         "de.appplant.cordova.plugin.local-notification": "0.8.4",
         "ionic-plugin-keyboard": "2.0.1",
         "org.pbernasconi.progressindicator": "1.1.0",
-        "phonegap-plugin-barcodescanner": "5.0.0"
+        "phonegap-plugin-barcodescanner": "5.0.0",
+        "cordova-plugin-crosswalk-webview": "1.7.2"
     }
 }

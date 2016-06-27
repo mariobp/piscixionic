@@ -762,9 +762,7 @@ angular.module('starter.controllers', [])
         $scope.respuestas = function() {
             $http.get($scope.server + '/reportes/respuesta/list/?reporte=' + id)
                 .then(function successCallback(response) {
-                    var  nuevo = response.data.object_list;
-                    nuevo.user = $scope.username;
-                    $scope.respuestas = nuevo;
+                    $scope.respuestas = response.data.object_list;
                     $scope.ready = true;
                 }, function errorCallback(response) {
                     if (response.status === 403) {
@@ -813,6 +811,7 @@ angular.module('starter.controllers', [])
                 $scope.data = {};
                 mensaje = response.data[0].fields;
                 mensaje.tu = 1;
+                mensaje.user = $scope.username;
                 $scope.respuestas.push(mensaje);
                 $ionicLoading.hide();
             }, function errorCallback(response) {
