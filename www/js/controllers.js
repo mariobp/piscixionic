@@ -620,8 +620,8 @@ angular.module('starter.controllers', [])
                                 $cordovaToast.show("Piscina:" + data.piscina[0], 'short', 'center');
                             } else if (data.tipo_de_reporte) {
                                 $cordovaToast.show("Tipo:" + data.tipo_de_reporte[0], 'short', 'center');
-                            } else if (data.reporta) {
-                                $cordovaToast.show("Reporta:" + data.reporta[0], 'short', 'center');
+                            } else if (data.usuario) {
+                                $cordovaToast.show("Usuario:" + data.usuario[0], 'short', 'center');
                             }
                         } else if (response.status == 500) {
                             $ionicLoading.hide();
@@ -1109,9 +1109,11 @@ angular.module('starter.controllers', [])
                         if (data.cliente) {
                             $cordovaToast.show("Piscina:" + data.piscina[0], 'short', 'center');
                         }
-
-                        if (data.reporta) {
-                            $cordovaToast.show("Contraseña:" + data.reporta[0], 'short', 'center');
+                        if (data.reporte) {
+                            $cordovaToast.show("Reporte:" + data.reporte[0], 'short', 'center');
+                        }
+                        if (data.tipo) {
+                            $cordovaToast.show("Tipo:" + data.tipo[0], 'short', 'center');
                         }
                     } else if (response.status == 500) {
                         $ionicLoading.hide();
