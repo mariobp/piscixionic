@@ -8,17 +8,17 @@
     <ion-content overflow-scroll=”true”>
         <ion-refresher pulling-text="Refrescar" on-refresh="reload()" refreshingText="Refrescando"></ion-refresher>
         <ul class="collapsible popout" data-collapsible="accordion" watch>
-            <li ng-repeat="reporte in reportes|filter:search track by reporte.pk">
+            <li ng-repeat="reporte in reportes|filter:search track by reporte.id">
                 <div class="collapsible-header grey lighten-5">
                     <ul class="collection grey lighten-5">
                         <li class="collection-item  grey lighten-5">
-                            <span class="title"><b ng-class="{'light-blue-text':reporte.pk == actual}">Reporte:</b> {{reporte.nombre}}</span>
+                            <span class="title"><b ng-class="{'light-blue-text':reporte.id == actual}">Reporte:</b> {{reporte.nombre}}</span>
                             <p>
-                                <b ng-class="{'light-blue-text':reporte.pk == actual}">Fecha:</b> {{reporte.fecha}}
+                                <b ng-class="{'light-blue-text':reporte.id == actual}">Fecha:</b> {{reporte.fecha}}
                                 <br>
-                                <b ng-class="{'light-blue-text':reporte.pk == actual}">Cliente:</b> {{reporte.nombreC}} {{reporte.apellidosC}}
+                                <b ng-class="{'light-blue-text':reporte.id == actual}">Cliente:</b> {{reporte.nombreC}} {{reporte.apellidosC}}
                                 <br>
-                                <b ng-class="{'light-blue-text':reporte.pk == actual}">Emitido por:</b> {{reporte.usuario__username}}
+                                <b ng-class="{'light-blue-text':reporte.id == actual}">Emitido por:</b> {{reporte.user}}
                             </p>
                         </li>
                     </ul>
@@ -42,14 +42,14 @@
                         </li>
                         <li class="collection-item">
                             <div class="row row-p">
-                                <a href="#/app/galeria/reportes/{{reporte.pk}}" class="btn-large waves-effect waves-light green accent-3 col" ng-class="{'s6': !reporte.estado, 's12':reporte.estado}">
+                                <a href="#/app/galeria/reportes/{{reporte.id}}" class="btn-large waves-effect waves-light green accent-3 col" ng-class="{'s6': !reporte.estado, 's12':reporte.estado}">
                                     <i class="micon">collections</i>
                                     Fotos</a>
-                                <a href="#/app/respuestas/{{reporte.pk}}" class="btn-large waves-effect waves-light light-blue col s6" ng-show="!reporte.estado">
+                                <a href="#/app/respuestas/{{reporte.id}}" class="btn-large waves-effect waves-light light-blue col s6" ng-show="!reporte.estado">
                                     <i class="micon">question_answer</i>
                                     Respuestas</a>
-                                 <a href="#/app/mantenimiento/{{reporte.pk}}" class="btn btn-large waves-effect waves-light red lighten-2 col s12" ng-show="!reporte.estado"><i class="micon" >build</i> Solución</a>
-                                <a href="#/app/historial/mantenimientos/{{ reporte.pk }}/0" class="btn btn-large waves-effect waves-light red lighten-2 col s12" ng-show="reporte.estado && reporte.cierre !== 1"><i class="micon">build</i> Historial de Soluciones</a>
+                                 <a href="#/app/mantenimiento/{{reporte.id}}" class="btn btn-large waves-effect waves-light red lighten-2 col s12" ng-show="!reporte.estado"><i class="micon" >build</i> Solución</a>
+                                <a href="#/app/historial/mantenimientos/{{ reporte.id }}/0" class="btn btn-large waves-effect waves-light red lighten-2 col s12" ng-show="reporte.estado && reporte.cierre !== 1"><i class="micon">build</i> Historial de Soluciones</a>
                             </div>
                         </li>
                     </ul>
