@@ -10,7 +10,7 @@ angular.module('starter.controllers', [])
     // Form data for the login modal
     //$scope.server = "http://104.236.33.228:8040";
     //$scope.server = "http://192.168.1.51:8000";
-    $scope.server = "http://192.168.0.102:8000";
+    $scope.server = "http://192.168.1.65:8000";
     $scope.posicion = function(path) {
         if (path) {
             $scope.anterior = path;
@@ -580,12 +580,14 @@ angular.module('starter.controllers', [])
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
                 }).then(function doneCallbacks(response) {
-                        enviarFotos(response.data[0].pk);
+                        console.log("Reporte");
+                        console.log(response);
+                        enviarFotos(response.data.id);
                         $cordovaToast.show("Guardando exitoso", 'long', 'center')
                             .then(function(success) {
                                 $state.go('app.historialR', {
                                     clienteId: id,
-                                    actual: response.data[0].pk
+                                    actual: response.data.id
                                 });
                             });
                     },
@@ -614,7 +616,7 @@ angular.module('starter.controllers', [])
                                 $cordovaToast.show("Nombre:" + data.nombre[0], 'short', 'center');
                             } else if (data.descripcion) {
                                 $cordovaToast.show("Descripcion:" + data.descripcion[0], 'short', 'center');
-                            } else if (data.cliente) {
+                            } else if (data.piscina) {
                                 $cordovaToast.show("Piscina:" + data.piscina[0], 'short', 'center');
                             } else if (data.tipo_de_reporte) {
                                 $cordovaToast.show("Tipo:" + data.tipo_de_reporte[0], 'short', 'center');
@@ -810,7 +812,7 @@ angular.module('starter.controllers', [])
             }).then(function successCallback(response) {
                 var mensaje = {};
                 $scope.data = {};
-                mensaje = response.data[0].fields;
+                mensaje = response.data;
                 mensaje.tu = 1;
                 mensaje.user = $scope.username;
                 $scope.respuestas.push(mensaje);
@@ -1073,12 +1075,12 @@ angular.module('starter.controllers', [])
                         'Content-Type': 'application/x-www-form-urlencoded'
                     },
                 }).then(function doneCallbacks(response) {
-                    enviarFotos(response.data[0].pk);
+                    enviarFotos(response.data.id);
                     $cordovaToast.show("Guardando exitoso", 'long', 'center')
                         .then(function(success) {
                             $state.go('app.historialM', {
                                 clienteId: id,
-                                actual: response.data[0].pk
+                                actual: response.data.id
                             });
                         });
                 }, function failCallbacks(response) {
