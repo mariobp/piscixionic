@@ -329,22 +329,6 @@ angular.module('starter.controllers', [])
         $scope.back = function() {
             $ionicHistory.goBack(-1);
         };
-        $scope.validateGps = function() {
-            if (window.cordova) {
-                cordova.plugins.diagnostic.isLocationEnabled(function(enabled) {
-                    if (!enabled) {
-                        $cordovaDialogs.confirm('Su gps esta desactivado.', 'Gps', ['Activar', 'Cancelar'])
-                            .then(function(result) {
-                                if (result === 1) {
-                                    cordova.plugins.diagnostic.switchToLocationSettings();
-                                }
-                            });
-                    }
-                }, function(error) {
-                    $cordovaDialogs.alert("Ah ocurrido un error" + error, 'Error');
-                });
-            }
-        };
 
         $scope.piscinas = function() {
             $http.get($scope.server + '/usuarios/service/list/piscina/?casa__cliente=' + id)
@@ -495,17 +479,15 @@ angular.module('starter.controllers', [])
             }
         };
 
-        $scope.validateGps();
         $cordovaGeolocation.getCurrentPosition(posOptions).then(function(pos) {
             $scope.data.latitud = pos.coords.latitude;
             $scope.data.longitud = pos.coords.longitude;
         }, function(error) {
-            $cordovaDialogs.alert('No se puede obtener la ubicación, posiblemente el gps este desactivado: ' + error.message, 'Gps')
+            $cordovaToast.show('No se puede obtener la ubicación, posiblemente el gps este desactivado: ' + error.message, 'Gps', 'short', 'center')
                 .then(function(res) {
                     $scope.validateGps();
                 });
         });
-
 
         $scope.enviar = function() {
             if ($scope.imagenes.length > 0) {
@@ -859,6 +841,7 @@ angular.module('starter.controllers', [])
         $scope.cargando = false;
         $scope.carga = 0;
         var id = $stateParams.clienteId;
+
         $scope.tipos = function() {
             $http.get($scope.server + '/mantenimiento/service/tiposolucion/list/')
                 .then(function successCallback(response) {
@@ -962,6 +945,12 @@ angular.module('starter.controllers', [])
                 });
         };
 
+        var posOptions = {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0
+        };
+
         $scope.validateGps = function() {
             if (window.cordova) {
                 cordova.plugins.diagnostic.isLocationEnabled(function(enabled) {
@@ -979,19 +968,11 @@ angular.module('starter.controllers', [])
             }
         };
 
-        $scope.validateGps();
-
-        var posOptions = {
-            enableHighAccuracy: true,
-            timeout: 10000,
-            maximumAge: 0
-        };
-
         $cordovaGeolocation.getCurrentPosition(posOptions).then(function(pos) {
             $scope.data.latitud = pos.coords.latitude;
             $scope.data.longitud = pos.coords.longitude;
         }, function(error) {
-            $cordovaDialogs.alert('No se puede obtener la ubicación, posiblemente el gps este desactivado: ' + error.message, 'Gps')
+            $cordovaToast.show('No se puede obtener la ubicación, posiblemente el gps este desactivado: ' + error.message, 'Gps', 'short', 'center')
                 .then(function(res) {
                     $scope.validateGps();
                 });
@@ -1243,7 +1224,7 @@ angular.module('starter.controllers', [])
             }
         };
     })
-    .controller('MapCtrl', function($scope, $ionicLoading, $stateParams, $cordovaGeolocation, $cordovaDialogs, $timeout, $http, $cordovaToast, $state, $location) {
+.controller('MapCtrl', function($scope, $ionicLoading, $stateParams, $cordovaGeolocation, $cordovaDialogs, $timeout, $http, $cordovaToast, $state, $location) {
         var latitud = $stateParams.latitud,
             longitud = $stateParams.longitud,
             id = $stateParams.casaId,
