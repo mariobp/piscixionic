@@ -2,7 +2,7 @@ angular.module('starter.socket', [])
 
 .factory('notix', function($rootScope, $cordovaLocalNotification, $state) {
     var scope = $rootScope;
-    scope.socket = scope.socket || io('http://192.168.1.65:1196');
+    scope.socket = scope.socket || io('http://104.236.33.228:1196');
     scope.recive = true;
     scope.lista_id = [];
     function Notix() {}
