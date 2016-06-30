@@ -12,8 +12,8 @@
                 <div class="collapsible-header grey lighten-5">
                     <ul class="collection grey lighten-5">
                         <li class="collection-item avatar grey lighten-5">
-                            <img ng-src="{{server}}/media/{{piscinero.imagen}}" ng-if="piscinero.imagen !=''" class="circle"/>
-                            <img ng-src="img/user.png" ng-if="piscinero.imagen ==''" class="circle"/>
+                            <img ng-src="{{server}}/media/{{piscinero.imagen}}" ng-if='piscinero.imagen!==""' class="circle"/>
+                            <img ng-src="img/user.png" ng-if='piscinero.imagen==""' class="circle"/>
                             <span class="title">{{piscinero.first_name}}
                                 {{piscinero.last_name}}</span>
                         <br>

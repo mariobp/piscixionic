@@ -14,8 +14,9 @@
      </ion-refresher>
       <ion-list>
         <ion-item collection-repeat="cliente in clientelists|filter:search" item="cliente" href="#/app/info/{{cliente.id}}" class="item item-avatar">
-            <img ng-src="{{server}}/media/{{cliente.imagen}}" ng-if="cliente.imagen !=''">
-            <img ng-src="img/user.png" ng-if="cliente.imagen ==''"/>
+            <img ng-src="{{server}}/media/{{cliente.imagen}}" ng-if="cliente.imagen!==null">
+            <img ng-src="img/user.png" ng-if="cliente.imagen==null"/>
+            {{cliente.imagen}}
             <h2>{{cliente.first_name}} {{cliente.last_name}}</h2>
             <p>
               <b>Telefono: </b>{{cliente.telefono}}<br>
