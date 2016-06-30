@@ -9,8 +9,8 @@
     <div class="row" ng-show="dataReady">
       <div class="list card col s12 grey lighten-5">
           <div class="item item-avatar grey lighten-5">
-              <img src="{{server}}/media/{{info.cliente.imagen}}" ng-if="info.cliente.imagen !=''">
-              <img src="img/user.png" ng-if="info.cliente.imagen ==''"/>
+              <img src="{{server}}/media/{{info.cliente.imagen}}" ng-if="info.cliente.imagen!==null">
+              <img src="img/user.png" ng-if="info.cliente.imagen==null"/>
               <i class="micon">person</i> {{info.cliente.first_name}} {{info.cliente.last_name}}<br>
               <i class="micon">email</i> {{info.cliente.email}}
           </div>

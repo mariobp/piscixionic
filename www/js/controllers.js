@@ -158,7 +158,7 @@ angular.module('starter.controllers', [])
                 .then(function successCallback(response) {
                     var clientes = response.data.object_list;
                     if (clientes.length === 0) {
-                        $cordovaDialogs.alert('No se han encontrado resultados.', 'Información');
+                        $cordovaDialogs.alert('No te han asignado ninguna piscina.', 'Información');
                     }
                     clientes.forEach(function(cliente) {
                         $scope.clientelists.push(cliente);
