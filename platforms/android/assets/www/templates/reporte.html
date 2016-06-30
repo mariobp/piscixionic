@@ -49,7 +49,7 @@
               <div class="input-field col s12">
                 <select id="piscina" class="ion-input-select" name="piscina" ng-model="data.piscina">
                    <option value="" disabled selected>Elegir piscina</option>
-                   <option value="{{piscina.id}}" ng-repeat="piscina in piscinas">{{piscina.nombre}}</option>
+                   <option value="{{piscina.pk}}" ng-repeat="piscina in piscinas">{{piscina.nombre}}</option>
                 </select>
                 <label for="piscina" class="label-select" ng-class="{'invalid': !data.piscina && form.$submitted,'valid':data.piscina && form.$submitted}">Piscina</label>
                  <div class="error-container" ng-show="!data.piscina && form.$submitted" ng-messages="form.nombre.$error">
