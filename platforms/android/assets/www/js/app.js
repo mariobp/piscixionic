@@ -27,6 +27,15 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
 
     var bandera = false;
 
+    document.addEventListener('deviceready', function () {
+        cordova.plugins.backgroundMode.setDefaults({
+          title:'Piscix',
+          text:'Piscix Supervisor',
+          ticker:'app'
+        });
+        cordova.plugins.backgroundMode.enable();
+    }, false);
+
     document.addEventListener("offline", onOffline, false);
 
     function onOffline() {

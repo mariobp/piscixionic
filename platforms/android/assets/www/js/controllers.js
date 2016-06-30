@@ -231,6 +231,9 @@ angular.module('starter.controllers', [])
         $http.get($scope.server + '/usuarios/single/cliente/' + id + '/')
             .then(function successCallback(response) {
                 $scope.info = response.data;
+                if($scope.info.imagen===""){
+                    $scope.info.imagen = null;
+                }
                 if ($scope.info.length === 0) {
                     $cordovaDialogs.alert('No se han encontrado resultados.', 'Información');
                 }
@@ -1252,9 +1255,11 @@ angular.module('starter.controllers', [])
 
         function validar(metodo) {
             if (longitud === "" && latitud === "") {
-                $cordovaDialogs.alert('No hay ningún gps asignado.', 'Gps')
+                $cordovaDialogs.confirm('No hay ningún gps asignado.', 'Gps', ['Asignar gps', 'Cancelar'])
                     .then(function(res) {
-                        $scope.validateGps();
+                      if(res === 1){
+                        $scope.centerOnMe();
+                      }
                     });
             } else {
                 if (metodo) {
@@ -1304,7 +1309,6 @@ angular.module('starter.controllers', [])
             if (!$scope.map) {
                 return;
             }
-            $scope.validateGps();
             $scope.loading = $ionicLoading.show({
                 template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Obteniendo la ubicación actual...',
                 noBackdrop: true
@@ -1323,11 +1327,10 @@ angular.module('starter.controllers', [])
                 $ionicLoading.hide();
             }, function(error) {
                 $ionicLoading.hide();
-
                 $cordovaDialogs.alert('No se puede obtener la ubicación, posiblemente el gps este desactivado: ' + error.message, 'Gps')
-                    .then(function(res) {
-                        $scope.validateGps();
-                    });
+                .then(function(res) {
+                    $scope.validateGps();
+                });
             });
         };
 
@@ -1536,7 +1539,7 @@ angular.module('starter.controllers', [])
                     },
                 }).then(function doneCallbacks(response) {
                     $ionicLoading.hide();
-                    $cordovaToast.show("Guardado exitoso!", 'short', 'botton');
+                    $cordovaToast.show("Guardado exitoso!", 'short', 'center');
                 }, function failCallbacks(response) {
                     if (obj.check) {
                         obj.check = false;

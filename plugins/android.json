@@ -13,6 +13,9 @@
         "com.telerik.plugins.nativepagetransitions": {
             "PACKAGE_NAME": "com.ionicframework.piscixs814642"
         },
+        "cordova-plugin-background-mode": {
+            "PACKAGE_NAME": "com.ionicframework.piscixs814642"
+        },
         "cordova-plugin-camera": {
             "PACKAGE_NAME": "com.ionicframework.piscixs814642"
         },

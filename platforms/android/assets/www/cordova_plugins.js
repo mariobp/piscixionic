@@ -15,6 +15,21 @@ module.exports = [
         ]
     },
     {
+        "file": "plugins/cordova-plugin-device/www/device.js",
+        "id": "cordova-plugin-device.device",
+        "clobbers": [
+            "device"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-background-mode/www/background-mode.js",
+        "id": "cordova-plugin-background-mode.BackgroundMode",
+        "clobbers": [
+            "cordova.plugins.backgroundMode",
+            "plugin.backgroundMode"
+        ]
+    },
+    {
         "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
         "id": "cordova-plugin-camera.Camera",
         "clobbers": [
@@ -40,13 +55,6 @@ module.exports = [
         "id": "cordova-plugin-camera.CameraPopoverHandle",
         "clobbers": [
             "CameraPopoverHandle"
-        ]
-    },
-    {
-        "file": "plugins/cordova-plugin-device/www/device.js",
-        "id": "cordova-plugin-device.device",
-        "clobbers": [
-            "device"
         ]
     },
     {
@@ -352,11 +360,12 @@ module.exports.metadata =
     "com.phonegap.plugins.PushPlugin": "2.5.0",
     "com.telerik.plugins.nativepagetransitions": "0.6.4",
     "cordova-plugin-app-event": "1.2.0",
+    "cordova-plugin-device": "1.1.1",
+    "cordova-plugin-background-mode": "0.6.5",
     "cordova-plugin-compat": "1.0.0",
     "cordova-plugin-camera": "2.2.0",
     "cordova-plugin-console": "1.0.2",
     "cordova-plugin-crosswalk-webview": "1.7.2",
-    "cordova-plugin-device": "1.1.1",
     "cordova-plugin-dialogs": "1.2.1",
     "cordova-plugin-file": "4.2.0",
     "cordova-plugin-file-transfer": "1.5.1",
