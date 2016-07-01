@@ -1278,18 +1278,18 @@ angular.module('starter.controllers', [])
         $scope.Ready = true;
         $scope.posicion($location.path());
 
-        function confirmar() {
-            $cordovaDialogs.confirm('Esta aplicación solo funciona con el gps en Alta presición.', 'Gps', ['Activar GPS', 'Salir'])
-                .then(function(result) {
-                    if (result === 1) {
-                        cordova.plugins.diagnostic.switchToLocationSettings();
-                    } else {
-                        $ionicHistory.goBack();
-                    }
-                });
-        }
+        $scope.confirmar = function () {
+          $cordovaDialogs.confirm('Esta aplicación solo funciona con el gps en Alta presición.', 'Gps', ['Activar GPS', 'Salir'])
+              .then(function(result) {
+                  if (result === 1) {
+                      cordova.plugins.diagnostic.switchToLocationSettings();
+                  } else {
+                      $ionicHistory.goBack();
+                  }
+              });
+        };
 
-        function validar(metodo) {
+        $scope.validar = function (metodo) {
             if (longitud === "" && latitud === "") {
                 $cordovaDialogs.confirm('No hay ningún gps asignado.', 'Gps', ['Asignar gps', 'Cancelar'])
                     .then(function(res) {
@@ -1302,12 +1302,11 @@ angular.module('starter.controllers', [])
                     metodo();
                 }
             }
-        }
-
+        };
 
         $scope.mapCreated = function(map) {
             $scope.map = map;
-            validar(function() {
+            $scope.validar(function() {
                 google.maps.event.addListenerOnce(map, 'tilesloaded', function() {
                     //this part runs when the mapobject is created and rendered
                     $scope.colocarMarker(latitud, longitud);
@@ -1364,24 +1363,24 @@ angular.module('starter.controllers', [])
                         $ionicLoading.hide();
                         $cordovaToast.show('No se puede obtener la ubicación, posiblemente el gps este desactivado: ' + error.message, 'Gps', 'short', 'center')
                             .then(function(res) {
-                                confirmar();
+                                $scope.confirmar();
                             });
                     });
                 } else if (state == "battery_saving") {
                     $ionicLoading.hide();
-                    confirmar();
+                    $scope.confirmar();
                 } else if (state == "device_only") {
                     $ionicLoading.hide();
-                    confirmar();
+                    $scope.confirmar();
                 } else {
                     $ionicLoading.hide();
-                    confirmar();
+                    $scope.confirmar();
                 }
             });
         };
 
         $scope.guardar = function() {
-            validar(function() {
+            $scope.validar(function() {
                 $scope.enviando = $ionicLoading.show({
                     template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Enviando...',
                     noBackdrop: true
@@ -1389,7 +1388,6 @@ angular.module('starter.controllers', [])
                 var data = {};
                 data.latitud = latitud;
                 data.longitud = longitud;
-                //$scope.Ready = false;
                 $http({
                     method: 'POST',
                     url: $scope.server + '/usuarios/service/asignacion/gps/' + id + '/',
@@ -1505,6 +1503,7 @@ angular.module('starter.controllers', [])
         var id = $stateParams.piscineroId;
         $scope.piscinas = [];
         $scope.checkes = [];
+        $scope.data = {};
         $scope.noMoreItemsAvailable = false;
         $scope.posicion($location.path());
         var num = 1,
@@ -1561,74 +1560,74 @@ angular.module('starter.controllers', [])
             $scope.$broadcast('scroll.refreshComplete');
         };
 
-        $scope.asignar = function(piscinaID, obj) {
-            var data = {};
-            data.piscina = piscinaID;
-            data.piscinero = id;
-            if (obj.check) {
-                data.asigna = 'True';
-            } else {
-                data.asigna = '';
-            }
-
-            function asignando() {
-                $scope.loading = $ionicLoading.show({
-                    template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Guardando cambios...',
-                    noBackdrop: true
-                });
-                $http({
-                    method: 'POST',
-                    url: $scope.server + '/usuarios/service/asignacion/form/piscinero/',
-                    data: $.param(data),
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                }).then(function doneCallbacks(response) {
-                    $ionicLoading.hide();
-                    $cordovaToast.show("Guardado exitoso!", 'short', 'center');
-                }, function failCallbacks(response) {
-                    if (obj.check) {
-                        obj.check = false;
-                    } else {
-                        obj.check = true;
+        $scope.asignando = function () {
+            $scope.loading = $ionicLoading.show({
+                template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Guardando cambios...',
+                noBackdrop: true
+            });
+            $http({
+                method: 'POST',
+                url: $scope.server + '/usuarios/service/asignacion/form/piscinero/',
+                data: $.param($scope.data),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+            }).then(function doneCallbacks(response) {
+                $ionicLoading.hide();
+                $cordovaToast.show("Guardado exitoso!", 'short', 'center');
+            }, function failCallbacks(response) {
+                if (obj.check) {
+                    obj.check = false;
+                } else {
+                    obj.check = true;
+                }
+                $ionicLoading.hide();
+                if (response.status === 403) {
+                    $cordovaToast
+                        .show(response.data.error, 'short', 'center')
+                        .then(function(success) {
+                            $state.go('app.login');
+                        }, function(error) {
+                            $state.go('app.login');
+                        });
+                }
+                if (response.status == 400) {
+                    var data = response.data;
+                    if (data.piscinero) {
+                        $cordovaToast.show("Piscinero: " + data.piscinero, 'short', 'botton');
                     }
-                    $ionicLoading.hide();
-                    if (response.status === 403) {
-                        $cordovaToast
-                            .show(response.data.error, 'short', 'center')
-                            .then(function(success) {
-                                $state.go('app.login');
-                            }, function(error) {
-                                $state.go('app.login');
-                            });
+                    if (data.piscina) {
+                        $cordovaToast.show("Piscina: " + data.piscina, 'short', 'botton');
                     }
-                    if (response.status == 400) {
-                        var data = response.data;
-                        if (data.piscinero) {
-                            $cordovaToast.show("Piscinero: " + data.piscinero, 'short', 'botton');
-                        }
-                        if (data.piscina) {
-                            $cordovaToast.show("Piscina: " + data.piscina, 'short', 'botton');
-                        }
-                        if (data.asigna) {
-                            $cordovaToast.show("Asigna: " + data.asigna, 'short', 'botton');
-                        }
-                        if (data.__all__) {
-                            $cordovaToast.show(data.__all__, 'short', 'botton');
-                        }
-                    } else if (response.status == 500) {
-                        $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
-                    } else {
-                        $timeout(function() {
-                            $cordovaToast.show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center').then(function(success) {
-                                asignando();
-                            });
-                        }, 10000);
+                    if (data.asigna) {
+                        $cordovaToast.show("Asigna: " + data.asigna, 'short', 'botton');
                     }
-                });
-            }
-            asignando();
+                    if (data.__all__) {
+                        $cordovaToast.show(data.__all__, 'short', 'botton');
+                    }
+                } else if (response.status == 500) {
+                    $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
+                } else {
+                    $timeout(function() {
+                        $cordovaToast.show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center').then(function(success) {
+                          $scope.asignando();
+                        });
+                    }, 10000);
+                }
+            });
         };
+
+        $scope.asignar = function(piscinaID, obj) {
+            $scope.data.piscina = piscinaID;
+            $scope.data.piscinero = id;
+            if (obj.check) {
+                $scope.data.asigna = 'True';
+            } else {
+                $scope.data.asigna = '';
+            }
+            $scope.asignando();
+        };
+
     })
     .controller('Ruta', function($scope, $http, $stateParams, $cordovaToast, $cordovaDialogs, $timeout, $ionicLoading, $state, $location) {
         $scope.piscinero = $stateParams.piscineroId;
