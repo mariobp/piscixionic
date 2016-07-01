@@ -125,14 +125,6 @@
         "is_top_level": false,
         "variables": {}
     },
-    "cordova.plugins.diagnostic": {
-        "source": {
-            "type": "registry",
-            "id": "cordova.plugins.diagnostic"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "phonegap-plugin-barcodescanner": {
         "source": {
             "type": "git",
@@ -196,6 +188,23 @@
         "source": {
             "type": "registry",
             "id": "cordova-plugin-crosswalk-webview"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-background-mode": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/katzer/cordova-plugin-background-mode.git",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova.plugins.diagnostic.api-22": {
+        "source": {
+            "type": "registry",
+            "id": "cordova.plugins.diagnostic.api-22"
         },
         "is_top_level": true,
         "variables": {}
