@@ -18,7 +18,6 @@
     @property (nonatomic) BOOL bluetoothEnabled;
     @property (nonatomic) NSString* bluetoothState;
     @property (strong, nonatomic) CLLocationManager* locationManager;
-    @property (nonatomic, retain) NSString* locationRequestCallbackId;
 
 - (void) isLocationEnabled: (CDVInvokedUrlCommand*)command;
 - (void) isLocationEnabledSetting: (CDVInvokedUrlCommand*)command;
@@ -43,8 +42,6 @@
 
 - (void) switchToSettings: (CDVInvokedUrlCommand*)command;
 
-- (void) isMicrophoneAuthorized: (CDVInvokedUrlCommand*)command;
-- (void) getMicrophoneAuthorizationStatus: (CDVInvokedUrlCommand*)command;
 - (void) requestMicrophoneAuthorization: (CDVInvokedUrlCommand*)command;
 
 @end

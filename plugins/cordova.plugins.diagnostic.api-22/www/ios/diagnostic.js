@@ -7,7 +7,7 @@
 var Diagnostic = (function(){
 
 	// Callback function to execute upon change in location authorization status
-	var _onLocationAuthorizationStatusChangeCallback = null;
+	var _onLocationAuthorizationStatusChangeCallback = function(){};
 
 	// Callback function to execute upon change in Bluetooth state
 	var _onBluetoothStateChangeCallback = function(){};
@@ -120,12 +120,9 @@ var Diagnostic = (function(){
 	 * To be notified of a change in location authorization status, register a handler using registerLocationAuthorizationStatusHandler()
 	 * @param {String} status - new location authorization status
 	 * @private
-	 * @deprecated
 	 */
 	Diagnostic._onLocationAuthorizationStatusChange = function(status){
-		if(_onLocationAuthorizationStatusChangeCallback){
-			_onLocationAuthorizationStatusChangeCallback(status);
-		}
+		_onLocationAuthorizationStatusChangeCallback(status);
 	};
 
 	/**
@@ -133,10 +130,8 @@ var Diagnostic = (function(){
 	 * @param {Function} fn - function call when a change in location authorization status occurs.
 	 * This callback function is passed a single string parameter containing new status.
 	 * Possible values are: "unknown", "denied", "not_determined", "authorized_always" or "authorized_when_in_use"
-	 * @deprecated
 	 */
 	Diagnostic.registerLocationAuthorizationStatusChangeHandler = function(fn){
-		console.warn("registerLocationAuthorizationStatusChangeHandler() is deprecated and will be removed in a future version. Update your code pass this function to requestLocationAuthorization() as successCallback, which will now be invoked when a change in location authorization status occurs");
 		_onLocationAuthorizationStatusChangeCallback = fn;
 	};
 
@@ -359,39 +354,6 @@ var Diagnostic = (function(){
 			errorCallback,
 			'Diagnostic',
 			'switchToSettings',
-			[]);
-	};
-
-	/**
-	 * Checks if the application is authorized to use the microphone for recording audio.
-	 *
-	 * @param {Function} successCallback - The callback which will be called when operation is successful.
-	 * This callback function is passed a single boolean parameter which is TRUE if access to microphone is authorized.
-	 * @param {Function} errorCallback -  The callback which will be called when operation encounters an error.
-	 * This callback function is passed a single string parameter containing the error message.
-	 */
-	Diagnostic.isMicrophoneAuthorized = function(successCallback, errorCallback) {
-		return cordova.exec(ensureBoolean(successCallback),
-			errorCallback,
-			'Diagnostic',
-			'isMicrophoneAuthorized',
-			[]);
-	};
-
-	/**
-	 * Returns the authorization status for the application to use the microphone for recording audio.
-	 *
-	 * @param {Function} successCallback - The callback which will be called when operation is successful.
-	 * This callback function is passed a single string parameter which indicates the authorization status.
-	 * Possible values are: "unknown", "denied", "not_determined", "authorized"
-	 * @param {Function} errorCallback -  The callback which will be called when operation encounters an error.
-	 * This callback function is passed a single string parameter containing the error message.
-	 */
-	Diagnostic.getMicrophoneAuthorizationStatus = function(successCallback, errorCallback) {
-		return cordova.exec(successCallback,
-			errorCallback,
-			'Diagnostic',
-			'getMicrophoneAuthorizationStatus',
 			[]);
 	};
 

@@ -31,7 +31,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
         cordova.plugins.backgroundMode.setDefaults({
           title:'Piscix',
           text:'Piscix Supervisor',
-          ticker:'app'
+          ticker:'Piscix'
         });
         cordova.plugins.backgroundMode.enable();
     }, false);

@@ -22,7 +22,6 @@
     
     [super pluginInitialize];
     
-    self.locationRequestCallbackId = nil;
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
     
@@ -134,9 +133,6 @@
     @catch (NSException *exception) {
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:exception.reason];
     }
-    self.locationRequestCallbackId = command.callbackId;
-    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_NO_RESULT];
-    [pluginResult setKeepCallback:[NSNumber numberWithBool:YES]];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
@@ -240,7 +236,7 @@
 {
     CDVPluginResult* pluginResult;
     @try {
-        if([[self getCameraRollAuthorizationStatus]  isEqual: @"authorized"]) {
+        if([self getCameraRollAuthorizationStatus] == @"authorized") {
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:1];
         }
         else {
@@ -339,7 +335,7 @@
 {
     CDVPluginResult* pluginResult;
     @try {
-        if (UIApplicationOpenSettingsURLString != nil && &UIApplicationOpenSettingsURLString != NULL){
+        if (UIApplicationOpenSettingsURLString != nil){
             [[UIApplication sharedApplication] openURL: [NSURL URLWithString: UIApplicationOpenSettingsURLString]];
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
         }else{
@@ -353,60 +349,6 @@
 }
 
 // Audio
-- (void) isMicrophoneAuthorized: (CDVInvokedUrlCommand*)command
-{
-    CDVPluginResult* pluginResult;
-    @try {
-#ifdef __IPHONE_8_0
-        AVAudioSessionRecordPermission recordPermission = [AVAudioSession sharedInstance].recordPermission;
-        
-        if(recordPermission == AVAudioSessionRecordPermissionGranted) {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:1];
-        }
-        else {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:0];
-        }
-#else
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Only supported on iOS 8 and higher"];
-#endif
-    }
-    @catch (NSException *exception) {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:exception.reason];
-    }
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-}
-
-- (void) getMicrophoneAuthorizationStatus: (CDVInvokedUrlCommand*)command
-{
-    CDVPluginResult* pluginResult;
-    @try {
-#ifdef __IPHONE_8_0
-        NSString* status = @"unknown";
-        AVAudioSessionRecordPermission recordPermission = [AVAudioSession sharedInstance].recordPermission;
-        switch(recordPermission){
-            case AVAudioSessionRecordPermissionDenied:
-                status = @"denied";
-                break;
-            case AVAudioSessionRecordPermissionGranted:
-                status = @"granted";
-                break;
-            case AVAudioSessionRecordPermissionUndetermined:
-                status = @"not_determined";
-                break;
-        }
-        
-        NSLog([NSString stringWithFormat:@"Microphone authorization status is: %@", status]);
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:status];
-#else
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Only supported on iOS 8 and higher"];
-#endif
-    }
-    @catch (NSException *exception) {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:exception.reason];
-    }
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-}
-
 - (void) requestMicrophoneAuthorization: (CDVInvokedUrlCommand*)command
 {
     @try {
@@ -531,7 +473,14 @@
  *********************/
 - (void)jsCallback: (NSString*)jsString
 {
-    [self.commandDelegate evalJs:jsString];
+    if ([self.webView isKindOfClass:[UIWebView class]]) {
+        [(UIWebView*)self.webView stringByEvaluatingJavaScriptFromString:jsString];
+    }
+    
+    // TODO - find a way to conditionally cast WKWebView so it doesn't cause compiler error if WKWebView is not defined (iOS 7 / cordova-ios@3)
+    /*else if([self.webView isKindOfClass:[WKWebView class]]) {
+        [(WKWebView*)self.webView evaluateJavaScript:jsString completionHandler:nil];
+    }*/
 }
 
 - (NSString*) getLocationAuthorizationStatusAsString: (CLAuthorizationStatus)authStatus
@@ -553,7 +502,7 @@
 {
     CLAuthorizationStatus authStatus = [CLLocationManager authorizationStatus];
     NSString* status = [self getLocationAuthorizationStatusAsString:authStatus];
-    if([status  isEqual: @"authorized_always"] || [status  isEqual: @"authorized_when_in_use"]) {
+    if(status == @"authorized_always" || status == @"authorized_when_in_use") {
         return true;
     } else {
         return false;
@@ -563,18 +512,6 @@
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)authStatus {
     NSString* status = [self getLocationAuthorizationStatusAsString:authStatus];
     NSLog([NSString stringWithFormat:@"Location authorization status changed to: %@", status]);
-    
-    if(self.locationRequestCallbackId != nil){
-        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:status];
-        [self.commandDelegate sendPluginResult:pluginResult callbackId:self.locationRequestCallbackId];
-    }
-    
-    [self onLocationAuthorizationStatusChange:status]; // Deprecated
-}
-
-
--(void)onLocationAuthorizationStatusChange:(NSString *)status __attribute__((deprecated))
-{
     NSString* jsString = [NSString stringWithFormat:@"cordova.plugins.diagnostic._onLocationAuthorizationStatusChange(\"%@\");", status];
     [self jsCallback:jsString];
 }
@@ -606,6 +543,7 @@
 
 - (NSString*) getCameraRollAuthorizationStatus
 {
+    CDVPluginResult* pluginResult;
     PHAuthorizationStatus authStatus = [PHPhotoLibrary authorizationStatus];
     return [self getCameraRollAuthorizationStatusAsString:authStatus];
     
@@ -706,7 +644,7 @@
     NSLog(@"Bluetooth state changed: %@",description);
     
     self.bluetoothState = state;
-    if([state  isEqual: @"powered_on"]){
+    if(state == @"powered_on"){
         self.bluetoothEnabled = true;
     }else{
         self.bluetoothEnabled = false;
