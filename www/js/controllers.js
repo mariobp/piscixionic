@@ -145,10 +145,6 @@ angular.module('starter.controllers', [])
         $scope.noMoreItemsAvailable = false;
         var num = 1,
             max = 0;
-        $scope.$on("$ionicView.afterLeave", function(event, data) {
-            // handle event
-            console.log("Data: ", data);
-        });
 
         $scope.loadMore = function() {
             $http.get($scope.server + '/usuarios/service/list/cliente/?page=' + num)
