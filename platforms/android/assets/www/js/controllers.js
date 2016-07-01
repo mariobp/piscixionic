@@ -8,8 +8,6 @@ angular.module('starter.controllers', [])
     //$scope.$on('$ionicView.enter', function(e) {
     //});
     // Form data for the login modal
-    //$scope.server = "http://104.236.33.228:8040";
-    //$scope.server = "http://192.168.1.51:8000";
     $scope.server = "http://104.236.33.228:8050";
     $scope.posicion = function(path) {
         if (path) {
