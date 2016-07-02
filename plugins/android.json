@@ -55,6 +55,9 @@
         "cordova-plugin-x-toast": {
             "PACKAGE_NAME": "com.ionicframework.piscixs814642"
         },
+        "cordova.plugins.diagnostic.api-22": {
+            "PACKAGE_NAME": "com.ionicframework.piscixs814642"
+        },
         "de.appplant.cordova.plugin.local-notification": {
             "PACKAGE_NAME": "com.ionicframework.piscixs814642"
         },
@@ -65,9 +68,6 @@
             "PACKAGE_NAME": "com.ionicframework.piscixs814642"
         },
         "phonegap-plugin-barcodescanner": {
-            "PACKAGE_NAME": "com.ionicframework.piscixs814642"
-        },
-        "cordova.plugins.diagnostic.api-22": {
             "PACKAGE_NAME": "com.ionicframework.piscixs814642"
         }
     },

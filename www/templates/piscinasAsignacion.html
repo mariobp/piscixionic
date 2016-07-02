@@ -13,19 +13,25 @@
        >
      </ion-refresher>
 		<ion-list>
-		  <ion-item collection-repeat="piscina in piscinas|filter:search" class="collection-item" on-tap="piscina.check=!piscina.check; asignar(piscina.id, piscina)">
+		  <ion-item collection-repeat="piscina in piscinas|filter:search" class="collection-item">
 				<div class="">
 					<h2>{{piscina.nombre}}</h2>
 						<p>
-								<b>Cliente:</b> {{piscina.casa__cliente__first_name}} {{piscina.casa__cliente__last_name}}<br>
-								<b>Casa:</b>  {{piscina.casa__direccion}}<br>
-								<b>Tipo Piscina:</b> {{piscina.tipo__nombre}}<br>
+								<b>Cliente:</b> {{piscina.casa__cliente__first_name}} {{piscina.casa__cliente__last_name}} <br>
+								<b>Casa:</b>  {{piscina.casa__direccion}} <br>
 								<b>Estado:</b> <b class="light-blue-text" ng-show="piscina.estado">Buen Estado</b> <b class="red-text" ng-show="!piscina.estado">Reportada</b>
 						</p>
-					<div class="secondary-content">
-							<input type="checkbox" class="checkbox red" id="piscina{{piscina.id}}" ng-model="piscina.check" ng-change="asignar(piscina.id, piscina)"/>
-							<label for="piscina{{piscina.id}}"></label>
-					</div>
+						<b class="teal-text lighten-1-text">Asignada:</b>
+							<div class="secondary-content">
+								<div class="switch">
+									<label for="piscina{{piscina.id}}">
+										No
+										<input type="checkbox"  id="piscina{{piscina.id}}" ng-model="piscina.check" ng-change="asignar(piscina.id, piscina)"/>
+										<span class="lever"></span>
+										Si
+									</label>
+								</div>
+							</div>
 				</div>
 		  </ion-item>
 		</ion-list>

@@ -183,6 +183,7 @@ angular.module('starter.controllers', [])
                     }
                 });
         };
+
         $scope.reload = function() {
             num = 1;
             max = 0;
@@ -1583,11 +1584,6 @@ angular.module('starter.controllers', [])
                     $ionicLoading.hide();
                     $cordovaToast.show("Guardado exitoso!", 'short', 'center');
                 }, function failCallbacks(response) {
-                    if (obj.check) {
-                        obj.check = false;
-                    } else {
-                        obj.check = true;
-                    }
                     $ionicLoading.hide();
                     if (response.status === 403) {
                         $cordovaToast
@@ -1599,7 +1595,13 @@ angular.module('starter.controllers', [])
                             });
                     }
                     if (response.status == 400) {
+                        if (obj.check) {
+                            obj.check = false;
+                        } else {
+                            obj.check = true;
+                        }
                         var data = response.data;
+                        console.log(data);
                         if (data.piscinero) {
                             $cordovaToast.show("Piscinero: " + data.piscinero, 'short', 'botton');
                         }
@@ -1611,6 +1613,7 @@ angular.module('starter.controllers', [])
                         }
                         if (data.__all__) {
                             $cordovaToast.show(data.__all__, 'short', 'botton');
+                            $scope.reload();
                         }
                     } else if (response.status == 500) {
                         $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
