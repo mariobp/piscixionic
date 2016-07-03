@@ -1,6 +1,6 @@
 <ion-view view-title="Reporte">
 <ion-header-bar align-title="center" class="bar bar-subheader light-blue " ng-class="{'white': !ready1 && ready2}">
-  <h2 class="title white-text">{{piscinas[0].nombreC}} {{piscinas[0].apellidosC}}</h2>
+  <h2 class="title white-text">{{piscinas[0].title}}</h2>
 </ion-header-bar>
   <ion-content >
       <div class="center" ng-show="cargando">
@@ -36,7 +36,9 @@
              <div class="input-field col s12">
                 <select id="tipo" class="ion-input-select" name="tipo_de_reporte" ng-model="data.tipo_de_reporte" >
                    <option value="" disabled selected>Elegir tipo de Reporte</option>
-                   <option value="{{tipo.id}}" ng-repeat="tipo in tipos">{{tipo.nombre}}</option>
+                   <option value="{{tipo.id}}" ng-repeat="tipo in tipos">
+                     {{tipo.nombre}} Cierre:{{tipo.cierre}}
+                   </option>
                </select>
                 <label for="tipo"  class="label-select" ng-class="{'invalid': !data.tipo && form.$submitted,'valid':data.tipo && form.$submitted}">Tipo de Reporte
                 </label>
