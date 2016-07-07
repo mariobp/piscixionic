@@ -1,6 +1,6 @@
 <ion-view cache-view="false" view-title="Solución del Reporte">
 <ion-header-bar align-title="center" class="bar bar-subheader light-blue " ng-class="{'white':!ready}">
-  <h2 class="title white-text">{{piscinas[0].nombreC}} {{piscinas[0].apellidosC}}</h2>
+  <h2 class="title white-text"></h2>
 </ion-header-bar>
 <ion-content>
 <div class="center" ng-show="cargando">
@@ -28,18 +28,6 @@
             <textarea type="text" id="descripcion" maxlength="200" rows="5" class="materialize-textarea" ng-model="data.descripcion" name="descripcion" required ng-class="{'invalid':form.descripcion.$invalid && form.$submitted,'valid':form.descripcion.$valid && form.$submitted}"></textarea>
             <label for="descripcion">Descripción</label>
             <div class="error-container" ng-show="form.descripcion.$error && form.$submitted" ng-messages="form.descripcion.$error">
-              <div ng-messages-include="templates/error-list.html"></div>
-            </div>
-          </div>
-        </div>
-        <div class="row row-p">
-          <div class="input-field col s12">
-            <select id="tipo" class="ion-input-select" ng-model="data.tipo">
-               <option value="" disabled selected>Tipo</option>
-               <option value="{{tipo.id}}" ng-repeat="tipo in tipos">{{tipo.nombre}}</option>
-            </select>
-            <label for="tipo" class="label-select" ng-class="{'invalid': !data.tipo && form.$submitted,'valid':data.tipo && form.$submitted}">Tipo</label>
-             <div class="error-container" ng-show="!data.tipo && form.$submitted" ng-messages="form.nombre.$error">
               <div ng-messages-include="templates/error-list.html"></div>
             </div>
           </div>

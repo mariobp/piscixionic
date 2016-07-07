@@ -190,32 +190,12 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
         }
     })
 
-    .state('app.asignargps', {
-        url: '/asignargps/:casaId/:latitud/:longitud',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/asignar-gps.html',
-                controller: 'MapCtrl'
-            }
-        }
-    })
-
     .state('app.ruta', {
         url: '/ruta',
         views: {
             'menuContent': {
                 templateUrl: 'templates/ruta.html',
                 controller: 'Ruta'
-            }
-        }
-    })
-
-    .state('app.maparuta', {
-        url: '/mapa/ruta',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/maparuta.html',
-                controller: 'MapaRuta'
             }
         }
     })

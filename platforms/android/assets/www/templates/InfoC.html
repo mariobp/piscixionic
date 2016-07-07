@@ -20,12 +20,12 @@
               {{info.cliente.telefono}}
           </a>
         </div>
-          <a href="#/app/historial/reportes/{{ info.cliente.id }}/0" class="item item-icon-left  grey lighten-5">
-              <i class="micon red-text lighten-2-text">report</i> Historial de Reportes
+          <a href="#/app/historial/reportes/{{ info.cliente.id }}/0" class="item item-icon-left  grey lighten-5 red-text lighten-2-text">
+              <i class="micon ">report</i> Historial de Reportes
           </a>
-          <a class="item item-icon-left  grey lighten-5" ng-repeat="casa in info.casas" href="#/app/asignargps/{{casa.id}}/{{casa.latitud}}/{{casa.longitud}}">
+          <div class="item item-icon-left  grey lighten-5" ng-repeat="casa in info.casas">
               <i class="micon green-text accent-3-text">home</i> {{casa.direccion}}
-          </a>
+          </div>
         </div>
     </div>
   </ion-content>
