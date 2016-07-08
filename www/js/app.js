@@ -27,11 +27,11 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
 
     var bandera = false;
 
-    document.addEventListener('deviceready', function () {
+    document.addEventListener('deviceready', function() {
         cordova.plugins.backgroundMode.setDefaults({
-          title:'Piscix',
-          text:'Piscix piscinero',
-          ticker:'Piscix'
+            title: 'Piscix',
+            text: 'Piscix piscinero',
+            ticker: 'Piscix'
         });
         cordova.plugins.backgroundMode.enable();
     }, false);
@@ -39,19 +39,8 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
     document.addEventListener("offline", onOffline, false);
 
     function onOffline() {
-        // Handle the offline event
-        $cordovaLocalNotification.cancel(56).then(function(result) {
-            $cordovaLocalNotification.schedule({
-                id: 55,
-                title: 'Piscix',
-                text: 'No hay conexión a Internet!',
-                //icon: 'img/icon.png'
-            });
-        });
-        $cordovaToast.show('No hay conexión a Internet!', 'short', 'bottom')
-            .then(function(success){
-                bandera = true;
-            });
+        $cordovaToast.show('No hay conexión a Internet!', 'long', 'center');
+        bandera = true;
     }
 
     document.addEventListener("online", onOnline, false);
@@ -59,20 +48,8 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
     function onOnline() {
         // Handle the online event
         if (bandera) {
-            $cordovaLocalNotification.cancel(55).then(function(result) {
-                // ...
-                $cordovaLocalNotification.schedule({
-                    id: 56,
-                    title: 'Piscix',
-                    text: 'Conexión a internet recuperada!',
-                    //icon: 'img/icon.png'
-                });
-            });
-            $cordovaToast.show('Su equipo se conecto a internet', 'short', 'bottom')
-                .then(function(success) {
-                    // success
-                    bandera = false;
-            });
+            $cordovaToast.show('Su equipo se conecto a internet', 'long', 'center');
+            bandera = false;
         }
     }
 
@@ -241,23 +218,23 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
     })
 
     .state('app.respuestas', {
-        url: '/respuestas/:reporteId',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/respuestas.html',
-                controller: 'Repuesta'
+            url: '/respuestas/:reporteId',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/respuestas.html',
+                    controller: 'Repuesta'
+                }
             }
-        }
-    })
-    .state('app.planilla', {
-        url: '/planilla/:clienteId',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/planilla.html',
-                controller: 'Planilla'
+        })
+        .state('app.planilla', {
+            url: '/planilla/:clienteId',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/planilla.html',
+                    controller: 'Planilla'
+                }
             }
-        }
-    });
+        });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/clientelists');
 });
