@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.controllers', 'ionic-native-transitions', 'ngMessages', 'starter.directives', 'ksSwiper', 'starter.socket'])
 
-.run(function($ionicPlatform, $cordovaStatusbar, $cordovaToast, $state, $cordovaLocalNotification) {
+.run(function($ionicPlatform, $cordovaStatusbar, $cordovaToast) {
     //Project Number: 725278590059
     //API Key: AIzaSyBeuBsMahCuzv7P09GZ69wWbtqDR_4nqGA
     $ionicPlatform.ready(function() {
@@ -39,19 +39,8 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
     document.addEventListener("offline", onOffline, false);
 
     function onOffline() {
-        // Handle the offline event
-        $cordovaLocalNotification.cancel(56).then(function(result) {
-            $cordovaLocalNotification.schedule({
-                id: 55,
-                title: 'Piscix',
-                text: 'No hay conexión a Internet!',
-                //icon: 'img/icon.png'
-            });
-        });
-        $cordovaToast.show('No hay conexión a Internet!', 'short', 'bottom')
-            .then(function(success){
-                bandera = true;
-            });
+        $cordovaToast.show('No hay conexión a Internet!', 'long', 'center');
+        bandera = true;
     }
 
     document.addEventListener("online", onOnline, false);
@@ -59,20 +48,8 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
     function onOnline() {
         // Handle the online event
         if (bandera) {
-            $cordovaLocalNotification.cancel(55).then(function(result) {
-                // ...
-                $cordovaLocalNotification.schedule({
-                    id: 56,
-                    title: 'Piscix',
-                    text: 'Conexión a internet recuperada!',
-                    //icon: 'img/icon.png'
-                });
-            });
-            $cordovaToast.show('Su equipo se conecto a internet', 'short', 'bottom')
-                .then(function(success) {
-                    // success
-                    bandera = false;
-            });
+            $cordovaToast.show('Su equipo se conecto a internet', 'long', 'center');
+            bandera = false;
         }
     }
 
