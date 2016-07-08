@@ -5,6 +5,7 @@ angular.module('starter.socket', [])
     scope.socket = scope.socket || io('http://104.236.33.228:1196');
     scope.recive = true;
     scope.lista_id = [];
+
     function Notix() {}
 
     var noti = Notix.prototype = {
@@ -103,32 +104,42 @@ angular.module('starter.socket', [])
                     }
                     $rootScope.$on('$cordovaLocalNotification:click',
                         function(event, notification, state) {
-                            if(notification.data){
-                              var data = JSON.parse(notification.data);
+                            if (notification.data) {
+                                var data = JSON.parse(notification.data);
                             }
                             this.visit(message._id, function() {
                                 if (data.tipo == "Reporte") {
                                     $state.go('app.historialR', {
                                         clienteId: data.cliente,
                                         actual: data.reporte
+                                    }, {
+                                        reload: true
                                     });
                                 } else if (data.tipo == "Respuesta") {
                                     $state.go('app.respuestas', {
                                         reporteId: data.reporte
+                                    }, {
+                                        reload: true
                                     });
                                 } else if (data.tipo === "Recordatorio") {
                                     $state.go('app.historialR', {
                                         clienteId: 0,
                                         actual: data.reporte
+                                    }, {
+                                        reload: true
                                     });
                                 } else if (data.tipo === "Solucion") {
                                     $state.go('app.historialM', {
                                         clienteId: data.reporte,
                                         actual: data.solucion
+                                    }, {
+                                        reload: true
                                     });
                                 } else if (data.tipo === "Asignacion") {
                                     $state.go('app.ruta', {
                                         piscineroId: data.piscinero_id
+                                    }, {
+                                        reload: true
                                     });
                                 }
                             });
@@ -137,7 +148,7 @@ angular.module('starter.socket', [])
             }.bind(this));
 
             scope.socket.on('visited', function(message) {
-							$cordovaLocalNotification.cancel(scope.lista_id.indexOf(message._id) + 1);
+                $cordovaLocalNotification.cancel(scope.lista_id.indexOf(message._id) + 1);
             });
             this.messages();
         },
