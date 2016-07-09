@@ -8,12 +8,22 @@
         <param name="android-package" value="com.telerik.plugins.nativepagetransitions.NativePageTransitions" />
         <param name="onload" value="true" />
     </feature>
-    <feature name="Camera">
-        <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
-    </feature>
     <feature name="Device">
         <param name="android-package" value="org.apache.cordova.device.Device" />
     </feature>
+    <feature name="BackgroundMode">
+        <param name="android-package" value="de.appplant.cordova.plugin.background.BackgroundMode" />
+    </feature>
+    <preference name="KeepRunning" value="true" />
+    <feature name="Camera">
+        <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
+    </feature>
+    <preference name="webView" value="org.crosswalk.engine.XWalkWebViewEngine" />
+    <preference default="18+" name="xwalkVersion" />
+    <preference default="xwalk_core_library_canary:17+" name="xwalkLiteVersion" />
+    <preference default="--disable-pull-to-refresh-effect" name="xwalkCommandLine" />
+    <preference default="embedded" name="xwalkMode" />
+    <preference default="true" name="xwalkMultipleApk" />
     <feature name="Notification">
         <param name="android-package" value="org.apache.cordova.dialogs.Notification" />
     </feature>
@@ -61,16 +71,6 @@
     <feature name="BarcodeScanner">
         <param name="android-package" value="com.phonegap.plugins.barcodescanner.BarcodeScanner" />
     </feature>
-    <preference name="webView" value="org.crosswalk.engine.XWalkWebViewEngine" />
-    <preference default="18+" name="xwalkVersion" />
-    <preference default="xwalk_core_library_canary:17+" name="xwalkLiteVersion" />
-    <preference default="--disable-pull-to-refresh-effect" name="xwalkCommandLine" />
-    <preference default="embedded" name="xwalkMode" />
-    <preference default="true" name="xwalkMultipleApk" />
-    <feature name="BackgroundMode">
-        <param name="android-package" value="de.appplant.cordova.plugin.background.BackgroundMode" />
-    </feature>
-    <preference name="KeepRunning" value="true" />
     <feature name="Diagnostic">
         <param name="android-package" value="cordova.plugins.Diagnostic" />
     </feature>

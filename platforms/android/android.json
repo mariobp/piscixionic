@@ -17,11 +17,43 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"BackgroundMode\"><param name=\"android-package\" value=\"de.appplant.cordova.plugin.background.BackgroundMode\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference name=\"KeepRunning\" value=\"true\" />",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"Camera\"><param name=\"android-package\" value=\"org.apache.cordova.camera.CameraLauncher\" /></feature>",
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
+                            "xml": "<preference name=\"webView\" value=\"org.crosswalk.engine.XWalkWebViewEngine\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference default=\"18+\" name=\"xwalkVersion\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference default=\"xwalk_core_library_canary:17+\" name=\"xwalkLiteVersion\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference default=\"--disable-pull-to-refresh-effect\" name=\"xwalkCommandLine\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference default=\"embedded\" name=\"xwalkMode\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference default=\"true\" name=\"xwalkMultipleApk\" />",
                             "count": 1
                         },
                         {
@@ -79,38 +111,6 @@
                         {
                             "xml": "<feature name=\"BarcodeScanner\"><param name=\"android-package\" value=\"com.phonegap.plugins.barcodescanner.BarcodeScanner\" /></feature>",
                             "count": 1
-                        },
-                        {
-                            "xml": "<preference name=\"webView\" value=\"org.crosswalk.engine.XWalkWebViewEngine\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<preference default=\"18+\" name=\"xwalkVersion\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<preference default=\"xwalk_core_library_canary:17+\" name=\"xwalkLiteVersion\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<preference default=\"--disable-pull-to-refresh-effect\" name=\"xwalkCommandLine\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<preference default=\"embedded\" name=\"xwalkMode\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<preference default=\"true\" name=\"xwalkMultipleApk\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"BackgroundMode\"><param name=\"android-package\" value=\"de.appplant.cordova.plugin.background.BackgroundMode\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<preference name=\"KeepRunning\" value=\"true\" />",
-                            "count": 1
                         }
                     ]
                 }
@@ -139,11 +139,11 @@
                             "count": 1
                         },
                         {
-                            "xml": "<permission android:name=\"com.ionicframework.piscix612347.permission.C2D_MESSAGE\" android:protectionLevel=\"signature\" />",
+                            "xml": "<permission android:name=\"com.ionicframework.piscixp998893.permission.C2D_MESSAGE\" android:protectionLevel=\"signature\" />",
                             "count": 1
                         },
                         {
-                            "xml": "<uses-permission android:name=\"com.ionicframework.piscix612347.permission.C2D_MESSAGE\" />",
+                            "xml": "<uses-permission android:name=\"com.ionicframework.piscixp998893.permission.C2D_MESSAGE\" />",
                             "count": 1
                         },
                         {
@@ -173,11 +173,15 @@
                             "count": 1
                         },
                         {
-                            "xml": "<receiver android:name=\"com.plugin.gcm.CordovaGCMBroadcastReceiver\" android:permission=\"com.google.android.c2dm.permission.SEND\"><intent-filter><action android:name=\"com.google.android.c2dm.intent.RECEIVE\" /><action android:name=\"com.google.android.c2dm.intent.REGISTRATION\" /><category android:name=\"com.ionicframework.piscix612347\" /></intent-filter></receiver>",
+                            "xml": "<receiver android:name=\"com.plugin.gcm.CordovaGCMBroadcastReceiver\" android:permission=\"com.google.android.c2dm.permission.SEND\"><intent-filter><action android:name=\"com.google.android.c2dm.intent.RECEIVE\" /><action android:name=\"com.google.android.c2dm.intent.REGISTRATION\" /><category android:name=\"com.ionicframework.piscixp998893\" /></intent-filter></receiver>",
                             "count": 1
                         },
                         {
                             "xml": "<service android:name=\"com.plugin.gcm.GCMIntentService\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<service android:name=\"de.appplant.cordova.plugin.background.ForegroundService\" />",
                             "count": 1
                         },
                         {
@@ -223,10 +227,6 @@
                         {
                             "xml": "<activity android:label=\"Share\" android:name=\"com.google.zxing.client.android.HelpActivity\"><intent-filter><action android:name=\"android.intent.action.VIEW\" /><category android:name=\"android.intent.category.DEFAULT\" /></intent-filter></activity>",
                             "count": 1
-                        },
-                        {
-                            "xml": "<service android:name=\"de.appplant.cordova.plugin.background.ForegroundService\" />",
-                            "count": 1
                         }
                     ],
                     "/*": [
@@ -235,19 +235,19 @@
                             "count": 3
                         },
                         {
-                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
-                            "count": 1
-                        },
-                        {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
                             "count": 2
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
                             "count": 1
                         }
                     ]
@@ -267,75 +267,75 @@
     },
     "installed_plugins": {
         "com.phonegap.plugins.PushPlugin": {
-            "PACKAGE_NAME": "com.ionicframework.piscix612347"
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
         },
         "com.telerik.plugins.nativepagetransitions": {
-            "PACKAGE_NAME": "com.ionicframework.piscix612347"
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
         },
         "cordova-plugin-app-event": {
-            "PACKAGE_NAME": "com.ionicframework.piscix612347"
-        },
-        "cordova-plugin-compat": {
-            "PACKAGE_NAME": "com.ionicframework.piscix612347"
-        },
-        "cordova-plugin-camera": {
-            "PACKAGE_NAME": "com.ionicframework.piscix612347"
-        },
-        "cordova-plugin-console": {
-            "PACKAGE_NAME": "com.ionicframework.piscix612347"
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
         },
         "cordova-plugin-device": {
-            "PACKAGE_NAME": "com.ionicframework.piscix612347"
-        },
-        "cordova-plugin-dialogs": {
-            "PACKAGE_NAME": "com.ionicframework.piscix612347"
-        },
-        "cordova-plugin-file": {
-            "PACKAGE_NAME": "com.ionicframework.piscix612347"
-        },
-        "cordova-plugin-file-transfer": {
-            "PACKAGE_NAME": "com.ionicframework.piscix612347"
-        },
-        "cordova-plugin-geolocation": {
-            "PACKAGE_NAME": "com.ionicframework.piscix612347"
-        },
-        "cordova-plugin-image-picker": {
-            "PACKAGE_NAME": "com.ionicframework.piscix612347"
-        },
-        "cordova-plugin-network-information": {
-            "PACKAGE_NAME": "com.ionicframework.piscix612347"
-        },
-        "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.ionicframework.piscix612347"
-        },
-        "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "com.ionicframework.piscix612347"
-        },
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.ionicframework.piscix612347"
-        },
-        "cordova-plugin-x-toast": {
-            "PACKAGE_NAME": "com.ionicframework.piscix612347"
-        },
-        "de.appplant.cordova.plugin.local-notification": {
-            "PACKAGE_NAME": "com.ionicframework.piscix612347"
-        },
-        "ionic-plugin-keyboard": {
-            "PACKAGE_NAME": "com.ionicframework.piscix612347"
-        },
-        "org.pbernasconi.progressindicator": {
-            "PACKAGE_NAME": "com.ionicframework.piscix612347"
-        },
-        "phonegap-plugin-barcodescanner": {
-            "PACKAGE_NAME": "com.ionicframework.piscix612347"
-        },
-        "cordova-plugin-crosswalk-webview": {
             "PACKAGE_NAME": "com.ionicframework.piscixp998893"
         },
         "cordova-plugin-background-mode": {
             "PACKAGE_NAME": "com.ionicframework.piscixp998893"
         },
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
+        "cordova-plugin-crosswalk-webview": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
+        "cordova-plugin-image-picker": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
+        "cordova-plugin-x-toast": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
         "cordova.plugins.diagnostic.api-22": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
+        "de.appplant.cordova.plugin.local-notification": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
+        "org.pbernasconi.progressindicator": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
+        "phonegap-plugin-barcodescanner": {
             "PACKAGE_NAME": "com.ionicframework.piscixp998893"
         }
     },
@@ -353,6 +353,21 @@
             "id": "com.telerik.plugins.nativepagetransitions.NativePageTransitions",
             "clobbers": [
                 "window.plugins.nativepagetransitions"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-device/www/device.js",
+            "id": "cordova-plugin-device.device",
+            "clobbers": [
+                "device"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-background-mode/www/background-mode.js",
+            "id": "cordova-plugin-background-mode.BackgroundMode",
+            "clobbers": [
+                "cordova.plugins.backgroundMode",
+                "plugin.backgroundMode"
             ]
         },
         {
@@ -381,13 +396,6 @@
             "id": "cordova-plugin-camera.CameraPopoverHandle",
             "clobbers": [
                 "CameraPopoverHandle"
-            ]
-        },
-        {
-            "file": "plugins/cordova-plugin-device/www/device.js",
-            "id": "cordova-plugin-device.device",
-            "clobbers": [
-                "device"
             ]
         },
         {
@@ -634,6 +642,13 @@
             "id": "cordova-plugin-x-toast.tests"
         },
         {
+            "file": "plugins/cordova.plugins.diagnostic.api-22/www/android/diagnostic.js",
+            "id": "cordova.plugins.diagnostic.api-22.Diagnostic",
+            "clobbers": [
+                "cordova.plugins.diagnostic"
+            ]
+        },
+        {
             "file": "plugins/de.appplant.cordova.plugin.local-notification/www/local-notification.js",
             "id": "de.appplant.cordova.plugin.local-notification.LocalNotification",
             "clobbers": [
@@ -678,31 +693,18 @@
             "clobbers": [
                 "cordova.plugins.barcodeScanner"
             ]
-        },
-        {
-            "file": "plugins/cordova-plugin-background-mode/www/background-mode.js",
-            "id": "cordova-plugin-background-mode.BackgroundMode",
-            "clobbers": [
-                "cordova.plugins.backgroundMode",
-                "plugin.backgroundMode"
-            ]
-        },
-        {
-            "file": "plugins/cordova.plugins.diagnostic.api-22/www/android/diagnostic.js",
-            "id": "cordova.plugins.diagnostic.api-22.Diagnostic",
-            "clobbers": [
-                "cordova.plugins.diagnostic"
-            ]
         }
     ],
     "plugin_metadata": {
         "com.phonegap.plugins.PushPlugin": "2.5.0",
         "com.telerik.plugins.nativepagetransitions": "0.6.4",
         "cordova-plugin-app-event": "1.2.0",
+        "cordova-plugin-device": "1.1.1",
+        "cordova-plugin-background-mode": "0.6.5",
         "cordova-plugin-compat": "1.0.0",
         "cordova-plugin-camera": "2.2.0",
         "cordova-plugin-console": "1.0.2",
-        "cordova-plugin-device": "1.1.1",
+        "cordova-plugin-crosswalk-webview": "1.7.2",
         "cordova-plugin-dialogs": "1.2.1",
         "cordova-plugin-file": "4.2.0",
         "cordova-plugin-file-transfer": "1.5.1",
@@ -713,12 +715,10 @@
         "cordova-plugin-statusbar": "2.1.2",
         "cordova-plugin-whitelist": "1.2.1",
         "cordova-plugin-x-toast": "2.5.0",
+        "cordova.plugins.diagnostic.api-22": "2.3.10-api-22",
         "de.appplant.cordova.plugin.local-notification": "0.8.4",
         "ionic-plugin-keyboard": "2.0.1",
         "org.pbernasconi.progressindicator": "1.1.0",
-        "phonegap-plugin-barcodescanner": "5.0.0",
-        "cordova-plugin-crosswalk-webview": "1.7.2",
-        "cordova-plugin-background-mode": "0.6.5",
-        "cordova.plugins.diagnostic.api-22": "2.3.10-api-22"
+        "phonegap-plugin-barcodescanner": "5.0.0"
     }
 }

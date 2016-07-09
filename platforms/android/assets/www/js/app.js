@@ -30,7 +30,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
     document.addEventListener('deviceready', function() {
         cordova.plugins.backgroundMode.setDefaults({
             title: 'Piscix',
-            text: 'Piscix piscinero',
+            text: 'Piscinero',
             ticker: 'Piscix'
         });
         cordova.plugins.backgroundMode.enable();
@@ -226,15 +226,24 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
                 }
             }
         })
-        .state('app.planilla', {
-            url: '/planilla/:clienteId',
+    .state('app.historialI', {
+            url: '/historial/reporte/informativos/:actual',
             views: {
                 'menuContent': {
-                    templateUrl: 'templates/planilla.html',
-                    controller: 'Planilla'
+                    templateUrl: 'templates/historialI.html',
+                    controller: 'HistorialIn'
                 }
             }
-        });
+        })
+      .state('app.planilla', {
+          url: '/planilla/:clienteId',
+          views: {
+              'menuContent': {
+                  templateUrl: 'templates/planilla.html',
+                  controller: 'Planilla'
+              }
+          }
+      });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/clientelists');
 });

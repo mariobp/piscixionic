@@ -1532,4 +1532,63 @@ angular.module('starter.controllers', [])
                 }
             });
         };
+    })
+    .controller('HistorialIn', function($scope, $rootScope, $http, $state, $location, $cordovaToast, $timeout, $cordovaDialogs, $stateParams, $ionicHistory) {
+        $scope.posicion($location.path());
+        $scope.search = "";
+        $scope.noMoreItemsAvailable = false;
+        $scope.actual = $stateParams.actual;
+        var num = 1,
+            max = 0,
+            url = '';
+        $scope.reportes = [];
+        $rootScope.$ionicGoBack = function() {
+            $ionicHistory.goBack(-1);
+        };
+        $scope.loadMore = function() {
+            $http.get($scope.server + "/reportes/reporte/informativo/list/?" + 'page=' + num)
+                .then(function successCallback(response) {
+                    var data = response.data.object_list;
+                    if (response.data.num_rows === 0) {
+                        $cordovaDialogs.alert('No hay ningún reporte registrado.', 'Información');
+                    }
+                    data.forEach(function(data) {
+                        $scope.reportes.push(data);
+                    });
+                    max = response.data.count;
+                    if ($scope.reportes.length === max) {
+                        $scope.noMoreItemsAvailable = true;
+                    }
+                    num++;
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                }, function errorCallback(response) {
+                    if (response.status == 403) {
+                        $cordovaToast
+                            .show(response.data.error, 'short', 'center')
+                            .then(function(success) {
+                                $state.go('app.login');
+                            }, function(error) {
+                                console.log(error);
+                            });
+                    } else if (response.status == 500) {
+                        $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
+                    } else if (response.status === 0) {
+                        $cordovaDialogs.confirm('No se puede acceder a este servicio en este momento.', 'Error');
+                    } else {
+                        $timeout(function() {
+                            $cordovaToast.show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center').then(function(success) {
+                                $scope.loadMore();
+                            });
+                        }, 10000);
+                    }
+                });
+        };
+
+        $scope.reload = function() {
+            $scope.reportes = [];
+            num = 1;
+            max = 0;
+            $scope.noMoreItemsAvailable = false;
+            $scope.$broadcast('scroll.refreshComplete');
+        };
     });

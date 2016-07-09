@@ -11,81 +11,54 @@
                 <div class="scroll2">
                     <div class="row row-p">
                         <div class="input-field col s12">
-                            <input type="checkbox" id="cepillado" name="cepillado" ng-model="data.cepillado" ng-class="{'invalid':form.cepillado.$invalid && form.$submitted,'valid':form.cepillado.$valid && form.$submitted}">
+                            <input type="checkbox" id="cepillado" name="cepillado" ng-model="data.cepillado">
                             <label for="cepillado">Cepillado</label>
-                            <div class="error-container" ng-show="form.cepillado.$error && form.$submitted" ng-messages="form.cepillado.$error">
-                                <div ng-messages-include="templates/error-list.html"></div>
-                            </div>
                         </div>
                     </div>
                     <div class="row row-p">
                         <div class="input-field col s12">
-                            <input type="checkbox" id="aspirado" name="aspirado" ng-model="data.aspirado" ng-class="{'invalid':form.aspirado.$invalid && form.$submitted,'valid':form.aspirado.$valid && form.$submitted}">
+                            <input type="checkbox" id="aspirado" name="aspirado" ng-model="data.aspirado">
                             <label for="aspirado">Aspirado</label>
-                            <div class="error-container" ng-show="form.aspirado.$error && form.$submitted" ng-messages="form.aspirado.$error">
-                                <div ng-messages-include="templates/error-list.html"></div>
-                            </div>
                         </div>
                     </div>
                     <div class="row row-p">
                         <div class="input-field col s12">
-                            <input type="checkbox" id="retrolavado" name="retrolavado" ng-model="data.retrolavado" ng-class="{'invalid':form.retrolavado.$invalid && form.$submitted,'valid':form.retrolavado.$valid && form.$submitted}">
+                            <input type="checkbox" id="retrolavado" name="retrolavado" ng-model="data.retrolavado">
                             <label for="retrolavado">Retrolavado</label>
-                            <div class="error-container" ng-show="form.retrolavado.$error && form.$submitted" ng-messages="form.retrolavado.$error">
-                                <div ng-messages-include="templates/error-list.html"></div>
-                            </div>
                         </div>
                     </div>
                     <div class="row row-p">
                         <div class="input-field col s12">
-                            <input type="checkbox" id="aumento_agua" name="aumento_agua" ng-model="data.aumento_agua" ng-class="{'invalid':form.aumento_agua.$invalid && form.$submitted,'valid':form.aumento_agua.$valid && form.$submitted}">
+                            <input type="checkbox" id="aumento_agua" name="aumento_agua" ng-model="data.aumento_agua">
                             <label for="aumento_agua">Aumento de agua</label>
-                            <div class="error-container" ng-show="form.aumento_agua.$error && form.$submitted" ng-messages="form.aumento_agua.$error">
-                                <div ng-messages-include="templates/error-list.html"></div>
-                            </div>
                         </div>
                     </div>
                     <div class="row row-p">
                         <div class="input-field col s12">
-                            <input type="checkbox" id="aplicacion_cloro" name="aplicacion_cloro" ng-model="data.aplicacion_cloro" ng-class="{'invalid':form.aplicacion_cloro.$invalid && form.$submitted,'valid':form.aplicacion_cloro.$valid && form.$submitted}">
+                            <input type="checkbox" id="aplicacion_cloro" name="aplicacion_cloro" ng-model="data.aplicacion_cloro">
                             <label for="aplicacion_cloro">Aplicación cloro</label>
-                            <div class="error-container" ng-show="form.aplicacion_cloro.$error && form.$submitted" ng-messages="form.aplicacion_cloro.$error">
-                                <div ng-messages-include="templates/error-list.html"></div>
-                            </div>
                         </div>
                     </div>
                     <div class="row row-p">
                         <div class="input-field col s12">
-                            <input type="checkbox" id="aplicacion_sulfato_al" name="aplicacion_sulfato_al" ng-model="data.aplicacion_sulfato_al" ng-class="{'invalid':form.aplicacion_sulfato_al.$invalid && form.$submitted,'valid':form.aplicacion_sulfato_al.$valid && form.$submitted}">
+                            <input type="checkbox" id="aplicacion_sulfato_al" name="aplicacion_sulfato_al" ng-model="data.aplicacion_sulfato_al">
                             <label for="aplicacion_sulfato_al">Aplicación Sulfato Al</label>
-                            <div class="error-container" ng-show="form.aplicacion_sulfato_al.$error && form.$submitted" ng-messages="form.aplicacion_sulfato_al.$error">
-                                <div ng-messages-include="templates/error-list.html"></div>
-                            </div>
                         </div>
                     </div>
                     <div class="row row-p">
                         <div class="input-field col s12">
-                            <input type="checkbox" id="clasificador_alg" name="clasificador_alg" ng-model="data.clasificador_alg" ng-class="{'invalid':form.clasificador_alg.$invalid && form.$submitted,'valid':form.clasificador_alg.$valid && form.$submitted}">
+                            <input type="checkbox" id="clasificador_alg" name="clasificador_alg" ng-model="data.clasificador_alg">
                             <label for="clasificador_alg">Clasificador AGL</label>
-                            <div class="error-container" ng-show="form.clasificador_alg.$error && form.$submitted" ng-messages="form.clasificador_alg.$error">
-                                <div ng-messages-include="templates/error-list.html"></div>
-                            </div>
                         </div>
                     </div>
                     <div class="row row-p">
                         <div class="input-field col s6">
-                            <input type="radio" id="disminucion_ph" name="ph" ng-model="data.disminucion_ph" ng-class="{'invalid':form.disminucion_ph.$invalid && form.$submitted,'valid':form.disminucion_ph.$valid && form.$submitted}">
+                            <input type="radio" id="disminucion_ph" name="ph" ng-model="data.disminucion_ph">
                             <label for="disminucion_ph">Disminución de PH</label>
-                            <div class="error-container" ng-show="form.disminucion_ph.$error && form.$submitted" ng-messages="form.disminucion_ph.$error">
-                                <div ng-messages-include="templates/error-list.html"></div>
-                            </div>
                         </div>
                         <div class="input-field col s6">
-                            <input type="radio" id="aumento_ph" name="ph" ng-model="data.aumento_ph" ng-class="{'invalid':form.aumento_ph.$invalid && form.$submitted,'valid':form.aumento_ph.$valid && form.$submitted}">
+                            <input type="radio" id="aumento_ph" name="ph" ng-model="data.aumento_ph">
                             <label for="aumento_ph">Aumento de PH</label>
-                            <div class="error-container" ng-show="form.aumento_ph.$error && form.$submitted" ng-messages="form.aumento_ph.$error">
-                                <div ng-messages-include="templates/error-list.html"></div>
-                            </div>
                         </div>
                     </div>
                     <div class="row row-p">
@@ -110,7 +83,7 @@
                         <div class="input-field col s12">
                             <select id="piscina" class="ion-input-select" name="piscina" ng-model="data.piscina" required>
                                 <option value="" disabled selected>Elegir piscina</option>
-                                <option value="{{piscina.id}}" ng-repeat="piscina in piscinas">{{piscina.nombre}}</option>
+                                <option value="{{piscina.pk}}" ng-repeat="piscina in piscinas">{{piscina.nombre}}</option>
                             </select>
                             <label for="piscina" class="label-select" ng-class="{'invalid': !data.piscina && form.$submitted,'valid':data.piscina && form.$submitted}">Piscina</label>
                             <div class="error-container" ng-show="!data.piscina && form.$submitted" ng-messages="form.nombre.$error">
@@ -137,7 +110,6 @@
                         </div>
                     </div>
                 </div>
-                {{form.$valid}}
                 <div class="bar headerbar footer-f">
                     <div class="row row-p">
                         <button type="button" class="btn btn-large waves-effect waves-light red lighten-2 col s6" ng-click="back()">Cancelar<i class="micon">cancel</i></button>

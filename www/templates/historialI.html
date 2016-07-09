@@ -1,0 +1,38 @@
+<ion-view title="Historial de Reportes Informativos">
+	<ion-header-bar class="bar-subheader headerbar item-input-inset row row-p">
+      <div class="input-field col s12 input-header">
+          <i class="micon prefix">search</i>
+          <input type="text" name="buscar" class="white-text" placeholder="Buscar" ng-model="search">
+      </div>
+  </ion-header-bar>
+  <ion-content overflow-scroll=”true”>
+      <ion-refresher pulling-text="Refrescar" on-refresh="reload()" refreshingText="Refrescando"></ion-refresher>
+      <ul class="collapsible popout" data-collapsible="accordion" watch>
+          <li ng-repeat="reporte in reportes|filter:search track by reporte.id">
+              <div class="collapsible-header grey lighten-5">
+                  <ul class="collection grey lighten-5">
+                      <li class="collection-item  grey lighten-5">
+                          <span class="title"><b ng-class="{'light-blue-text':reporte.id == actual}">Reporte:</b> {{reporte.nombre}}</span>
+                          <p>
+                              <b ng-class="{'light-blue-text':reporte.id == actual}">Fecha:</b> {{reporte.fecha}}
+                          </p>
+                      </li>
+                  </ul>
+              </div>
+              <div class="collapsible-body row row-p grey lighten-5">
+                  <ul class="collection">
+                      <li class="collection-item">
+                          <b>Descripción:</b> {{reporte.descripcion}}
+                      </li>
+                  </ul>
+              </div>
+          </li>
+      </ul>
+      <ion-infinite-scroll ng-if="!noMoreItemsAvailable" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll>
+  </ion-content>
+  <ion-footer-bar class="headerbar footer-f">
+    <div class="row row-p ">
+      <a class="btn btn-large waves-effect waves-light light-blue waves-effect col s12"><i class="micon">info</i> Agregar Reporte Informativo</a>
+    </div>
+  </ion-footer-bar>
+</ion-view>
