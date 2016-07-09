@@ -1460,69 +1460,76 @@ angular.module('starter.controllers', [])
         $scope.piscinas();
 
         $scope.enviar = function() {
+          console.log("Enviar?");
+          console.log($scope.data);
+            $cordovaDialogs.confirm('Esta seguro que quiere enviar?', 'Enviar', ['Si, Enviar!', 'Cancelar'])
+                .then(function(result) {
+                    if (result === 1) {
+                        $scope.enviando(); //Se formatea la informacion y se envia.
+                    }
+                });
+        };
+
+        $scope.enviando = function() {
             $scope.loading = $ionicLoading.show({
                 template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Guardando...',
                 noBackdrop: true
             });
-
-            function enviando() {
-                $http({
-                    method: 'POST',
-                    url: $scope.server + '/actividades/planilladiaria/form/',
-                    data: $.param($scope.data),
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                }).then(function doneCallbacks(response) {
-                    $scope.data = {};
-                    $scope.total = 0;
+            $http({
+                method: 'POST',
+                url: $scope.server + '/actividades/planilladiaria/form/',
+                data: $.param($scope.data),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+            }).then(function doneCallbacks(response) {
+                $scope.data = {};
+                $ionicLoading.hide();
+                $cordovaToast.show("Enviado exitoso", 'long', 'center');
+                $scope.back();
+            }, function failCallbacks(response) {
+                if (response.status === 403) {
                     $ionicLoading.hide();
-                    $cordovaToast.show("Enviado exitoso", 'long', 'center');
-                }, function failCallbacks(response) {
-                    if (response.status === 403) {
-                        $ionicLoading.hide();
-                        $cordovaToast
-                            .show(response.data.error, 'short', 'center')
-                            .then(function(success) {
-                                $state.go('app.login');
-                            }, function(error) {
-                                $state.go('app.login');
-                            });
+                    $cordovaToast
+                        .show(response.data.error, 'short', 'center')
+                        .then(function(success) {
+                            $state.go('app.login');
+                        }, function(error) {
+                            $state.go('app.login');
+                        });
+                }
+                if (response.status === 400) {
+                    $ionicLoading.hide();
+                    var data = response.data;
+                    if (data.__all__) {
+                        $cordovaToast.show(data.__all__[0], 'short', 'center');
                     }
-                    if (response.status === 400) {
-                        $ionicLoading.hide();
-                        var data = response.data;
-                        if (data.__all__) {
-                            $cordovaToast.show(data.__all__[0], 'short', 'center');
-                        }
-                        if (data.nombre) {
-                            $cordovaToast.show("Nivel de cloro:" + data.nivel_cloro[0], 'short', 'center');
-                        }
-                        if (data.descripcion) {
-                            $cordovaToast.show("Observaciones:" + data.observaciones[0], 'short', 'center');
-                        }
-                        if (data.cliente) {
-                            $cordovaToast.show("Piscina:" + data.piscina[0], 'short', 'center');
-                        }
-                        if (data.reporta) {
-                            $cordovaToast.show("Nivel PH:" + data.nivel_ph[0], 'short', 'center');
-                        }
-                        if (data.piscinero) {
-                            $cordovaToast.show("Piscinero:" + data.piscinero[0], 'short', 'center');
-                        }
-                    } else if (response.status == 500) {
-                        $ionicLoading.hide();
-                        $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
-                    } else {
-                        $timeout(function() {
-                            $cordovaToast.show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center').then(function(success) {
-                                $ionicLoading.hide();
-                                enviando();
-                            });
-                        }, 5000);
+                    if (data.nombre) {
+                        $cordovaToast.show("Nivel de cloro:" + data.nivel_cloro[0], 'short', 'center');
                     }
-                });
-            }
-            enviando();
+                    if (data.descripcion) {
+                        $cordovaToast.show("Observaciones:" + data.observaciones[0], 'short', 'center');
+                    }
+                    if (data.cliente) {
+                        $cordovaToast.show("Piscina:" + data.piscina[0], 'short', 'center');
+                    }
+                    if (data.reporta) {
+                        $cordovaToast.show("Nivel PH:" + data.nivel_ph[0], 'short', 'center');
+                    }
+                    if (data.piscinero) {
+                        $cordovaToast.show("Piscinero:" + data.piscinero[0], 'short', 'center');
+                    }
+                } else if (response.status == 500) {
+                    $ionicLoading.hide();
+                    $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
+                } else {
+                    $timeout(function() {
+                        $cordovaToast.show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center').then(function(success) {
+                            $ionicLoading.hide();
+                            $scope.enviando();
+                        });
+                    }, 5000);
+                }
+            });
         };
     });
