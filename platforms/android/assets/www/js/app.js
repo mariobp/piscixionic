@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.controllers', 'ionic-native-transitions', 'ngMessages', 'starter.directives', 'ksSwiper', 'starter.socket'])
 
-.run(function($ionicPlatform, $cordovaStatusbar, $cordovaToast, $state, $cordovaLocalNotification) {
+.run(function($ionicPlatform, $cordovaStatusbar, $cordovaToast) {
     //Project Number: 725278590059
     //API Key: AIzaSyBeuBsMahCuzv7P09GZ69wWbtqDR_4nqGA
     $ionicPlatform.ready(function() {
@@ -27,11 +27,11 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
 
     var bandera = false;
 
-    document.addEventListener('deviceready', function() {
+    document.addEventListener('deviceready', function () {
         cordova.plugins.backgroundMode.setDefaults({
-            title: 'Piscix',
-            text: 'Piscinero',
-            ticker: 'Piscix'
+          title:'Piscix',
+          text:'Piscix Supervisor',
+          ticker:'Piscix'
         });
         cordova.plugins.backgroundMode.enable();
     }, false);
@@ -157,6 +157,16 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
         }
     })
 
+    .state('app.piscineros', {
+        url: '/piscineros',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/piscineros.html',
+                controller: 'Piscineros'
+            }
+        }
+    })
+
     .state('app.asigacionpiscina', {
         url: '/asignacionpiscina/:piscineroId',
         views: {
@@ -167,12 +177,32 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
         }
     })
 
+    .state('app.asignargps', {
+        url: '/asignargps/:casaId/:latitud/:longitud',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/asignar-gps.html',
+                controller: 'MapCtrl'
+            }
+        }
+    })
+
     .state('app.ruta', {
-        url: '/ruta',
+        url: '/ruta/:piscineroId',
         views: {
             'menuContent': {
                 templateUrl: 'templates/ruta.html',
                 controller: 'Ruta'
+            }
+        }
+    })
+
+    .state('app.maparuta', {
+        url: '/mapa/ruta/:piscineroId',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/maparuta.html',
+                controller: 'MapaRuta'
             }
         }
     })
@@ -217,33 +247,35 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
         }
     })
 
-    .state('app.respuestas', {
-            url: '/respuestas/:reporteId',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/respuestas.html',
-                    controller: 'Repuesta'
-                }
-            }
-        })
     .state('app.historialI', {
-            url: '/historial/reporte/informativos',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/historialI.html',
-                    controller: 'HistorialIn'
-                }
+        url: '/historial/reporte/informativos',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/historialI.html',
+                controller: 'HistorialIn'
             }
-        })
-      .state('app.planilla', {
-          url: '/planilla/:clienteId',
-          views: {
-              'menuContent': {
-                  templateUrl: 'templates/planilla.html',
-                  controller: 'Planilla'
-              }
-          }
-      });
+        }
+    })
+
+    .state('app.notificaciones', {
+        url: '/notificaciones',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/notificaciones.html',
+                controller: 'Notificaciones'
+            }
+        }
+    })
+
+    .state('app.respuestas', {
+        url: '/respuestas/:reporteId',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/respuestas.html',
+                controller: 'Repuesta'
+            }
+        }
+    });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/clientelists');
 });

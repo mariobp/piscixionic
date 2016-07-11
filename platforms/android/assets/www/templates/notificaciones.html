@@ -1,0 +1,12 @@
+<ion-view title="Notificaciones">
+	<ion-content>
+    <div class="card">
+      <div class="item item-text-wrap" ng-repeat="noti in notix">
+          <b>{{noti.data.data.tipo}}</b>
+          <p>
+            {{noti.data.html}}
+          </p>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

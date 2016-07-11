@@ -14,6 +14,7 @@ angular.module('starter.socket', [])
         type: null,
         event: null,
         callback: null,
+        notixList: [],
         data: {},
 
         setup: function(session_id, username, type) {
@@ -38,6 +39,7 @@ angular.module('starter.socket', [])
 
             scope.socket.on('notix', function(message) {
                 if (scope.recive) {
+                    this.notixList.push(message);
                     scope.lista_id.push(message._id);
                     var id_message = scope.lista_id.indexOf(message._id) + 1;
                     if (message.data.data.tipo == "Reporte") {
