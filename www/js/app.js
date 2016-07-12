@@ -30,7 +30,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
     document.addEventListener('deviceready', function () {
         cordova.plugins.backgroundMode.setDefaults({
           title:'Piscix',
-          text:'Piscix Supervisor',
+          text:'Supervisor',
           ticker:'Piscix'
         });
         cordova.plugins.backgroundMode.enable();
