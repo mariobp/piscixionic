@@ -177,16 +177,6 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
         }
     })
 
-    .state('app.asignargps', {
-        url: '/asignargps/:casaId/:latitud/:longitud',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/asignar-gps.html',
-                controller: 'MapCtrl'
-            }
-        }
-    })
-
     .state('app.ruta', {
         url: '/ruta',
         views: {
@@ -196,7 +186,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
             }
         }
     })
-    
+
     .state('app.historialR', {
         url: '/historial/reportes/:clienteId/:actual',
         views: {
