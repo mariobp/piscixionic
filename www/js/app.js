@@ -27,11 +27,11 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
 
     var bandera = false;
 
-    document.addEventListener('deviceready', function () {
+    document.addEventListener('deviceready', function() {
         cordova.plugins.backgroundMode.setDefaults({
-          title:'Piscix',
-          text:'Piscix Supervisor',
-          ticker:'Piscix'
+            title: 'Piscix',
+            text: 'Piscix Supervisor',
+            ticker: 'Piscix'
         });
         cordova.plugins.backgroundMode.enable();
     }, false);
@@ -157,15 +157,6 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
         }
     })
 
-    .state('app.piscineros', {
-        url: '/piscineros',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/piscineros.html',
-                controller: 'Piscineros'
-            }
-        }
-    })
 
     .state('app.asigacionpiscina', {
         url: '/asignacionpiscina/:piscineroId',
