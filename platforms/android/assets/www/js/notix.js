@@ -99,7 +99,6 @@ angular.module('starter.socket', [])
                             title: 'Asignación',
                             text: message.data.html,
                             data: {
-                                reporte: message.data.data.piscinero_id,
                                 tipo: message.data.data.tipo
                             }
                         });
@@ -138,9 +137,8 @@ angular.module('starter.socket', [])
                                         reload: true
                                     });
                                 } else if (data.tipo === "Asignacion") {
-                                    $state.go('app.ruta', {
-                                        piscineroId: data.piscinero_id
-                                    }, {
+                                    $state.go('app.ruta', {},
+                                    {
                                         reload: true
                                     });
                                 }
@@ -150,6 +148,10 @@ angular.module('starter.socket', [])
             }.bind(this));
 
             scope.socket.on('visited', function(message) {
+                var index = this.notixList.indexOf(message);
+                if (index > -1) {
+                    this.notixList.splice(index, 1);
+                }
                 $cordovaLocalNotification.cancel(scope.lista_id.indexOf(message._id) + 1);
             });
             this.messages();

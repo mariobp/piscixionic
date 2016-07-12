@@ -1635,8 +1635,7 @@ angular.module('starter.controllers', [])
         };
 
     })
-    .controller('Ruta', function($scope, $http, $stateParams, $cordovaToast, $cordovaDialogs, $timeout, $ionicLoading, $state, $location) {
-        $scope.piscinero = $stateParams.piscineroId;
+    .controller('Ruta', function($scope, $http, $cordovaToast, $cordovaDialogs, $timeout, $ionicLoading, $state, $location) {
         $scope.noMoreItemsAvailable = false;
         $scope.items = [];
         $scope.data = {};
@@ -1644,7 +1643,7 @@ angular.module('starter.controllers', [])
             max = 0;
         $scope.posicion($location.path());
         $scope.loadMore = function() {
-            $http.get($scope.server + '/usuarios/service/list/asignaciones/?piscinero=' + $scope.piscinero + '&page=' + num + '&asigna=true')
+            $http.get($scope.server + '/usuarios/service/list/asignaciones/?page=' + num + '&asigna=true')
                 .then(function doneCallbacks(response) {
                     if (response.data.num_rows === 0) {
                         $cordovaDialogs.alert('Este piscinero no tiene ninguna ruta asignada.', 'Información');
@@ -1744,126 +1743,7 @@ angular.module('starter.controllers', [])
         };
 
     })
-
-.controller('MapaRuta', function($scope, $http, $stateParams, $cordovaToast, $cordovaDialogs, $ionicLoading, $timeout, $state, $location, $ionicHistory) {
-    $scope.cargado = false;
-    var gpsnull = true,
-        casanull = null,
-        marker = null;
-    $scope.items = [];
-    $scope.posicion($location.path());
-    $scope.mapCreated = function(map) {
-        var directionsService = new google.maps.DirectionsService();
-        var directionsDisplay = new google.maps.DirectionsRenderer();
-        $scope.map = map;
-        directionsDisplay.setMap(map);
-        $scope.calculate(directionsService, directionsDisplay);
-    };
-
-    $scope.calculate = function calculateAndDisplayRoute(directionsService, directionsDisplay) {
-        var waypts = [];
-
-        $http.get($scope.server + '/usuarios/service/list/asignaciones/?piscinero=' + $stateParams.piscineroId + '&asigna=true')
-            .then(function doneCallbacks(response) {
-                    if (response.data.num_rows === 0) {
-                        $cordovaDialogs.alert('No hay ninguna ruta que mostrar.', 'Información');
-                    }
-                    var data = response.data.object_list;
-                    $scope.items = data;
-                    $scope.cargado = true;
-                    if (data.length === 0) {
-                        $cordovaDialogs.alert('No tiene ningúna ruta asignada.', 'Ruta');
-                    } else if (data.length === 1) {
-
-                        $scope.map.setCenter(new google.maps.LatLng(data[0].latitud, data[0].longitud));
-                        var myLatLng = {
-                            lat: parseFloat(data[0].latitud),
-                            lng: parseFloat(data[0].longitud)
-                        };
-                        if (marker !== null) {
-                            marker.setMap(null);
-                        }
-
-                        marker = new google.maps.Marker({
-                            map: $scope.map,
-                            position: myLatLng,
-                            animation: google.maps.Animation.DROP,
-                            title: 'Estas aquí!'
-                        });
-
-                        var infowindow = new google.maps.InfoWindow({
-                            content: "Usted esta aquí"
-                        });
-
-                        $timeout(function() {
-                            infowindow.open($scope.map, marker);
-                        }, 2000);
-                    } else if (data.length > 1) {
-                        data.forEach(function(data, index) {
-                            if (data.latitud !== null && data.longitud !== null) {
-                                if (index > 0 && index < data.length - 1) {
-                                    waypts.push({
-                                        location: {
-                                            lat: parseFloat(data.latitud),
-                                            lng: parseFloat(data.longitud)
-                                        },
-                                        stopover: true
-                                    });
-                                }
-                            } else {
-                                gpsnull = false;
-                                casanull = data;
-                            }
-                        });
-                        if (gpsnull) {
-                            directionsService.route({
-                                origin: {
-                                    lat: parseFloat(data[0].latitud),
-                                    lng: parseFloat(data[0].longitud)
-                                },
-                                destination: {
-                                    lat: parseFloat(data[data.length - 1].latitud),
-                                    lng: parseFloat(data[data.length - 1].longitud)
-                                },
-                                waypoints: waypts,
-                                optimizeWaypoints: true,
-                                travelMode: google.maps.TravelMode.DRIVING
-                            }, function(response, status) {
-                                if (status === google.maps.DirectionsStatus.OK) {
-                                    directionsDisplay.setDirections(response);
-                                    //var route = response.routes[0];
-                                } else {
-                                    $cordovaDialogs.alert('Directions request failed due to ' + status);
-                                }
-                            });
-                        } else {
-                            $cordovaDialogs.alert('No se puede mostrar la ruta porque la piscina: ' + casanull.nombreP + ' en la casa con dirección ' + casanull.nombreCA + ' del cliente ' + casanull.nombreCF + ' ' + casanull.nombreCL + ' no tiene asignado el gps. ', 'gps')
-                                .then(function(success) {
-                                    $ionicHistory.goBack();
-                                });
-                        }
-
-                    }
-                },
-
-                function errorCallback(response) {
-                    if (response.status == 403) {
-                        $cordovaToast
-                            .show(response.data.error, 'short', 'center')
-                            .then(function(success) {
-                                $state.go('app.login');
-                            }, function(error) {
-                                $state.go('app.login');
-                            });
-                    } else if (response.status === 0) {
-                        $cordovaDialogs.alert('No se puede acceder a este servicio en este momento.', 'Error');
-                    } else if (response.status === 500) {
-                        $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
-                    }
-                });
-    };
-})
-
+    
 .controller('HistorialIn', function($scope, $rootScope, $http, $state, $location, $cordovaToast, $timeout, $cordovaDialogs, $cordovaGeolocation, $ionicModal, $ionicLoading) {
     $scope.posicion($location.path());
     $scope.search = "";
@@ -2066,7 +1946,45 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('Notificaciones', function($scope){
-  console.log($scope.notify);
-  $scope.notix = $scope.notify.notixList;
+.controller('Notificaciones', function($scope, $state){
+  console.log($scope.notify.notixList);
+  $scope.count = $scope.notify.notixList.length;
+  $scope.notificar = function(mensaje) {
+    var data = mensaje.data.data;
+    $scope.notify.visit(mensaje._id, function() {
+          if (data.tipo == "Reporte") {
+              $state.go('app.historialR', {
+                  clienteId: data.cliente_id,
+                  actual: data.reporte_id
+              }, {
+                  reload: true
+              });
+          } else if (data.tipo == "Respuesta") {
+              $state.go('app.respuestas', {
+                  reporteId: data.reporte_id
+              }, {
+                  reload: true
+              });
+          } else if (data.tipo === "Recordatorio") {
+              $state.go('app.historialR', {
+                  clienteId: 0,
+                  actual: data.reporte_id
+              }, {
+                  reload: true
+              });
+          } else if (data.tipo === "Solucion") {
+              $state.go('app.historialM', {
+                  clienteId: data.reporte_id,
+                  actual: data.solucion_id
+              }, {
+                  reload: true
+              });
+          } else if (data.tipo === "Asignacion") {
+              $state.go('app.ruta', {},
+              {
+                  reload: true
+              });
+          }
+      });
+  };
 });

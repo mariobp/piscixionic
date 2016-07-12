@@ -469,3 +469,7 @@ progress[value]::-webkit-progress-value {
     border-radius: 2px;
     background-size: 35px 20px, 100% 100%, 100% 100%;
 }
+
+.cardX{
+  margin: 20px 10px !important;
+}

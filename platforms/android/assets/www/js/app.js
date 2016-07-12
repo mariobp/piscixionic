@@ -198,7 +198,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
     })
 
     .state('app.maparuta', {
-        url: '/mapa/ruta/:piscineroId',
+        url: '/mapa/ruta',
         views: {
             'menuContent': {
                 templateUrl: 'templates/maparuta.html',

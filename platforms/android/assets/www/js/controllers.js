@@ -1635,8 +1635,7 @@ angular.module('starter.controllers', [])
         };
 
     })
-    .controller('Ruta', function($scope, $http, $stateParams, $cordovaToast, $cordovaDialogs, $timeout, $ionicLoading, $state, $location) {
-        $scope.piscinero = $stateParams.piscineroId;
+    .controller('Ruta', function($scope, $http, $cordovaToast, $cordovaDialogs, $timeout, $ionicLoading, $state, $location) {
         $scope.noMoreItemsAvailable = false;
         $scope.items = [];
         $scope.data = {};
@@ -1644,7 +1643,7 @@ angular.module('starter.controllers', [])
             max = 0;
         $scope.posicion($location.path());
         $scope.loadMore = function() {
-            $http.get($scope.server + '/usuarios/service/list/asignaciones/?piscinero=' + $scope.piscinero + '&page=' + num + '&asigna=true')
+            $http.get($scope.server + '/usuarios/service/list/asignaciones/?page=' + num + '&asigna=true')
                 .then(function doneCallbacks(response) {
                     if (response.data.num_rows === 0) {
                         $cordovaDialogs.alert('Este piscinero no tiene ninguna ruta asignada.', 'Información');
@@ -2066,7 +2065,45 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('Notificaciones', function($scope){
-  console.log($scope.notify);
-  $scope.notix = $scope.notify.notixList;
+.controller('Notificaciones', function($scope, $state){
+  console.log($scope.notify.notixList);
+  $scope.count = $scope.notify.notixList.length;
+  $scope.notificar = function(mensaje) {
+    var data = message.data.data;
+    $scope.notify.visit(message._id, function() {
+          if (data.tipo == "Reporte") {
+              $state.go('app.historialR', {
+                  clienteId: data.cliente_id,
+                  actual: data.reporte_id
+              }, {
+                  reload: true
+              });
+          } else if (data.tipo == "Respuesta") {
+              $state.go('app.respuestas', {
+                  reporteId: data.reporte_id
+              }, {
+                  reload: true
+              });
+          } else if (data.tipo === "Recordatorio") {
+              $state.go('app.historialR', {
+                  clienteId: 0,
+                  actual: data.reporte_id
+              }, {
+                  reload: true
+              });
+          } else if (data.tipo === "Solucion") {
+              $state.go('app.historialM', {
+                  clienteId: data.reporte_id,
+                  actual: data.solucion_id
+              }, {
+                  reload: true
+              });
+          } else if (data.tipo === "Asignacion") {
+              $state.go('app.ruta', {},
+              {
+                  reload: true
+              });
+          }
+      });
+  };
 });

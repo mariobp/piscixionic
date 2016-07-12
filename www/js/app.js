@@ -188,7 +188,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
     })
 
     .state('app.ruta', {
-        url: '/ruta/:piscineroId',
+        url: '/ruta',
         views: {
             'menuContent': {
                 templateUrl: 'templates/ruta.html',
@@ -196,17 +196,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
             }
         }
     })
-
-    .state('app.maparuta', {
-        url: '/mapa/ruta/:piscineroId',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/maparuta.html',
-                controller: 'MapaRuta'
-            }
-        }
-    })
-
+    
     .state('app.historialR', {
         url: '/historial/reportes/:clienteId/:actual',
         views: {
@@ -253,16 +243,6 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
             'menuContent': {
                 templateUrl: 'templates/historialI.html',
                 controller: 'HistorialIn'
-            }
-        }
-    })
-
-    .state('app.notificaciones', {
-        url: '/notificaciones',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/notificaciones.html',
-                controller: 'Notificaciones'
             }
         }
     })
