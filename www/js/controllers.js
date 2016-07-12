@@ -30,11 +30,16 @@ angular.module('starter.controllers', [])
         $scope.username = username;
     };
 
+    $scope.noti = function(obj) {
+        $scope.notify = obj;
+    };
+
     $scope.isLogin = function() {
         $http.get($scope.server + "/usuarios/is/login/")
             .then(function doneCallbacks(response) {
                 $scope.user(response.data.username);
                 notix.setup(response.data.session, response.data.username, response.data.type);
+                $scope.noti(notix);
             }, function failCallbacks(response) {
                 if (response.status === 400) {
                     $cordovaToast
@@ -2056,6 +2061,49 @@ angular.module('starter.controllers', [])
                         $scope.sendData();
                     });
                 }, 5000);
+            }
+        });
+    };
+})
+.controller('Notificaciones', function($scope, $state) {
+
+    $scope.notificar = function(mensaje) {
+        console.log(mensaje);
+        var data = mensaje.data.data;
+        $scope.notify.visit(mensaje._id, function() {
+            if (data.tipo == "Reporte") {
+                $state.go('app.historialR', {
+                    clienteId: data.cliente_id,
+                    actual: data.reporte_id
+                }, {
+                    reload: true
+                });
+            } else if (data.tipo == "Respuesta") {
+                $state.go('app.respuestas', {
+                    reporteId: data.reporte_id
+                }, {
+                    reload: true
+                });
+            } else if (data.tipo === "Recordatorio") {
+                $state.go('app.historialR', {
+                    clienteId: 0,
+                    actual: data.reporte_id
+                }, {
+                    reload: true
+                });
+            } else if (data.tipo === "Solucion") {
+                $state.go('app.historialM', {
+                    clienteId: data.reporte_id,
+                    actual: data.solucion_id
+                }, {
+                    reload: true
+                });
+            } else if (data.tipo === "Asignacion") {
+                $state.go('app.ruta', {
+                  actual: data.asignacion_id
+                }, {
+                    reload: true
+                });
             }
         });
     };

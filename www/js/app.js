@@ -256,7 +256,17 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
             }
         }
     })
-    
+
+    .state('app.notificaciones', {
+        url: '/notificaciones',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/notificaciones.html',
+                controller: 'Notificaciones'
+            }
+        }
+    })
+
     .state('app.respuestas', {
         url: '/respuestas/:reporteId',
         views: {

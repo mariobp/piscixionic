@@ -14,6 +14,7 @@ angular.module('starter.socket', [])
         type: null,
         event: null,
         callback: null,
+        notixList: [],
         data: {},
 
         setup: function(session_id, username, type) {
@@ -38,6 +39,7 @@ angular.module('starter.socket', [])
 
             scope.socket.on('notix', function(message) {
                 if (scope.recive) {
+                    this.notixList.push(message);
                     scope.lista_id.push(message._id);
                     var id_message = scope.lista_id.indexOf(message._id) + 1;
                     if (message.data.data.tipo == "Reporte") {
@@ -97,7 +99,7 @@ angular.module('starter.socket', [])
                             title: 'Asignación',
                             text: message.data.html,
                             data: {
-                                reporte: message.data.data.piscinero_id,
+                                asignacion: message.data.data.asignacion_id,
                                 tipo: message.data.data.tipo
                             }
                         });
@@ -137,8 +139,9 @@ angular.module('starter.socket', [])
                                     });
                                 } else if (data.tipo === "Asignacion") {
                                     $state.go('app.ruta', {
-                                        piscineroId: data.piscinero_id
-                                    }, {
+                                      actual: data.asignacion
+                                    },
+                                    {
                                         reload: true
                                     });
                                 }
@@ -148,8 +151,17 @@ angular.module('starter.socket', [])
             }.bind(this));
 
             scope.socket.on('visited', function(message) {
-                $cordovaLocalNotification.cancel(scope.lista_id.indexOf(message._id) + 1);
-            });
+                var elemento = this.notixList.filter(function(element) {
+                  return element._id == message.message_id;
+                });
+                if(elemento.length>0){
+                    var index = this.notixList.indexOf(elemento[0]);
+                    if (index > -1) {
+                        this.notixList.splice(index, 1);
+                    }
+                }
+                $cordovaLocalNotification.cancel(scope.lista_id.indexOf(message.message_id) + 1);
+            }.bind(this));
             this.messages();
         },
 
