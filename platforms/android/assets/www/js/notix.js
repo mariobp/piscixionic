@@ -99,6 +99,7 @@ angular.module('starter.socket', [])
                             title: 'Asignación',
                             text: message.data.html,
                             data: {
+                                asignacion: message.data.data.asignacion_id,
                                 tipo: message.data.data.tipo
                             }
                         });
@@ -137,7 +138,9 @@ angular.module('starter.socket', [])
                                         reload: true
                                     });
                                 } else if (data.tipo === "Asignacion") {
-                                    $state.go('app.ruta', {},
+                                    $state.go('app.ruta', {
+                                      actual: data.asignacion
+                                    },
                                     {
                                         reload: true
                                     });
@@ -148,12 +151,14 @@ angular.module('starter.socket', [])
             }.bind(this));
 
             scope.socket.on('visited', function(message) {
+              console.log();
+              console.log(this.notixList);
                 var index = this.notixList.indexOf(message);
                 if (index > -1) {
                     this.notixList.splice(index, 1);
                 }
                 $cordovaLocalNotification.cancel(scope.lista_id.indexOf(message._id) + 1);
-            });
+            }.bind(this));
             this.messages();
         },
 

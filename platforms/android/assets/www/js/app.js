@@ -157,16 +157,6 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
         }
     })
 
-    .state('app.piscineros', {
-        url: '/piscineros',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/piscineros.html',
-                controller: 'Piscineros'
-            }
-        }
-    })
-
     .state('app.asigacionpiscina', {
         url: '/asignacionpiscina/:piscineroId',
         views: {
@@ -177,32 +167,12 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
         }
     })
 
-    .state('app.asignargps', {
-        url: '/asignargps/:casaId/:latitud/:longitud',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/asignar-gps.html',
-                controller: 'MapCtrl'
-            }
-        }
-    })
-
     .state('app.ruta', {
-        url: '/ruta/:piscineroId',
+        url: '/ruta/:actual',
         views: {
             'menuContent': {
                 templateUrl: 'templates/ruta.html',
                 controller: 'Ruta'
-            }
-        }
-    })
-
-    .state('app.maparuta', {
-        url: '/mapa/ruta',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/maparuta.html',
-                controller: 'MapaRuta'
             }
         }
     })

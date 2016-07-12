@@ -1401,13 +1401,14 @@ angular.module('starter.controllers', [])
         };
 
     })
-    .controller('Ruta', function($scope, $http, $cordovaToast, $cordovaDialogs, $timeout, $ionicLoading, $state, $location) {
+    .controller('Ruta', function($scope, $http, $cordovaToast, $cordovaDialogs, $timeout, $ionicLoading, $state, $location, $stateParams) {
         $scope.noMoreItemsAvailable = false;
         $scope.items = [];
         $scope.data = {};
         var num = 1,
             max = 0;
         $scope.posicion($location.path());
+        $scope.actual =  $stateParams.actual;
         $scope.loadMore = function() {
             $http.get($scope.server + '/usuarios/service/list/asignaciones/?page=' + num + '&asigna=true')
                 .then(function doneCallbacks(response) {

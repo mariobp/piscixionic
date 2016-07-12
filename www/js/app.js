@@ -27,11 +27,11 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
 
     var bandera = false;
 
-    document.addEventListener('deviceready', function() {
+    document.addEventListener('deviceready', function () {
         cordova.plugins.backgroundMode.setDefaults({
-            title: 'Piscix',
-            text: 'Piscix Supervisor',
-            ticker: 'Piscix'
+          title:'Piscix',
+          text:'Piscix Supervisor',
+          ticker:'Piscix'
         });
         cordova.plugins.backgroundMode.enable();
     }, false);
@@ -157,7 +157,6 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
         }
     })
 
-
     .state('app.asigacionpiscina', {
         url: '/asignacionpiscina/:piscineroId',
         views: {
@@ -169,7 +168,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
     })
 
     .state('app.ruta', {
-        url: '/ruta',
+        url: '/ruta/:actual',
         views: {
             'menuContent': {
                 templateUrl: 'templates/ruta.html',
@@ -224,6 +223,16 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
             'menuContent': {
                 templateUrl: 'templates/historialI.html',
                 controller: 'HistorialIn'
+            }
+        }
+    })
+
+    .state('app.notificaciones', {
+        url: '/notificaciones',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/notificaciones.html',
+                controller: 'Notificaciones'
             }
         }
     })

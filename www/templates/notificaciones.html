@@ -4,7 +4,8 @@
       <div class="item item-text-wrap" ng-repeat="noti in notify.notixList" on-tap="notificar(noti)">
           <b>{{noti.data.data.tipo}}</b>
           <p>
-            {{noti.data.html}}
+            {{noti.data.html}} <br>
+						{{noti.data.data.fecha}}
           </p>
       </div>
     </div>
