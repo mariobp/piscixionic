@@ -151,13 +151,16 @@ angular.module('starter.socket', [])
             }.bind(this));
 
             scope.socket.on('visited', function(message) {
-              console.log();
-              console.log(this.notixList);
-                var index = this.notixList.indexOf(message);
-                if (index > -1) {
-                    this.notixList.splice(index, 1);
+                var elemento = this.notixList.filter(function(element) {
+                  return element._id == message.message_id;
+                });
+                if(elemento.length>0){
+                    var index = this.notixList.indexOf(elemento[0]);
+                    if (index > -1) {
+                        this.notixList.splice(index, 1);
+                    }
                 }
-                $cordovaLocalNotification.cancel(scope.lista_id.indexOf(message._id) + 1);
+                $cordovaLocalNotification.cancel(scope.lista_id.indexOf(message.message_id) + 1);
             }.bind(this));
             this.messages();
         },

@@ -1409,6 +1409,7 @@ angular.module('starter.controllers', [])
             max = 0;
         $scope.posicion($location.path());
         $scope.actual =  $stateParams.actual;
+        console.log("Actual", $scope.actual);
         $scope.loadMore = function() {
             $http.get($scope.server + '/usuarios/service/list/asignaciones/?page=' + num + '&asigna=true')
                 .then(function doneCallbacks(response) {
@@ -1714,9 +1715,9 @@ angular.module('starter.controllers', [])
 })
 
 .controller('Notificaciones', function($scope, $state) {
-    console.log($scope.notify.notixList);
-    $scope.count = $scope.notify.notixList.length;
+
     $scope.notificar = function(mensaje) {
+        console.log(mensaje);
         var data = mensaje.data.data;
         $scope.notify.visit(mensaje._id, function() {
             if (data.tipo == "Reporte") {
@@ -1747,7 +1748,9 @@ angular.module('starter.controllers', [])
                     reload: true
                 });
             } else if (data.tipo === "Asignacion") {
-                $state.go('app.ruta', {}, {
+                $state.go('app.ruta', {
+                  actual: data.asignacion_id
+                }, {
                     reload: true
                 });
             }

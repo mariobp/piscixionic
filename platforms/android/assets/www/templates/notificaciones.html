@@ -1,7 +1,7 @@
 <ion-view title="Notificaciones">
 	<ion-content>
-    <div class="list card cardX" ng-if="count>0">
-      <div class="item item-text-wrap" ng-repeat="noti in notify.notixList" on-tap="notificar(noti)">
+    <div class="list card cardX" ng-if="notify.notixList.length">
+      <div class="item item-text-wrap" ng-repeat="noti in notify.notixList track by $index" on-tap="notificar(noti)">
           <b>{{noti.data.data.tipo}}</b>
           <p>
             {{noti.data.html}} <br>
@@ -9,7 +9,7 @@
           </p>
       </div>
     </div>
-    <div class="center" ng-if="count==0">
+    <div class="center" ng-if="!notify.notixList.length">
         <img width="100%" src="img/notifications_off.svg"/>
         <h4 class="blue-grey-text" >No tiene ningúna notificación</h4>
     </div>
