@@ -301,13 +301,6 @@ module.exports = [
         "id": "cordova-plugin-x-toast.tests"
     },
     {
-        "file": "plugins/cordova.plugins.diagnostic.api-22/www/android/diagnostic.js",
-        "id": "cordova.plugins.diagnostic.api-22.Diagnostic",
-        "clobbers": [
-            "cordova.plugins.diagnostic"
-        ]
-    },
-    {
         "file": "plugins/de.appplant.cordova.plugin.local-notification/www/local-notification.js",
         "id": "de.appplant.cordova.plugin.local-notification.LocalNotification",
         "clobbers": [
@@ -352,6 +345,13 @@ module.exports = [
         "clobbers": [
             "cordova.plugins.barcodeScanner"
         ]
+    },
+    {
+        "file": "plugins/cordova.plugins.diagnostic/www/android/diagnostic.js",
+        "id": "cordova.plugins.diagnostic.Diagnostic",
+        "clobbers": [
+            "cordova.plugins.diagnostic"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -376,11 +376,11 @@ module.exports.metadata =
     "cordova-plugin-statusbar": "2.1.2",
     "cordova-plugin-whitelist": "1.2.1",
     "cordova-plugin-x-toast": "2.5.0",
-    "cordova.plugins.diagnostic.api-22": "2.3.10-api-22",
     "de.appplant.cordova.plugin.local-notification": "0.8.4",
     "ionic-plugin-keyboard": "2.0.1",
     "org.pbernasconi.progressindicator": "1.1.0",
-    "phonegap-plugin-barcodescanner": "5.0.0"
+    "phonegap-plugin-barcodescanner": "5.0.0",
+    "cordova.plugins.diagnostic": "3.1.0"
 };
 // BOTTOM OF METADATA
 });

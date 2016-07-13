@@ -201,10 +201,10 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova.plugins.diagnostic.api-22": {
+    "cordova.plugins.diagnostic": {
         "source": {
             "type": "registry",
-            "id": "cordova.plugins.diagnostic.api-22"
+            "id": "cordova.plugins.diagnostic"
         },
         "is_top_level": true,
         "variables": {}

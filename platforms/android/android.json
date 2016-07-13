@@ -227,6 +227,10 @@
                         {
                             "xml": "<activity android:label=\"Share\" android:name=\"com.google.zxing.client.android.HelpActivity\"><intent-filter><action android:name=\"android.intent.action.VIEW\" /><category android:name=\"android.intent.category.DEFAULT\" /></intent-filter></activity>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<receiver android:name=\"cordova.plugins.Diagnostic$LocationProviderChangedReceiver\"><intent-filter><action android:name=\"android.location.PROVIDERS_CHANGED\" /></intent-filter></receiver>",
+                            "count": 1
                         }
                     ],
                     "/*": [
@@ -257,7 +261,7 @@
                 "parents": {
                     "/*": [
                         {
-                            "xml": "<feature name=\"Diagnostic\"><param name=\"android-package\" value=\"cordova.plugins.Diagnostic\" /></feature>",
+                            "xml": "<feature name=\"Diagnostic\"><param name=\"android-package\" value=\"cordova.plugins.Diagnostic\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -323,9 +327,6 @@
         "cordova-plugin-x-toast": {
             "PACKAGE_NAME": "com.ionicframework.piscixp998893"
         },
-        "cordova.plugins.diagnostic.api-22": {
-            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
-        },
         "de.appplant.cordova.plugin.local-notification": {
             "PACKAGE_NAME": "com.ionicframework.piscixp998893"
         },
@@ -336,6 +337,9 @@
             "PACKAGE_NAME": "com.ionicframework.piscixp998893"
         },
         "phonegap-plugin-barcodescanner": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
+        "cordova.plugins.diagnostic": {
             "PACKAGE_NAME": "com.ionicframework.piscixp998893"
         }
     },
@@ -642,13 +646,6 @@
             "id": "cordova-plugin-x-toast.tests"
         },
         {
-            "file": "plugins/cordova.plugins.diagnostic.api-22/www/android/diagnostic.js",
-            "id": "cordova.plugins.diagnostic.api-22.Diagnostic",
-            "clobbers": [
-                "cordova.plugins.diagnostic"
-            ]
-        },
-        {
             "file": "plugins/de.appplant.cordova.plugin.local-notification/www/local-notification.js",
             "id": "de.appplant.cordova.plugin.local-notification.LocalNotification",
             "clobbers": [
@@ -693,6 +690,13 @@
             "clobbers": [
                 "cordova.plugins.barcodeScanner"
             ]
+        },
+        {
+            "file": "plugins/cordova.plugins.diagnostic/www/android/diagnostic.js",
+            "id": "cordova.plugins.diagnostic.Diagnostic",
+            "clobbers": [
+                "cordova.plugins.diagnostic"
+            ]
         }
     ],
     "plugin_metadata": {
@@ -715,10 +719,10 @@
         "cordova-plugin-statusbar": "2.1.2",
         "cordova-plugin-whitelist": "1.2.1",
         "cordova-plugin-x-toast": "2.5.0",
-        "cordova.plugins.diagnostic.api-22": "2.3.10-api-22",
         "de.appplant.cordova.plugin.local-notification": "0.8.4",
         "ionic-plugin-keyboard": "2.0.1",
         "org.pbernasconi.progressindicator": "1.1.0",
-        "phonegap-plugin-barcodescanner": "5.0.0"
+        "phonegap-plugin-barcodescanner": "5.0.0",
+        "cordova.plugins.diagnostic": "3.1.0"
     }
 }

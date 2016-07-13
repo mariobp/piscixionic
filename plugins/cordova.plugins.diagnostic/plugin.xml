@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    id="cordova.plugins.diagnostic.api-22"
-    version="2.3.10-api-22">
+    id="cordova.plugins.diagnostic"
+    version="3.1.0">
 
     <name>Diagnostic</name>
     <description>Cordova/Phonegap plugin to check the state of Location/WiFi/Camera/Bluetooth device settings.</description>
@@ -40,35 +40,51 @@
         <framework src="CoreBluetooth.framework" />
         <framework src="AVFoundation.framework" />
         <framework src="Photos.framework" />
+        <framework src="AddressBook.framework" />
+        <framework src="EventKit.framework" />
     </platform>
 
-	<!-- android -->
-	<platform name="android">
-		<config-file target="config.xml" parent="/*">
-			<feature name="Diagnostic" >
-				<param name="android-package" value="cordova.plugins.Diagnostic"/>
-			</feature>
-		</config-file>
+    <!-- android -->
+    <platform name="android">
+        <config-file target="config.xml" parent="/*">
+            <feature name="Diagnostic" >
+                <param name="android-package" value="cordova.plugins.Diagnostic"/>
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
+
+        <framework src="com.android.support:support-v4:23.+" />
+        <framework src="com.android.support:appcompat-v7:23.+" />
 
         <js-module src="www/android/diagnostic.js" name="Diagnostic">
             <clobbers target="cordova.plugins.diagnostic" />
         </js-module>
         <source-file src="src/android/Diagnostic.java" target-dir="src/cordova/plugins" />
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <receiver
+                    android:name="cordova.plugins.Diagnostic$LocationProviderChangedReceiver">
+                <intent-filter>
+                    <action android:name="android.location.PROVIDERS_CHANGED" />
+                </intent-filter>
+            </receiver>
+        </config-file>
     </platform>
 
-	<!-- windows -->
-	<platform name="windows">
-		<config-file target="config.xml" parent="/*">
-			<feature name="Diagnostic" >
-				<param name="windows-package" value="cordova.plugins.Diagnostic"/>
-			</feature>
-		</config-file>
+    <!-- windows -->
+    <platform name="windows">
+        <config-file target="config.xml" parent="/*">
+            <feature name="Diagnostic" >
+                <param name="windows-package" value="cordova.plugins.Diagnostic"/>
+            </feature>
+            <preference name="windows-target-version" value="10.0" />
+        </config-file>
 
-		<js-module src="www/windows/diagnostic.js" name="Diagnostic">
-			<clobbers target="cordova.plugins.diagnostic" />
-		</js-module>
-		<js-module src="src/windows/diagnosticProxy.js" name="diagnosticProxy">
-			<merges target="" />
-		</js-module>
-	</platform>
+        <js-module src="www/windows/diagnostic.js" name="Diagnostic">
+            <clobbers target="cordova.plugins.diagnostic" />
+        </js-module>
+        <js-module src="src/windows/diagnosticProxy.js" name="diagnosticProxy">
+            <merges target="" />
+        </js-module>
+    </platform>
 </plugin>

@@ -150,7 +150,7 @@ angular.module('starter.controllers', [])
             max = 0;
 
         $scope.loadMore = function() {
-            $http.get($scope.server + '/usuarios/service/list/cliente/?page=' + num)
+            $http.get($scope.server + '/usuarios/service/list/cliente/?page=' + num +"&search=" + $scope.search)
                 .then(function successCallback(response) {
                     var clientes = response.data.object_list;
                     if (clientes.length === 0) {
@@ -200,6 +200,12 @@ angular.module('starter.controllers', [])
             $scope.noMoreItemsAvailable = false;
             $scope.clientelists = [];
             $scope.$broadcast('scroll.refreshComplete');
+        };
+
+        $scope.infoC = function(cliente) {
+          $state.go('app.info', {
+              "clienteId": cliente
+          });
         };
 
         $scope.scanearCodigo = function() {
@@ -870,7 +876,6 @@ angular.module('starter.controllers', [])
         $scope.data = {};
         $scope.imagenes = [];
         $scope.total = 0;
-        $scope.ready = false;
         $scope.cargando = false;
         $scope.carga = 0;
         var id = $stateParams.clienteId;
@@ -1054,6 +1059,9 @@ angular.module('starter.controllers', [])
         };
 
         $scope.sendData = function() {
+            $scope.loading = $ionicLoading.show({
+                template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Guardando...',
+            });
             $scope.data.reporte = id;
             $http({
                 method: 'POST',
