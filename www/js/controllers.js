@@ -671,7 +671,7 @@ angular.module('starter.controllers', [])
             };
         }
         $scope.loadMore = function() {
-            $http.get($scope.server + url + 'page=' + num)
+            $http.get($scope.server + url + 'page=' + num + "&search=" + $scope.search)
                 .then(function successCallback(response) {
                     var data = response.data.object_list;
                     if (response.data.num_rows === 0) {
@@ -715,6 +715,14 @@ angular.module('starter.controllers', [])
             max = 0;
             $scope.noMoreItemsAvailable = false;
             $scope.$broadcast('scroll.refreshComplete');
+        };
+
+        $scope.reload2 = function() {
+            $scope.reportes = [];
+            num = 1;
+            max = 0;
+            $scope.noMoreItemsAvailable = false;
+            $scope.loadMore();
         };
 
     })
@@ -1138,7 +1146,7 @@ angular.module('starter.controllers', [])
             };
         }
         $scope.loadMore = function() {
-            $http.get($scope.server + url + 'page=' + num)
+            $http.get($scope.server + url + 'page=' + num + "&search=" + $scope.search)
                 .then(function successCallback(response) {
                     var data = response.data.object_list;
                     if (response.data.num_rows === 0) {
@@ -1186,6 +1194,14 @@ angular.module('starter.controllers', [])
             max = 0;
             $scope.noMoreItemsAvailable = false;
             $scope.$broadcast('scroll.refreshComplete');
+        };
+
+        $scope.reload2 = function() {
+            $scope.lista = [];
+            num = 1;
+            max = 0;
+            $scope.noMoreItemsAvailable = false;
+            $scope.loadMore();
         };
     })
     .controller('GaleriaM', function($http, $scope, $stateParams, $cordovaToast, $state, $cordovaDialogs, $location, $timeout, $ionicLoading) {
@@ -1491,7 +1507,7 @@ angular.module('starter.controllers', [])
     $scope.reportes = [];
     $scope.data = {};
     $scope.loadMore = function() {
-        $http.get($scope.server + "/reportes/reporte/informativo/list/?" + 'page=' + num)
+        $http.get($scope.server + "/reportes/reporte/informativo/list/?" + 'page=' + num + "&search=" + $scope.search)
             .then(function successCallback(response) {
                 var data = response.data.object_list;
                 if (response.data.num_rows === 0) {
@@ -1535,6 +1551,14 @@ angular.module('starter.controllers', [])
         max = 0;
         $scope.noMoreItemsAvailable = false;
         $scope.$broadcast('scroll.refreshComplete');
+    };
+
+    $scope.reload2 = function() {
+        $scope.reportes = [];
+        num = 1;
+        max = 0;
+        $scope.noMoreItemsAvailable = false;
+        $scope.loadMore();
     };
 
     //Modal para enviar reporte informativo

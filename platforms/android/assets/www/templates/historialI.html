@@ -2,13 +2,13 @@
 	<ion-header-bar class="bar-subheader headerbar item-input-inset row row-p">
       <div class="input-field col s12 input-header">
           <i class="micon prefix">search</i>
-          <input type="text" name="buscar" class="white-text" placeholder="Buscar" ng-model="search">
+          <input type="text" name="buscar" class="white-text" ng-change="reload2()" placeholder="Buscar" ng-model="search">
       </div>
   </ion-header-bar>
   <ion-content overflow-scroll=”true”>
       <ion-refresher pulling-text="Refrescar" on-refresh="reload()" refreshingText="Refrescando"></ion-refresher>
       <ul class="collapsible popout" data-collapsible="accordion" watch>
-          <li ng-repeat="reporte in reportes|filter:search track by reporte.id">
+          <li ng-repeat="reporte in reportes track by reporte.id">
               <div class="collapsible-header grey lighten-5">
                   <ul class="collection grey lighten-5">
                       <li class="collection-item  grey lighten-5">
