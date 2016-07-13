@@ -1479,13 +1479,14 @@ angular.module('starter.controllers', [])
         var id = $stateParams.piscineroId;
         $scope.piscinas = [];
         $scope.checkes = [];
+        $scope.search = "";
         $scope.data = {};
         $scope.noMoreItemsAvailable = false;
         $scope.posicion($location.path());
         var num = 1,
             max = 0;
         $scope.loadMore = function() {
-            $http.get($scope.server + '/usuarios/service/asignacion/piscinero/' + id + '/?page=' + num)
+            $http.get($scope.server + '/usuarios/service/asignacion/piscinero/' + id + '/?page=' + num + "&search=" + $scope.search)
                 .then(function doneCallbacks(response) {
                     var data = response.data.object_list;
                     if (response.data.num_rows === 0) {
