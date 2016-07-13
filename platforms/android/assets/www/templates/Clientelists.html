@@ -2,7 +2,7 @@
   <ion-header-bar class="bar-subheader headerbar item-input-inset row row-p">
       <div class="input-field col s12 input-header">
         <i class="micon prefix">search</i>
-        <input type="text" name="buscar" class="white-text" placeholder="Buscar" ng-model="search" >
+        <input type="text" name="buscar" ng-change="reload()" class="white-text" placeholder="Buscar" ng-model="search" >
       </div>
   </ion-header-bar>
   <ion-content overflow-scroll=”true”>
@@ -13,14 +13,12 @@
        >
      </ion-refresher>
       <ion-list>
-        <ion-item collection-repeat="cliente in clientelists|filter:search" item="cliente" href="#/app/info/{{cliente.id}}" class="item item-avatar">
+        <ion-item collection-repeat="cliente in clientelists" item="cliente" href="#/app/info/{{cliente.id}}" class="item item-avatar">
             <img ng-src="{{server}}/media/{{cliente.imagen}}" ng-if="cliente.imagen!==''">
             <img ng-src="img/user.png" ng-if="cliente.imagen==''"/>
-            {{cliente.imagen}}
             <h2>{{cliente.first_name}} {{cliente.last_name}}</h2>
             <p>
-              <b>Telefono: </b>{{cliente.telefono}}<br>
-              <b>Email: </b>{{cliente.email}}
+              <b>Tipo: </b><span ng-if="cliente.tipo">Propietario/a</span><span ng-if="!cliente.tipo">Arrendatario/a</span><br>
             </p>
         </ion-item>
       </ion-list>
