@@ -2,7 +2,7 @@
 	  <ion-header-bar class="bar-subheader headerbar item-input-inset row">
 	      <div class="input-field col s12">
 	        <i class="ion-search prefix"></i>
-	        <input type="text" name="buscar" class="white-text" placeholder="Buscar" ng-model="search" >
+	        <input type="text" name="buscar" class="white-text" ng-change="reload()" placeholder="Buscar" ng-model="search" >
 	      </div>
 	  </ion-header-bar>
 	<ion-content overflow-scroll=”true”>
@@ -13,7 +13,7 @@
        >
      </ion-refresher>
 		<ion-list>
-		  <ion-item collection-repeat="piscina in piscinas|filter:search" class="collection-item">
+		  <ion-item collection-repeat="piscina in piscinas" class="collection-item">
 				<div class="">
 					<h2>{{piscina.nombre}}</h2>
 						<p>

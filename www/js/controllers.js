@@ -1413,26 +1413,20 @@ angular.module('starter.controllers', [])
     var num = 1,
         max = 0;
     $scope.piscineros = [];
-    $scope.toggleGroup = function(group) {
-        if ($scope.isGroupShown(group)) {
-            $scope.shownGroup = null;
-        } else {
-            $scope.shownGroup = group;
-        }
-    };
-
-    $scope.isGroupShown = function(group) {
-        return $scope.shownGroup === group;
-    };
 
     $scope.loadMore = function() {
-        $http.get($scope.server + '/usuarios/service/list/piscinero/?page=' + num)
+        $http.get($scope.server + '/usuarios/service/list/piscinero/?page=' + num +"&search="+ $scope.search)
             .then(function successCallback(response) {
                 var data = response.data.object_list;
                 if (response.data.num_rows === 0) {
-                    $cordovaDialogs.alert('No hay ningún piscinero registrado.', 'Información');
+                    $cordovaDialogs.alert('No se han encontrado resultados.', 'Información');
                 }
                 data.forEach(function(data) {
+                    if(data.imagen === ""){
+                      data.imagen = "";
+                    }if(data.imagen === null){
+                      data.imagen = "";
+                    }
                     $scope.piscineros.push(data);
                 });
                 max = response.data.count;
@@ -1465,11 +1459,19 @@ angular.module('starter.controllers', [])
     };
 
     $scope.reload = function() {
-        $scope.piscineros = [];
         num = 1;
         max = 0;
         $scope.noMoreItemsAvailable = false;
+        $scope.piscineros = [];
         $scope.$broadcast('scroll.refreshComplete');
+    };
+
+    $scope.reload2 = function() {
+        num = 1;
+        max = 0;
+        $scope.noMoreItemsAvailable = false;
+        $scope.piscineros = [];
+        $scope.loadMore();
     };
 })
 
@@ -1477,13 +1479,14 @@ angular.module('starter.controllers', [])
         var id = $stateParams.piscineroId;
         $scope.piscinas = [];
         $scope.checkes = [];
+        $scope.search = "";
         $scope.data = {};
         $scope.noMoreItemsAvailable = false;
         $scope.posicion($location.path());
         var num = 1,
             max = 0;
         $scope.loadMore = function() {
-            $http.get($scope.server + '/usuarios/service/asignacion/piscinero/' + id + '/?page=' + num)
+            $http.get($scope.server + '/usuarios/service/asignacion/piscinero/' + id + '/?page=' + num + "&search=" + $scope.search)
                 .then(function doneCallbacks(response) {
                     var data = response.data.object_list;
                     if (response.data.num_rows === 0) {
