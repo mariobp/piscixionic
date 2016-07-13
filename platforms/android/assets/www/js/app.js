@@ -30,7 +30,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
     document.addEventListener('deviceready', function () {
         cordova.plugins.backgroundMode.setDefaults({
           title:'Piscix',
-          text:'Piscix Supervisor',
+          text:'Piscinero',
           ticker:'Piscix'
         });
         cordova.plugins.backgroundMode.enable();
@@ -245,7 +245,15 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
                 controller: 'Repuesta'
             }
         }
-    });
+    }).state('app.planilla', {
+          url: '/planilla/:clienteId',
+          views: {
+              'menuContent': {
+                  templateUrl: 'templates/planilla.html',
+                  controller: 'Planilla'
+              }
+          }
+      });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/clientelists');
 });
