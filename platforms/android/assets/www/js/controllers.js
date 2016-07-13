@@ -202,12 +202,6 @@ angular.module('starter.controllers', [])
             $scope.$broadcast('scroll.refreshComplete');
         };
 
-        $scope.infoC = function(cliente) {
-          $state.go('app.info', {
-              "clienteId": cliente
-          });
-        };
-
         $scope.scanearCodigo = function() {
             $cordovaBarcodeScanner
                 .scan()
