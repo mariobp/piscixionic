@@ -397,11 +397,14 @@ select::-ms-expand {
 .scrollR {
     overflow: auto;
     width: 100%;
-    position: fixed;
     bottom: 0px;
     top: 0px;
+    padding-top: 140px;
     padding-bottom: 60px;
+    position: fixed;
+    z-index: -1;
 }
+
 .fecha-font{
     font-size: 10px;
     color: #9e9e9e;
@@ -468,4 +471,18 @@ progress[value]::-webkit-progress-value {
 	   -webkit-linear-gradient(left, #09c, #f44);
     border-radius: 2px;
     background-size: 35px 20px, 100% 100%, 100% 100%;
+}
+
+.card-r{
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+.footer-r {
+    padding: 0px;
+    height: 71px;
+    bottom: 0;
+    border-top-width: 1px;
+    border-bottom-width: 0;
+    background-position: top;
 }

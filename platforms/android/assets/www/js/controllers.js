@@ -779,8 +779,44 @@ angular.module('starter.controllers', [])
         var id = $stateParams.reporteId;
         $scope.respuestas = [];
         $scope.ready = false;
+        $scope.ready2 = false;
+        $scope.reporte = [];
         $scope.data = {};
         $scope.posicion($location.path());
+
+        $scope.reporte = function() {
+            $http.get($scope.server + '/reportes/reporte/list/?id=' + id)
+                .then(function doneCallbacks(response) {
+                    $scope.reporte = response.data.object_list;
+                    $scope.ready2 = true;
+                }, function failCallbacks(response) {
+                    if (response.status === 403) {
+                        $cordovaToast
+                            .show(response.data.error, 'short', 'center')
+                            .then(function(success) {
+                                $state.go('app.login');
+                            }, function(error) {
+                                console.log(error);
+                            });
+                    } else if (response.status === 400) {
+                        $cordovaDialogs.alert('No se exise un cliente con ese codigo.', 'Error', 'Regresar')
+                            .then(function(res) {
+                                $ionicHistory.goBack(-1);
+                            });
+                    } else if (response.status == 500) {
+                        $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
+                    } else if (response.status === 0) {
+                        $cordovaDialogs.alert('No se puede acceder a este servicio en este momento.', 'Error', 'Ok');
+                    } else {
+                        $timeout(function() {
+                            $cordovaToast.show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center').then(function(success) {
+                                $scope.reporte();
+                            });
+                        }, 10000);
+                    }
+                });
+        };
+        $scope.reporte();
 
         $scope.respuestas = function() {
             $http.get($scope.server + '/reportes/respuesta/list/?reporte=' + id)

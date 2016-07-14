@@ -1,9 +1,19 @@
 <ion-view title="Respuestas">
     <ion-content>
-    <div class="spin" ng-show="!ready">
+    <div class="spin" ng-show="!ready && !ready2">
       <ion-spinner></ion-spinner>
     </div>
-    <div class="" ng-show="ready">
+    <div class="" ng-show="ready && ready2">
+        <div class="card-r light-blue">
+            <span class="title white-text"><b>Reporte:</b> {{reporte[0].nombre}}</span>
+            <p class="white-text">
+                <b>Cliente:</b> {{reporte[0].nombreC}} {{reporte[0].apellidosC}}
+                <br>
+                <b>Piscina: </b> {{reporte[0].piscina__nombre}}
+                <br>
+                <b>Fecha:</b> {{reporte[0].fecha}}
+            </p>
+        </div>
         <div class="scrollR" >
             <div class="row row-p">
                 <div class="col s10" ng-class="{'left': respuesta.tu == 0,  'right': respuesta.tu == 1}" ng-repeat="respuesta in respuestas">
@@ -15,7 +25,7 @@
                 </div>
             </div>
         </div>
-        <div class="bar footer-f">
+        <div class="bar footer-r">
           <div class="row row-p">
               <div class="input-field">
                    <input type="text" name="name" class="col s10 m4" ng-model=(data.mensaje)>
