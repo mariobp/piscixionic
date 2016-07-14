@@ -154,7 +154,7 @@ angular.module('starter.controllers', [])
                 .then(function successCallback(response) {
                     var clientes = response.data.object_list;
                     if (clientes.length === 0) {
-                        $cordovaDialogs.alert('No se han encontrado resultados.', 'Información');
+                        $cordovaToast.show('No se han encontrado resultados.', 'short', 'center');
                     }
                     clientes.forEach(function(cliente) {
                         if (cliente.imagen === "") {
@@ -243,7 +243,7 @@ angular.module('starter.controllers', [])
                     $scope.info.cliente.imagen = "";
                 }
                 if ($scope.info.length === 0) {
-                    $cordovaDialogs.alert('No se han encontrado resultados.', 'Información');
+                    $cordovaToast.show('No se han encontrado resultados.', 'short', 'center');
                 }
                 $scope.dataReady = true;
             }, function errorCallback(response) {
@@ -676,7 +676,7 @@ angular.module('starter.controllers', [])
                 .then(function successCallback(response) {
                     var data = response.data.object_list;
                     if (response.data.num_rows === 0) {
-                        $cordovaDialogs.alert('No hay ningún reporte registrado.', 'Información');
+                        $cordovaToast.show('No se han encontrado resultados.', 'short', 'center');
                     }
                     data.forEach(function(data) {
                         $scope.reportes.push(data);
@@ -1187,7 +1187,7 @@ angular.module('starter.controllers', [])
                 .then(function successCallback(response) {
                     var data = response.data.object_list;
                     if (response.data.num_rows === 0) {
-                        $cordovaDialogs.alert('No hay ninguna solución.', 'Información')
+                        $cordovaToast.show('No se han encontrado resultados.', 'short', 'center')
                             .then(function() {
                                 $ionicHistory.goBack(-1);
                             });
@@ -1430,7 +1430,6 @@ angular.module('starter.controllers', [])
             max = 0;
         $scope.posicion($location.path());
         $scope.actual = $stateParams.actual;
-        console.log("Actual", $scope.actual);
         $scope.loadMore = function() {
             $http.get($scope.server + '/usuarios/service/list/asignaciones/?page=' + num + '&asigna=true')
                 .then(function doneCallbacks(response) {
@@ -1548,7 +1547,7 @@ angular.module('starter.controllers', [])
                 .then(function successCallback(response) {
                     var data = response.data.object_list;
                     if (response.data.num_rows === 0) {
-                        $cordovaDialogs.alert('No hay ningún reporte registrado.', 'Información');
+                        $cordovaToast.show('No se han encontrado resultados.', 'short', 'center');
                     }
                     data.forEach(function(data) {
                         $scope.reportes.push(data);
