@@ -154,7 +154,7 @@ angular.module('starter.controllers', [])
               .then(function successCallback(response) {
                   var clientes = response.data.object_list;
                   if (clientes.length === 0) {
-                      $cordovaDialogs.alert('No se han encontrado resultados.', 'Información');
+                      $cordovaToast.show('No se han encontrado resultados.', 'short', 'center');
                   }
                   clientes.forEach(function(cliente) {
                       if(cliente.imagen === ""){
@@ -242,7 +242,7 @@ angular.module('starter.controllers', [])
                   $scope.info.cliente.imagen = "";
               }
               if ($scope.info.length === 0) {
-                  $cordovaDialogs.alert('No se han encontrado resultados.', 'Información');
+                  $cordovaToast.show('No se han encontrado resultados.', 'short', 'center');
               }
               $scope.dataReady = true;
           }, function errorCallback(response) {
@@ -675,7 +675,7 @@ angular.module('starter.controllers', [])
                 .then(function successCallback(response) {
                     var data = response.data.object_list;
                     if (response.data.num_rows === 0) {
-                        $cordovaDialogs.alert('No se han encontrado resultados.', 'Información');
+                        $cordovaToast.show('No se han encontrado resultados.', 'short', 'center');
                     }
                     data.forEach(function(data) {
                         $scope.reportes.push(data);
@@ -1471,7 +1471,7 @@ angular.module('starter.controllers', [])
             .then(function successCallback(response) {
                 var data = response.data.object_list;
                 if (response.data.num_rows === 0) {
-                    $cordovaDialogs.alert('No se han encontrado resultados.', 'Información');
+                    $cordovaToast.show('No se han encontrado resultados.', 'short', 'center');
                 }
                 data.forEach(function(data) {
                     if(data.imagen === ""){
@@ -1633,16 +1633,16 @@ angular.module('starter.controllers', [])
                         var data = response.data;
                         console.log(data);
                         if (data.piscinero) {
-                            $cordovaToast.show("Piscinero: " + data.piscinero, 'short', 'botton');
+                            $cordovaToast.show("Piscinero: " + data.piscinero[0], 'short', 'botton');
                         }
                         if (data.piscina) {
-                            $cordovaToast.show("Piscina: " + data.piscina, 'short', 'botton');
+                            $cordovaToast.show("Piscina: " + data.piscina[0], 'short', 'botton');
                         }
                         if (data.asigna) {
-                            $cordovaToast.show("Asigna: " + data.asigna, 'short', 'botton');
+                            $cordovaToast.show("Asigna: " + data.asigna[0], 'short', 'botton');
                         }
                         if (data.__all__) {
-                            $cordovaToast.show(data.__all__, 'short', 'botton');
+                            $cordovaToast.show(data.__all__[0], 'short', 'botton');
                             $scope.reload();
                         }
                     } else if (response.status == 500) {
@@ -1904,7 +1904,7 @@ angular.module('starter.controllers', [])
             .then(function successCallback(response) {
                 var data = response.data.object_list;
                 if (response.data.num_rows === 0) {
-                    $cordovaDialogs.alert('No se han encontrado resultados.', 'Información');
+                    $cordovaToast.show('No se han encontrado resultados.', 'short', 'center');
                 }
                 data.forEach(function(data) {
                     $scope.reportes.push(data);
