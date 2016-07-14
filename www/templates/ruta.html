@@ -8,7 +8,7 @@
    </ion-refresher>
 		<ion-list>
 		  <ion-item collection-repeat="item in items" item="item" class="collection-item">
-				<h2 ng-class="{'light-blue-text':item.id == actual}"> <b class="light-blue-text">{{$index + 1}}</b> {{ item.nombreP }}</h2>
+				<h2 ng-class="{'light-blue-text':item.id == actual}"><b class="light-blue-text">#{{$index + 1}}</b> Piscina: {{ item.nombreP }}</h2>
 				<p ng-class="{'light-blue-text':item.id == actual}">
 					<b>Cliente: </b> {{ item.nombreCF }} {{ item.nombreCL }}<br>
 					<b>Casa: </b> {{ item.nombreCA }}<br>
