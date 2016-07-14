@@ -409,7 +409,10 @@ select::-ms-expand {
     width: 100%;
     bottom: 0px;
     top: 0px;
+    padding-top: 140px;
     padding-bottom: 60px;
+    position: fixed;
+    z-index: -1;
 }
 .fecha-font{
     font-size: 10px;
