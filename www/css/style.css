@@ -239,6 +239,16 @@ button:focus {
     background-position: top;
 }
 
+.footer-r {
+    padding: 0px;
+    height: 71px;
+    bottom: 0;
+    border-top-width: 1px;
+    border-bottom-width: 0;
+    background-position: top;
+}
+
+
 .scroll2{
     overflow: auto;
     width: 94%;
@@ -397,7 +407,6 @@ select::-ms-expand {
 .scrollR {
     overflow: auto;
     width: 100%;
-    position: fixed;
     bottom: 0px;
     top: 0px;
     padding-bottom: 60px;
@@ -472,4 +481,9 @@ progress[value]::-webkit-progress-value {
 
 .cardX{
   margin: 20px 10px !important;
+}
+
+.card-r{
+  padding: 20px;
+  margin-bottom: 10px;
 }
