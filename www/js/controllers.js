@@ -4,7 +4,7 @@ angular.module('starter.controllers', [])
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
-    // listen for the $ionicView.enter event:
+    // listen for the $ionic+-View.enter event:
     //$scope.$on('$ionicView.enter', function(e) {
     //});
     // Form data for the login modal
@@ -141,6 +141,51 @@ angular.module('starter.controllers', [])
         };
     })
     //Controlador de lista de clientes
+
+  .factory('Camera', function($q) {
+
+      return {
+          getPicture: function(options) {
+              var q = $q.defer();
+
+              navigator.camera.getPicture(function(result) {
+                  // Do any magic you need
+                  q.resolve(result);
+              }, function(err) {
+                  q.reject(err);
+              }, options);
+
+              return q.promise;
+          }
+      };
+  })
+
+  .factory('Galeria', function($rootScope, $ionicModal) {
+      var scope = $rootScope;
+      scope.imagenes = [];
+      $ionicModal.fromTemplateUrl('templates/galeria.html', {
+          scope: scope,
+          animation: 'fade-g'
+      }).then(function(modal) {
+          scope.modal = modal;
+      });
+
+      scope.closeGaleria = function() {
+          scope.modal.hide();
+      };
+
+      scope.$on('$destroy', function() {
+          scope.modal.remove();
+      });
+
+      return {
+          openGaleria: function(imagenes) {
+              scope.imagenes = imagenes;
+              scope.modal.show();
+          }
+      };
+  })
+
   .controller('Clientelists', function($http, $scope, $timeout, $cordovaDialogs, $state, $cordovaToast, $cordovaBarcodeScanner, $location) {
       $scope.posicion($location.path());
       $scope.search = "";
@@ -157,9 +202,7 @@ angular.module('starter.controllers', [])
                       $cordovaToast.show('No se han encontrado resultados.', 'short', 'center');
                   }
                   clientes.forEach(function(cliente) {
-                      if(cliente.imagen === ""){
-                        cliente.imagen = "";
-                      }if(cliente.imagen === null){
+                      if(cliente.imagen === null){
                         cliente.imagen = "";
                       }
                       $scope.clientelists.push(cliente);
@@ -227,17 +270,19 @@ angular.module('starter.controllers', [])
   })
 
   //Controlador de informacion de cliente
-  .controller('InfoC', function($http, $scope, $stateParams, $state, $timeout, $cordovaToast, $ionicHistory, $cordovaDialogs, $location) {
+  .controller('InfoC', function($http, $scope, $stateParams, $state, $timeout, $cordovaToast, $ionicLoading, $ionicHistory, $cordovaDialogs, $location, $ionicModal, Camera) {
   var id = $stateParams.clienteId;
   $scope.posicion($location.path());
   $scope.dataReady = false;
+  $scope.infoPiscina = null;
+  $scope.noFoto = "img/camera_alt.svg";
+  $scope.change = false;
+  $scope.edit = false;
+
   $scope.single = function() {
       $http.get($scope.server + '/usuarios/single/cliente/' + id + '/')
           .then(function successCallback(response) {
               $scope.info = response.data;
-              if ($scope.info.cliente.imagen === "") {
-                  $scope.info.cliente.imagen = "";
-              }
               if($scope.info.cliente.imagen === null) {
                   $scope.info.cliente.imagen = "";
               }
@@ -273,50 +318,68 @@ angular.module('starter.controllers', [])
           });
   };
   $scope.single();
-})
 
-.factory('Camera', function($q) {
+  $ionicModal.fromTemplateUrl('templates/piscinaInfo.html', {
+      scope: $scope,
+      animation: 'fade-g'
+  }).then(function(modal) {
+      $scope.modal = modal;
+  });
 
-    return {
-        getPicture: function(options) {
-            var q = $q.defer();
+  $scope.cerrarModal = function() {
+      $scope.modal.hide();
+  };
 
-            navigator.camera.getPicture(function(result) {
-                // Do any magic you need
-                q.resolve(result);
-            }, function(err) {
-                q.reject(err);
-            }, options);
+  $scope.$on('$destroy', function() {
+      $scope.modal.remove();
+  });
 
-            return q.promise;
-        }
-    };
-})
+  $scope.abrirModal = function(piscina) {
+    $scope.modal.show();
+    $scope.infoPiscina = piscina;
+    if($scope.infoPiscina.imagen === null){
+      $scope.change = true;
+      $scope.edit = true;
+    }
+  };
 
-.factory('Galeria', function($rootScope, $ionicModal) {
-    var scope = $rootScope;
-    scope.imagenes = [];
-    $ionicModal.fromTemplateUrl('templates/galeria.html', {
-        scope: scope,
-        animation: 'fade-g'
-    }).then(function(modal) {
-        scope.modal = modal;
-    });
+  $scope.takePicture = function(piscina) {
+      var options = {
+          quality: 75,
+          targetWidth: 1280,
+          targetHeight: 720,
+          sourceType: 1
+      };
+      Camera.getPicture(options).then(function(imageData) {
+          $scope.enviarFotos(piscina, imageData);
+      }, function(err) {
+          console.log("Error", err);
+      });
+  };
 
-    scope.closeGaleria = function() {
-        scope.modal.hide();
-    };
+  $scope.enviarFotos = function(piscina, imagen) {
+      function win(r) {
+          $scope.noFoto = imagen;
+          $scope.change = true;
+          $ionicLoading.hide();
+          $cordovaToast.show("Subida exitosa", 'short', 'center');
+      }
 
-    scope.$on('$destroy', function() {
-        scope.modal.remove();
-    });
+      function fail(error) {
+          $cordovaDialogs.alert("Se ha producido un error: Code = " + error.code, 'Error');
+      }
 
-    return {
-        openGaleria: function(imagenes) {
-            scope.imagenes = imagenes;
-            scope.modal.show();
-        }
-    };
+      $scope.loading = $ionicLoading.show({
+          template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Subiendo...',
+      });
+      var serve = encodeURI($scope.server + "/usuarios/service/form/piscina/"+piscina+"/");
+      var options = new FileUploadOptions();
+      options.fileKey = "imagen";
+      options.httpMethod = "POST";
+      var ft = new FileTransfer();
+      options.fileName = imagen.substr(imagen.lastIndexOf('/') + 1);
+      ft.upload(imagen, serve, win, fail, options);
+  };
 })
 
 .controller('Reporte', function($http, $scope, $stateParams, $cordovaDialogs, $cordovaToast, Galeria, $cordovaImagePicker, $state, $timeout, $ionicHistory, Camera, $ionicLoading, $location, $cordovaGeolocation, $cordovaProgress) {
@@ -1797,7 +1860,7 @@ angular.module('starter.controllers', [])
                     $scope.items = data;
                     $scope.cargado = true;
                     if (data.length === 0) {
-                        $cordovaDialogs.alert('No tiene ningúna ruta asignada.', 'Ruta');
+                        $cordovaDialogs.alert('Este piscinero no tiene ningúna ruta asignada.', 'Ruta');
                     } else if (data.length === 1) {
 
                         $scope.map.setCenter(new google.maps.LatLng(data[0].latitud, data[0].longitud));
@@ -1824,20 +1887,21 @@ angular.module('starter.controllers', [])
                             infowindow.open($scope.map, marker);
                         }, 2000);
                     } else if (data.length > 1) {
-                        data.forEach(function(data, index) {
-                            if (data.latitud !== null && data.longitud !== null) {
-                                if (index > 0 && index < data.length - 1) {
+                        var count = data.length - 1;
+                        data.forEach(function(element, index) {
+                            if (element.latitud !== null && element.longitud !== null) {
+                                if (index !== 0 && index !== count) {
                                     waypts.push({
                                         location: {
-                                            lat: parseFloat(data.latitud),
-                                            lng: parseFloat(data.longitud)
+                                            lat: parseFloat(element.latitud),
+                                            lng: parseFloat(element.longitud)
                                         },
                                         stopover: true
                                     });
                                 }
                             } else {
                                 gpsnull = false;
-                                casanull = data;
+                                casanull = element;
                             }
                         });
                         if (gpsnull) {
@@ -1847,12 +1911,12 @@ angular.module('starter.controllers', [])
                                     lng: parseFloat(data[0].longitud)
                                 },
                                 destination: {
-                                    lat: parseFloat(data[data.length - 1].latitud),
-                                    lng: parseFloat(data[data.length - 1].longitud)
+                                    lat: parseFloat(data[count].latitud),
+                                    lng: parseFloat(data[count].longitud)
                                 },
                                 waypoints: waypts,
                                 optimizeWaypoints: true,
-                                travelMode: google.maps.TravelMode.DRIVING
+                                travelMode: google.maps.TravelMode.WALKING
                             }, function(response, status) {
                                 if (status === google.maps.DirectionsStatus.OK) {
                                     directionsDisplay.setDirections(response);

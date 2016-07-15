@@ -3,20 +3,16 @@
         <ion-content overflow-scroll="false">
             <map class="medio" on-create="mapCreated(map)"></map>
             <div class="medio over">
-				<div class="spin2" ng-show="!cargado">
-					<ion-spinner></ion-spinner>
-				</div>
-                <ion-list id="directions-panel" ng-show="cargado">
+                <div class="spin2" ng-show="!cargado">
+                    <ion-spinner></ion-spinner>
+                </div>
+                <ion-list ng-show="cargado">
                     <ion-item ng-repeat="item in items" item="item" class="collection-item">
-                        <h2>{{ item.nombreP }}</h2>
+                        <h2><b class="light-blue-text">#{{$index + 1}}</b> Piscina {{ item.nombreP }} <b>Tipo</b> {{ item.tipo }}</h2>
                         <p>
-                            <b>Cliente:
-                            </b>
-                            {{ item.nombreCF }}
-                            {{ item.nombreCL }}<br>
-                            <b>Casa:
-                            </b>
-                            {{ item.nombreCA }}<br>
+                          	<b>Ancho</b> {{ item.ancho }} <b>Largo</b> {{ item.largo }} <b>Profundidad</b> {{ item.profundidad }}
+                            <br>
+                            <b>Cliente:</b> {{ item.nombreCF }} {{ item.nombreCL }}
                         </p>
                     </ion-item>
                 </ion-list>

@@ -6,28 +6,29 @@
     <div class="spin" ng-show="!dataReady">
       <ion-spinner></ion-spinner>
     </div>
-    <div class="row" ng-show="dataReady">
-      <div class="list card col s12 grey lighten-5">
-          <div class="item item-avatar grey lighten-5">
-              <img src="{{server}}/media/{{info.cliente.imagen}}" ng-if="info.cliente.imagen !==''">
-              <img src="img/user.png" ng-if="info.cliente.imagen ==''"/>
-              <i class="micon">person</i> {{info.cliente.first_name}} {{info.cliente.last_name}}<br>
-              <i class="micon">email</i> {{info.cliente.email}}
-          </div>
-          <div class="item item-icon-left  grey lighten-5"  ng-if="info.cliente.telefono">
-             <a ng-href="tel:{{info.cliente.telefono}}" >
-                 <i class="micon">call</i>
-                {{info.cliente.telefono}}
-            </a>
-          </div>
-          <a href="#/app/historial/reportes/{{ info.cliente.id }}/0" class="item item-icon-left  grey lighten-5">
-              <i class="micon red-text lighten-2-text">report</i> Historial de Reportes
-          </a>
-          <a class="item item-icon-left  grey lighten-5" ng-repeat="casa in info.casas" href="#/app/asignargps/{{casa.id}}/{{casa.latitud}}/{{casa.longitud}}">
-              <i class="micon green-text accent-3-text">home</i> {{casa.direccion}}
+    <div class="list card cardX grey lighten-5" ng-show="dataReady">
+        <div class="item item-avatar grey lighten-5">
+            <img src="{{server}}/media/{{info.cliente.imagen}}" ng-if="info.cliente.imagen !==''">
+            <img src="img/user.png" ng-if="info.cliente.imagen ==''"/>
+            <i class="micon">person</i> {{info.cliente.first_name}} {{info.cliente.last_name}}<br>
+            <i class="micon">email</i> {{info.cliente.email}}
+        </div>
+        <div class="item item-icon-left  grey lighten-5"  ng-if="info.cliente.telefono">
+           <a ng-href="tel:{{info.cliente.telefono}}" >
+               <i class="micon">call</i>
+              {{info.cliente.telefono}}
           </a>
         </div>
-    </div>
+        <a href="#/app/historial/reportes/{{ info.cliente.id }}/0" class="item item-icon-left  grey lighten-5">
+            <i class="micon red-text lighten-2-text">report</i> Historial de Reportes
+        </a>
+        <div class="item item-icon-left  grey lighten-5" ng-repeat="piscina in info.piscinas" ng-click="abrirModal(piscina)">
+            <i class="micon light-blue-text">pool</i> {{piscina.nombre}}
+        </div>
+        <a class="item item-icon-left  grey lighten-5" ng-repeat="casa in info.casas" href="#/app/asignargps/{{casa.id}}/{{casa.latitud}}/{{casa.longitud}}">
+            <i class="micon green-text accent-3-text">home</i> {{casa.direccion}}
+        </a>
+      </div>
   </ion-content>
   <ion-footer-bar  class="headerbar footer-f" ng-show="dataReady">
     <div class="row row-p">
