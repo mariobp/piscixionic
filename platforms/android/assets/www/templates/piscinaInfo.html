@@ -1,0 +1,23 @@
+<ion-modal-view>
+  <ion-header-bar class="headerbar">
+    <h1 class="title">Piscina</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="cerrarModal()"><i class="micon">close</i></button>
+    </div>
+  </ion-header-bar>
+  <ion-content overflow-scroll="false">
+    <div class="list card cardX grey lighten-5">
+      <div class="item center  grey lighten-5">
+        <b>Piscina</b> {{infoPiscina.nombre}} <b>Tipo</b> {{infoPiscina.tipo__nombre}}
+      </div>
+      <div class="item center grey lighten-5">
+        <b>Ancho:</b> {{infoPiscina.ancho}} <b>Largo:</b> {{infoPiscina.largo}} <b>Profuntidad:</b> {{infoPiscina.profundidad}}
+      </div>
+      <div class="item item-body center grey lighten-5">
+        <img width="77%" ng-src="{{server}}/media/{{infoPiscina.imagen}}" ng-if="!change">
+        <img width="77%" ng-click="takePicture(infoPiscina.id)" ng-src="{{noFoto}}" ng-if="change"/>
+        <h2 class="light-blue-text" ng-if="change">No tiene ningúna imagen</h2>
+      </div>
+    </div>
+  </ion-content>
+</ion-modal-view>

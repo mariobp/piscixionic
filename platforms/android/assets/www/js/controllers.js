@@ -228,10 +228,12 @@ angular.module('starter.controllers', [])
     })
 
 //Controlador de informacion de cliente
-.controller('InfoC', function($http, $scope, $stateParams, $state, $timeout, $cordovaToast, $ionicHistory, $cordovaDialogs, $location) {
+.controller('InfoC', function($http, $scope, $stateParams, $state, $timeout, $cordovaToast, $ionicModal, $ionicHistory, $cordovaDialogs, $location) {
     var id = $stateParams.clienteId;
     $scope.posicion($location.path());
     $scope.dataReady = false;
+    $scope.change = false;
+    $scope.noFoto = "img/broken_image.svg";
     $scope.single = function() {
         $http.get($scope.server + '/usuarios/single/cliente/' + id + '/')
             .then(function successCallback(response) {
@@ -274,6 +276,29 @@ angular.module('starter.controllers', [])
             });
     };
     $scope.single();
+
+  $ionicModal.fromTemplateUrl('templates/piscinaInfo.html', {
+      scope: $scope,
+      animation: 'fade-g'
+  }).then(function(modal) {
+      $scope.modal = modal;
+  });
+
+  $scope.cerrarModal = function() {
+      $scope.modal.hide();
+  };
+
+  $scope.$on('$destroy', function() {
+      $scope.modal.remove();
+  });
+
+  $scope.abrirModal = function(piscina) {
+    $scope.modal.show();
+    $scope.infoPiscina = piscina;
+    if($scope.infoPiscina.imagen === null){
+      $scope.change = true;
+    }
+  };
 })
 
 .factory('Camera', function($q) {
