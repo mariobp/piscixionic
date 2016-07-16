@@ -1,12 +1,19 @@
 <ion-view title="Notificaciones">
 	<ion-content>
     <div class="list card cardX" ng-if="notify.notixList.length">
-      <div class="item item-text-wrap" ng-repeat="noti in notify.notixList track by $index" on-tap="notificar(noti)">
-          <b>{{noti.data.data.tipo}}</b>
-          <p>
-            {{noti.data.html}} <br>
-						{{noti.data.data.fecha}}
-          </p>
+      <div class="item item-avatar" ng-repeat="noti in notify.notixList track by $index" on-tap="notificar(noti)">
+        	<img ng-src="img/report.svg" ng-if="noti.data.data.tipo=='Reporte'"/>
+				  <img ng-src="img/question_answer.svg" ng-if="noti.data.data.tipo=='Respuesta'"/>
+				  <img ng-src="img/notifications_active.svg" ng-if="noti.data.data.tipo=='Recordatorio'"/>
+				  <img ng-src="img/build.svg" ng-if="noti.data.data.tipo=='Solucion'"/>
+				  <img ng-src="img/assignment.svg" ng-if="noti.data.data.tipo=='Asignacion'"/>
+				  <h2>{{noti.data.data.tipo}}</h2>
+				  <p>
+				    {{noti.data.html}}
+				    <span class="right">
+				      {{noti.data.data.fecha}}
+				    </span>
+				  </p>
       </div>
     </div>
     <div class="center" ng-if="!notify.notixList.length">

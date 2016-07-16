@@ -19,7 +19,7 @@
     color: #E57373;
     vertical-align: middle;
 }
-.last-error-container > .error {
+.last-error-container> .error {
     padding: 10px 16px 0;
 }
 .has-errors {
@@ -27,6 +27,9 @@
 }
 .no-errors {
     border-bottom: 3px solid #81C784 !important;
+}
+.spinner svg {
+    stroke: #00bcd4;
 }
 div.spin {
     margin: auto;
@@ -37,17 +40,18 @@ div.spin {
     right: 0;
     height: 85px;
     text-align: center;
+    stroke: #00bcd4;
 }
 div.spin2 {
     margin: auto;
     position: relative;
-    ;
-    top: calc(25% + 30px);
+    top: calc(25%+ 30px);
     left: 0;
     bottom: 0;
     right: 0;
     height: 60px;
     text-align: center;
+    stroke: #00bcd4;
 }
 .spin svg, .spin2 svg {
     width: 19% !important;
@@ -102,14 +106,16 @@ map {
 .over {
     overflow: scroll;
 }
+
 /*.scroll {
     height: 100%;
 }*/
+
 .icon {
     font-size: 20pt;
 }
 .headerbar {
-    background-color: #607D8B;
+    background-color: #00bcd4;
     color: white !important;
 }
 .headerbar button, h1 {
@@ -128,7 +134,7 @@ map {
     border-radius: 4px;
     box-shadow: 0px 1px 10px;
     font-weight: 500;
-    color: #607D8B;
+    color: #00bcd4;
     transition: .3s;
 }
 .badge-x {
@@ -149,15 +155,15 @@ map {
     right: 1px;
 }
 .active {
-    color: #455A64 !important;
+    color: #0097a7 !important;
 }
 input[type=text]:focus {
-    border-bottom: 1px #455A64 !important;
-    box-shadow: 0 1px 0 0 #455A64 !important;
+    border-bottom: 1px #0097a7 !important;
+    box-shadow: 0 1px 0 0 #0097a7 !important;
 }
 textarea:focus {
-    border-bottom: 1px #455A64 !important;
-    box-shadow: 0 1px 0 0 #455A64 !important;
+    border-bottom: 1px #0097a7 !important;
+    box-shadow: 0 1px 0 0 #0097a7 !important;
 }
 
 /* label color */
@@ -168,22 +174,40 @@ textarea:focus {
 
 /* label focus color */
 
-.input-field input[type=text]:focus + label {
-    color: #455A64;
+.input-field input[type=text]:focus+ label {
+    color: #0097a7;
 }
 
 /* label underline focus color */
 
 .input-field input[type=text]:focus {
-    border-bottom: 1px solid #455A64;
-    box-shadow: 0 1px 0 0 #455A64;
+    border-bottom: 1px solid #0097a7;
+    box-shadow: 0 1px 0 0 #0097a7;
 }
-.input-field textarea:focus + label {
-    color: #455A64;
+.input-field input[type=number]:focus {
+    border-bottom: 1px solid #0097a7;
+    box-shadow: 0 1px 0 0 #0097a7;
+}
+.input-field textarea:focus+ label {
+    color: #0097a7;
 }
 .input-field textarea:focus {
-    border-bottom: 1px solid #455A64;
-    box-shadow: 0 1px 0 0 #455A64;
+    border-bottom: 1px solid #0097a7;
+    box-shadow: 0 1px 0 0 #0097a7;
+}
+input[type="radio"]:checked+label:after, [type="radio"].with-gap:checked+label:after {
+    background-color: #00bcd4;
+    z-index: 0;
+}
+input[type="radio"]:checked+label:after, [type="radio"].with-gap:checked+label:before, [type="radio"].with-gap:checked+label:after {
+    border: 2px solid #00bcd4;
+}
+input[type="checkbox"]:checked+label:before {
+    border-right: 2px solid #00bcd4;
+    border-bottom: 2px solid #00bcd4;
+}
+.input-search {
+    border-bottom: 1px solid #ffffff !important;
 }
 
 /* valid color */
@@ -208,10 +232,14 @@ textarea:focus {
     box-shadow: 0 1px 0 0 #E57373;
 }
 
-/* icon prefix focus color */
+/* icon   focus color */
 
 .input-field .prefix.active {
     color: #212121;
+}
+.input-field .prefix2 {
+    top: 10px;
+    left: 14px;
 }
 .popup-container {
     background: rgba(0, 0, 0, 0.4);
@@ -220,7 +248,7 @@ textarea:focus {
     height: 56px;
 }
 button:focus {
-    background-color: background-color: #455A64 !important;
+    background-color: background-color: #0097a7 !important;
 }
 .centrar {
     text-align: center !important;
@@ -229,7 +257,6 @@ button:focus {
     padding: 0px;
     height: 117px;
 }
-
 .footer-f {
     padding: 0px;
     height: 63px;
@@ -238,7 +265,6 @@ button:focus {
     border-bottom-width: 0;
     background-position: top;
 }
-
 .footer-r {
     padding: 0px;
     height: 71px;
@@ -247,9 +273,7 @@ button:focus {
     border-bottom-width: 0;
     background-position: top;
 }
-
-
-.scroll2{
+.scroll2 {
     overflow: auto;
     width: 94%;
     /* height: 300px; */
@@ -263,12 +287,10 @@ button:focus {
     padding: 0px;
     /*margin-bottom: 0px;*/
 }
-
 .col-p {
     margin: 0 auto;
     float: none !important;
 }
-
 .content-b {
     height: calc(100% - 150px);
 }
@@ -281,112 +303,142 @@ button:focus {
     display: table-cell;
     height: 30px;
 }
-
-.ion-input-select--large,
-.ion-input-select,
-select {
-  /*-webkit-appearance:none;*/
-  background-repeat: no-repeat;
-  background-color: rgba(0,0,0,0);
-  border:thin solid #dddddd;
-  font-weight:300;
-  display:inline;
-  vertical-align:middle;
-  color:#333;
-  padding: auto 0;
-  overflow:hidden;
-  box-sizing:border-box;
-
+.ion-input-select--large, .ion-input-select, select {
+    /*-webkit-appearance:none;*/
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0);
+    border: thin solid #dddddd;
+    font-weight: 300;
+    display: inline;
+    vertical-align: middle;
+    color: #333;
+    padding: auto 0;
+    overflow: hidden;
+    box-sizing: border-box;
 }
-
 .ion-input-select--large {
-  width:420px;
-  font-size:1.6rem;
-  /*background-image: url(http://i.imgur.com/7rGM4IX.png);*/
-  text-indent:40px;
-  padding:1.2rem 0;
+    width: 420px;
+    font-size: 1.6rem;
+    /*background-image: url(http://i.imgur.com/7rGM4IX.png);*/
+    text-indent: 40px;
+    padding: 1.2rem 0;
 }
-
 .ion-input-select {
-  width:100%;
-  font-size:1rem;
- /* background-image: url(http://i.imgur.com/nA9xx1X.png);*/
-  text-indent:20px;
-  padding:.5rem 0;
+    width: 100%;
+    font-size: 1rem;
+    /* background-image: url(http://i.imgur.com/nA9xx1X.png);*/
+    text-indent: 20px;
+    padding: .5rem 0;
 }
-
 .label-select {
     top: -2rem !important;
 }
-
 option {
-  background:#444;
+    background: #444;
 }
-
 select::-ms-expand {
     display: none;
 }
-
 .list .item.item-accordion {
-  line-height: 38px;
-  padding-top: 0;
-  padding-bottom: 0;
-  transition: 0.09s all linear;
+    line-height: 38px;
+    padding-top: 0;
+    padding-bottom: 0;
+    transition: 0.09s all linear;
 }
 .list .item.item-accordion.ng-hide {
-  line-height: 0px;
+    line-height: 0px;
 }
-.list .item.item-accordion.ng-hide-add,
-.list .item.item-accordion.ng-hide-remove {
-  display: block !important;
+.list .item.item-accordion.ng-hide-add, .list .item.item-accordion.ng-hide-remove {
+    display: block !important;
 }
+
 /*
 :focus {
   outline:none;
 }*/
-@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 
-@-webkit-keyframes fadeOut { from { opacity:1; } to { opacity:0; } }
-@-moz-keyframes fadeOut { from { opacity:1; } to { opacity:0; } }
-@keyframes fadeOut { from { opacity:1; } to { opacity:0; } }
-
-.fade-g{
-    opacity:0;  /* make things invisible upon start */
-    -webkit-animation:fadeIn ease-in 1;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
-    -moz-animation:fadeIn ease-in 1;
-    animation:fadeIn ease-in 1;
-
-    -webkit-animation-fill-mode:forwards;  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
-    -moz-animation-fill-mode:forwards;
-    animation-fill-mode:forwards;
-
-    -webkit-animation-duration:0.3s;
-    -moz-animation-duration:0.3s;
-    animation-duration:0.3s;
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
-
-.fade-g.ng-leave,
-.fade-g > .ng.leave{
-    opacity:1;  /* make things invisible upon start */
-    -webkit-animation:fadeOut ease-in 1;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
-    -moz-animation:fadeOut ease-in 1;
-    animation:fadeOut ease-in 1;
-
-    -webkit-animation-fill-mode:forwards;  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
-    -moz-animation-fill-mode:forwards;
-    animation-fill-mode:forwards;
-
-    -webkit-animation-duration:0.3s;
-    -moz-animation-duration:0.3s;
-    animation-duration:0.3s;
+@-moz-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
-
-.input-header{
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@-webkit-keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+@-moz-keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+.fade-g {
+    opacity: 0;
+    /* make things invisible upon start */
+    -webkit-animation: fadeIn ease-in 1;
+    /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+    -moz-animation: fadeIn ease-in 1;
+    animation: fadeIn ease-in 1;
+    -webkit-animation-fill-mode: forwards;
+    /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
+    -moz-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-duration: 0.3s;
+    -moz-animation-duration: 0.3s;
+    animation-duration: 0.3s;
+}
+.fade-g.ng-leave, .fade-g> .ng.leave {
+    opacity: 1;
+    /* make things invisible upon start */
+    -webkit-animation: fadeOut ease-in 1;
+    /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+    -moz-animation: fadeOut ease-in 1;
+    animation: fadeOut ease-in 1;
+    -webkit-animation-fill-mode: forwards;
+    /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
+    -moz-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-duration: 0.3s;
+    -moz-animation-duration: 0.3s;
+    animation-duration: 0.3s;
+}
+.input-header {
     top: -15px;
 }
-.galeria-up{
+.galeria-up {
     height: 360px;
     display: flex;
     align-items: center;
@@ -394,16 +446,14 @@ select::-ms-expand {
     align-self: center;
     justify-content: center;
 }
-
-.galeria-down{
-    height:  calc(100% - 360px);
+.galeria-down {
+    height: calc(100% - 360px);
     display: flex;
     align-items: center;
     align-content: center;
     align-self: center;
     justify-content: center;
 }
-
 .scrollR {
     overflow: auto;
     width: 100%;
@@ -414,12 +464,11 @@ select::-ms-expand {
     position: fixed;
     z-index: -1;
 }
-.fecha-font{
+.fecha-font {
     font-size: 10px;
     color: #9e9e9e;
 }
-
-.logo{
+.logo {
     background-image: url('../img/icon.png');
     width: 100%;
     height: 170px;
@@ -428,8 +477,7 @@ select::-ms-expand {
     background-size: contain;
     padding-top: 1px;
 }
-
-.logo-t{
+.logo-t {
     background-image: url('../img/Icono-f-t.png');
     width: 100%;
     height: 270px;
@@ -438,7 +486,7 @@ select::-ms-expand {
     background-size: contain;
     padding-top: 1px;
 }
-.logo-e{
+.logo-e {
     background-image: url('../img/EXILE-small.png');
     width: 100%;
     height: 100px;
@@ -447,12 +495,10 @@ select::-ms-expand {
     background-size: contain;
     padding-top: 1px;
 }
-
-.login-content{
+.login-content {
     padding-top: 70px;
 }
-
-.content-center{
+.content-center {
     width: 90%;
     align-items: center;
     align-content: center;
@@ -460,33 +506,22 @@ select::-ms-expand {
     align-self: center;
     justify-content: center;
 }
-
-.content-logo{
+.content-logo {
     position: relative;
     top: calc( 50% - 209px);
 }
-.no-scroll{
+.no-scroll {
     overflow: hidden;
 }
-
 progress[value]::-webkit-progress-value {
-  background-image:
-	   -webkit-linear-gradient(-45deg,
-	                           transparent 33%, rgba(0, 0, 0, .1) 33%,
-	                           rgba(0,0, 0, .1) 66%, transparent 66%),
-	   -webkit-linear-gradient(top,
-	                           rgba(255, 255, 255, .25),
-	                           rgba(0, 0, 0, .25)),
-	   -webkit-linear-gradient(left, #09c, #f44);
+    background-image: -webkit-linear-gradient(-45deg, transparent 33%, rgba(0, 0, 0, .1) 33%, rgba(0, 0, 0, .1) 66%, transparent 66%), -webkit-linear-gradient(top, rgba(255, 255, 255, .25), rgba(0, 0, 0, .25)), -webkit-linear-gradient(left, #09c, #f44);
     border-radius: 2px;
     background-size: 35px 20px, 100% 100%, 100% 100%;
 }
-
-.cardX{
-  margin: 20px 10px !important;
+.cardX {
+    margin: 20px 10px !important;
 }
-
-.card-r{
-  padding: 20px;
-  margin-bottom: 10px;
+.card-r {
+    padding: 20px;
+    margin-bottom: 10px;
 }

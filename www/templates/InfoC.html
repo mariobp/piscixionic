@@ -1,5 +1,5 @@
 <ion-view cache-view="true" view-title="Información de Cliente">
-  <ion-header-bar align-title="center" class="bar bar-subheader light-blue" ng-class="{'white':!dataReady}">
+  <ion-header-bar align-title="center" class="bar bar-subheader teal accent-4" ng-class="{'white':!dataReady}">
      <h2 class="title white-text">{{info.cliente.first_name}} {{info.cliente.last_name}}</h2>
   </ion-header-bar>
   <ion-content overflow-scroll=”true” class="content-b">
@@ -9,7 +9,7 @@
       <div class="list card cardX grey lighten-5" ng-show="dataReady">
         <div class="item item-avatar grey lighten-5">
             <img src="{{server}}/media/{{info.cliente.imagen}}" ng-if="info.cliente.imagen !==''">
-            <img src="img/user.png" ng-if="info.cliente.imagen ==''"/>
+            <img src="img/user.svg" ng-if="info.cliente.imagen ==''"/>
             <i class="micon">person</i> {{info.cliente.first_name}} {{info.cliente.last_name}}<br>
             <i class="micon">email</i> {{info.cliente.email}}
         </div>
@@ -20,13 +20,13 @@
           </a>
         </div>
           <a href="#/app/historial/reportes/{{ info.cliente.id }}/0" class="item item-icon-left  grey lighten-5 red-text lighten-2-text">
-              <i class="micon ">report</i> Historial de Reportes
+              <i class="micon">report</i> Historial de Reportes
           </a>
-          <div class="item item-icon-left  grey lighten-5" ng-repeat="piscina in info.piscinas" ng-click="abrirModal(piscina)">
-              <i class="micon light-blue-text">pool</i> {{piscina.nombre}}
+          <div class="item item-icon-left grey lighten-5 teal-text accent-4-text" ng-repeat="piscina in info.piscinas" ng-click="abrirModal(piscina)">
+              <i class="micon">pool</i> {{piscina.nombre}}
           </div>
-          <div class="item item-icon-left  grey lighten-5" ng-repeat="casa in info.casas">
-              <i class="micon green-text accent-3-text">home</i> {{casa.direccion}}
+          <div class="item item-icon-left grey lighten-5 green-text accent-3-text" ng-repeat="casa in info.casas">
+              <i class="micon">home</i> {{casa.direccion}}
           </div>
         </div>
   </ion-content>

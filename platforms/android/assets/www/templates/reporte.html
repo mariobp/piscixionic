@@ -1,5 +1,5 @@
 <ion-view view-title="Reporte">
-<ion-header-bar align-title="center" class="bar bar-subheader light-blue " ng-class="{'white': !ready1 && ready2}">
+<ion-header-bar align-title="center" class="bar bar-subheader teal accent-4 " ng-class="{'white': !ready1 && ready2}">
   <h2 class="title white-text">{{piscinas[0].title}}</h2>
 </ion-header-bar>
   <ion-content >
@@ -59,7 +59,7 @@
             </div>
             <div class="row row-p">
                 <div class="col s4">
-                  <button type="button" class="btn-large waves-effect waves-light  light-blue" ng-click="takePicture()">
+                  <button type="button" class="btn-large waves-effect waves-light  teal accent-4" ng-click="takePicture()">
                   <i class="micon">photo_camera</i>
                   </button>
                 </div>
@@ -69,7 +69,7 @@
             </div>
             <div class="row row-p">
                 <div class="col s4">
-                  <button type="button" class="btn-large waves-effect waves-light light-blue" ng-click="getPicture()">
+                  <button type="button" class="btn-large waves-effect waves-light teal accent-4" ng-click="getPicture()">
                   <i class="micon">add_to_photos</i>
                   </button>
                 </div>
@@ -79,7 +79,7 @@
             </div>
             <div class="row row-p">
                 <div class="col s4">
-                  <button type="button" class="btn-large waves-effect waves-light light-blue" ng-disabled="total==0" ng-class="{'disabled':total==0}" ng-click="verGaleria()">
+                  <button type="button" class="btn-large waves-effect waves-light teal accent-4" ng-disabled="total==0" ng-class="{'disabled':total==0}" ng-click="verGaleria()">
                   <i class="micon">collections</i><span class="badge-x" ng-show="total>0">{{total}}</span>
                   </button>
                 </div>
