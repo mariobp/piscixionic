@@ -2188,16 +2188,16 @@ angular.module('starter.controllers', [])
                 }, {
                     reload: true
                 });
-            } else if (data.tipo === "Solucion") {
+            } else if (data.tipo === "Solución") {
                 $state.go('app.historialM', {
                     clienteId: data.reporte_id,
                     actual: data.solucion_id
                 }, {
                     reload: true
                 });
-            } else if (data.tipo === "Asignacion") {
+            } else if (data.tipo === "Asignación") {
                 $state.go('app.ruta', {
-                  actual: data.asignacion_id
+                    actual: data.asignacion_id
                 }, {
                     reload: true
                 });

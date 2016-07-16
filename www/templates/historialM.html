@@ -1,8 +1,8 @@
 <ion-view title="Historial de soluciones">
 	<ion-header-bar class="bar-subheader headerbar item-input-inset row row-p">
 		<div class="input-field col s12 input-header">
-			<i class="micon prefix">search</i>
-			<input type="text" name="buscar" class="white-text" ng-change="reload2()" placeholder="Buscar" ng-model="search">
+			<i class="micon prefix prefix2">search</i>
+			<input type="text" name="buscar" class="white-text input-search" ng-change="reload2()" ng-model="search">
 		</div>
 	</ion-header-bar>
 	<ion-content overflow-scroll=”true”>
@@ -12,13 +12,13 @@
 				<div class="collapsible-header grey lighten-5">
 					<ul class="collection grey lighten-5">
 						<li class="collection-item  grey lighten-5">
-							<span class="title"><b ng-class="{'light-blue-text':item.id == actual}">Nombre:</b> {{item.nombre}}</span>
+							<span class="title"><b ng-class="{'teal-text accent-4-text':item.id == actual}">Nombre:</b> {{item.nombre}}</span>
 							<p>
-								<b ng-class="{'light-blue-text':item.id == actual}">Fecha:</b> {{item.fecha}}
+								<b ng-class="{'teal-text accent-4-text':item.id == actual}">Fecha:</b> {{item.fecha}}
 								<br>
-								<b ng-class="{'light-blue-text':item.id == actual}">Cliente:</b> {{item.nombreC}} {{item.apellidosC}}
+								<b ng-class="{'teal-text accent-4-text':item.id == actual}">Cliente:</b> {{item.nombreC}} {{item.apellidosC}}
 								<br>
-									<b ng-class="{'light-blue-text':item.id == actual}">Emitido por:</b> {{item.user}}
+									<b ng-class="{'teal-text accent-4-text':item.id == actual}">Emitido por:</b> {{item.user}}
 							</p>
 						</li>
 					</ul>

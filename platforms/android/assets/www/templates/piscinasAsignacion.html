@@ -1,8 +1,8 @@
 <ion-view cache-view="false" title="Asignacion Piscina">
 	  <ion-header-bar class="bar-subheader headerbar item-input-inset row">
 	      <div class="input-field col s12">
-	        <i class="ion-search prefix"></i>
-	        <input type="text" name="buscar" class="white-text" ng-change="reload()" placeholder="Buscar" ng-model="search" >
+	        <i class="ion-search prefix prefix2"></i>
+	        <input type="text" name="buscar" class="white-text input-search" ng-change="reload()" ng-model="search" >
 	      </div>
 	  </ion-header-bar>
 	<ion-content overflow-scroll=”true”>
@@ -19,7 +19,7 @@
 						<p>
 								<b>Ancho:</b> {{ piscina.ancho }} <b>Largo:</b> {{ piscina.largo }} <b>Profundidad:</b> {{ piscina.profundidad }} <br>
 								<b>Cliente:</b> {{piscina.casa__cliente__first_name}} {{piscina.casa__cliente__last_name}} <br>
-								<b>Estado:</b> <b class="light-blue-text" ng-show="piscina.estado">Buen Estado</b> <b class="red-text" ng-show="!piscina.estado">Reportada</b>
+								<b>Estado:</b> <b class="teal-text accent-4-text" ng-show="piscina.estado">Buen Estado</b> <b class="red-text" ng-show="!piscina.estado">Reportada</b>
 						</p>
 						<b class="teal-text lighten-1-text">Asignada:</b>
 							<div class="secondary-content">

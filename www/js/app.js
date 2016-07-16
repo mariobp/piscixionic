@@ -21,7 +21,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
         if (window.StatusBar) {
             // org.apache.cordova.statusbar required
             StatusBar.styleLightContent();
-            StatusBar.backgroundColorByHexString('#455A64');
+            StatusBar.backgroundColorByHexString('#0097a7');
         }
     });
 

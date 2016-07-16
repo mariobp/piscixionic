@@ -1,8 +1,8 @@
  <ion-view cache-view="false" view-title="Clientes">
   <ion-header-bar class="bar-subheader headerbar item-input-inset row row-p">
       <div class="input-field col s12 input-header">
-        <i class="micon prefix">search</i>
-        <input type="text" name="buscar" ng-change="reload()" class="white-text" placeholder="Buscar" ng-model="search" >
+        <i class="micon prefix prefix2">search</i>
+        <input type="text" name="buscar" ng-change="reload()" class="white-text input-search" ng-model="search" >
       </div>
   </ion-header-bar>
   <ion-content overflow-scroll=”true”>
@@ -15,7 +15,7 @@
       <ion-list>
         <ion-item collection-repeat="cliente in clientelists" item="cliente" href="#/app/info/{{cliente.id}}" class="item item-avatar">
             <img ng-src="{{server}}/media/{{cliente.imagen}}" ng-if="cliente.imagen!==''">
-            <img ng-src="img/user.png" ng-if="cliente.imagen==''"/>
+            <img ng-src="img/user.svg" ng-if="cliente.imagen==''"/>
             <h2>{{cliente.first_name}} {{cliente.last_name}}</h2>
             <p>
               <b>Tipo: </b><span ng-if="cliente.tipo">Propietario/a</span><span ng-if="!cliente.tipo">Arrendatario/a</span><br>
@@ -26,7 +26,7 @@
   </ion-content>
   <ion-footer-bar class="headerbar footer-f">
     <div class="row row-p ">
-      <button ng-click="scanearCodigo()" class="btn btn-large waves-effect waves-light light-blue waves-effect col s12"><i class="micon">crop_free</i> Escanear codigo QR</button>
+      <button ng-click="scanearCodigo()" class="btn btn-large waves-effect waves-light teal accent-4 waves-effect col s12"><i class="micon">crop_free</i> Escanear codigo QR</button>
     </div>
   </ion-footer-bar>
 </ion-view>
