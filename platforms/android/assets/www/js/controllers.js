@@ -1849,8 +1849,8 @@ angular.module('starter.controllers', [])
     };
 
     $scope.calculate = function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+        var ruta = [];
         var waypts = [];
-
         $http.get($scope.server + '/usuarios/service/list/asignaciones/?piscinero=' + $stateParams.piscineroId + '&asigna=true')
             .then(function doneCallbacks(response) {
                     if (response.data.num_rows === 0) {
@@ -1861,12 +1861,19 @@ angular.module('starter.controllers', [])
                     $scope.cargado = true;
                     if (data.length === 0) {
                         $cordovaDialogs.alert('Este piscinero no tiene ningúna ruta asignada.', 'Ruta');
-                    } else if (data.length === 1) {
-
-                        $scope.map.setCenter(new google.maps.LatLng(data[0].latitud, data[0].longitud));
+                    } else {
+                      data.forEach(function(element, index) {
+                          if (element.latitud !== null && element.longitud !== null) {
+                              ruta.push(element);
+                          }
+                      });
+                      if (ruta.length === 0) {
+                        $cordovaDialogs.alert('No se puede mostrar la ruta, porque ninguna casa tiene GPS.', 'Ruta');
+                      }else if(ruta.length === 1){
+                        $scope.map.setCenter(new google.maps.LatLng(ruta[0].latitud, ruta[0].longitud));
                         var myLatLng = {
-                            lat: parseFloat(data[0].latitud),
-                            lng: parseFloat(data[0].longitud)
+                            lat: parseFloat(ruta[0].latitud),
+                            lng: parseFloat(ruta[0].longitud)
                         };
                         if (marker !== null) {
                             marker.setMap(null);
@@ -1876,19 +1883,38 @@ angular.module('starter.controllers', [])
                             map: $scope.map,
                             position: myLatLng,
                             animation: google.maps.Animation.DROP,
-                            title: 'Estas aquí!'
+                            title: ruta[0].nombreP
                         });
 
                         var infowindow = new google.maps.InfoWindow({
-                            content: "Usted esta aquí"
+                            content: "Piscix"
                         });
 
                         $timeout(function() {
                             infowindow.open($scope.map, marker);
                         }, 2000);
-                    } else if (data.length > 1) {
-                        var count = data.length - 1;
-                        data.forEach(function(element, index) {
+                      }else if(ruta.length === 2){
+                        directionsService.route({
+                            origin: {
+                                lat: parseFloat(ruta[0].latitud),
+                                lng: parseFloat(ruta[0].longitud)
+                            },
+                            destination: {
+                                lat: parseFloat(ruta[1].latitud),
+                                lng: parseFloat(ruta[1].longitud)
+                            },
+                            travelMode: google.maps.TravelMode.WALKING
+                        }, function(response, status) {
+                            if (status === google.maps.DirectionsStatus.OK) {
+                                directionsDisplay.setDirections(response);
+                                //var route = response.routes[0];
+                            } else {
+                                $cordovaDialogs.alert('Solicitud de direcciones suspendida debido a la ' + status);
+                            }
+                        });
+                      }else if(ruta.length > 2){
+                        var count = ruta.length - 1;
+                        ruta.forEach(function(element, index) {
                             if (element.latitud !== null && element.longitud !== null) {
                                 if (index !== 0 && index !== count) {
                                     waypts.push({
@@ -1899,42 +1925,31 @@ angular.module('starter.controllers', [])
                                         stopover: true
                                     });
                                 }
-                            } else {
-                                gpsnull = false;
-                                casanull = element;
                             }
                         });
-                        if (gpsnull) {
-                            directionsService.route({
-                                origin: {
-                                    lat: parseFloat(data[0].latitud),
-                                    lng: parseFloat(data[0].longitud)
-                                },
-                                destination: {
-                                    lat: parseFloat(data[count].latitud),
-                                    lng: parseFloat(data[count].longitud)
-                                },
-                                waypoints: waypts,
-                                optimizeWaypoints: true,
-                                travelMode: google.maps.TravelMode.WALKING
-                            }, function(response, status) {
-                                if (status === google.maps.DirectionsStatus.OK) {
-                                    directionsDisplay.setDirections(response);
-                                    //var route = response.routes[0];
-                                } else {
-                                    $cordovaDialogs.alert('Directions request failed due to ' + status);
-                                }
-                            });
-                        } else {
-                            $cordovaDialogs.alert('No se puede mostrar la ruta porque la piscina: ' + casanull.nombreP + ' en la casa con dirección ' + casanull.nombreCA + ' del cliente ' + casanull.nombreCF + ' ' + casanull.nombreCL + ' no tiene asignado el gps. ', 'gps')
-                                .then(function(success) {
-                                    $ionicHistory.goBack();
-                                });
-                        }
-
+                        directionsService.route({
+                            origin: {
+                                lat: parseFloat(ruta[0].latitud),
+                                lng: parseFloat(ruta[0].longitud)
+                            },
+                            destination: {
+                                lat: parseFloat(ruta[count].latitud),
+                                lng: parseFloat(ruta[count].longitud)
+                            },
+                            waypoints: waypts,
+                            optimizeWaypoints: true,
+                            travelMode: google.maps.TravelMode.WALKING
+                        }, function(response, status) {
+                            if (status === google.maps.DirectionsStatus.OK) {
+                                directionsDisplay.setDirections(response);
+                                //var route = response.routes[0];
+                            } else {
+                                $cordovaDialogs.alert('Solicitud de direcciones suspendida debido a la ' + status);
+                            }
+                        });
+                      }
                     }
                 },
-
                 function errorCallback(response) {
                     if (response.status == 403) {
                         $cordovaToast
@@ -1991,7 +2006,7 @@ angular.module('starter.controllers', [])
                 } else if (response.status == 500) {
                     $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
                 } else if (response.status === 0) {
-                    $cordovaDialogs.confirm('No se puede acceder a este servicio en este momento.', 'Error');
+                    $cordovaDialogs.alert('No se puede acceder a este servicio en este momento.', 'Error');
                 } else {
                     $timeout(function() {
                         $cordovaToast.show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center').then(function(success) {

@@ -1,6 +1,6 @@
 <ion-view cache-view="false" title="Mapa de Ruta">
     <ion-content>
-        <ion-content overflow-scroll="false">
+        <ion-content overflow-scroll="true">
             <map class="medio" on-create="mapCreated(map)"></map>
             <div class="medio over">
                 <div class="spin2" ng-show="!cargado">
@@ -8,12 +8,24 @@
                 </div>
                 <ion-list ng-show="cargado">
                     <ion-item ng-repeat="item in items" item="item" class="collection-item">
-                        <h2><b class="teal-text accent-4-text">#{{$index + 1}}</b> Piscina {{ item.nombreP }} <b>Tipo</b> {{ item.tipo }}</h2>
-                        <p>
-                          	<b>Ancho</b> {{ item.ancho }} <b>Largo</b> {{ item.largo }} <b>Profundidad</b> {{ item.profundidad }}
-                            <br>
-                            <b>Cliente:</b> {{ item.nombreCF }} {{ item.nombreCL }}
-                        </p>
+                        <div class="row row-n">
+                        		<div class="col s2 teal-text accent-4-text">
+                  						<i class="micon center" ng-if="item.planilla>0">done</i>
+                  						<i class="micon center" ng-if="item.planilla==0">content_paste</i>
+                  					</div>
+                            <div class="col s8">
+                              <h2><b class="teal-text accent-4-text">#{{$index + 1}}</b> Piscina {{ item.nombreP }} <b>Tipo</b> {{ item.tipo }}</h2>
+                              <p>
+                                	<b>Ancho</b> {{ item.ancho }} <b>Largo</b> {{ item.largo }} <b>Profundidad</b> {{ item.profundidad }}
+                                  <br>
+                                  <b>Cliente:</b> {{ item.nombreCF }} {{ item.nombreCL }}
+                              </p>
+                            </div>
+                            <div class="col s2">
+                              <i class="micon center" ng-if="item.latitud!==null && item.longitud!==null">location_on</i>
+                              <i class="micon center" ng-if="item.latitud==null && item.longitud==null">location_off</i>
+                            </div>
+                        </div>
                     </ion-item>
                 </ion-list>
             </div>

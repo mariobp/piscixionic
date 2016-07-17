@@ -2,12 +2,20 @@
 	<ion-content>
 		<ion-list class="" show-reorder="true">
 		  <ion-item ng-repeat="item in items" item="item" class="collection-item">
-				<h2> <b class="teal-text accent-4-text">#{{$index + 1}}</b> Piscina {{ item.nombreP }} <b>Tipo</b> {{ item.tipo }}</h2>
-				<p>
-					<b>Ancho</b> {{ item.ancho }} <b>Largo</b> {{ item.largo }} <b>Profundidad</b> {{ item.profundidad }}
-					<br>
-					<b>Cliente: </b> {{ item.nombreCF }} {{ item.nombreCL }}<br>
-				</p>
+				<div class="row row-n">
+					<div class="col s2 teal-text accent-4-text">
+						<i class="micon center" ng-if="item.planilla>0">done</i>
+						<i class="micon center" ng-if="item.planilla==0">content_paste</i>
+					</div>
+					<div class="col s10">
+						<h2> <b class="teal-text accent-4-text">#{{$index + 1}}</b> Piscina {{ item.nombreP }} <b>Tipo</b> {{ item.tipo }}</h2>
+						<p>
+							<b>Ancho</b> {{ item.ancho }} <b>Largo</b> {{ item.largo }} <b>Profundidad</b> {{ item.profundidad }}
+							<br>
+							<b>Cliente: </b> {{ item.nombreCF }} {{ item.nombreCL }}<br>
+						</p>
+					</div>
+				</div>
         <ion-reorder-button class="ion-drag" on-reorder="moveItem(item, $fromIndex, $toIndex)"></ion-reorder-button>
 		  </ion-item>
 		</ion-list>
