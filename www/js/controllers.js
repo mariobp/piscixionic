@@ -299,6 +299,21 @@ angular.module('starter.controllers', [])
       $scope.change = true;
     }
   };
+
+  $scope.contacto = $ionicModal.fromTemplateUrl('templates/contactos.html', {
+      scope: $scope,
+      animation: 'fade-g'
+  }).then(function(modal) {
+      $scope.modal2 = modal;
+  });
+
+  $scope.cerrarModal2 = function() {
+      $scope.modal2.hide();
+  };
+
+  $scope.abrirModal2 = function() {
+      $scope.modal2.show();
+  };
 })
 
 .factory('Camera', function($q) {

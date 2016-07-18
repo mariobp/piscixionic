@@ -13,6 +13,9 @@
             <i class="micon">person</i> {{info.cliente.first_name}} {{info.cliente.last_name}}<br>
             <i class="micon">email</i> {{info.cliente.email}}
         </div>
+        <div class="item item-icon-left  grey lighten-5 brown-text accent-4-text" ng-click="abrirModal2()">
+           <i class="micon">person</i> Contactos
+        </div>
         <div class="item item-icon-left  grey lighten-5"  ng-if="info.cliente.telefono">
            <a ng-href="tel:{{info.cliente.telefono}}" >
                <i class="micon">call</i>
