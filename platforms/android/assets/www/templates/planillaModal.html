@@ -1,0 +1,108 @@
+<ion-modal-view>
+  <ion-header-bar class="headerbar">
+    <h1 class="title center">Planilla Diaria</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="cerrarModal()"><i class="micon">close</i></button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <form class="col s12" name="form" ng-submit="form.$valid && enviar()" novalidate>
+        <div class="scroll2">
+            <div class="row row-p">
+                <div class="input-field col s12">
+                    <input type="checkbox" id="cepillado" name="cepillado" ng-model="data.cepillado">
+                    <label for="cepillado">Cepillado</label>
+                </div>
+            </div>
+            <div class="row row-p">
+                <div class="input-field col s12">
+                    <input type="checkbox" id="aspirado" name="aspirado" ng-model="data.aspirado">
+                    <label for="aspirado">Aspirado</label>
+                </div>
+            </div>
+            <div class="row row-p">
+                <div class="input-field col s12">
+                    <input type="checkbox" id="retrolavado" name="retrolavado" ng-model="data.retrolavado">
+                    <label for="retrolavado">Retrolavado</label>
+                </div>
+            </div>
+            <div class="row row-p">
+                <div class="input-field col s12">
+                    <input type="checkbox" id="aumento_agua" name="aumento_agua" ng-model="data.aumento_agua">
+                    <label for="aumento_agua">Aumento de agua</label>
+                </div>
+            </div>
+            <div class="row row-p">
+                <div class="input-field col s12">
+                    <input type="checkbox" id="aplicacion_cloro" name="aplicacion_cloro" ng-model="data.aplicacion_cloro">
+                    <label for="aplicacion_cloro">Aplicación cloro</label>
+                </div>
+            </div>
+            <div class="row row-p">
+                <div class="input-field col s12">
+                    <input type="checkbox" id="aplicacion_sulfato_al" name="aplicacion_sulfato_al" ng-model="data.aplicacion_sulfato_al">
+                    <label for="aplicacion_sulfato_al">Aplicación Sulfato Al</label>
+                </div>
+            </div>
+            <div class="row row-p">
+                <div class="input-field col s12">
+                    <input type="checkbox" id="clasificador_alg" name="clasificador_alg" ng-model="data.clasificador_alg">
+                    <label for="clasificador_alg">Clasificador AGL</label>
+                </div>
+            </div>
+            <div class="row row-p">
+                <div class="input-field col s6">
+                    <input type="radio" id="disminucion_ph" name="ph" ng-model="data.disminucion_ph">
+                    <label for="disminucion_ph">Disminución de PH</label>
+                </div>
+                <div class="input-field col s6">
+                    <input type="radio" id="aumento_ph" name="ph" ng-model="data.aumento_ph">
+                    <label for="aumento_ph">Aumento de PH</label>
+                </div>
+            </div>
+            <div class="row row-p">
+                <div class="input-field col s12">
+                    <input type="number" id="nivel_cloro" name="nivel_cloro" ng-model="data.nivel_cloro" ng-class="{'invalid':form.nivel_cloro.$invalid && form.$submitted,'valid':form.nivel_cloro.$valid && form.$submitted}" required>
+                    <label for="nivel_cloro">Nivel cloro</label>
+                    <div class="error-container" ng-show="form.nivel_cloro.$error && form.$submitted" ng-messages="form.nivel_cloro.$error">
+                        <div ng-messages-include="templates/error-list.html"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-p">
+                <div class="input-field col s12">
+                    <input type="number" id="nivel_ph" name="nivel_ph" ng-model="data.nivel_ph" ng-class="{'invalid':form.nivel_ph.$invalid && form.$submitted,'valid':form.nivel_ph.$valid && form.$submitted}" required>
+                    <label for="nivel_ph">Nivel PH</label>
+                    <div class="error-container" ng-show="form.nivel_ph.$error && form.$submitted" ng-messages="form.nivel_ph.$error">
+                        <div ng-messages-include="templates/error-list.html"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-p">
+                <div class="input-field col s12">
+                    <textarea
+                        type="text"
+                        id="observaciones"
+                        maxlength="200"
+                        rows="5"
+                        class="materialize-textarea"
+                        ng-model="data.observaciones"
+                        name="observaciones"
+                        required
+                        ng-class="{'invalid':form.observaciones.$invalid && form.$submitted,'valid':form.observaciones.$valid && form.$submitted}"></textarea>
+                    <label for="descripcion">Observaciones</label>
+                    <div class="error-container" ng-show="form.observaciones.$error && form.$submitted" ng-messages="form.observaciones.$error">
+                        <div ng-messages-include="templates/error-list.html"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bar headerbar footer-f">
+            <div class="row row-p">
+                <button type="button" class="btn btn-large waves-effect waves-light red lighten-2 col s6" ng-click="cerrarModal()">Cancelar<i class="micon">cancel</i></button>
+                <button type="submit" class="btn btn-large waves-effect waves-light green lighten-2 col s6">Enviar<i class="micon">done_all</i></button>
+            </div>
+        </div>
+    </form>
+  </ion-content>
+</ion-modal-view>

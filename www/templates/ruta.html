@@ -7,13 +7,22 @@
      >
    </ion-refresher>
 		<ion-list>
-		  <ion-item collection-repeat="item in items" item="item" class="collection-item">
-				<h2> <b class="teal-text accent-4-text">#{{$index + 1}}</b> Piscina {{ item.nombreP }} <b>Tipo</b> {{ item.tipo }}</h2>
-				<p>
-					<b>Ancho</b> {{ item.ancho }} <b>Largo</b> {{ item.largo }} <b>Profundidad</b> {{ item.profundidad }}
-					<br>
-					<b>Cliente: </b> {{ item.nombreCF }} {{ item.nombreCL }}<br>
-				</p>
+		  <ion-item collection-repeat="item in items" item="item">
+				<div class="row row-n">
+					<div class="col s10">
+						<h2> <b class="teal-text accent-4-text">#{{$index + 1}}</b> Piscina {{ item.nombreP }} <b>Tipo</b> {{ item.tipo }}</h2>
+						<p>
+							<b>Ancho</b> {{ item.ancho }} <b>Largo</b> {{ item.largo }} <b>Profundidad</b> {{ item.profundidad }}
+							<br>
+							<b>Cliente: </b> {{ item.nombreCF }} {{ item.nombreCL }}<br>
+						</p>
+					</div>
+					<div class="col s2">
+							<i class="micon center blue-text lighten-2-text" ng-if="item.planilla!==null && item.salida!==null">done_all</i>
+							<i class="micon center green-text lighten-2-text" ng-if="item.planilla!==null && item.salida==null" ng-click="enviarEdit(item)">done</i>
+							<i class="micon center red-text lighten-2-text" ng-if="item.planilla==null" ng-click="abrirModal(item)">content_paste</i>
+					</div>
+				</div>
 		  </ion-item>
 		</ion-list>
 		<ion-infinite-scroll ng-if="!noMoreItemsAvailable" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll>

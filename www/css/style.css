@@ -284,9 +284,20 @@ button:focus {
 }
 .row-p {
     display: block;
-    padding: 0px;
+    padding: 0;
     /*margin-bottom: 0px;*/
 }
+
+.row-n {
+    display: block;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.row-n i.center{
+  margin-top: 20px;
+}
+
 .col-p {
     margin: 0 auto;
     float: none !important;
