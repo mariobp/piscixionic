@@ -332,6 +332,7 @@ angular.module('starter.controllers', [])
 
   $scope.$on('$destroy', function() {
       $scope.modal.remove();
+      $scope.modal2.remove();
   });
 
   $scope.abrirModal = function(piscina) {
@@ -341,6 +342,21 @@ angular.module('starter.controllers', [])
       $scope.change = true;
       $scope.edit = true;
     }
+  };
+
+  $scope.contacto = $ionicModal.fromTemplateUrl('templates/contactos.html', {
+      scope: $scope,
+      animation: 'fade-g'
+  }).then(function(modal) {
+      $scope.modal2 = modal;
+  });
+
+  $scope.cerrarModal2 = function() {
+      $scope.modal2.hide();
+  };
+
+  $scope.abrirModal2 = function() {
+      $scope.modal2.show();
   };
 
   $scope.takePicture = function(piscina) {

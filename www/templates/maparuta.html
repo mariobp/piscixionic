@@ -10,8 +10,9 @@
                     <ion-item ng-repeat="item in items" item="item" class="collection-item">
                         <div class="row row-n">
                         		<div class="col s2 teal-text accent-4-text">
-                  						<i class="micon center" ng-if="item.planilla>0">done</i>
-                  						<i class="micon center" ng-if="item.planilla==0">content_paste</i>
+          											<i class="micon center" ng-if="item.planilla!==null && item.salida!==null">done_all</i>
+                    					  <i class="micon center" ng-if="item.planilla!==null && item.salida==null">done</i>
+                    					  <i class="micon center" ng-if="item.planilla==null">content_paste</i>
                   					</div>
                             <div class="col s8">
                               <h2><b class="teal-text accent-4-text">#{{$index + 1}}</b> Piscina {{ item.nombreP }} <b>Tipo</b> {{ item.tipo }}</h2>
