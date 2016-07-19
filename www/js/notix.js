@@ -103,6 +103,16 @@ angular.module('starter.socket', [])
                                 tipo: message.data.data.tipo
                             }
                         });
+                    } else if (message.data.data.tipo == "Reporte informativo") {
+                        $cordovaLocalNotification.schedule({
+                            id: id_message,
+                            title: 'Reporte informativo',
+                            text: message.data.html,
+                            data: {
+                                actual: message.data.data.reporte_id,
+                                tipo: message.data.data.tipo
+                            }
+                        });
                     }
                     $rootScope.$on('$cordovaLocalNotification:click',
                         function(event, notification, state) {
@@ -142,6 +152,12 @@ angular.module('starter.socket', [])
                                       actual: data.asignacion
                                     },
                                     {
+                                        reload: true
+                                    });
+                                } else if (data.tipo == "Reporte informativo") {
+                                    $state.go('app.historialI', {
+                                        actual: data.reporte
+                                    }, {
                                         reload: true
                                     });
                                 }

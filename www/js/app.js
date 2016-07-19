@@ -248,7 +248,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
     })
 
     .state('app.historialI', {
-        url: '/historial/reporte/informativos',
+        url: '/historial/reporte/informativos/:actual',
         views: {
             'menuContent': {
                 templateUrl: 'templates/historialI.html',

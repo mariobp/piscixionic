@@ -1986,11 +1986,11 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('HistorialIn', function($scope, $rootScope, $http, $state, $location, $cordovaToast, $timeout, $cordovaDialogs, $cordovaGeolocation, $ionicModal, $ionicLoading) {
+.controller('HistorialIn', function($scope, $rootScope, $http, $state, $location, $cordovaToast, $timeout, $cordovaDialogs, $cordovaGeolocation, $ionicModal, $ionicLoading, $stateParams) {
     $scope.posicion($location.path());
     $scope.search = "";
     $scope.noMoreItemsAvailable = false;
-    $scope.actual = 0;
+    $scope.actual = $stateParams.actual;
     var num = 1,
         max = 0,
         url = '';
@@ -2231,6 +2231,12 @@ angular.module('starter.controllers', [])
             } else if (data.tipo === "Asignación") {
                 $state.go('app.ruta', {
                     actual: data.asignacion_id
+                }, {
+                    reload: true
+                });
+            } else if (data.tipo === "Reporte informativo"){
+                $state.go('app.historialI', {
+                    actual: data.reporte_id
                 }, {
                     reload: true
                 });
