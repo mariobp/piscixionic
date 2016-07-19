@@ -6,10 +6,15 @@
     </div>
   </ion-header-bar>
   <ion-content>
-    <div class="list card">
+    <div class="list card cardX" ng-if="imagenes.length">
       <div ng-repeat="imagen in imagenes" class="item item-body">
+        <button class="button delete-g red lighten-2" ng-click="delete(imagen)"><i class="micon white-text">delete</i></button>
         <img class="full-image" ng-src="{{imagen}}">
       </div>
+    </div>
+    <div class="center" ng-if="!imagenes.length">
+        <img width="100%" src="img/broken_image.svg"/>
+        <h4 class="blue-grey-text" >No tiene ningúna imagen</h4>
     </div>
   </ion-content>
 </ion-modal-view>

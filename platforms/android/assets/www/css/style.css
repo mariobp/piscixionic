@@ -536,3 +536,10 @@ progress[value]::-webkit-progress-value {
     padding: 20px;
     margin-bottom: 10px;
 }
+
+.delete-g{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    border-radius: 2px;
+}

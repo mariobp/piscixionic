@@ -334,7 +334,7 @@ angular.module('starter.controllers', [])
     };
 })
 
-.factory('Galeria', function($rootScope, $ionicModal) {
+.factory('Galeria', function($rootScope, $ionicModal, $cordovaDialogs) {
     var scope = $rootScope;
     scope.imagenes = [];
     $ionicModal.fromTemplateUrl('templates/galeria.html', {
@@ -352,6 +352,15 @@ angular.module('starter.controllers', [])
         scope.modal.remove();
     });
 
+    scope.delete = function(imagen) {
+    $cordovaDialogs.confirm('Esta seguro de que quieres eliminar esta foto?.', 'Foto', ['Eliminar', 'Cancelar'])
+        .then(function(result) {
+            if (result === 1) {
+              scope.imagenes.splice(scope.imagenes.indexOf(imagen), 1);
+            }
+        });
+    };
+
     return {
         openGaleria: function(imagenes) {
             scope.imagenes = imagenes;
@@ -364,7 +373,6 @@ angular.module('starter.controllers', [])
         $scope.posicion($location.path());
         $scope.data = {};
         $scope.imagenes = [];
-        $scope.total = 0;
         $scope.ready1 = false;
         $scope.ready2 = false;
         $scope.piscinas = [];
@@ -462,7 +470,7 @@ angular.module('starter.controllers', [])
         */
 
         $scope.takePicture = function() {
-            if ($scope.total < 5) {
+            if ($scope.imagenes.length < 5) {
                 var options = {
                     quality: 75,
                     targetWidth: 1280,
@@ -471,7 +479,6 @@ angular.module('starter.controllers', [])
                 };
                 Camera.getPicture(options).then(function(imageData) {
                     $scope.imagenes.push(imageData);
-                    $scope.total = $scope.imagenes.length;
                 }, function(err) {
                     console.log("Error", err);
                 });
@@ -484,12 +491,8 @@ angular.module('starter.controllers', [])
             Galeria.openGaleria($scope.imagenes);
         };
 
-        $scope.count = function() {
-            $scope.max += 1;
-        };
-
         $scope.getPicture = function() {
-            if ($scope.total < 5) {
+            if ($scope.imagenes.length < 5) {
                 var options = {
                     quality: 75,
                     targetWidth: 1280,
@@ -498,7 +501,6 @@ angular.module('starter.controllers', [])
                 };
                 Camera.getPicture(options).then(function(imageData) {
                     $scope.imagenes.push(imageData);
-                    $scope.total = $scope.imagenes.length;
                 }, function(err) {
                     console.log("Error", err);
                 });
@@ -954,12 +956,12 @@ angular.module('starter.controllers', [])
         $scope.posicion($location.path());
         $scope.data = {};
         $scope.imagenes = [];
-        $scope.total = 0;
         $scope.cargando = false;
         $scope.carga = 0;
         var id = $stateParams.clienteId;
+
         $scope.takePicture = function() {
-            if ($scope.total < 5) {
+            if ($scope.imagenes.length < 5) {
                 var options = {
                     quality: 75,
                     targetWidth: 1280,
@@ -968,7 +970,6 @@ angular.module('starter.controllers', [])
                 };
                 Camera.getPicture(options).then(function(imageData) {
                     $scope.imagenes.push(imageData);
-                    $scope.total = $scope.imagenes.length;
                 }, function(err) {
                     console.log("Error", err);
                 });
@@ -983,7 +984,7 @@ angular.module('starter.controllers', [])
 
 
         $scope.getPicture = function() {
-            if ($scope.total < 5) {
+            if ($scope.imagenes.length < 5) {
                 var options = {
                     quality: 75,
                     targetWidth: 1280,
@@ -992,7 +993,6 @@ angular.module('starter.controllers', [])
                 };
                 Camera.getPicture(options).then(function(imageData) {
                     $scope.imagenes.push(imageData);
-                    $scope.total = $scope.imagenes.length;
                 }, function(err) {
                     console.log("Error", err);
                 });
@@ -1014,7 +1014,6 @@ angular.module('starter.controllers', [])
                 .then(function(results) {
                     results.forEach(function(imagen) {
                         $scope.imagenes.push(imagen);
-                        $scope.total = $scope.imagenes.length;
                     });
                 }, function(error) {
                     console.log('Error: ' + JSON.stringify(error)); // In case of error
