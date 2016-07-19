@@ -9,7 +9,7 @@
 		<ion-list>
 		  <ion-item collection-repeat="item in items" item="item">
 				<div class="row row-n">
-					<div class="col s10">
+					<div class="col s9">
 						<h2> <b class="teal-text accent-4-text">#{{$index + 1}}</b> Piscina {{ item.nombreP }} <b>Tipo</b> {{ item.tipo }}</h2>
 						<p>
 							<b>Ancho</b> {{ item.ancho }} <b>Largo</b> {{ item.largo }} <b>Profundidad</b> {{ item.profundidad }}
@@ -17,10 +17,12 @@
 							<b>Cliente: </b> {{ item.nombreCF }} {{ item.nombreCL }}<br>
 						</p>
 					</div>
-					<div class="col s2">
-							<i class="micon center blue-text lighten-2-text" ng-if="item.planilla!==null && item.salida!==null">done_all</i>
-							<i class="micon center green-text lighten-2-text" ng-if="item.planilla!==null && item.salida==null" ng-click="enviarEdit(item)">done</i>
-							<i class="micon center red-text lighten-2-text" ng-if="item.planilla==null" ng-click="abrirModal(item)">content_paste</i>
+					<div class="col s3 center">
+							<button class="btn-floating btn-large center" ng-class="{'cyan': item.planilla==null, 'teal': item.planilla!==null && item.salida==null, 'accent-4':item.planilla!==null && item.salida==null, 'light-blue':item.planilla!==null && item.salida!==null, 'no-shadow':item.planilla!==null && item.salida!==null, 'waves-effect': item.salida==null, 'waves-light':item.salida==null}">
+								<i class="micon  white-text" ng-if="item.planilla!==null && item.salida!==null">done_all</i>
+								<i class="micon white-text" ng-if="item.planilla!==null && item.salida==null" ng-click="enviarEdit(item)">done</i>
+								<i class="micon white-text" ng-if="item.planilla==null" ng-click="abrirModal(item)">content_paste</i>
+							</button>
 					</div>
 				</div>
 		  </ion-item>

@@ -1,5 +1,5 @@
 <ion-view title="Galeria Reportes">
-	<ion-content>
+	<ion-content ng-class="{'void-l':ready && count==0}" overflow-scroll="false">
     <div class="spin" ng-if="!ready">
       <ion-spinner></ion-spinner>
     </div>
@@ -14,8 +14,8 @@
 		</ks-swiper-container>
 	</div>
     <div class="center" ng-if="ready && count==0">
-        <img width="100%" src="img/broken_image.svg"/>
-        <h4 class="blue-grey-text" >No tiene ningúna imagen</h4>
+        <img width="50%" src="img/broken_image.svg"/>
+        <h5 class="blue-grey-text" >No tiene ningúna imagen</h5>
     </div>
   </ion-content>
 </ion-view>

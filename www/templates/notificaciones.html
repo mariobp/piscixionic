@@ -1,5 +1,5 @@
 <ion-view title="Notificaciones">
-	<ion-content>
+	<ion-content ng-class="{'void-l':!notify.notixList.length}" overflow-scroll="false">
     <div class="list card cardX" ng-if="notify.notixList.length">
       <div class="item item-avatar" ng-repeat="noti in notify.notixList track by $index" on-tap="notificar(noti)">
         	<img ng-src="img/report.svg" ng-if="noti.data.data.tipo=='Reporte'"/>
@@ -17,8 +17,8 @@
       </div>
     </div>
     <div class="center" ng-if="!notify.notixList.length">
-        <img width="100%" src="img/notifications_off.svg"/>
-        <h4 class="blue-grey-text" >No tiene ningúna notificación</h4>
+        <img width="50%" src="img/notifications_off.svg"/>
+        <h5 class="blue-grey-text" >No tiene ningúna notificación</h5>
     </div>
   </ion-content>
 </ion-view>

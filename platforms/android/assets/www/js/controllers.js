@@ -1528,6 +1528,7 @@ angular.module('starter.controllers', [])
 
         $scope.cerrarModal = function() {
             $scope.modal.hide();
+            $scope.data = {};
         };
 
         $scope.$on('$destroy', function() {
@@ -1562,11 +1563,10 @@ angular.module('starter.controllers', [])
                   'Content-Type': 'application/x-www-form-urlencoded'
               },
           }).then(function doneCallbacks(response) {
-              $scope.modal.hide();
+              $scope.cerrarModal();
               $ionicLoading.hide();
               $scope.asignacion.planilla = response.data.id;
               $cordovaToast.show("Enviado exitoso", 'long', 'center');
-              $scope.data = {};
           }, function failCallbacks(response) {
               if (response.status === 403) {
                   $ionicLoading.hide();
@@ -1675,7 +1675,6 @@ angular.module('starter.controllers', [])
       };
 
       $scope.enviandoEdit = function() {
-          console.log($scope.planilla);
           var planilla = {};
           planilla.salida = true;
           $scope.loading = $ionicLoading.show({
@@ -2014,12 +2013,12 @@ angular.module('starter.controllers', [])
             $ionicHistory.goBack(-1);
         };
         $scope.piscinas = function() {
-            $http.get($scope.server + '/usuarios/service/list/piscina/?casa__cliente=' + id)
+            $http.get($scope.server + '/usuarios/service/list/piscina/planilla/?casa__cliente=' + id)
                 .then(function successCallback(response) {
                     $scope.piscinas = response.data.object_list;
                     console.log("Cliente");
                     if (response.data.num_rows === 0) {
-                        $cordovaDialogs.alert('Planilla no disponible, Este Usuario no tiene piscinas asociadas.', 'Información').
+                        $cordovaDialogs.alert('La planilla diaria de la(s) piscina(s) de este cliente ya ha sido deligenciada(s).', 'Planilla no disponible').
                         then(function() {
                             $ionicHistory.goBack(-1);
                         });

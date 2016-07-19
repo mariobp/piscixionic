@@ -543,3 +543,15 @@ progress[value]::-webkit-progress-value {
     right: 0px;
     border-radius: 2px;
 }
+
+.no-shadow{
+    box-shadow: none;
+}
+
+.void-l{
+  display: flex;
+  align-items: center;
+  align-content: center;
+  align-self: center;
+  justify-content: center;
+}
