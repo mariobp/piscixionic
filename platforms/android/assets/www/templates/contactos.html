@@ -5,7 +5,7 @@
       <button class="button button-clear" ng-click="cerrarModal2()"><i class="micon">close</i></button>
     </div>
   </ion-header-bar>
-  <ion-content>
+  <ion-content overflow-scroll="false" ng-class="{'void-l':!info.contactos.length}">
       <div class="list card cardX" ng-if="info.contactos.length">
         <div class="item item-avatar" ng-repeat="contacto in info.contactos track by $index">
           <img src="img/person.svg" />
@@ -19,8 +19,8 @@
         </div>
       </div>
       <div class="center" ng-if="!info.contactos.length">
-          <img width="100%" src="img/person.svg"/>
-          <h4 class="blue-grey-text" >No tiene contacto registrado</h4>
+          <img width="50%" src="img/person.svg"/>
+          <h5 class="blue-grey-text" >No tiene contacto registrado</h5>
       </div>
     </ion-content>
   </ion-content>

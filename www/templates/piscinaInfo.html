@@ -15,7 +15,7 @@
       </div>
       <div class="item item-body center grey lighten-5">
         <img width="77%" ng-src="{{server}}/media/{{infoPiscina.imagen}}" ng-if="!change">
-        <img width="77%" ng-click="takePicture(infoPiscina.id)" ng-src="{{noFoto}}" ng-if="change"/>
+        <img width="50%" ng-click="takePicture(infoPiscina.id)" ng-src="{{noFoto}}" ng-if="change"/>
         <h2 class="teal-text accent-4-text" ng-if="!edit" ng-click="takePicture(infoPiscina.id)">Cambiar foto</h2>
         <h2 class="teal-text accent-4-text" ng-if="edit">Presiona la camara para tomar la foto</h2>
       </div>

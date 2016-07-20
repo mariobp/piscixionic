@@ -596,9 +596,6 @@ angular.module('starter.controllers', [])
 
         //Si la aplicacion regresa de un background y verifica si ya se tiene gps, si no se recalcula
         document.addEventListener("resume", function() {
-          console.log("Resume");
-          console.log($scope.data.latitud);
-          console.log($scope.data.longitud);
           if ($scope.data.latitud === undefined && $scope.data.longitud === undefined) {
               $scope.tomarUbicacion();
           }
