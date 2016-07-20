@@ -1,8 +1,8 @@
 <ion-view cache-view="false" view-title="Solución del Reporte">
-<ion-content>
+<ion-content ng-class="{'void-l':cargando}">
 <div class="center" ng-show="cargando">
-    <img width="100%" src="img/file_upload.svg"/>
-    <h4 class="blue-grey-text">Subiendo Foto #{{numImage}}</h4>
+    <img width="50%" src="img/file_upload.svg"/>
+    <h5 class="blue-grey-text">Subiendo Foto #{{numImage}}</h5>
     <progress value="{{carga}}" max="100"></progress>
 </div>
 <div class="row row-p" ng-show="!cargando">

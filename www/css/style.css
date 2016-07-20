@@ -548,7 +548,7 @@ progress[value]::-webkit-progress-value {
     box-shadow: none;
 }
 
-.void-l{
+.void-l, .void-l .scroll{
   display: flex;
   align-items: center;
   align-content: center;

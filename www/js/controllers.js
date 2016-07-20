@@ -588,16 +588,11 @@ angular.module('starter.controllers', [])
 
         $scope.enviarFotos = function(reporteId) {
             function win(r) {
-                console.log("Code = " + r.responseCode);
-                console.log("Response = " + r.response);
-                console.log("Sent = " + r.bytesSent);
+                $scope.cargando = false;
             }
 
             function fail(error) {
                 $cordovaDialogs.alert("Se ha producido un error: Code = " + error.code, 'Error');
-                console.log(console.error);
-                console.log("upload error source " + error.source);
-                console.log("upload error target " + error.target);
             }
 
             $scope.cargando = true;
@@ -1099,16 +1094,11 @@ angular.module('starter.controllers', [])
 
         $scope.enviarFotos = function(mantenimientoId) {
             function win(r) {
-                console.log("Code = " + r.responseCode);
-                console.log("Response = " + r.response);
-                console.log("Sent = " + r.bytesSent);
+              $scope.cargando = false;
             }
 
             function fail(error) {
                 $cordovaDialogs.alert("Se ha producido un error: Code = " + error.code, 'Error');
-                console.log(console.error);
-                console.log("upload error source " + error.source);
-                console.log("upload error target " + error.target);
             }
 
             $scope.cargando = true;
