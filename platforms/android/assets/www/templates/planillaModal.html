@@ -8,48 +8,15 @@
   <ion-content>
     <form class="col s12" name="form" ng-submit="form.$valid && enviar()" novalidate>
         <div class="scroll2">
-            <div class="row row-p">
-                <div class="input-field col s12">
-                    <input type="checkbox" id="cepillado" name="cepillado" ng-model="data.cepillado">
-                    <label for="cepillado">Cepillado</label>
-                </div>
-            </div>
-            <div class="row row-p">
-                <div class="input-field col s12">
-                    <input type="checkbox" id="aspirado" name="aspirado" ng-model="data.aspirado">
-                    <label for="aspirado">Aspirado</label>
-                </div>
-            </div>
-            <div class="row row-p">
-                <div class="input-field col s12">
-                    <input type="checkbox" id="retrolavado" name="retrolavado" ng-model="data.retrolavado">
-                    <label for="retrolavado">Retrolavado</label>
-                </div>
-            </div>
-            <div class="row row-p">
-                <div class="input-field col s12">
-                    <input type="checkbox" id="aumento_agua" name="aumento_agua" ng-model="data.aumento_agua">
-                    <label for="aumento_agua">Aumento de agua</label>
-                </div>
-            </div>
-            <div class="row row-p">
-                <div class="input-field col s12">
-                    <input type="checkbox" id="aplicacion_cloro" name="aplicacion_cloro" ng-model="data.aplicacion_cloro">
-                    <label for="aplicacion_cloro">Aplicación cloro</label>
-                </div>
-            </div>
-            <div class="row row-p">
-                <div class="input-field col s12">
-                    <input type="checkbox" id="aplicacion_sulfato_al" name="aplicacion_sulfato_al" ng-model="data.aplicacion_sulfato_al">
-                    <label for="aplicacion_sulfato_al">Aplicación Sulfato Al</label>
-                </div>
-            </div>
-            <div class="row row-p">
-                <div class="input-field col s12">
-                    <input type="checkbox" id="clasificador_alg" name="clasificador_alg" ng-model="data.clasificador_alg">
-                    <label for="clasificador_alg">Clasificador AGL</label>
-                </div>
-            </div>
+            <ion-list class="planilla">
+                <ion-checkbox class="checkbox-calm" ng-model="data.cepillado">Cepillado</ion-checkbox>
+                <ion-checkbox class="checkbox-calm" ng-model="data.aspirado">Aspirado</ion-checkbox>
+                <ion-checkbox class="checkbox-calm" ng-model="data.retrolavado">Retrolavado</ion-checkbox>
+                <ion-checkbox class="checkbox-calm" ng-model="data.aumento_agua">Aumento de agua</ion-checkbox>
+                <ion-checkbox class="checkbox-calm" ng-model="data.aplicacion_cloro">Aplicación cloro</ion-checkbox>
+                <ion-checkbox class="checkbox-calm" ng-model="data.aplicacion_sulfato_al">Aplicación Sulfato Al</ion-checkbox>
+                <ion-checkbox class="checkbox-calm" ng-model="data.clasificador_alg">Clasificador AGL</ion-checkbox>
+            </ion-list>
             <div class="row row-p">
                 <div class="input-field col s6">
                     <input type="radio" id="disminucion_ph" name="ph" ng-model="data.disminucion_ph">

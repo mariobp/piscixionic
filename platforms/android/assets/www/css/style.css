@@ -555,3 +555,14 @@ progress[value]::-webkit-progress-value {
   align-self: center;
   justify-content: center;
 }
+
+.planilla .list{
+  padding-left: 6px;
+}
+
+.planilla .item{
+  background-color: inherit;
+  border-width: inherit;
+  border-style: none;
+  font-size: 1rem;
+}
