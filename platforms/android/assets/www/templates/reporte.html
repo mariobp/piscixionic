@@ -37,7 +37,7 @@
                 <select id="tipo" class="ion-input-select" name="tipo_de_reporte" ng-model="data.tipo_de_reporte" >
                    <option value="" disabled selected>Elegir tipo de Reporte</option>
                    <option value="{{tipo.id}}" ng-repeat="tipo in tipos">
-                     {{tipo.nombre}} Cierre:{{tipo.cierre}}
+                     {{tipo.nombre}}
                    </option>
                </select>
                 <label for="tipo"  class="label-select" ng-class="{'invalid': !data.tipo && form.$submitted,'valid':data.tipo && form.$submitted}">Tipo de Reporte
