@@ -955,6 +955,10 @@ angular.module('starter.controllers', [])
         $scope.carga = 0;
         var id = $stateParams.clienteId;
 
+        $scope.back = function() {
+            $ionicHistory.goBack(-1);
+        };
+        
         $scope.takePicture = function() {
             if ($scope.imagenes.length < 5) {
                 var options = {
