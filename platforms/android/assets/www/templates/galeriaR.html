@@ -5,7 +5,7 @@
     </div>
 	<div class="" ng-if="ready && count>0">
 		<div class="card galeria-up" ng-if="ready && count>0">
-			<img height="50%" ng-src="{{server}}/media/{{actual}}"/>
+			<img height="90%" ng-src="{{server}}/media/{{actual}}"/>
 		</div>
 		<ks-swiper-container ng-if="ready && count>0" class="galeria-down" initial-slide="0" speed="2000" loop="false" slides-per-view="3" space-between="0" pagination-clickable="false" show-nav-buttons="true">
 			<ks-swiper-slide class="swiper-slide" ng-repeat="imagen in imagenes" on-touch="selecion(imagen)">

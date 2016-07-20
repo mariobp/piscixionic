@@ -1,11 +1,11 @@
 <ion-view title="Galeria Mantenimienos">
-	<ion-content ng-class="{'void-l':ready && count==0}" >
+	<ion-content overflow-scroll="false" ng-class="{'void-l':!imagenes.length}">
     <div class="spin" ng-if="!ready">
       <ion-spinner></ion-spinner>
     </div>
 	<div class="" ng-if="ready && count>0">
 		<div class="card galeria-up" ng-if="ready && count>0">
-			<img class="full-image" ng-src="{{server}}/media/{{actual}}"/>
+			<img height="90%" ng-src="{{server}}/media/{{actual}}"/>
 		</div>
 		<ks-swiper-container ng-if="ready && count>0" initial-slide="0" speed="2000" loop="false" slides-per-view="3" space-between="0" pagination-clickable="false" show-nav-buttons="true">
 			<ks-swiper-slide class="swiper-slide galeria-down" ng-repeat="imagen in imagenes" on-touch="selecion(imagen)">
