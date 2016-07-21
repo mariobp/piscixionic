@@ -385,6 +385,9 @@ angular.module('starter.controllers', [])
         $scope.max = 0;
         var id = $stateParams.clienteId;
         //Angular Document Ready
+        $ionicHistory.nextViewOptions({
+            disableBack: true
+        });
         $scope.back = function() {
             $ionicHistory.goBack(-1);
         };
@@ -703,11 +706,7 @@ angular.module('starter.controllers', [])
         } else {
             url = '/reportes/reporte/list/?piscina__casa__cliente=' + id + '&';
         }
-        if ($scope.actual > 0) {
-            $rootScope.$ionicGoBack = function() {
-                $ionicHistory.goBack(-2);
-            };
-        }
+
         $scope.loadMore = function() {
             $http.get($scope.server + url + 'page=' + num + "&search=" + $scope.search)
                 .then(function successCallback(response) {
@@ -769,7 +768,6 @@ angular.module('starter.controllers', [])
         var id = $stateParams.reporteId;
         $scope.imagenes = [];
         $scope.ready = false;
-        $scope.count = 0;
         $scope.actual = "";
         $scope.swiper = {};
 
@@ -777,8 +775,7 @@ angular.module('starter.controllers', [])
             $http.get($scope.server + '/reportes/fotoreporte/list/?reporte=' + id)
                 .then(function successCallback(response) {
                     $scope.imagenes = response.data.object_list;
-                    $scope.count = $scope.imagenes.length;
-                    if ($scope.count > 0) {
+                    if ($scope.imagenes.length > 0) {
                         $scope.actual = $scope.imagenes[0].url;
                     }
                     $scope.ready = true;
@@ -954,7 +951,9 @@ angular.module('starter.controllers', [])
         $scope.cargando = false;
         $scope.carga = 0;
         var id = $stateParams.clienteId;
-
+        $ionicHistory.nextViewOptions({
+            disableBack: true
+        });
         $scope.back = function() {
             $ionicHistory.goBack(-1);
         };
@@ -1210,11 +1209,7 @@ angular.module('starter.controllers', [])
         } else {
             url = '/mantenimiento/service/mantanimiento/list/?reporte=' + id + '&';
         }
-        if ($scope.actual > 0) {
-            $rootScope.$ionicGoBack = function() {
-                $ionicHistory.goBack(-2);
-            };
-        }
+        
         $scope.loadMore = function() {
             $http.get($scope.server + url + 'page=' + num + "&search=" + $scope.search)
                 .then(function successCallback(response) {
@@ -1278,7 +1273,6 @@ angular.module('starter.controllers', [])
         var id = $stateParams.mantenimientoId;
         $scope.imagenes = [];
         $scope.ready = false;
-        $scope.count = 0;
         $scope.actual = "";
         $scope.swiper = {};
         $scope.posicion($location.path());
@@ -1287,8 +1281,7 @@ angular.module('starter.controllers', [])
             $http.get($scope.server + '/mantenimiento/service/fotomantenimiento/list/?mantenimiento=' + id)
                 .then(function successCallback(response) {
                     $scope.imagenes = response.data.object_list;
-                    $scope.count = $scope.imagenes.length;
-                    if ($scope.count > 0) {
+                    if ($scope.imagenes.length > 0) {
                         $scope.actual = $scope.imagenes[0].url;
                     }
                     $scope.ready = true;

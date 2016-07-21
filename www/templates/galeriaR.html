@@ -1,19 +1,19 @@
 <ion-view title="Galeria Reportes">
-	<ion-content overflow-scroll="true" ng-class="{'void-l':ready && count==0}">
+	<ion-content overflow-scroll="true" ng-class="{'void-l':ready && imagenes.length==0}">
     <div class="spin" ng-if="!ready">
       <ion-spinner></ion-spinner>
     </div>
-	<div class="" ng-if="ready && count>0">
-		<div class="card galeria-up" ng-if="ready && count>0">
+	<div class="" ng-if="ready && imagenes.length>0">
+		<div class="card galeria-up" ng-if="ready && imagenes.length>0">
 			<img height="90%" ng-src="{{server}}/media/{{actual}}"/>
 		</div>
-		<ks-swiper-container ng-if="ready && count>0" class="galeria-down" initial-slide="0" speed="2000" loop="false" slides-per-view="3" space-between="0" pagination-clickable="false" show-nav-buttons="true">
+		<ks-swiper-container ng-if="ready && imagenes.length>0" class="galeria-down" initial-slide="0" speed="2000" loop="false" slides-per-view="3" space-between="0" pagination-clickable="false" show-nav-buttons="true">
 			<ks-swiper-slide class="swiper-slide" ng-repeat="imagen in imagenes" on-touch="selecion(imagen)">
 				<img ng-src="{{server}}/media/{{imagen.url}}">
 			</ks-swiper-slide>
 		</ks-swiper-container>
 	</div>
-    <div class="center" ng-if="ready && count==0">
+    <div class="center" ng-if="ready && imagenes.length==0">
         <img width="50%" src="img/broken_image.svg"/>
         <h5 class="blue-grey-text" >No tiene ningúna imagen</h5>
     </div>
