@@ -958,7 +958,7 @@ angular.module('starter.controllers', [])
         $scope.back = function() {
             $ionicHistory.goBack(-1);
         };
-        
+
         $scope.takePicture = function() {
             if ($scope.imagenes.length < 5) {
                 var options = {
@@ -1632,6 +1632,8 @@ angular.module('starter.controllers', [])
                   $cordovaGeolocation.getCurrentPosition(posOptions).then(function(pos) {
                       $scope.dataRespuesta.latitud = pos.coords.latitude;
                       $scope.dataRespuesta.longitud = pos.coords.longitude;
+                      $scope.dataRespuesta.nombre = "Salida de piscina " + $scope.planilla.nombreP;
+                      $scope.dataRespuesta.descripcion = "Actividad de mantenimiento finalizada en la piscina " + $scope.planilla.nombreP + " del cliente " + $scope.planilla.nombreCF +" "+$scope.planilla.nombreCL;
                       $ionicLoading.hide();
                       $cordovaToast.show("Ubicación tomada", 'short', 'center').then(function(success){
                           $cordovaDialogs.confirm('Esta seguro que quiere indicar que ya salio?', 'Enviar', ['Si, Enviar!', 'Cancelar'])
@@ -1685,8 +1687,6 @@ angular.module('starter.controllers', [])
           }).then(function doneCallbacks(response) {
               $ionicLoading.hide();
               $scope.planilla.salida = true;
-              $scope.dataRespuesta.nombre = "Salida de piscina " + $scope.planilla.nombreP;
-              $scope.dataRespuesta.descripcion = "Actividad de mantenimiento finalizada en la piscina " + $scope.planilla.nombreP + " del cliente " + $scope.planilla.nombreCF +" "+$scope.planilla.nombreCL;
               $scope.enviarInforme();
           }, function failCallbacks(response) {
               if (response.status === 403) {

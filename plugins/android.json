@@ -19,9 +19,6 @@
         "cordova-plugin-camera": {
             "PACKAGE_NAME": "com.ionicframework.piscixp998893"
         },
-        "cordova-plugin-console": {
-            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
-        },
         "cordova-plugin-crosswalk-webview": {
             "PACKAGE_NAME": "com.ionicframework.piscixp998893"
         },
