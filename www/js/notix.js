@@ -82,7 +82,7 @@ angular.module('starter.socket', [])
                                 tipo: message.data.data.tipo
                             }
                         });
-                    } else if (message.data.data.tipo == "Solución") {
+                    } else if (message.data.data.tipo == "Solucion") {
                         $cordovaLocalNotification.schedule({
                             id: id_message,
                             title: 'Solución de Reporte',
@@ -93,7 +93,7 @@ angular.module('starter.socket', [])
                                 tipo: message.data.data.tipo
                             }
                         });
-                    } else if (message.data.data.tipo == "Asignación") {
+                    } else if (message.data.data.tipo == "Asignacion") {
                         $cordovaLocalNotification.schedule({
                             id: id_message,
                             title: 'Asignación',
@@ -140,14 +140,14 @@ angular.module('starter.socket', [])
                                     }, {
                                         reload: true
                                     });
-                                } else if (data.tipo === "Solución") {
+                                } else if (data.tipo === "Solucion") {
                                     $state.go('app.historialM', {
                                         clienteId: data.reporte,
                                         actual: data.solucion
                                     }, {
                                         reload: true
                                     });
-                                } else if (data.tipo === "Asignación") {
+                                } else if (data.tipo === "Asignacion") {
                                     $state.go('app.ruta', {
                                       actual: data.asignacion
                                     },
