@@ -88,7 +88,7 @@ angular.module('starter.controllers', [])
             }
         });
     };
-
+    console.log(notix);
     $scope.serverOn();
 })
 
@@ -1209,7 +1209,7 @@ angular.module('starter.controllers', [])
         } else {
             url = '/mantenimiento/service/mantanimiento/list/?reporte=' + id + '&';
         }
-        
+
         $scope.loadMore = function() {
             $http.get($scope.server + url + 'page=' + num + "&search=" + $scope.search)
                 .then(function successCallback(response) {
@@ -2139,14 +2139,14 @@ angular.module('starter.controllers', [])
                     }, {
                         reload: true
                     });
-                } else if (data.tipo === "Solución") {
+                } else if (data.tipo === "Solucion") {
                     $state.go('app.historialM', {
                         clienteId: data.reporte_id,
                         actual: data.solucion_id
                     }, {
                         reload: true
                     });
-                } else if (data.tipo === "Asignación") {
+                } else if (data.tipo === "Asignacion") {
                     $state.go('app.ruta', {
                         actual: data.asignacion_id
                     }, {
