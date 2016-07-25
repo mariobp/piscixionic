@@ -566,3 +566,7 @@ progress[value]::-webkit-progress-value {
   border-style: none;
   font-size: 1rem;
 }
+
+.actividades p{
+  white-space: normal;
+}

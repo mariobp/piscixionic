@@ -39,70 +39,73 @@ angular.module('starter.socket', [])
 
             scope.socket.on('notix', function(message) {
                 if (scope.recive) {
-                    this.notixList.push(message);
-                    scope.lista_id.push(message._id);
-                    var id_message = scope.lista_id.indexOf(message._id) + 1;
-                    if (message.data.data.tipo == "Reporte") {
-                        $cordovaLocalNotification.schedule({
-                            id: id_message,
-                            title: 'Reporte',
-                            text: message.data.html,
-                            data: {
-                                reporte: message.data.data.reporte_id,
-                                cliente: message.data.data.cliente_id,
-                                tipo: message.data.data.tipo
-                            }
-                        });
-                    } else if (message.data.data.tipo == "Actividad") {
-                        $cordovaLocalNotification.schedule({
-                            id: id_message,
-                            title: 'Actividad',
-                            text: message.data.html,
-                            data: {
-                                tipo: message.data.data.tipo
-                            }
-                        });
-                    } else if (message.data.data.tipo == "Respuesta") {
-                        $cordovaLocalNotification.schedule({
-                            id: id_message,
-                            title: 'Respuesta',
-                            text: message.data.html,
-                            data: {
-                                reporte: message.data.data.reporte_id,
-                                tipo: message.data.data.tipo
-                            }
-                        });
-                    } else if (message.data.data.tipo == "Recordatorio") {
-                        $cordovaLocalNotification.schedule({
-                            id: id_message,
-                            title: 'Recordatorio',
-                            text: message.data.html,
-                            data: {
-                                reporte: message.data.data.reporte_id,
-                                tipo: message.data.data.tipo
-                            }
-                        });
-                    } else if (message.data.data.tipo == "Solucion") {
-                        $cordovaLocalNotification.schedule({
-                            id: id_message,
-                            title: 'Solución de Reporte',
-                            text: message.data.html,
-                            data: {
-                                solucion: message.data.data.solucion_id,
-                                reporte: message.data.data.reporte_id,
-                                tipo: message.data.data.tipo
-                            }
-                        });
-                    } else if (message.data.data.tipo == "Asignacion") {
-                        $cordovaLocalNotification.schedule({
-                            id: id_message,
-                            title: 'Asignación',
-                            text: message.data.html,
-                            data: {
-                                asignacion: message.data.data.asignacion_id,
-                                tipo: message.data.data.tipo
-                            }
-                        });
+                    console.log(message);
+                    if (message.data.data !== undefined) {
+                        this.notixList.push(message);
+                        scope.lista_id.push(message._id);
+                        var id_message = scope.lista_id.indexOf(message._id) + 1;
+                        if (message.data.data.tipo == "Reporte") {
+                            $cordovaLocalNotification.schedule({
+                                id: id_message,
+                                title: 'Reporte',
+                                text: message.data.html,
+                                data: {
+                                    reporte: message.data.data.reporte_id,
+                                    cliente: message.data.data.cliente_id,
+                                    tipo: message.data.data.tipo
+                                }
+                            });
+                        } else if (message.data.data.tipo == "Actividad") {
+                            $cordovaLocalNotification.schedule({
+                                id: id_message,
+                                title: 'Actividad',
+                                text: message.data.html,
+                                data: {
+                                    tipo: message.data.data.tipo
+                                }
+                            });
+                        } else if (message.data.data.tipo == "Respuesta") {
+                            $cordovaLocalNotification.schedule({
+                                id: id_message,
+                                title: 'Respuesta',
+                                text: message.data.html,
+                                data: {
+                                    reporte: message.data.data.reporte_id,
+                                    tipo: message.data.data.tipo
+                                }
+                            });
+                        } else if (message.data.data.tipo == "Recordatorio") {
+                            $cordovaLocalNotification.schedule({
+                                id: id_message,
+                                title: 'Recordatorio',
+                                text: message.data.html,
+                                data: {
+                                    reporte: message.data.data.reporte_id,
+                                    tipo: message.data.data.tipo
+                                }
+                            });
+                        } else if (message.data.data.tipo == "Solucion") {
+                            $cordovaLocalNotification.schedule({
+                                id: id_message,
+                                title: 'Solución de Reporte',
+                                text: message.data.html,
+                                data: {
+                                    solucion: message.data.data.solucion_id,
+                                    reporte: message.data.data.reporte_id,
+                                    tipo: message.data.data.tipo
+                                }
+                            });
+                        } else if (message.data.data.tipo == "Asignacion") {
+                            $cordovaLocalNotification.schedule({
+                                id: id_message,
+                                title: 'Asignación',
+                                text: message.data.html,
+                                data: {
+                                    asignacion: message.data.data.asignacion_id,
+                                    tipo: message.data.data.tipo
+                                }
+                            });
+                        }
                     }
                     $rootScope.$on('$cordovaLocalNotification:click',
                         function(event, notification, state) {

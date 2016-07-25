@@ -1,0 +1,20 @@
+<ion-view cache-view="false" title="Calendario">
+	<ion-content ng-class="{'void-l':!eventos.length}">
+      <div class="spin" ng-if="!ready">
+        <ion-spinner></ion-spinner>
+      </div>
+      </ion-refresher>
+      <div class="list card cardX actividades" ng-if="eventos.length && ready">
+          <div class="item {{event.color}}" ng-repeat="event in eventos track by $index">
+              <h2>{{event.type}}</h2>
+    				  <p>
+    				    {{event.title}}
+    				  </p>
+          </div>
+      </div>
+      <div class="center" ng-if="!eventos.length && ready">
+          <img width="50%" src="img/busy.svg"/>
+          <h5 class="blue-grey-text" >No tiene ningúna actividad</h5>
+      </div>
+  </ion-content>
+</ion-view>
