@@ -275,7 +275,16 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
                 controller: 'Repuesta'
             }
         }
-    });
+    })
+    .state('app.calendario', {
+            url: '/calendario',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/calendario.html',
+                    controller: 'Calendario'
+                }
+            }
+      });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/clientelists');
 });

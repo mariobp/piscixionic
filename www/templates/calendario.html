@@ -1,0 +1,30 @@
+<ion-view cache-view="false" title="Calendario de actividades">
+  <ion-header-bar class="bar-subheader headerbar item-input-inset row row-p">
+			<div class="input-field col s6 input-header">
+        <i class="micon prefix prefix2">date_range</i>
+        <input type="date" name="buscar" ng-change="reload()" placeholder="Inicio" class="white-text input-search" ng-model="starts" >
+      </div>
+		  <div class="input-field col s6 input-header">
+				<i class="micon prefix prefix2">date_range</i>
+				<input type="date" name="buscar" ng-change="reload()" placeholder="Fin" class="white-text input-search" ng-model="ends" >
+			</div>
+  </ion-header-bar>
+	<ion-content ng-class="{'void-l':!eventos.length}">
+      <div class="spin" ng-if="!ready">
+        <ion-spinner></ion-spinner>
+      </div>
+      </ion-refresher>
+      <div class="list card cardX actividades" ng-if="eventos.length && ready">
+          <div class="item {{event.color}}" ng-repeat="event in eventos track by $index">
+              <h2>{{event.type}}</h2>
+    				  <p>
+    				    {{event.title}}
+    				  </p>
+          </div>
+      </div>
+      <div class="center" ng-if="!eventos.length && ready">
+          <img width="50%" src="img/busy.svg"/>
+          <h5 class="blue-grey-text" >No tiene ningúna actividad</h5>
+      </div>
+  </ion-content>
+</ion-view>

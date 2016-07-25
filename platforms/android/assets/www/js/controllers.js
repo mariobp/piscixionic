@@ -103,7 +103,7 @@ angular.module('starter.controllers', [])
             $scope.loginReady = false;
             $http({
                 method: 'POST',
-                url: $scope.server + '/usuarios/login/piscinero/',
+                url: $scope.server + '/usuarios/login/supervisor/',
                 data: $.param($scope.loginData),
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -131,7 +131,10 @@ angular.module('starter.controllers', [])
                     if (data.password) {
                         $cordovaToast.show("Contraseña:" + data.password[0], 'short', 'center');
                     }
-                } else if (response.status == 500) {
+                }else if(response.status == 404){
+                    $cordovaToast.show("Usuario y/o contraseña incorrectos", 'short', 'center');
+                }
+                else if (response.status == 500) {
                     $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
                 }
             });
@@ -2238,4 +2241,54 @@ angular.module('starter.controllers', [])
             }
         });
     };
-});
+})
+.controller('Calendario', function($scope, $http, $cordovaDialogs, $cordovaToast, $cordovaDatePicker) {
+      $scope.eventos = [];
+      $scope.starts = new Date();
+      $scope.ends = $scope.starts;
+      $scope.ready = false;
+      var mes1 = $scope.starts.getMonth() + 1;
+      var mes2 = null;
+      var starts = $scope.starts.getFullYear() + "-" + mes1 + "-" + $scope.starts.getDate();
+      var ends = starts;
+
+      $scope.eventosDelDia = function() {
+          $http.get($scope.server + '/notificaciones/calendar/?start=' + starts + "&end=" + ends)
+              .then(function doneCallbacks(response) {
+                  $scope.eventos = response.data;
+                  $scope.ready = true;
+              }, function failCallbacks(response) {
+                  if (response.status === 403) {
+                      $cordovaToast
+                          .show(response.data.error, 'short', 'center')
+                          .then(function(success) {
+                              $state.go('app.login');
+                          }, function(error) {
+                              $state.go('app.login');
+                          });
+                  } else if (response.status == 500) {
+                      $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
+                  } else if (response.status === 0) {
+                      $cordovaDialogs.alert('No se puede acceder a este servicio en este momento.', 'Error', 'Ok');
+                  } else {
+                      $timeout(function() {
+                          $cordovaToast.show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center').then(function(success) {
+                              $scope.eventosDelDia();
+                          });
+                      }, 10000);
+                  }
+              });
+      };
+
+      $scope.eventosDelDia();
+
+      $scope.reload = function(){
+        $scope.ready = false;
+        mes1 = $scope.starts.getMonth() + 1;
+        mes2 = $scope.ends.getMonth() + 1;
+        starts = $scope.starts.getFullYear() + "-" + mes1 + "-" + $scope.starts.getDate();
+        ends = $scope.ends.getFullYear() + "-" + mes2 + "-" + $scope.ends.getDate();
+        $scope.eventos = [];
+        $scope.eventosDelDia();
+      };
+  });

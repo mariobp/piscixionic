@@ -1,4 +1,4 @@
-<ion-view cache-view="false" title="Notificaciones">
+<ion-view title="Notificaciones">
 	<ion-content overflow-scroll="false" ng-class="{'void-l':!notify.notixList.length}">
     <div class="list card cardX" ng-if="notify.notixList.length">
       <div class="item item-avatar" ng-repeat="noti in notify.notixList track by $index" on-tap="notificar(noti)">
