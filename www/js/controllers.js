@@ -131,10 +131,9 @@ angular.module('starter.controllers', [])
                     if (data.password) {
                         $cordovaToast.show("Contraseña:" + data.password[0], 'short', 'center');
                     }
-                }else if(response.status == 404){
+                } else if (response.status == 404) {
                     $cordovaToast.show("Usuario y/o contraseña incorrectos", 'short', 'center');
-                }
-                else if (response.status == 500) {
+                } else if (response.status == 500) {
                     $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
                 }
             });
@@ -2159,16 +2158,18 @@ angular.module('starter.controllers', [])
             });
         };
     })
-    .controller('Calendario', function($scope, $http, $cordovaDialogs, $cordovaToast) {
+    .controller('Calendario', function($scope, $http, $cordovaDialogs, $cordovaToast, $cordovaDatePicker) {
         $scope.eventos = [];
-        var fecha = new Date();
-        var mes = fecha.getMonth() + 1;
-        $scope.starts = fecha.getFullYear() + "-" + mes + "-" + fecha.getDate();
+        $scope.starts = new Date();
         $scope.ends = $scope.starts;
         $scope.ready = false;
+        var mes1 = $scope.starts.getMonth() + 1;
+        var mes2 = null;
+        var starts = $scope.starts.getFullYear() + "-" + mes1 + "-" + $scope.starts.getDate();
+        var ends = starts;
 
         $scope.eventosDelDia = function() {
-            $http.get($scope.server + '/notificaciones/calendar/?start=' + $scope.starts + "&end=" + $scope.ends)
+            $http.get($scope.server + '/notificaciones/calendar/?start=' + starts + "&end=" + ends)
                 .then(function doneCallbacks(response) {
                     $scope.eventos = response.data;
                     $scope.ready = true;
@@ -2196,4 +2197,14 @@ angular.module('starter.controllers', [])
         };
 
         $scope.eventosDelDia();
+
+        $scope.reload = function() {
+            $scope.ready = false;
+            mes1 = $scope.starts.getMonth() + 1;
+            mes2 = $scope.ends.getMonth() + 1;
+            starts = $scope.starts.getFullYear() + "-" + mes1 + "-" + $scope.starts.getDate();
+            ends = $scope.ends.getFullYear() + "-" + mes2 + "-" + $scope.ends.getDate();
+            $scope.eventos = [];
+            $scope.eventosDelDia();
+        };
     });
