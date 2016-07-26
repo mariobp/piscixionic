@@ -1835,6 +1835,7 @@ angular.module('starter.controllers', [])
             max = 0,
             url = '';
         $scope.reportes = [];
+        $scope.disableEnviar = false;
         $scope.data = {};
         $scope.loadMore = function() {
             $http.get($scope.server + "/reportes/reporte/informativo/list/?" + 'page=' + num + "&search=" + $scope.search)
@@ -1964,11 +1965,14 @@ angular.module('starter.controllers', [])
         };
 
         $scope.enviar = function() {
+            $scope.disableEnviar = true;
             if ($scope.data.latitud && $scope.data.longitud) {
                 $cordovaDialogs.confirm('Esta seguro que quiere enviar?', 'Enviar', ['Si, Enviar!', 'Cancelar'])
                     .then(function(result) {
                         if (result === 1) {
                             $scope.sendData(); //Se formatea la informacion y se envia.
+                        }else{
+                            $scope.disableEnviar = false;
                         }
                     });
             } else {
@@ -1998,8 +2002,8 @@ angular.module('starter.controllers', [])
                         $scope.cerrarModal();
                     });
             }, function failCallbacks(response) {
+                $ionicLoading.hide();
                 if (response.status === 403) {
-                    $ionicLoading.hide();
                     $cordovaToast
                         .show(response.data.error, 'short', 'center')
                         .then(function(success) {
@@ -2009,7 +2013,6 @@ angular.module('starter.controllers', [])
                         });
                 }
                 if (response.status === 400) {
-                    $ionicLoading.hide();
                     var data = response.data;
                     if (data.error) {
                         $cordovaToast.show(data.error[0], 'short', 'center');
@@ -2021,16 +2024,15 @@ angular.module('starter.controllers', [])
                         $cordovaToast.show("Descripción:" + data.descripcion[0], 'short', 'center');
                     }
                 } else if (response.status == 500) {
-                    $ionicLoading.hide();
                     $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
                 } else {
                     $timeout(function() {
                         $cordovaToast.show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center').then(function(success) {
-                            $ionicLoading.hide();
                             $scope.sendData();
                         });
                     }, 5000);
                 }
+                $scope.disableEnviar = false;
             });
         };
     })
@@ -2039,7 +2041,7 @@ angular.module('starter.controllers', [])
         $scope.data = {};
         $scope.ready = false;
         $scope.piscinas = [];
-        $scope.disableEnviar = true;
+        $scope.disableEnviar = false;
 
         var id = $stateParams.clienteId;
         //Angular Document Ready
@@ -2051,12 +2053,13 @@ angular.module('starter.controllers', [])
             $http.get($scope.server + '/usuarios/service/list/piscina/planilla/?casa__cliente=' + id)
                 .then(function successCallback(response) {
                     $scope.piscinas = response.data.object_list;
-                    console.log("Cliente");
                     if (response.data.num_rows === 0) {
                         $cordovaDialogs.alert('La planilla diaria de la(s) piscina(s) de este cliente ya ha sido deligenciada(s).', 'Planilla no disponible').
                         then(function() {
                             $ionicHistory.goBack(-1);
                         });
+                    }else{
+                        $scope.tomarUbicacion();
                     }
                     $scope.ready = true;
                 }, function errorCallback(response) {
@@ -2129,8 +2132,6 @@ angular.module('starter.controllers', [])
                 }
             });
         };
-        //Se calcula la ubicación actual
-        $scope.tomarUbicacion();
 
         //Si la aplicacion regresa de un background y verifica si ya se tiene gps, si no se recalcula
         document.addEventListener("resume", function() {
