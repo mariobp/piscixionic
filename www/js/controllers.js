@@ -2302,13 +2302,17 @@ angular.module('starter.controllers', [])
 
         $scope.eventosDelDia();
 
-        $scope.reload = function() {
-            $scope.ready = false;
-            mes1 = $scope.starts.getMonth() + 1;
-            mes2 = $scope.ends.getMonth() + 1;
-            starts = $scope.starts.getFullYear() + "-" + mes1 + "-" + $scope.starts.getDate();
-            ends = $scope.ends.getFullYear() + "-" + mes2 + "-" + $scope.ends.getDate();
-            $scope.eventos = [];
-            $scope.eventosDelDia();
-        };
+       $scope.reload = function(){
+            if ($scope.starts !== null && $scope.ends !== null) {
+              $scope.ready = false;
+              mes1 = $scope.starts.getMonth() + 1;
+              mes2 = $scope.ends.getMonth() + 1;
+              starts = $scope.starts.getFullYear() + "-" + mes1 + "-" + $scope.starts.getDate();
+              ends = $scope.ends.getFullYear() + "-" + mes2 + "-" + $scope.ends.getDate();
+              $scope.eventos = [];
+              $scope.eventosDelDia();
+            }else{
+              $cordovaDialogs.alert("Debe llenar los dos campos de fechas");
+            }
+      };
     });
