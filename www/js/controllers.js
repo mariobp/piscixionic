@@ -2312,7 +2312,7 @@ angular.module('starter.controllers', [])
               $scope.eventos = [];
               $scope.eventosDelDia();
             }else{
-              $cordovaDialogs.alert("Debe llenar los dos campos de fechas");
+                $cordovaDialogs.alert("Debe llenar los dos campos de fechas", "Campos requeridos");
             }
       };
     });
