@@ -423,6 +423,7 @@ angular.module('starter.controllers', [])
         $scope.cargando = false;
         $scope.file = "";
         $scope.numImage = 0;
+        $scope.disableEnviar = false;
         $scope.max = 0;
         var id = $stateParams.clienteId;
         //Angular Document Ready
@@ -609,12 +610,15 @@ angular.module('starter.controllers', [])
         }, false);
 
         $scope.enviar = function() {
+            $scope.disableEnviar = true;
             if ($scope.data.latitud && $scope.data.longitud) {
                 if ($scope.imagenes.length > 0) {
                     $cordovaDialogs.confirm('Esta seguro que quiere enviar?', 'Enviar', ['Si, Enviar!', 'Cancelar'])
                         .then(function(result) {
                             if (result === 1) {
                                 $scope.sendData(); //Se formatea la informacion y se envia.
+                            }else{
+                                $scope.disableEnviar = false;
                             }
                         });
                 } else {
@@ -624,12 +628,15 @@ angular.module('starter.controllers', [])
                                 $scope.sendData(); //Se envia sin fotos
                             } else {
                                 $scope.takePicture();
+                                $scope.disableEnviar = false;
                             }
                         });
                 }
             } else {
-                $cordovaToast.show("No se ha tomado aun la ubicación, por favor espere e intente de nuevo", 'short', 'center');
-            }
+                $cordovaToast.show("No se ha tomado aun la ubicación, por favor espere e intente de nuevo", 'short', 'center').then(function() {
+                      $scope.disableEnviar = false;
+                  });
+          }
         };
 
         $scope.enviarFotos = function(reporteId) {
@@ -684,6 +691,7 @@ angular.module('starter.controllers', [])
                 },
             }).then(function doneCallbacks(response) {
                     $ionicLoading.hide();
+                    $scope.disableEnviar = false;
                     $scope.enviarFotos(response.data.id);
                     $cordovaToast.show("Guardando exitoso", 'long', 'center')
                         .then(function(success) {
@@ -694,8 +702,8 @@ angular.module('starter.controllers', [])
                         });
                 },
                 function failCallbacks(response) {
+                    $ionicLoading.hide();
                     if (response.status === 403) {
-                        $ionicLoading.hide();
                         var error;
                         if (response.data.error) {
                             error = response.data.error;
@@ -710,7 +718,6 @@ angular.module('starter.controllers', [])
                                 $state.go('app.login');
                             });
                     } else if (response.status == 400) {
-                        $ionicLoading.hide();
                         var data = response.data;
                         if (data.error) {
                             $cordovaToast.show(data.error[0], 'short', 'center');
@@ -726,16 +733,15 @@ angular.module('starter.controllers', [])
                             $cordovaToast.show("Reporta:" + data.reporta[0], 'short', 'center');
                         }
                     } else if (response.status == 500) {
-                        $ionicLoading.hide();
                         $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
                     } else {
                         $timeout(function() {
                             $cordovaToast.show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center').then(function(success) {
-                                $ionicLoading.hide();
                                 $scope.sendData();
                             });
                         }, 5000);
                     }
+                    $scope.disableEnviar = false;
                 });
         };
     })
@@ -999,6 +1005,7 @@ angular.module('starter.controllers', [])
         $scope.tipos = [];
         $scope.cargando = false;
         $scope.carga = 0;
+        $scope.disableEnviar = false;
         var id = $stateParams.clienteId;
         $ionicHistory.nextViewOptions({
             disableBack: true
@@ -1121,12 +1128,15 @@ angular.module('starter.controllers', [])
         }, false);
 
         $scope.enviar = function() {
+            $scope.disableEnviar = true;
             if ($scope.data.latitud && $scope.data.longitud) {
                 if ($scope.imagenes.length > 0) {
                     $cordovaDialogs.confirm('Esta seguro que quiere enviar?', 'Enviar', ['Si, Enviar!', 'Cancelar'])
                         .then(function(result) {
                             if (result === 1) {
                                 $scope.sendData(); //Se formatea la informacion y se envia.
+                            }else{
+                              $scope.disableEnviar = false;
                             }
                         });
                 } else {
@@ -1136,11 +1146,14 @@ angular.module('starter.controllers', [])
                                 $scope.sendData(); //Se envia sin fotos
                             } else {
                                 $scope.takePicture();
+                                $scope.disableEnviar = false;
                             }
                         });
                 }
             } else {
-                $cordovaToast.show("No se ha tomado aun la ubicación, por favor espere e intente de nuevo", 'short', 'center');
+                $cordovaToast.show("No se ha tomado aun la ubicación, por favor espere e intente de nuevo", 'short', 'center').then(function() {
+                    $scope.disableEnviar = false;
+                });
             }
         };
 
@@ -1197,6 +1210,7 @@ angular.module('starter.controllers', [])
                     },
                 }).then(function doneCallbacks(response) {
                     $ionicLoading.hide();
+                    $scope.disableEnviar = false;
                     $scope.enviarFotos(response.data.id);
                     $cordovaToast.show("Guardando exitoso", 'long', 'center')
                         .then(function(success) {
@@ -1206,8 +1220,8 @@ angular.module('starter.controllers', [])
                             });
                         });
                 }, function failCallbacks(response) {
+                    $ionicLoading.hide();
                     if (response.status === 403) {
-                        $ionicLoading.hide();
                         $cordovaToast
                             .show(response.data.error, 'short', 'center')
                             .then(function(success) {
@@ -1217,7 +1231,6 @@ angular.module('starter.controllers', [])
                             });
                     }
                     if (response.status === 400) {
-                        $ionicLoading.hide();
                         var data = response.data;
                         if (data.error) {
                             $cordovaToast.show(data.error[0], 'short', 'center');
@@ -1235,16 +1248,15 @@ angular.module('starter.controllers', [])
                             $cordovaToast.show("Reporte:" + data.reporte[0], 'short', 'center');
                         }
                     } else if (response.status == 500) {
-                        $ionicLoading.hide();
                         $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
                     } else {
                         $timeout(function() {
                             $cordovaToast.show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center').then(function(success) {
-                                $ionicLoading.hide();
                                 $scope.sendData();
                             });
                         }, 5000);
                     }
+                    $scope.disableEnviar = false;
                 });
         };
     })
@@ -1988,6 +2000,7 @@ angular.module('starter.controllers', [])
     $scope.posicion($location.path());
     $scope.search = "";
     $scope.noMoreItemsAvailable = false;
+    $scope.disableEnviar = false;
     $scope.actual = $stateParams.actual;
     var num = 1,
         max = 0,
@@ -2123,15 +2136,20 @@ angular.module('starter.controllers', [])
     };
 
     $scope.enviar = function() {
+        $scope.disableEnviar = true;
         if ($scope.data.latitud && $scope.data.longitud) {
             $cordovaDialogs.confirm('Esta seguro que quiere enviar?', 'Enviar', ['Si, Enviar!', 'Cancelar'])
                 .then(function(result) {
                     if (result === 1) {
                         $scope.sendData(); //Se formatea la informacion y se envia.
+                    }else{
+                        $scope.disableEnviar = false;
                     }
                 });
         } else {
-            $cordovaToast.show("No se ha tomado aun la ubicación, por favor espere e intente de nuevo", 'short', 'center');
+            $cordovaToast.show("No se ha tomado aun la ubicación, por favor espere e intente de nuevo", 'short', 'center').then(function() {
+                    $scope.disableEnviar = false;
+                });
         }
     };
 
@@ -2149,6 +2167,7 @@ angular.module('starter.controllers', [])
             },
         }).then(function doneCallbacks(response) {
             $ionicLoading.hide();
+            $scope.disableEnviar = false;
             $cordovaToast.show("Guardando exitoso", 'long', 'center')
                 .then(function(success) {
                   $scope.actual = response.data.id;
@@ -2157,8 +2176,8 @@ angular.module('starter.controllers', [])
                   $scope.cerrarModal();
                 });
         }, function failCallbacks(response) {
+            $ionicLoading.hide();
             if (response.status === 403) {
-                $ionicLoading.hide();
                 $cordovaToast
                     .show(response.data.error, 'short', 'center')
                     .then(function(success) {
@@ -2168,7 +2187,6 @@ angular.module('starter.controllers', [])
                     });
             }
             if (response.status === 400) {
-                $ionicLoading.hide();
                 var data = response.data;
                 if (data.error) {
                     $cordovaToast.show(data.error[0], 'short', 'center');
@@ -2180,16 +2198,15 @@ angular.module('starter.controllers', [])
                     $cordovaToast.show("Descripción:" + data.descripcion[0], 'short', 'center');
                 }
             } else if (response.status == 500) {
-                $ionicLoading.hide();
                 $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
             } else {
                 $timeout(function() {
                     $cordovaToast.show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center').then(function(success) {
-                        $ionicLoading.hide();
                         $scope.sendData();
                     });
                 }, 5000);
             }
+            $scope.disableEnviar = false;
         });
     };
 })
@@ -2283,12 +2300,16 @@ angular.module('starter.controllers', [])
       $scope.eventosDelDia();
 
       $scope.reload = function(){
-        $scope.ready = false;
-        mes1 = $scope.starts.getMonth() + 1;
-        mes2 = $scope.ends.getMonth() + 1;
-        starts = $scope.starts.getFullYear() + "-" + mes1 + "-" + $scope.starts.getDate();
-        ends = $scope.ends.getFullYear() + "-" + mes2 + "-" + $scope.ends.getDate();
-        $scope.eventos = [];
-        $scope.eventosDelDia();
+        if ($scope.starts !== null && $scope.ends !== null) {
+          $scope.ready = false;
+          mes1 = $scope.starts.getMonth() + 1;
+          mes2 = $scope.ends.getMonth() + 1;
+          starts = $scope.starts.getFullYear() + "-" + mes1 + "-" + $scope.starts.getDate();
+          ends = $scope.ends.getFullYear() + "-" + mes2 + "-" + $scope.ends.getDate();
+          $scope.eventos = [];
+          $scope.eventosDelDia();
+        }else{
+          $cordovaDialogs.alert("Debe llenar los dos campos de fechas", "Campos requeridos");
+        }
       };
   });
