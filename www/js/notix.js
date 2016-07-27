@@ -118,7 +118,21 @@ angular.module('starter.socket', [])
                                     tipo: message.data.data.tipo
                                 }
                             });
-                        }
+                        } else if (message.data.data.tipo == "Reporte informativo") {
+                            if ($state.current.name == "app.historialI") {
+                                scope.$broadcast('leer', message.data.data);
+                            } else {
+                              $cordovaLocalNotification.schedule({
+                                  id: id_message,
+                                  title: 'Reporte informativo',
+                                  text: message.data.html,
+                                  data: {
+                                      actual: message.data.data.reporte_id,
+                                      tipo: message.data.data.tipo
+                                  }
+                              });
+                            }
+                      }
                     }
                     $rootScope.$on('$cordovaLocalNotification:click',
                         function(event, notification, state) {
@@ -161,6 +175,12 @@ angular.module('starter.socket', [])
                                     });
                                 } else if (data.tipo === "Actividad") {
                                     $state.go('app.notificaciones');
+                                } else if (data.tipo == "Reporte informativo") {
+                                    $state.go('app.historialI', {
+                                        actual: data.reporte
+                                    }, {
+                                        reload: true
+                                    });
                                 }
                             });
                         }.bind(this));
@@ -257,6 +277,8 @@ angular.module('starter.socket', [])
                 this.limpiar("Respuesta");
             } else if ($state.current.name == "app.historialM") {
                 this.limpiar("Solucion");
+            } else if ($state.current.name == "app.historialI") {
+                this.limpiar("Reporte informativo");
             }
         }
     };
