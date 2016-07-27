@@ -14,22 +14,24 @@
                 <b>Fecha:</b> {{reporte[0].fecha}}
             </p>
         </div>
-        <div class="scrollR" >
+        <div class="scrollR grey lighten-3" >
             <div class="row row-p">
                 <div class="col s10" ng-class="{'left': respuesta.tu == 0,  'right': respuesta.tu == 1}" ng-repeat="respuesta in respuestas">
-                    <div class="card-panel" ng-class="{'green':respuesta.tu == 1,'lighten-2':respuesta.tu == 1}">
-                        <b class="teal-text accent-4-text">{{respuesta.user}}</b><br>
-                        <span >{{respuesta.mensaje}}</span>
+                    <div class="card-panel card-m" ng-class="{'green':respuesta.tu == 1,'lighten-2':respuesta.tu == 1}">
+                        <b class="teal-text accent-4-text font-r">{{respuesta.user}}</b><br>
+                        <span class="font-r">{{respuesta.mensaje}}</span>
                         <span class="fecha-font right" ng-class="{'white-text':respuesta.tu == 1}">{{respuesta.fecha}}</span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="bar footer-r">
-          <div class="row row-p">
-              <div class="input-field">
-                   <input type="text" name="name" class="col s10 m4" ng-model=(data.mensaje)>
-                   <button type="button" ng-click="enviar()" class="btn waves-effect waves-light  teal accent-4 col s2" ng-class="{'disabled':!data.mensaje}" ng-disabled="!data.mensaje"><i class="micon">send</i></button>
+          <div class="list full">
+              <div class="item item-input-inset">
+                <label class="item-input-wrapper">
+                  <input type="text" class="input-send" name="name" placeholder="Escribir aqui" ng-model=(data.mensaje) ng-focus="onfocus()">
+                </label>
+                <button type="button" ng-click="enviar()" class="btn waves-effect waves-light  teal accent-4" ng-class="{'disabled':!data.mensaje}" style="margin-left: 10px;" ng-disabled="!data.mensaje"><i class="micon">send</i></button>
               </div>
           </div>
         </div>

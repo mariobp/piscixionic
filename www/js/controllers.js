@@ -698,6 +698,7 @@ angular.module('starter.controllers', [])
         $scope.search = "";
         $scope.noMoreItemsAvailable = false;
         $scope.actual = $stateParams.actual;
+        $scope.notify.leido();
         var num = 1,
             max = 0,
             id = $stateParams.clienteId,
@@ -812,14 +813,17 @@ angular.module('starter.controllers', [])
             }
         };
     })
-    .controller('Repuesta', function($scope, $http, $stateParams, $state, $cordovaToast, $timeout, $cordovaDialogs, $ionicLoading, $location) {
+    .controller('Respuesta', function($scope, $http, $stateParams, $state, $cordovaToast, $timeout, $cordovaDialogs, $ionicLoading, $location) {
         var id = $stateParams.reporteId;
         $scope.respuestas = [];
         $scope.ready = false;
         $scope.ready2 = false;
         $scope.reporte = [];
         $scope.data = {};
+        var nuevo = {};
         $scope.posicion($location.path());
+        $scope.notify.leido();
+        var content = document.querySelector(".scrollR div");
 
         $scope.reporte = function() {
             $http.get($scope.server + '/reportes/reporte/list/?id=' + id)
@@ -860,6 +864,10 @@ angular.module('starter.controllers', [])
                 .then(function successCallback(response) {
                     $scope.respuestas = response.data.object_list;
                     $scope.ready = true;
+                    $timeout(function(){
+                      content.scrollIntoView(false);
+                      $ionicScrollDelegate.scrollBottom();
+                    }, 1000);
                 }, function errorCallback(response) {
                     if (response.status === 403) {
                         $cordovaToast
@@ -889,6 +897,22 @@ angular.module('starter.controllers', [])
         };
         $scope.respuestas();
 
+        $scope.onfocus = function() {
+          content.scrollIntoView(false);
+        };
+
+        $scope.$on('leer', function(event, data){
+          console.log(data);
+            nuevo.user = data.usuario;
+            nuevo.tu = 0;
+            nuevo.mensaje = data.mensaje;
+            nuevo.fecha = data.fecha;
+            console.log(nuevo);
+            $scope.respuestas.push(nuevo);
+            $scope.notify.leido();
+            $scope.$apply();
+        });
+
         $scope.enviar = function() {
             $scope.loading = $ionicLoading.show({
                 template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Enviando...',
@@ -910,6 +934,7 @@ angular.module('starter.controllers', [])
                 mensaje.tu = 1;
                 $scope.respuestas.push(mensaje);
                 $ionicLoading.hide();
+                content.scrollIntoView(false);
             }, function errorCallback(response) {
                 $ionicLoading.hide();
                 if (response.status === 403) {
@@ -1209,6 +1234,8 @@ angular.module('starter.controllers', [])
         $scope.noMoreItemsAvailable = false;
         $scope.lista = [];
         $scope.actual = $stateParams.actual;
+        $scope.notify.leido();
+
         var num = 1,
             max = 0,
             id = $stateParams.clienteId,
