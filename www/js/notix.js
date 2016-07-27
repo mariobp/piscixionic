@@ -256,8 +256,8 @@ angular.module('starter.socket', [])
         limpiar: function(tipo) {
             this.notixList.forEach(function(elemento) {
                 if(tipo=="Respuesta"){
-                  if (parseInt($state.params.reporteId) == elemento.data.data.reporte_id) {
-                    if(elemento.data.data.tipo == tipo) {
+                  if (elemento.data.data.tipo == tipo) {
+                    if(parseInt($state.params.reporteId) == elemento.data.data.reporte_id) {
                         this.visit(elemento._id);
                     }
                   }

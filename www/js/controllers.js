@@ -902,7 +902,6 @@ angular.module('starter.controllers', [])
         };
 
         $scope.$on('leer', function(event, data){
-          console.log(data);
             nuevo.user = data.usuario;
             nuevo.tu = 0;
             nuevo.mensaje = data.mensaje;
