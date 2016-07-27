@@ -265,9 +265,10 @@ button:focus {
     border-bottom-width: 0;
     background-position: top;
 }
+
 .footer-r {
     padding: 0px;
-    height: 71px;
+    height: 60px;
     bottom: 0;
     border-top-width: 1px;
     border-bottom-width: 0;
@@ -284,14 +285,14 @@ button:focus {
 }
 .row-p {
     display: block;
-    padding: 0px;
+    padding: 0;
     /*margin-bottom: 0px;*/
 }
 
 .row-n {
     display: block;
-    padding: 0px;
-    margin-bottom: 0px;
+    padding: 0;
+    margin-bottom: 0;
 }
 
 .row-n i.center{
@@ -470,13 +471,13 @@ select::-ms-expand {
     width: 100%;
     bottom: 0px;
     top: 0px;
-    padding-top: 140px;
+    padding-top: 120px;
     padding-bottom: 60px;
     position: fixed;
     z-index: -1;
 }
 .fecha-font {
-    font-size: 10px;
+    font-size: 0.8em;
     color: #9e9e9e;
 }
 .logo {
@@ -533,8 +534,9 @@ progress[value]::-webkit-progress-value {
     margin: 20px 10px !important;
 }
 .card-r {
-    padding: 20px;
+    padding: 10px;
     margin-bottom: 10px;
+    box-shadow: 0 0 5px #000000;
 }
 
 .delete-g{
@@ -544,10 +546,51 @@ progress[value]::-webkit-progress-value {
     border-radius: 2px;
 }
 
+.no-shadow{
+    box-shadow: none;
+}
+
 .void-l, .void-l .scroll{
   display: flex;
   align-items: center;
   align-content: center;
   align-self: center;
   justify-content: center;
+}
+
+.planilla .list{
+  padding-left: 6px;
+}
+
+.planilla .item{
+  background-color: inherit;
+  border-width: inherit;
+  border-style: none;
+  font-size: 1rem;
+}
+
+.actividades p{
+  white-space: normal;
+}
+
+.badge-n{
+  border-radius: 50%;
+  padding: 4px 7px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.input-send{
+  margin: 0 !important;
+  border-bottom: none !important;
+}
+
+.card-m{
+  padding: 3px 16px !important;
+  margin: 0.3rem 0 0rem 0 !important;
+  border-radius: 5px !important;
+}
+
+.font-r{
+  font-size: 1.2em;
 }

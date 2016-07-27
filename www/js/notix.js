@@ -188,6 +188,7 @@ angular.module('starter.socket', [])
             }.bind(this));
 
             scope.socket.on('visited', function(message) {
+                console.log(message.message_id);
                 var elemento = this.notixList.filter(function(element) {
                     return element._id == message.message_id;
                 });
@@ -197,6 +198,7 @@ angular.module('starter.socket', [])
                         this.notixList.splice(index, 1);
                     }
                 }
+                console.log(this.notixList.length);
                 $cordovaLocalNotification.cancel(scope.lista_id.indexOf(message.message_id) + 1);
             }.bind(this));
             this.messages();
@@ -256,9 +258,10 @@ angular.module('starter.socket', [])
         limpiar: function(tipo) {
             this.notixList.forEach(function(elemento) {
                 if(tipo=="Respuesta"){
-                  if (parseInt($state.params.reporteId) == elemento.data.data.reporte_id) {
-                    if(elemento.data.data.tipo == tipo) {
+                  if (elemento.data.data.tipo == tipo ) {
+                    if(parseInt($state.params.reporteId) == elemento.data.data.reporte_id) {
                         this.visit(elemento._id);
+                        console.log(elemento._id);
                     }
                   }
                 }

@@ -265,9 +265,10 @@ button:focus {
     border-bottom-width: 0;
     background-position: top;
 }
+
 .footer-r {
     padding: 0px;
-    height: 60px
+    height: 60px;
     bottom: 0;
     border-top-width: 1px;
     border-bottom-width: 0;
@@ -284,14 +285,14 @@ button:focus {
 }
 .row-p {
     display: block;
-    padding: 0px;
+    padding: 0;
     /*margin-bottom: 0px;*/
 }
 
 .row-n {
     display: block;
-    padding: 0px;
-    margin-bottom: 0px;
+    padding: 0;
+    margin-bottom: 0;
 }
 
 .row-n i.center{
@@ -545,6 +546,10 @@ progress[value]::-webkit-progress-value {
     border-radius: 2px;
 }
 
+.no-shadow{
+    box-shadow: none;
+}
+
 .void-l, .void-l .scroll{
   display: flex;
   align-items: center;
@@ -553,6 +558,20 @@ progress[value]::-webkit-progress-value {
   justify-content: center;
 }
 
+.planilla .list{
+  padding-left: 6px;
+}
+
+.planilla .item{
+  background-color: inherit;
+  border-width: inherit;
+  border-style: none;
+  font-size: 1rem;
+}
+
+.actividades p{
+  white-space: normal;
+}
 
 .badge-n{
   border-radius: 50%;
