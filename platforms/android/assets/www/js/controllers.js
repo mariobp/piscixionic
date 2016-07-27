@@ -902,7 +902,6 @@ angular.module('starter.controllers', [])
         };
 
         $scope.$on('leer', function(event, data){
-          console.log(data);
             nuevo.user = data.usuario;
             nuevo.tu = 0;
             nuevo.mensaje = data.mensaje;
@@ -1493,7 +1492,8 @@ angular.module('starter.controllers', [])
         $scope.dataRespuesta = {};
         $scope.disableEnviar = false;
         var num = 1,
-            max = 0;
+            max = 0,
+            bandera= false;
         $scope.posicion($location.path());
         $scope.actual = $stateParams.actual;
         $scope.loadMore = function() {
@@ -1552,6 +1552,7 @@ angular.module('starter.controllers', [])
 
         $scope.cerrarModal = function() {
             $scope.modal.hide();
+            bandera = false;
             $scope.data = {};
         };
 
@@ -1602,8 +1603,7 @@ angular.module('starter.controllers', [])
 
         //Si la aplicacion regresa de un background y verifica si ya se tiene gps, si no se recalcula
         document.addEventListener("resume", function() {
-            console.log("Entro");
-            if ($scope.data.latitud === undefined && $scope.data.longitud === undefined) {
+            if ($scope.data.latitud === undefined && $scope.data.longitud === undefined && bandera) {
                 $scope.tomarUbicacion();
             }
         }, false);
@@ -1611,6 +1611,7 @@ angular.module('starter.controllers', [])
         $scope.abrirModal = function(item) {
             //Se calcula la ubicación actual
             $scope.tomarUbicacion();
+            bandera = true;
             $scope.modal.show();
             $scope.data.piscina = item.piscina;
             $scope.asignacion = item;
