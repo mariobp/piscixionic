@@ -801,7 +801,15 @@ angular.module('starter.controllers', [])
                 });
         };
 
+        function arraymove(arr, fromIndex, toIndex) {
+            var element = arr[fromIndex];
+            arr.splice(fromIndex, 1);
+            arr.splice(toIndex, 0, element);
+        }
+
         $scope.$on('leer', function(event, data) {
+            console.log("Reporte");
+            console.log(data);
             nuevo.nombre = data.nombre;
             nuevo.nombreC = data.cliente;
             nuevo.apellidosC = "";
@@ -815,6 +823,7 @@ angular.module('starter.controllers', [])
             nuevo.id = data.reporte_id;
             $scope.actual = data.reporte_id;
             $scope.reportes.push(nuevo);
+            arraymove($scope.reportes, $scope.reportes.indexOf(nuevo), 0);
             $scope.notify.leido();
             $scope.$apply();
         });
@@ -1379,10 +1388,16 @@ angular.module('starter.controllers', [])
             $scope.loadMore();
         };
 
+        function arraymove(arr, fromIndex, toIndex) {
+            var element = arr[fromIndex];
+            arr.splice(fromIndex, 1);
+            arr.splice(toIndex, 0, element);
+        }
+
         $scope.$on('leer', function(event, data) {
             nuevo.nombre = data.nombre;
             nuevo.nombreC = data.cliente;
-            nuevo.nombreC = "";
+            nuevo.apellidosC = "";
             nuevo.descripcion = data.descripcion;
             nuevo.fecha = data.fecha;
             nuevo.user = data.emisor;
@@ -1390,6 +1405,7 @@ angular.module('starter.controllers', [])
             nuevo.id = data.solucion_id;
             $scope.actual = data.solucion_id
             $scope.lista.push(nuevo);
+            arraymove($scope.lista, $scope.lista.indexOf(nuevo), 0);
             $scope.notify.leido();
             $scope.$apply();
       });
@@ -2064,22 +2080,11 @@ angular.module('starter.controllers', [])
         $scope.actual = $stateParams.actual;
         var num = 1,
             max = 0,
+            nuevo = {},
             url = '';
         $scope.reportes = [];
         $scope.data = {};
         $scope.notify.leido();
-
-        $scope.$on('leer', function(event, data) {
-            nuevo.nombre = data.nombre;
-            nuevo.descripcion = data.descripcion;
-            nuevo.fecha = data.fecha;
-            nuevo.nombreU = data.nombreU;
-            nuevo.apellidosU = data.apellidosU;
-            $scope.actual = data.reporte_id;
-            $scope.reportes.push(nuevo);
-            $scope.notify.leido();
-            $scope.$apply();
-        });
 
         $scope.loadMore = function() {
             $http.get($scope.server + "/reportes/reporte/informativo/list/?" + 'page=' + num + "&search=" + $scope.search)
@@ -2283,6 +2288,20 @@ angular.module('starter.controllers', [])
                 $scope.disableEnviar = false;
             });
         };
+
+        $scope.$on('leer', function(event, data) {
+            nuevo.nombre = data.nombre;
+            nuevo.descripcion = data.descripcion;
+            nuevo.fecha = data.fecha;
+            nuevo.nombreU = data.nombreU;
+            nuevo.apellidosU = data.apellidosU;
+            nuevo.id = data.reporte_id;
+            $scope.actual = data.reporte_id;
+            $scope.reportes.push(nuevo);
+            arraymove($scope.reportes, $scope.reportes.indexOf(nuevo), 0);
+            $scope.notify.leido();
+            $scope.$apply();
+        });
     })
     .controller('Notificaciones', function($scope, $state) {
 

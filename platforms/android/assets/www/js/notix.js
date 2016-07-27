@@ -47,6 +47,7 @@ angular.module('starter.socket', [])
                         var id_message = scope.lista_id.indexOf(message._id) + 1;
                         if (message.data.data.tipo == "Reporte") {
                             if ($state.current.name == "app.historialR") {
+                              console.log("Notix reporte");
                                 scope.$broadcast('leer', message.data.data);
                             } else {
                                 $cordovaLocalNotification.schedule({
