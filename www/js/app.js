@@ -272,7 +272,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
         views: {
             'menuContent': {
                 templateUrl: 'templates/respuestas.html',
-                controller: 'Repuesta'
+                controller: 'Respuesta'
             }
         }
     })
