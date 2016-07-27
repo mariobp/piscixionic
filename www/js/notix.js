@@ -15,7 +15,6 @@ angular.module('starter.socket', [])
         event: null,
         callback: null,
         notixList: [],
-        list_actual: [],
         data: {},
 
         setup: function(session_id, username, type) {
@@ -43,7 +42,6 @@ angular.module('starter.socket', [])
                     if (message.data.data !== undefined) {
                         this.notixList.push(message);
                         scope.lista_id.push(message._id);
-                        this.list_actual = [];
                         var id_message = scope.lista_id.indexOf(message._id) + 1;
                         if (message.data.data.tipo == "Reporte") {
                             if ($state.current.name == "app.historialR") {

@@ -866,7 +866,6 @@ angular.module('starter.controllers', [])
                     $scope.ready = true;
                     $timeout(function(){
                       content.scrollIntoView(false);
-                      $ionicScrollDelegate.scrollBottom();
                     }, 1000);
                 }, function errorCallback(response) {
                     if (response.status === 403) {
