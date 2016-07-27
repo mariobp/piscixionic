@@ -8,7 +8,7 @@
   <ion-content overflow-scroll=”true”>
       <ion-refresher pulling-text="Refrescar" on-refresh="reload()" refreshingText="Refrescando"></ion-refresher>
       <ul class="collapsible popout" data-collapsible="accordion" watch>
-          <li ng-repeat="reporte in reportes track by reporte.id">
+          <li ng-repeat="reporte in reportes track by $index">
               <div class="collapsible-header grey lighten-5">
                   <ul class="collection grey lighten-5">
                       <li class="collection-item  grey lighten-5">

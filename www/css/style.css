@@ -586,11 +586,25 @@ progress[value]::-webkit-progress-value {
 }
 
 .card-m{
-  padding: 3px 16px !important;
+  padding: 5px 12px !important;
   margin: 0.3rem 0 0rem 0 !important;
   border-radius: 5px !important;
 }
 
 .font-r{
   font-size: 1.2em;
+}
+
+.card-body{
+  padding-bottom: 10px;
+}
+
+.card-body span{
+  display: block;
+  padding-bottom: 3px;
+}
+
+.card-fecha span{
+    position: relative;
+    margin-top: -14px;
 }

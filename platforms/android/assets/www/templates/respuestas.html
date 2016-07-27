@@ -16,11 +16,15 @@
         </div>
         <div class="scrollR grey lighten-3" >
             <div class="row row-p">
-                <div class="col s10" ng-class="{'left': respuesta.tu == 0,  'right': respuesta.tu == 1}" ng-repeat="respuesta in respuestas">
+                <div class="col s10" ng-class="{'left': respuesta.tu == 0,  'right': respuesta.tu == 1}" ng-repeat="respuesta in respuestas track by $index">
                     <div class="card-panel card-m" ng-class="{'green':respuesta.tu == 1,'lighten-2':respuesta.tu == 1}">
-                        <b class="teal-text accent-4-text font-r">{{respuesta.user}}</b><br>
-                        <span class="font-r">{{respuesta.mensaje}}</span>
-                        <span class="fecha-font right" ng-class="{'white-text':respuesta.tu == 1}">{{respuesta.fecha}}</span>
+                        <div class="card-body">
+                          <b class="teal-text accent-4-text font-r">{{respuesta.user}}</b><br>
+                          <span class="font-r">{{respuesta.mensaje}}</span>
+                        </div>
+                        <div class="card-fecha">
+                          <span class="fecha-font right" ng-class="{'white-text':respuesta.tu == 1}">{{respuesta.fecha}}</span>
+                        </div>
                     </div>
                 </div>
             </div>
