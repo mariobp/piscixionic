@@ -1716,7 +1716,7 @@ angular.module('starter.controllers', [])
                                 });
                         });
                     }, function(error) {
-                        $cordovaToast.show('No se puede obtener la ubicación, posiblemente el gps este desactivado: ' + error.message, 'Gps', 'short', 'center')
+                        $cordovaToast.show('No se puede obtener la ubicación, posiblemente el gps este desactivado: ' + error.message, 'Gps', 'short', 'bottom')
                             .then(function(res) {
                                 $scope.confirmar();
                             });
