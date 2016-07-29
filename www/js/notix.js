@@ -186,7 +186,7 @@ angular.module('starter.socket', [])
             }.bind(this));
 
             scope.socket.on('visited', function(message) {
-                console.log(message.message_id);
+                console.log("Llego este mensaje", message.message_id);
                 var elemento = this.notixList.filter(function(element) {
                     return element._id == message.message_id;
                 });
@@ -234,13 +234,15 @@ angular.module('starter.socket', [])
 
         visit: function(message_id, callback) {
             this.callback = callback;
-            this.emit('visited', {
+            var opciones = {
                 'django_id': this.django_id,
                 'usertype': 'WEB',
                 'webuser': this.username,
                 'message_id': message_id,
                 'type': this.type
-            });
+            };
+            console.log("Envio el mensaje:", opciones);
+            this.emit('visited', opciones);
         },
 
         login: function() {
@@ -258,11 +260,8 @@ angular.module('starter.socket', [])
             this.notixList.forEach(function(elemento, index) {
                 if(tipo=="Respuesta"){
                   if (elemento.data.data.tipo == tipo ) {
-                      console.log("Primer if"+ index);
                     if(parseInt($state.params.reporteId) == elemento.data.data.reporte_id) {
-                        console.log("Segundo if"+ index);
                         this.visit(elemento._id);
-                        console.log(elemento._id);
                     }
                   }
                 }
