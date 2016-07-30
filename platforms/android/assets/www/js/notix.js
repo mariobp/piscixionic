@@ -137,7 +137,7 @@ angular.module('starter.socket', [])
                             if (notification.data) {
                                 var data = JSON.parse(notification.data);
                             }
-                            this.visit(message._id, function() {
+                            this.visit([message._id], function() {
                                 if (data.tipo == "Reporte") {
                                     $state.go('app.historialR', {
                                         clienteId: data.cliente,
@@ -188,9 +188,9 @@ angular.module('starter.socket', [])
             scope.socket.on('visited', function(messages) {
                 var elemento = null;
                 var index = null;
-                messages.forEach(function(message) {
+                messages.messages_id.forEach(function(message) {
                     elemento = this.notixList.filter(function(element) {
-                        return element._id == message.message_id;
+                        return element._id == message;
                     });
                     if (elemento.length > 0) {
                         index = this.notixList.indexOf(elemento[0]);
@@ -198,8 +198,8 @@ angular.module('starter.socket', [])
                             this.notixList.splice(index, 1);
                         }
                     }
-                    $cordovaLocalNotification.cancel(scope.lista_id.indexOf(message.message_id) + 1);
-                });
+                    $cordovaLocalNotification.cancel(scope.lista_id.indexOf(message) + 1);
+                }.bind(this));
             }.bind(this));
             this.messages();
         },
@@ -270,8 +270,11 @@ angular.module('starter.socket', [])
                         mensajes.push(elemento._id);
                     }
                 }
+            });
+            if (mensajes.length>0) {
                 this.visit(mensajes);
-            }.bind(this));
+            }
+
         },
 
         leido: function() {

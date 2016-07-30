@@ -2251,7 +2251,7 @@ angular.module('starter.controllers', [])
 
         $scope.notificar = function(mensaje) {
             var data = mensaje.data.data;
-            $scope.notify.visit(mensaje._id, function() {
+            $scope.notify.visit([mensaje._id], function() {
                 if (data.tipo == "Reporte") {
                     $state.go('app.historialR', {
                         clienteId: data.cliente_id,
