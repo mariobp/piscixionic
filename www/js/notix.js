@@ -187,12 +187,13 @@ angular.module('starter.socket', [])
 
             scope.socket.on('visited', function(messages) {
                 var elemento = null;
+                var index = null;
                 messages.forEach(function(message) {
                     elemento = this.notixList.filter(function(element) {
                         return element._id == message.message_id;
                     });
                     if (elemento.length > 0) {
-                        var index = this.notixList.indexOf(elemento[0]);
+                        index = this.notixList.indexOf(elemento[0]);
                         if (index > -1) {
                             this.notixList.splice(index, 1);
                         }
