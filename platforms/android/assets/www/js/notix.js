@@ -120,24 +120,24 @@ angular.module('starter.socket', [])
                             if ($state.current.name == "app.historialI") {
                                 scope.$broadcast('leer', message.data.data);
                             } else {
-                              $cordovaLocalNotification.schedule({
-                                  id: id_message,
-                                  title: 'Reporte informativo',
-                                  text: message.data.html,
-                                  data: {
-                                      actual: message.data.data.reporte_id,
-                                      tipo: message.data.data.tipo
-                                  }
-                              });
+                                $cordovaLocalNotification.schedule({
+                                    id: id_message,
+                                    title: 'Reporte informativo',
+                                    text: message.data.html,
+                                    data: {
+                                        actual: message.data.data.reporte_id,
+                                        tipo: message.data.data.tipo
+                                    }
+                                });
                             }
-                      }
+                        }
                     }
                     $rootScope.$on('$cordovaLocalNotification:click',
                         function(event, notification, state) {
                             if (notification.data) {
                                 var data = JSON.parse(notification.data);
                             }
-                            this.visit(message._id, function() {
+                            this.visit([message._id], function() {
                                 if (data.tipo == "Reporte") {
                                     $state.go('app.historialR', {
                                         clienteId: data.cliente,
@@ -185,19 +185,24 @@ angular.module('starter.socket', [])
                 }
             }.bind(this));
 
-            scope.socket.on('visited', function(message) {
-                console.log("Llego este mensaje", message.message_id);
-                var elemento = this.notixList.filter(function(element) {
-                    return element._id == message.message_id;
-                });
-                if (elemento.length > 0) {
-                    var index = this.notixList.indexOf(elemento[0]);
-                    if (index > -1) {
-                        this.notixList.splice(index, 1);
+            scope.socket.on('visited', function(messages) {
+                var elemento = null;
+                var index = null;
+                console.log("Visited");
+                console.log(messages);
+                messages.messages_id.forEach(function(message) {
+                    elemento = this.notixList.filter(function(element) {
+                        return element._id == message.message_id;
+                    });
+                    if (elemento.length > 0) {
+                        index = this.notixList.indexOf(elemento[0]);
+                        if (index > -1) {
+                            console.log("Elimino un elemento de la lista");
+                            this.notixList.splice(index, 1);
+                        }
                     }
-                }
-                console.log(this.notixList.length);
-                $cordovaLocalNotification.cancel(scope.lista_id.indexOf(message.message_id) + 1);
+                    $cordovaLocalNotification.cancel(scope.lista_id.indexOf(message.message_id) + 1);
+                }.bind(this));
             }.bind(this));
             this.messages();
         },
@@ -232,16 +237,15 @@ angular.module('starter.socket', [])
             });
         },
 
-        visit: function(message_id, callback) {
+        visit: function(messages_id, callback) {
             this.callback = callback;
             var opciones = {
                 'django_id': this.django_id,
                 'usertype': 'WEB',
                 'webuser': this.username,
-                'message_id': message_id,
+                'messages_id': messages_id,
                 'type': this.type
             };
-            console.log("Envio el mensaje:", opciones);
             this.emit('visited', opciones);
         },
 
@@ -256,21 +260,24 @@ angular.module('starter.socket', [])
         },
 
         limpiar: function(tipo) {
-            console.log(this.notixList.length);
+            var mensajes = [];
             this.notixList.forEach(function(elemento, index) {
-                if(tipo=="Respuesta"){
-                  if (elemento.data.data.tipo == tipo ) {
-                    if(parseInt($state.params.reporteId) == elemento.data.data.reporte_id) {
-                        this.visit(elemento._id);
+                if (tipo == "Respuesta") {
+                    if (elemento.data.data.tipo == tipo) {
+                        if (parseInt($state.params.reporteId) == elemento.data.data.reporte_id) {
+                            mensajes.push(elemento._id);
+                        }
                     }
-                  }
+                } else {
+                    if (elemento.data.data.tipo == tipo) {
+                        mensajes.push(elemento._id);
+                    }
                 }
-                else{
-                  if(elemento.data.data.tipo == tipo) {
-                      this.visit(elemento._id);
-                  }
-                }
-            }.bind(this));
+            });
+            if (mensajes.length>0) {
+                this.visit(mensajes);
+            }
+
         },
 
         leido: function() {
