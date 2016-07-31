@@ -820,7 +820,6 @@ angular.module('starter.controllers', [])
         $scope.ready2 = false;
         $scope.reporte = [];
         $scope.data = {};
-        var nuevo = {};
         $scope.posicion($location.path());
         $scope.notify.leido();
         var content = document.querySelector(".scrollR div");
@@ -900,16 +899,20 @@ angular.module('starter.controllers', [])
           content.scrollIntoView(false);
         };
 
-        $scope.$on('leer', function(event, data){
+        $scope.$on('leer', function(event, data) {
+            var nuevo = {};
             nuevo.user = data.usuario;
             nuevo.tu = 0;
             nuevo.mensaje = data.mensaje;
             nuevo.fecha = data.fecha;
-            console.log(nuevo);
-            $scope.respuestas.push(nuevo);
+            $scope.chat(nuevo);
             $scope.notify.leido();
-            $scope.$apply();
         });
+
+        $scope.chat = function(mensaje) {
+          $scope.respuestas.push(mensaje);
+          $scope.$apply();
+        };
 
         $scope.enviar = function() {
             $scope.loading = $ionicLoading.show({
