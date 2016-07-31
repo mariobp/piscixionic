@@ -899,7 +899,6 @@ angular.module('starter.controllers', [])
         $scope.ready2 = false;
         $scope.reporte = [];
         $scope.data = {};
-        var nuevo = {};
         $scope.posicion($location.path());
         $scope.notify.leido();
         var content = document.querySelector(".scrollR div");
@@ -980,16 +979,20 @@ angular.module('starter.controllers', [])
         };
 
         $scope.$on('leer', function(event, data) {
-            console.log(data);
+            var nuevo = {};
             nuevo.user = data.usuario;
             nuevo.tu = 0;
             nuevo.mensaje = data.mensaje;
             nuevo.fecha = data.fecha;
-            console.log(nuevo);
-            $scope.respuestas.push(nuevo);
+            $scope.chat(nuevo);
             $scope.notify.leido();
-            $scope.$apply();
         });
+
+        $scope.chat = function(mensaje) {
+          console.log(mensaje);
+          $scope.respuestas.push(mensaje);
+          $scope.$apply();
+        };
 
         $scope.enviar = function() {
             $scope.loading = $ionicLoading.show({
@@ -2306,9 +2309,8 @@ angular.module('starter.controllers', [])
     .controller('Notificaciones', function($scope, $state) {
 
         $scope.notificar = function(mensaje) {
-            console.log(mensaje);
             var data = mensaje.data.data;
-            $scope.notify.visit(mensaje._id, function() {
+            $scope.notify.visit([mensaje._id], function() {
                 if (data.tipo == "Reporte") {
                     $state.go('app.historialR', {
                         clienteId: data.cliente_id,

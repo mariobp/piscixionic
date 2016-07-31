@@ -58,7 +58,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $ionicNativeTransitionsProvider) {
     $ionicConfigProvider.views.maxCache(1);
     $ionicConfigProvider.views.transition('none');
-    //$ionicConfigProvider.spinner.icon('ripple');
+    $ionicConfigProvider.spinner.icon('ripple');
     $ionicConfigProvider.scrolling.jsScrolling(false);
     $ionicNativeTransitionsProvider.setDefaultOptions({
         duration: 375, // in milliseconds (ms), default 400,

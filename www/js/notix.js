@@ -188,20 +188,17 @@ angular.module('starter.socket', [])
             scope.socket.on('visited', function(messages) {
                 var elemento = null;
                 var index = null;
-                console.log("Visited");
-                console.log(messages);
                 messages.messages_id.forEach(function(message) {
                     elemento = this.notixList.filter(function(element) {
-                        return element._id == message.message_id;
+                        return element._id == message;
                     });
                     if (elemento.length > 0) {
                         index = this.notixList.indexOf(elemento[0]);
                         if (index > -1) {
-                            console.log("Elimino un elemento de la lista");
                             this.notixList.splice(index, 1);
                         }
                     }
-                    $cordovaLocalNotification.cancel(scope.lista_id.indexOf(message.message_id) + 1);
+                    $cordovaLocalNotification.cancel(scope.lista_id.indexOf(message) + 1);
                 }.bind(this));
             }.bind(this));
             this.messages();
