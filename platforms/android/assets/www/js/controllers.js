@@ -813,165 +813,173 @@ angular.module('starter.controllers', [])
             }
         };
     })
-    .controller('Respuesta', function($scope, $http, $stateParams, $state, $cordovaToast, $timeout, $cordovaDialogs, $ionicLoading, $location) {
-        var id = $stateParams.reporteId;
-        $scope.respuestas = [];
-        $scope.ready = false;
-        $scope.ready2 = false;
-        $scope.reporte = [];
-        $scope.data = {};
-        $scope.posicion($location.path());
-        $scope.notify.leido();
-        var content = document.querySelector(".scrollR div");
+      .controller('Respuesta', function($scope, $http, $stateParams, $state, $cordovaToast, $timeout, $cordovaDialogs, $ionicLoading, $location, $cordovaVibration) {
+          var id = $stateParams.reporteId;
+          $scope.respuestas = [];
+          $scope.ready = false;
+          $scope.ready2 = false;
+          $scope.reporte = [];
+          $scope.data = {};
+          $scope.posicion($location.path());
+          $scope.notify.leido();
+          $scope.reporteInfo = true;
 
-        $scope.reporte = function() {
-            $http.get($scope.server + '/reportes/reporte/list/?id=' + id)
-                .then(function doneCallbacks(response) {
-                    $scope.reporte = response.data.object_list;
-                    $scope.ready2 = true;
-                }, function failCallbacks(response) {
-                    if (response.status === 403) {
-                        $cordovaToast
-                            .show(response.data.error, 'short', 'center')
-                            .then(function(success) {
-                                $state.go('app.login');
-                            }, function(error) {
-                                console.log(error);
-                            });
-                    } else if (response.status === 400) {
-                        $cordovaDialogs.alert('No se exise un cliente con ese codigo.', 'Error', 'Regresar')
-                            .then(function(res) {
-                                $ionicHistory.goBack(-1);
-                            });
-                    } else if (response.status == 500) {
-                        $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
-                    } else if (response.status === 0) {
-                        $cordovaDialogs.alert('No se puede acceder a este servicio en este momento.', 'Error', 'Ok');
-                    } else {
-                        $timeout(function() {
-                            $cordovaToast.show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center').then(function(success) {
-                                $scope.reporte();
-                            });
-                        }, 10000);
-                    }
-                });
-        };
-        $scope.reporte();
+          $scope.reporte = function() {
+              $http.get($scope.server + '/reportes/reporte/list/?id=' + id)
+                  .then(function doneCallbacks(response) {
+                      $scope.reporte = response.data.object_list;
+                      $scope.ready2 = true;
+                  }, function failCallbacks(response) {
+                      if (response.status === 403) {
+                          $cordovaToast
+                              .show(response.data.error, 'short', 'center')
+                              .then(function(success) {
+                                  $state.go('app.login');
+                              }, function(error) {
+                                  console.log(error);
+                              });
+                      } else if (response.status === 400) {
+                          $cordovaDialogs.alert('No se exise un cliente con ese codigo.', 'Error', 'Regresar')
+                              .then(function(res) {
+                                  $ionicHistory.goBack(-1);
+                              });
+                      } else if (response.status == 500) {
+                          $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
+                      } else if (response.status === 0) {
+                          $cordovaDialogs.alert('No se puede acceder a este servicio en este momento.', 'Error', 'Ok');
+                      } else {
+                          $timeout(function() {
+                              $cordovaToast.show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center').then(function(success) {
+                                  $scope.reporte();
+                              });
+                          }, 10000);
+                      }
+                  });
+          };
+          $scope.reporte();
 
-        $scope.respuestas = function() {
-            $http.get($scope.server + '/reportes/respuesta/list/?reporte=' + id)
-                .then(function successCallback(response) {
-                    $scope.respuestas = response.data.object_list;
-                    $scope.ready = true;
-                    $timeout(function(){
-                      content.scrollIntoView(false);
-                    }, 1000);
-                }, function errorCallback(response) {
-                    if (response.status === 403) {
-                        $cordovaToast
-                            .show(response.data.error, 'short', 'center')
-                            .then(function(success) {
-                                $state.go('app.login');
-                            }, function(error) {
-                                console.log(error);
-                            });
-                    } else if (response.status === 400) {
-                        $cordovaDialogs.alert('No se exise un cliente con ese codigo.', 'Error', 'Regresar')
-                            .then(function(res) {
-                                $ionicHistory.goBack(-1);
-                            });
-                    } else if (response.status == 500) {
-                        $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
-                    } else if (response.status === 0) {
-                        $cordovaDialogs.alert('No se puede acceder a este servicio en este momento.', 'Error', 'Ok');
-                    } else {
-                        $timeout(function() {
-                            $cordovaToast.show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center').then(function(success) {
-                                $scope.respuestas();
-                            });
-                        }, 10000);
-                    }
-                });
-        };
-        $scope.respuestas();
+          window.addEventListener('native.keyboardshow', keyboardShowHandler);
 
-        $scope.onfocus = function() {
-          content.scrollIntoView(false);
-        };
+          function keyboardShowHandler(e){
+              $(".scrollR").animate({'scrollTop': $("#content").height()}, 10);
+          }
 
-        $scope.$on('leer', function(event, data) {
-            var nuevo = {};
-            nuevo.user = data.usuario;
-            nuevo.tu = 0;
-            nuevo.mensaje = data.mensaje;
-            nuevo.fecha = data.fecha;
-            $scope.chat(nuevo);
-            $scope.notify.leido();
-        });
+          $scope.onfocus = function() {
+              $(".scrollR").animate({'scrollTop': $("#content").height()}, 10);
+          };
 
-        $scope.chat = function(mensaje) {
-          $scope.respuestas.push(mensaje);
-          $scope.$apply();
-        };
+          $scope.respuestas = function() {
+              $http.get($scope.server + '/reportes/respuesta/list/?reporte=' + id)
+                  .then(function successCallback(response) {
+                      $scope.respuestas = response.data.object_list;
+                      $scope.ready = true;
+                      $timeout(function() {
+                          $scope.onfocus();
+                      }, 1000);
+                  }, function errorCallback(response) {
+                      if (response.status === 403) {
+                          $cordovaToast
+                              .show(response.data.error, 'short', 'center')
+                              .then(function(success) {
+                                  $state.go('app.login');
+                              }, function(error) {
+                                  console.log(error);
+                              });
+                      } else if (response.status === 400) {
+                          $cordovaDialogs.alert('No se exise un cliente con ese codigo.', 'Error', 'Regresar')
+                              .then(function(res) {
+                                  $ionicHistory.goBack(-1);
+                              });
+                      } else if (response.status == 500) {
+                          $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
+                      } else if (response.status === 0) {
+                          $cordovaDialogs.alert('No se puede acceder a este servicio en este momento.', 'Error', 'Ok');
+                      } else {
+                          $timeout(function() {
+                              $cordovaToast.show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center').then(function(success) {
+                                  $scope.respuestas();
+                              });
+                          }, 10000);
+                      }
+                  });
+          };
+          $scope.respuestas();
 
-        $scope.enviar = function() {
-            $scope.loading = $ionicLoading.show({
-                template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Enviando...',
-                noBackdrop: true
-            });
-            $scope.data.reporte = id;
-            $http({
-                method: 'POST',
-                url: $scope.server + '/reportes/respuesta/form/',
-                data: $.param($scope.data),
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-            }).then(function successCallback(response) {
-                var mensaje = {};
-                $scope.data = {};
-                mensaje = response.data;
-                mensaje.user = $scope.username;
-                mensaje.tu = 1;
-                $scope.respuestas.push(mensaje);
-                $ionicLoading.hide();
-                content.scrollIntoView(false);
-            }, function errorCallback(response) {
-                $ionicLoading.hide();
-                if (response.status === 403) {
-                    $cordovaToast
-                        .show(response.data.error, 'short', 'center')
-                        .then(function(success) {
-                            $state.go('app.login');
-                        }, function(error) {
-                            $state.go('app.login');
-                        });
-                } else if (response.status === 400) {
-                    $ionicLoading.hide();
-                    var data = response.data;
-                    if (data.error) {
-                        $cordovaToast.show(data.error[0], 'short', 'center');
-                    }
-                    if (data.nombre) {
-                        $cordovaToast.show("Mensaje:" + data.mensaje[0], 'short', 'center');
-                    }
-                    if (data.reporte) {
-                        $cordovaToast.show("Reporte:" + data.reporte[0], 'short', 'center');
-                    }
-                } else if (response.status == 500) {
-                    $ionicLoading.hide();
-                    $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
-                } else {
-                    $timeout(function() {
-                        $cordovaToast.show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center').then(function(success) {
-                            $scope.enviar();
-                        });
-                    }, 5000);
-                }
-            });
-        };
+          $scope.$on('leer', function(event, data) {
+              var nuevo = {};
+              nuevo.user = data.usuario;
+              nuevo.tu = 0;
+              nuevo.mensaje = data.mensaje;
+              nuevo.fecha = data.fecha;
+              $scope.chat(nuevo);
+              $scope.onfocus();
+              $cordovaVibration.vibrate(500);
+              $scope.notify.leido();
+          });
 
-    })
+          $scope.chat = function(mensaje) {
+            $scope.respuestas.push(mensaje);
+            $scope.$apply();
+          };
+
+          $scope.enviar = function() {
+              $scope.loading = $ionicLoading.show({
+                  template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Enviando...',
+                  noBackdrop: true
+              });
+              $scope.data.reporte = id;
+              $http({
+                  method: 'POST',
+                  url: $scope.server + '/reportes/respuesta/form/',
+                  data: $.param($scope.data),
+                  headers: {
+                      'Content-Type': 'application/x-www-form-urlencoded'
+                  },
+              }).then(function successCallback(response) {
+                  var mensaje = {};
+                  $scope.data = {};
+                  mensaje = response.data;
+                  mensaje.user = $scope.username;
+                  mensaje.tu = 1;
+                  $scope.respuestas.push(mensaje);
+                  $ionicLoading.hide();
+                  $scope.onfocus();
+              }, function errorCallback(response) {
+                  $ionicLoading.hide();
+                  if (response.status === 403) {
+                      $cordovaToast
+                          .show(response.data.error, 'short', 'center')
+                          .then(function(success) {
+                              $state.go('app.login');
+                          }, function(error) {
+                              $state.go('app.login');
+                          });
+                  } else if (response.status === 400) {
+                      $ionicLoading.hide();
+                      var data = response.data;
+                      if (data.error) {
+                          $cordovaToast.show(data.error[0], 'short', 'center');
+                      }
+                      if (data.nombre) {
+                          $cordovaToast.show("Mensaje:" + data.mensaje[0], 'short', 'center');
+                      }
+                      if (data.reporte) {
+                          $cordovaToast.show("Reporte:" + data.reporte[0], 'short', 'center');
+                      }
+                  } else if (response.status == 500) {
+                      $ionicLoading.hide();
+                      $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
+                  } else {
+                      $timeout(function() {
+                          $cordovaToast.show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center').then(function(success) {
+                              $scope.enviar();
+                          });
+                      }, 5000);
+                  }
+              });
+          };
+
+      })
     .controller('Mantenimiento', function($http, $scope, $stateParams, Camera, Galeria, $cordovaImagePicker, $cordovaToast, $state, $cordovaDialogs, $ionicHistory, $timeout, $ionicLoading, $location, $cordovaGeolocation) {
         $scope.posicion($location.path());
         $scope.data = {};
