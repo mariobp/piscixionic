@@ -352,6 +352,14 @@ module.exports = [
         "clobbers": [
             "cordova.plugins.barcodeScanner"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-vibration/www/vibration.js",
+        "id": "cordova-plugin-vibration.notification",
+        "merges": [
+            "navigator.notification",
+            "navigator"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -380,7 +388,8 @@ module.exports.metadata =
     "de.appplant.cordova.plugin.local-notification": "0.8.4",
     "ionic-plugin-keyboard": "2.0.1",
     "org.pbernasconi.progressindicator": "1.1.0",
-    "phonegap-plugin-barcodescanner": "5.0.0"
+    "phonegap-plugin-barcodescanner": "5.0.0",
+    "cordova-plugin-vibration": "2.1.1"
 };
 // BOTTOM OF METADATA
 });

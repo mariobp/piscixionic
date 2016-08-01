@@ -69,6 +69,9 @@
         },
         "phonegap-plugin-barcodescanner": {
             "PACKAGE_NAME": "com.ionicframework.piscixs814642"
+        },
+        "cordova-plugin-vibration": {
+            "PACKAGE_NAME": "com.ionicframework.piscixs814642"
         }
     },
     "dependent_plugins": {

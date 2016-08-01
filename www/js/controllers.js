@@ -892,7 +892,7 @@ angular.module('starter.controllers', [])
             }
         };
     })
-    .controller('Respuesta', function($scope, $http, $stateParams, $state, $cordovaToast, $timeout, $cordovaDialogs, $ionicLoading, $location) {
+    .controller('Respuesta', function($scope, $http, $stateParams, $state, $cordovaToast, $timeout, $cordovaDialogs, $ionicLoading, $location, $cordovaVibration) {
         var id = $stateParams.reporteId;
         $scope.respuestas = [];
         $scope.ready = false;
@@ -901,7 +901,7 @@ angular.module('starter.controllers', [])
         $scope.data = {};
         $scope.posicion($location.path());
         $scope.notify.leido();
-        var content = document.querySelector(".scrollR div");
+        $scope.reporteInfo = true;
 
         $scope.reporte = function() {
             $http.get($scope.server + '/reportes/reporte/list/?id=' + id)
@@ -937,13 +937,29 @@ angular.module('starter.controllers', [])
         };
         $scope.reporte();
 
+        window.addEventListener('native.keyboardshow', keyboardShowHandler);
+
+        function keyboardShowHandler(e){
+            $(".scrollR").animate({'scrollTop': $("#content").height()}, 10);
+        }
+      /*
+        window.addEventListener('native.keyboardhide', keyboardHideHandler);
+
+        function keyboardHideHandler(e){
+            $scope.reporteInfo = true;
+        }
+      */
+        $scope.onfocus = function() {
+            $(".scrollR").animate({'scrollTop': $("#content").height()}, 10);
+        };
+
         $scope.respuestas = function() {
             $http.get($scope.server + '/reportes/respuesta/list/?reporte=' + id)
                 .then(function successCallback(response) {
                     $scope.respuestas = response.data.object_list;
                     $scope.ready = true;
                     $timeout(function() {
-                        content.scrollIntoView(false);
+                        $scope.onfocus();
                     }, 1000);
                 }, function errorCallback(response) {
                     if (response.status === 403) {
@@ -974,10 +990,6 @@ angular.module('starter.controllers', [])
         };
         $scope.respuestas();
 
-        $scope.onfocus = function() {
-            content.scrollIntoView(false);
-        };
-
         $scope.$on('leer', function(event, data) {
             var nuevo = {};
             nuevo.user = data.usuario;
@@ -985,6 +997,8 @@ angular.module('starter.controllers', [])
             nuevo.mensaje = data.mensaje;
             nuevo.fecha = data.fecha;
             $scope.chat(nuevo);
+            $scope.onfocus();
+            $cordovaVibration.vibrate(500);
             $scope.notify.leido();
         });
 
@@ -1014,7 +1028,7 @@ angular.module('starter.controllers', [])
                 mensaje.tu = 1;
                 $scope.respuestas.push(mensaje);
                 $ionicLoading.hide();
-                content.scrollIntoView(false);
+                $scope.onfocus();
             }, function errorCallback(response) {
                 $ionicLoading.hide();
                 if (response.status === 403) {
