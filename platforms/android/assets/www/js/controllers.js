@@ -209,7 +209,6 @@ angular.module('starter.controllers', [])
             $cordovaBarcodeScanner
                 .scan()
                 .then(function(barcodeData) {
-                    console.log(barcodeData);
                     // Success! Barcode data is here
                     if (barcodeData.text !== "") {
                         $cordovaToast
@@ -1101,9 +1100,6 @@ angular.module('starter.controllers', [])
 
         //Si la aplicacion regresa de un background y verifica si ya se tiene gps, si no se recalcula
         document.addEventListener("resume", function() {
-            console.log("Resume");
-            console.log($scope.data.latitud);
-            console.log($scope.data.longitud);
             if ($scope.data.latitud === undefined && $scope.data.longitud === undefined) {
                 $scope.tomarUbicacion();
             }
@@ -1275,7 +1271,6 @@ angular.module('starter.controllers', [])
                     num++;
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                 }, function errorCallback(response) {
-                    console.log(response);
                     if (response.status == 403) {
                         $cordovaToast
                             .show(response.data.error, 'short', 'center')
@@ -1464,7 +1459,6 @@ angular.module('starter.controllers', [])
                             obj.check = true;
                         }
                         var data = response.data;
-                        console.log(data);
                         if (data.piscinero) {
                             $cordovaToast.show("Piscinero: " + data.piscinero, 'short', 'botton');
                         }
@@ -1498,12 +1492,15 @@ angular.module('starter.controllers', [])
         $scope.items = [];
         $scope.asignacion = {};
         $scope.planilla = {};
+        $scope.pkPlanilla = null;
         $scope.data = {};
         $scope.dataRespuesta = {};
         $scope.disableEnviar = false;
         var num = 1,
             max = 0,
-            bandera= false;
+            bandera = false,
+            bandera2 = false,
+            url = null;
         $scope.posicion($location.path());
         $scope.actual = $stateParams.actual;
         $scope.loadMore = function() {
@@ -1545,6 +1542,46 @@ angular.module('starter.controllers', [])
                 });
         };
 
+        $scope.traerPlanilla = function(){
+          $scope.loading = $ionicLoading.show({
+              template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Cargando...',
+              noBackdrop: true
+          });
+          $http.get($scope.server + '/actividades/planilladiaria/list/?pk=' + $scope.pkPlanilla)
+              .then(function doneCallbacks(response) {
+                  $ionicLoading.hide();
+                  $scope.data = response.data.object_list[0];
+                  if ($scope.data.aumento_ph) {
+                    $scope.data.ph = true;
+                  }else {
+                    $scope.data.ph = false;
+                  }
+                  $scope.modal.show();
+                  angular.element(document).ready(function () {
+                    Materialize.updateTextFields();
+                  });
+              }, function failCallbacks(response) {
+                  if (response.status == 403) {
+                      $cordovaToast
+                          .show(response.data.error, 'short', 'center')
+                          .then(function(success) {
+                              $state.go('app.login');
+                          }, function(error) {
+                              $state.go('app.login');
+                          });
+                  } else if (response.status == 500) {
+                      $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
+                  } else if (response.status === 0) {
+                      $cordovaDialogs.alert('No se puede acceder a este servicio en este momento.', 'Error');
+                  } else {
+                      $timeout(function() {
+                          $cordovaToast.show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center').then(function(success) {
+                              $scope.traerPlanilla();
+                          });
+                      }, 10000);
+                  }
+              });
+        };
         $scope.reload = function() {
             num = 1;
             max = 0;
@@ -1563,6 +1600,7 @@ angular.module('starter.controllers', [])
         $scope.cerrarModal = function() {
             $scope.modal.hide();
             bandera = false;
+            bandera2 = false;
             $scope.data = {};
         };
 
@@ -1625,6 +1663,14 @@ angular.module('starter.controllers', [])
             $scope.modal.show();
             $scope.data.piscina = item.piscina;
             $scope.asignacion = item;
+            Materialize.updateTextFields();
+        };
+
+        $scope.editarPlanilla = function(item){
+            bandera2 = true;
+            $scope.asignacion = item;
+            $scope.pkPlanilla = item.planilla;
+            $scope.traerPlanilla();
         };
 
         $scope.enviar = function() {
@@ -1633,6 +1679,13 @@ angular.module('starter.controllers', [])
                 $cordovaDialogs.confirm('Esta seguro que quiere enviar?', 'Enviar', ['Si, Enviar!', 'Cancelar'])
                     .then(function(result) {
                         if (result === 1) {
+                            if ($scope.data.ph) {
+                              $scope.data.aumento_ph = true;
+                              $scope.data.disminucion_ph = "";
+                            }else {
+                              $scope.data.disminucion_ph = true;
+                              $scope.data.aumento_ph = "";
+                            }
                             $scope.enviando(); //Se formatea la informacion y se envia.
                         }
                     });
@@ -1648,9 +1701,14 @@ angular.module('starter.controllers', [])
                 template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Enviando...',
                 noBackdrop: true
             });
+            if(bandera2){
+                url = "/actividades/planilladiaria/edit/form/" + $scope.pkPlanilla + '/';
+            }else{
+                url = "/actividades/planilladiaria/form/";
+            }
             $http({
                 method: 'POST',
-                url: $scope.server + '/actividades/planilladiaria/form/',
+                url: $scope.server + url,
                 data: $.param($scope.data),
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -1659,7 +1717,13 @@ angular.module('starter.controllers', [])
                 $scope.cerrarModal();
                 $scope.disableEnviar = false;
                 $ionicLoading.hide();
+                bandera2 = false;
                 $scope.asignacion.planilla = response.data.id;
+                if(response.data.espera===true){
+                    $scope.asignacion.espera = 1;
+                }else{
+                    $scope.asignacion.espera = null;
+                }
                 $cordovaToast.show("Enviado exitoso", 'long', 'center');
             }, function failCallbacks(response) {
                 $ionicLoading.hide();
@@ -2184,6 +2248,13 @@ angular.module('starter.controllers', [])
                 $cordovaDialogs.confirm('Esta seguro que quiere enviar?', 'Enviar', ['Si, Enviar!', 'Cancelar'])
                     .then(function(result) {
                         if (result === 1) {
+                            if ($scope.data.ph) {
+                              $scope.data.aumento_ph = true;
+                              $scope.data.disminucion_ph = "";
+                            }else {
+                              $scope.data.disminucion_ph = true;
+                              $scope.data.aumento_ph = "";
+                            }
                             $scope.enviando(); //Se formatea la informacion y se envia.
                         }else{
                           $scope.disableEnviar = false;

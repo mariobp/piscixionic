@@ -19,17 +19,17 @@
             </ion-list>
             <div class="row row-p">
                 <div class="input-field col s6">
-                    <input type="radio" id="disminucion_ph" name="ph" ng-model="data.disminucion_ph">
+                    <input type="radio" id="disminucion_ph" name="ph" ng-model="data.ph">
                     <label for="disminucion_ph">Disminución de PH</label>
                 </div>
                 <div class="input-field col s6">
-                    <input type="radio" id="aumento_ph" name="ph" ng-model="data.aumento_ph">
+                    <input type="radio" id="aumento_ph" name="ph" ng-model="data.ph">
                     <label for="aumento_ph">Aumento de PH</label>
                 </div>
             </div>
             <div class="row row-p">
                 <div class="input-field col s12">
-                    <input type="number" id="nivel_cloro" name="nivel_cloro" ng-model="data.nivel_cloro" ng-class="{'invalid':form.nivel_cloro.$invalid && form.$submitted,'valid':form.nivel_cloro.$valid && form.$submitted}" required>
+                    <input type="number" placeholder="escribir aquí.." id="nivel_cloro" name="nivel_cloro" ng-model="data.nivel_cloro" ng-class="{'invalid':form.nivel_cloro.$invalid && form.$submitted,'valid':form.nivel_cloro.$valid && form.$submitted}" required>
                     <label for="nivel_cloro">Nivel cloro</label>
                     <div class="error-container" ng-show="form.nivel_cloro.$error && form.$submitted" ng-messages="form.nivel_cloro.$error">
                         <div ng-messages-include="templates/error-list.html"></div>
@@ -38,7 +38,7 @@
             </div>
             <div class="row row-p">
                 <div class="input-field col s12">
-                    <input type="number" id="nivel_ph" name="nivel_ph" ng-model="data.nivel_ph" ng-class="{'invalid':form.nivel_ph.$invalid && form.$submitted,'valid':form.nivel_ph.$valid && form.$submitted}" required>
+                    <input type="number" placeholder="escribir aquí.." id="nivel_ph" name="nivel_ph" ng-model="data.nivel_ph" ng-class="{'invalid':form.nivel_ph.$invalid && form.$submitted,'valid':form.nivel_ph.$valid && form.$submitted}" required>
                     <label for="nivel_ph">Nivel PH</label>
                     <div class="error-container" ng-show="form.nivel_ph.$error && form.$submitted" ng-messages="form.nivel_ph.$error">
                         <div ng-messages-include="templates/error-list.html"></div>
@@ -55,14 +55,14 @@
                         class="materialize-textarea"
                         ng-model="data.observaciones"
                         name="observaciones"
-                        required
-                        ng-class="{'invalid':form.observaciones.$invalid && form.$submitted,'valid':form.observaciones.$valid && form.$submitted}"></textarea>
+                        placeholder="escribir aquí.."
+                        ></textarea>
                     <label for="descripcion">Observaciones</label>
-                    <div class="error-container" ng-show="form.observaciones.$error && form.$submitted" ng-messages="form.observaciones.$error">
-                        <div ng-messages-include="templates/error-list.html"></div>
-                    </div>
                 </div>
             </div>
+            <ion-list class="planilla">
+                <ion-checkbox class="checkbox-calm" ng-model="data.espera">Poner en espera</ion-checkbox>
+            </ion-list>
         </div>
         <div class="bar headerbar footer-f">
             <div class="row row-p">
