@@ -2420,4 +2420,85 @@ angular.module('starter.controllers', [])
                 $cordovaDialogs.alert("Debe llenar los dos campos de fechas", "Campos requeridos");
             }
         };
+    })
+    .controller('Alarma', function($scope, $ionicModal, $cordovaDialogs, $ionicLoading, $cordovaToast) {
+        $scope.data = {};
+        $scope.alarmas = [];
+        $scope.disabled = false;
+        $scope.loading = $ionicLoading.show({
+            template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Cargando...',
+            noBackdrop: true
+        });
+        $scope.notify.showAlarm("piscinero", $scope.username);
+        $ionicLoading.hide();
+
+        $scope.$on('lista-alarmas', function(event, data){
+          $scope.alarmas = data;
+          $scope.$apply();
+        });
+
+        $ionicModal.fromTemplateUrl('templates/newAlarm.html', {
+            scope: $scope,
+            animation: 'fade-g'
+        }).then(function(modal) {
+            $scope.modal = modal;
+        });
+
+        $scope.cerrarModal = function() {
+            $scope.modal.hide();
+        };
+
+        $scope.$on('$destroy', function() {
+            $scope.modal.remove();
+        });
+
+
+        $scope.abrirModa = function() {
+            $scope.modal.show();
+            Materialize.updateTextFields();
+        };
+
+        function calcDiferencia(date1, date2) {
+            if (date2 < date1) {
+                date2.setDate(date2.getDate() + 1);
+            }
+            var diff = date2 - date1;
+            console.log(diff/60000);
+            return diff;
+        }
+
+        function completar(num){
+            if(num>=0 && num<=9){
+              return "0"+num;
+            }else{
+              return num;
+            }
+        }
+
+        $scope.enviar = function() {
+            $scope.disabled = true;
+            var now = new Date();
+            var time = new Date();
+            time.setHours($scope.data.time.getHours());
+            time.setMinutes($scope.data.time.getMinutes());
+            var hora = completar($scope.data.time.getHours())+":"+completar($scope.data.time.getMinutes());
+            if (time > now) {
+                $scope.modal.hide();
+                $scope.loading = $ionicLoading.show({
+                    template: '<ion-spinner class="spinner-light"></ion-spinner><br/>Guardando...',
+                    noBackdrop: true
+                });
+
+                $scope.notify.alarma(calcDiferencia(now, time), "piscinero", $scope.username, $scope.data.mensaje, hora);
+                $scope.notify.showAlarm("piscinero", $scope.username);
+                $ionicLoading.hide();
+                $cordovaToast.show("Recordatorio programado", 'short', 'center');
+                $scope.data = {};
+            } else {
+                $scope.data.time = "";
+                $scope.disabled = false;
+                $cordovaDialogs.alert("La hora del recordatorio debe ser mayor a la actual", "Hora");
+            }
+
+        };
     });

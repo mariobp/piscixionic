@@ -1,0 +1,41 @@
+<ion-modal-view>
+  <ion-header-bar class="headerbar">
+    <h1 class="title center">Nuevo recordatorio</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="cerrarModal()"><i class="micon">close</i></button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+      <div class="row row-p">
+        <form class="col s12" id="reporte" method="post" name="form" ng-submit="form.$valid && enviar()" novalidate>
+            <div class="row row-p">
+              <div class="row row-p"><div class="col s2">
+              <div class="label-time">
+                Hora
+              </div>
+            </div>
+              <div class="input-field col s12">
+                <input type="time" id="time" name="time" ng-model="data.time" ng-class="{'invalid':form.time.$invalid && form.$submitted,'valid':form.time.$valid && form.$submitted}" required>
+                <label for="time"></label>
+                <div class="error-container" ng-show="form.time.$error && form.$submitted" ng-messages="form.time.$error">
+                  <div ng-messages-include="templates/error-list.html"></div>
+                </div>
+              </div>
+             </div>
+            <div class="row row-p">
+              <div class="input-field col s12">
+                <textarea type="text" id="mensaje" placeholder="escribir aquí.." rows="5" class="materialize-textarea" ng-model="data.mensaje" maxlength="200"  name="mensaje" required ng-class="{'invalid':form.mensaje.$invalid && form.$submitted,'valid':form.mensaje.$valid && form.$submitted}"></textarea>
+                <label for="mensaje">Mensaje</label>
+                <div class="error-container" ng-show="form.mensaje.$error && form.$submitted" ng-messages="form.mensaje.$error">
+                  <div ng-messages-include="templates/error-list.html"></div>
+                </div>
+              </div>
+            </div>
+            <div class="row row-p">
+             <button type="button" class="btn btn-large waves-effect waves-light red lighten-2 col s6" ng-click="cerrarModal()">Cancelar <i class="micon">cancel</i></button>
+             <button type="submit" class="btn btn-large waves-effect waves-light green lighten-2 col s6" ng-class="{'disabled': disableEnviar}">Enviar <i class="micon">done_all</i></button>
+            </div>
+        </form>
+      </div>
+  </ion-content>
+</ion-modal-view>

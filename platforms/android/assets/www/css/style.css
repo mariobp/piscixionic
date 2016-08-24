@@ -608,3 +608,7 @@ progress[value]::-webkit-progress-value {
     position: relative;
     margin-top: -14px;
 }
+
+.big-icon{
+  font-size: 2rem !important;
+}

@@ -37,6 +37,23 @@ angular.module('starter.socket', [])
                 console.log("Error");
             });
 
+            scope.socket.on('alarm', function(message) {
+                var text = message.html + " - " + message.hora;
+                $cordovaLocalNotification.schedule({
+                    id: message.id,
+                    title: 'Recordatorio',
+                    text: text,
+                    data:{
+                      tipo:"Alarma",
+                    }
+                });
+                this.showAlarm("piscinero", scope.username);
+            }.bind(this));
+
+            scope.socket.on('list-alarms', function(list){
+                scope.$broadcast('lista-alarmas', list);
+            });
+
             scope.socket.on('notix', function(message) {
                 if (scope.recive) {
                     if (message.data.data !== undefined) {
@@ -287,6 +304,23 @@ angular.module('starter.socket', [])
             } else if ($state.current.name == "app.historialI") {
                 this.limpiar("Reporte informativo");
             }
+        },
+
+        alarma: function(time, usertype, webuser, message, hora) {
+            scope.socket.emit('alarm', {
+                "time": time,
+                "usertype": usertype,
+                "webuser": webuser,
+                "message": message,
+                "hora": hora
+            });
+        },
+
+        showAlarm: function(usertype, username){
+            scope.socket.emit('show-alarm', {
+              "usertype": usertype,
+              "webuser": username
+            });
         }
     };
 
