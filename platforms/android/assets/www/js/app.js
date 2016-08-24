@@ -261,6 +261,15 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ngCordova', 'starter.
                     controller: 'Calendario'
                 }
             }
+      })
+      .state('app.alarma', {
+            url: '/alarma',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/alarma.html',
+                    controller: 'Alarma'
+                }
+            }
       });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/clientelists');

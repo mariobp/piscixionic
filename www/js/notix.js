@@ -15,6 +15,7 @@ angular.module('starter.socket', [])
         event: null,
         callback: null,
         notixList: [],
+        alarmList: [],
         data: {},
 
         setup: function(session_id, username, type) {
@@ -35,6 +36,24 @@ angular.module('starter.socket', [])
 
             scope.socket.on('error-login', function(message) {
                 console.log("Error");
+            });
+
+            scope.socket.on('alarm', function(message) {
+                var text = message.html + " - " + message.hora;
+                $cordovaLocalNotification.schedule({
+                    id: message.id,
+                    title: 'Recordatorio',
+                    text: text,
+                    data:{
+                      tipo:"Alarma",
+                    }
+                });
+                console.log(scope.username);
+                this.showAlarm("piscinero", scope.username);
+            }.bind(this));
+
+            scope.socket.on('list-alarms', function(list){
+                scope.$broadcast('lista-alarmas', list);
             });
 
             scope.socket.on('notix', function(message) {
@@ -130,6 +149,8 @@ angular.module('starter.socket', [])
                                     }
                                 });
                             }
+                        } else {
+
                         }
                     }
                     $rootScope.$on('$cordovaLocalNotification:click',
@@ -271,7 +292,7 @@ angular.module('starter.socket', [])
                     }
                 }
             });
-            if (mensajes.length>0) {
+            if (mensajes.length > 0) {
                 this.visit(mensajes);
             }
 
@@ -287,6 +308,24 @@ angular.module('starter.socket', [])
             } else if ($state.current.name == "app.historialI") {
                 this.limpiar("Reporte informativo");
             }
+        },
+
+        alarma: function(time, usertype, webuser, message, hora) {
+            scope.socket.emit('alarm', {
+                "time": time,
+                "usertype": usertype,
+                "webuser": webuser,
+                "message": message,
+                "hora": hora
+            });
+        },
+
+        showAlarm: function(usertype, username){
+          console.log(usertype +" "+ username);
+            scope.socket.emit('show-alarm', {
+              "usertype": usertype,
+              "webuser": username
+            });
         }
     };
 

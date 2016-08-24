@@ -10,7 +10,7 @@
         <form class="col s12" id="reporte" method="post" name="form" ng-submit="form.$valid && enviar()" novalidate>
             <div class="row row-p">
               <div class="input-field col s12">
-                <input type="text" id="nombre" name="nombre" ng-model="data.nombre" ng-class="{'invalid':form.nombre.$invalid && form.$submitted,'valid':form.nombre.$valid && form.$submitted}" required>
+                <input type="text" id="nombre" placeholder="escribir aquí.." name="nombre" ng-model="data.nombre" ng-class="{'invalid':form.nombre.$invalid && form.$submitted,'valid':form.nombre.$valid && form.$submitted}" required>
                 <label for="nombre">Nombre</label>
                 <div class="error-container" ng-show="form.nombre.$error && form.$submitted" ng-messages="form.nombre.$error">
                   <div ng-messages-include="templates/error-list.html"></div>
@@ -19,7 +19,7 @@
              </div>
             <div class="row row-p">
               <div class="input-field col s12">
-                <textarea type="text" id="descripcion"  rows="5" class="materialize-textarea" ng-model="data.descripcion" maxlength="200" max name="descripcion" required ng-class="{'invalid':form.descripcion.$invalid && form.$submitted,'valid':form.descripcion.$valid && form.$submitted}"></textarea>
+                <textarea type="text" id="descripcion" placeholder="escribir aquí.." rows="5" class="materialize-textarea" ng-model="data.descripcion" maxlength="200" max name="descripcion" required ng-class="{'invalid':form.descripcion.$invalid && form.$submitted,'valid':form.descripcion.$valid && form.$submitted}"></textarea>
                 <label for="descripcion">Descripción</label>
                 <div class="error-container" ng-show="form.descripcion.$error && form.$submitted" ng-messages="form.descripcion.$error">
                   <div ng-messages-include="templates/error-list.html"></div>

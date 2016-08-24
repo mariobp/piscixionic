@@ -14,12 +14,15 @@
 
   <ion-side-menu side="left">
     <ion-header-bar class="headerbar">
-      <h1 class="title">Menu piscinero</h1>
+      <h1 class="title">Menu piscinero({{username}})</h1>
     </ion-header-bar>
     <ion-content>
       <ion-list>
         <ion-item menu-close href="#/app/clientelists">
           <i class="micon">account_circle</i> Clientes
+        </ion-item>
+        <ion-item menu-close href="#/app/alarma">
+          <i class="micon">alarm</i> Recordatorio
         </ion-item>
         <ion-item menu-close href="#/app/ruta/0">
           <i class="micon">directions</i> Ruta
