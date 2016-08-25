@@ -609,6 +609,11 @@ progress[value]::-webkit-progress-value {
     margin-top: -14px;
 }
 
+.label-time{
+    margin-top: 10px;
+    font-size: 0.8rem;
+}
+
 .big-icon{
   font-size: 2rem !important;
 }
