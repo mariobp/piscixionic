@@ -614,5 +614,5 @@ progress[value]::-webkit-progress-value {
 }
 
 .big-icon{
-  font-size: 2rem;
+  font-size: 2rem !important;
 }
