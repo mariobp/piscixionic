@@ -1498,6 +1498,7 @@ angular.module('starter.controllers', [])
         $scope.items = [];
         $scope.asignacion = {};
         $scope.planilla = {};
+        $scope.piscina = null;
         $scope.pkPlanilla = null;
         $scope.data = {};
         $scope.dataRespuesta = {};
@@ -1668,6 +1669,7 @@ angular.module('starter.controllers', [])
             bandera = true;
             $scope.modal.show();
             $scope.data.piscina = item.piscina;
+            $scope.piscina = item.nombreP;
             $scope.asignacion = item;
             Materialize.updateTextFields();
         };
@@ -1676,6 +1678,7 @@ angular.module('starter.controllers', [])
             bandera2 = true;
             $scope.asignacion = item;
             $scope.pkPlanilla = item.planilla;
+            $scope.piscina = item.nombreP;
             $scope.traerPlanilla();
         };
 
