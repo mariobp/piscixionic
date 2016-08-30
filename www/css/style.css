@@ -1,7 +1,7 @@
 /* Empty. Add your own CSS if you like */
 
 .error-container {
-    margin: 5px 0;
+      margin: 5px 0;
 }
 .error-container:last-child {
     margin: 5px 0 0;
@@ -614,5 +614,9 @@ progress[value]::-webkit-progress-value {
 }
 
 .big-icon{
-  font-size: 2rem !important;
+    font-size: 2rem !important;
+}
+
+.ajuste{
+    margin-top: 20px;
 }

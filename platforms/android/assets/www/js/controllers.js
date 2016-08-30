@@ -1501,6 +1501,8 @@ angular.module('starter.controllers', [])
         $scope.piscina = null;
         $scope.pkPlanilla = null;
         $scope.data = {};
+        $scope.max = 0;
+        $scope.reverse = false;
         $scope.dataRespuesta = {};
         $scope.disableEnviar = false;
         var num = 1,
@@ -1510,18 +1512,65 @@ angular.module('starter.controllers', [])
             url = null;
         $scope.posicion($location.path());
         $scope.actual = $stateParams.actual;
+
+        $scope.loadPendiente = function() {
+            $http.get($scope.server + '/actividades/planilladiaria/pendiente/list/')
+                .then(function doneCallbacks(response) {
+                  console.log("Pendiente");
+                    if (response.data.num_rows === 0) {
+                        $cordovaDialogs.alert('Este piscinero no tiene ninguna planilla pendiente.', 'Información');
+                    }
+                    var data = response.data.object_list;
+                    data.forEach(function(data) {
+                        data.old = true;
+                        $scope.items.push(data);
+                    });
+                    $scope.reverse = true;
+                }, function failCallbacks(response) {
+                    if (response.status == 403) {
+                        $cordovaToast
+                            .show(response.data.error, 'short', 'center')
+                            .then(function(success) {
+                                $state.go('app.login');
+                            }, function(error) {
+                                $state.go('app.login');
+                            });
+                    } else if (response.status == 500) {
+                        $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
+                    } else if (response.status === 0) {
+                        $cordovaDialogs.alert('No se puede acceder a este servicio en este momento.', 'Error');
+                    } else {
+                        $timeout(function() {
+                            $cordovaToast.show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center').then(function(success) {
+                                $scope.loadPendiente();
+                            });
+                        }, 10000);
+                    }
+                });
+        };
+        $scope.loadPendiente();
         $scope.loadMore = function() {
             $http.get($scope.server + '/usuarios/service/list/asignaciones/?page=' + num + '&asigna=true')
                 .then(function doneCallbacks(response) {
+                  console.log("De hoy");
                     if (response.data.num_rows === 0) {
                         $cordovaDialogs.alert('Este piscinero no tiene ninguna ruta asignada.', 'Información');
                     }
                     var data = response.data.object_list;
+                    $scope.max += data.length;
                     data.forEach(function(data) {
+                        data.old = false;
+                        if(data.planilla === null) {
+                          data.planilla = false;
+                        }if(data.espera === null) {
+                          data.espera = false;
+                        }if(data.salida === null) {
+                          data.salida = false;
+                        }
                         $scope.items.push(data);
                     });
                     max = response.data.count;
-                    if ($scope.items.length === max) {
+                    if ($scope.max === max) {
                         $scope.noMoreItemsAvailable = true;
                     }
                     num++;
@@ -1594,6 +1643,7 @@ angular.module('starter.controllers', [])
             max = 0;
             $scope.noMoreItemsAvailable = false;
             $scope.items = [];
+            $scope.itemsOld = [];
             $scope.$broadcast('scroll.refreshComplete');
         };
 
@@ -1728,11 +1778,7 @@ angular.module('starter.controllers', [])
                 $ionicLoading.hide();
                 bandera2 = false;
                 $scope.asignacion.planilla = response.data.id;
-                if (response.data.espera === true) {
-                    $scope.asignacion.espera = 1;
-                } else {
-                    $scope.asignacion.espera = null;
-                }
+                $scope.asignacion.espera = response.data.espera;
                 $cordovaToast.show("Enviado exitoso", 'long', 'center');
             }, function failCallbacks(response) {
                 $ionicLoading.hide();
@@ -2448,9 +2494,9 @@ angular.module('starter.controllers', [])
         $scope.notify.showAlarm("piscinero", $scope.username);
         $ionicLoading.hide();
 
-        $scope.$on('lista-alarmas', function(event, data){
-          $scope.alarmas = data;
-          $scope.$apply();
+        $scope.$on('lista-alarmas', function(event, data) {
+            $scope.alarmas = data;
+            $scope.$apply();
         });
 
         $ionicModal.fromTemplateUrl('templates/newAlarm.html', {
@@ -2479,15 +2525,15 @@ angular.module('starter.controllers', [])
                 date2.setDate(date2.getDate() + 1);
             }
             var diff = date2 - date1;
-            console.log(diff/60000);
+            console.log(diff / 60000);
             return diff;
         }
 
-        function completar(num){
-            if(num>=0 && num<=9){
-              return "0"+num;
-            }else{
-              return num;
+        function completar(num) {
+            if (num >= 0 && num <= 9) {
+                return "0" + num;
+            } else {
+                return num;
             }
         }
 
@@ -2497,7 +2543,7 @@ angular.module('starter.controllers', [])
             var time = new Date();
             time.setHours($scope.data.time.getHours());
             time.setMinutes($scope.data.time.getMinutes());
-            var hora = completar($scope.data.time.getHours())+":"+completar($scope.data.time.getMinutes());
+            var hora = completar($scope.data.time.getHours()) + ":" + completar($scope.data.time.getMinutes());
             if (time > now) {
                 $scope.modal.hide();
                 $scope.loading = $ionicLoading.show({

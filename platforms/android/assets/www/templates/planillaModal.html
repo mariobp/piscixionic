@@ -29,20 +29,14 @@
             </div>
             <div class="row row-p">
                 <div class="input-field col s12">
-                    <input type="number" placeholder="escribir aquí.." id="nivel_cloro" name="nivel_cloro" ng-model="data.nivel_cloro" ng-class="{'invalid':form.nivel_cloro.$invalid && form.$submitted,'valid':form.nivel_cloro.$valid && form.$submitted}" required>
+                    <input type="number" placeholder="escribir aquí.." id="nivel_cloro" name="nivel_cloro" ng-model="data.nivel_cloro" ng-class="{'valid':form.nivel_cloro.$valid && form.$submitted}">
                     <label for="nivel_cloro">Nivel cloro</label>
-                    <div class="error-container" ng-show="form.nivel_cloro.$error && form.$submitted" ng-messages="form.nivel_cloro.$error">
-                        <div ng-messages-include="templates/error-list.html"></div>
-                    </div>
                 </div>
             </div>
             <div class="row row-p">
                 <div class="input-field col s12">
-                    <input type="number" placeholder="escribir aquí.." id="nivel_ph" name="nivel_ph" ng-model="data.nivel_ph" ng-class="{'invalid':form.nivel_ph.$invalid && form.$submitted,'valid':form.nivel_ph.$valid && form.$submitted}" required>
+                    <input type="number" placeholder="escribir aquí.." id="nivel_ph" name="nivel_ph" ng-model="data.nivel_ph" ng-class="{'valid':form.nivel_ph.$valid && form.$submitted}">
                     <label for="nivel_ph">Nivel PH</label>
-                    <div class="error-container" ng-show="form.nivel_ph.$error && form.$submitted" ng-messages="form.nivel_ph.$error">
-                        <div ng-messages-include="templates/error-list.html"></div>
-                    </div>
                 </div>
             </div>
             <div class="row row-p">
