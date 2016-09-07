@@ -15,21 +15,6 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/cordova-plugin-device/www/device.js",
-        "id": "cordova-plugin-device.device",
-        "clobbers": [
-            "device"
-        ]
-    },
-    {
-        "file": "plugins/cordova-plugin-background-mode/www/background-mode.js",
-        "id": "cordova-plugin-background-mode.BackgroundMode",
-        "clobbers": [
-            "cordova.plugins.backgroundMode",
-            "plugin.backgroundMode"
-        ]
-    },
-    {
         "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
         "id": "cordova-plugin-camera.Camera",
         "clobbers": [
@@ -249,11 +234,51 @@ module.exports = [
         "runs": true
     },
     {
+        "file": "plugins/cordova.plugins.diagnostic.api-22/www/android/diagnostic.js",
+        "id": "cordova.plugins.diagnostic.api-22.Diagnostic",
+        "clobbers": [
+            "cordova.plugins.diagnostic"
+        ]
+    },
+    {
+        "file": "plugins/org.pbernasconi.progressindicator/www/progressIndicator.js",
+        "id": "org.pbernasconi.progressindicator.ProgressIndicator",
+        "clobbers": [
+            "ProgressIndicator"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-vibration/www/vibration.js",
+        "id": "cordova-plugin-vibration.notification",
+        "merges": [
+            "navigator.notification",
+            "navigator"
+        ]
+    },
+    {
+        "file": "plugins/phonegap-plugin-barcodescanner/www/barcodescanner.js",
+        "id": "phonegap-plugin-barcodescanner.BarcodeScanner",
+        "clobbers": [
+            "cordova.plugins.barcodeScanner"
+        ]
+    },
+    {
         "file": "plugins/cordova-plugin-image-picker/www/imagepicker.js",
         "id": "cordova-plugin-image-picker.ImagePicker",
         "clobbers": [
             "plugins.imagePicker"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-x-toast/www/Toast.js",
+        "id": "cordova-plugin-x-toast.Toast",
+        "clobbers": [
+            "window.plugins.toast"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-x-toast/test/tests.js",
+        "id": "cordova-plugin-x-toast.tests"
     },
     {
         "file": "plugins/cordova-plugin-network-information/www/network.js",
@@ -271,11 +296,12 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
-        "id": "cordova-plugin-splashscreen.SplashScreen",
+        "file": "plugins/ionic-plugin-keyboard/www/android/keyboard.js",
+        "id": "ionic-plugin-keyboard.keyboard",
         "clobbers": [
-            "navigator.splashscreen"
-        ]
+            "cordova.plugins.Keyboard"
+        ],
+        "runs": true
     },
     {
         "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
@@ -285,26 +311,25 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/cordova-plugin-whitelist/whitelist.js",
-        "id": "cordova-plugin-whitelist.whitelist",
-        "runs": true
-    },
-    {
-        "file": "plugins/cordova-plugin-x-toast/www/Toast.js",
-        "id": "cordova-plugin-x-toast.Toast",
+        "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+        "id": "cordova-plugin-splashscreen.SplashScreen",
         "clobbers": [
-            "window.plugins.toast"
+            "navigator.splashscreen"
         ]
     },
     {
-        "file": "plugins/cordova-plugin-x-toast/test/tests.js",
-        "id": "cordova-plugin-x-toast.tests"
+        "file": "plugins/cordova-plugin-device/www/device.js",
+        "id": "cordova-plugin-device.device",
+        "clobbers": [
+            "device"
+        ]
     },
     {
-        "file": "plugins/cordova.plugins.diagnostic.api-22/www/android/diagnostic.js",
-        "id": "cordova.plugins.diagnostic.api-22.Diagnostic",
+        "file": "plugins/cordova-plugin-background-mode/www/background-mode.js",
+        "id": "cordova-plugin-background-mode.BackgroundMode",
         "clobbers": [
-            "cordova.plugins.diagnostic"
+            "cordova.plugins.backgroundMode",
+            "plugin.backgroundMode"
         ]
     },
     {
@@ -330,36 +355,6 @@ module.exports = [
             "cordova.plugins.notification.local.core",
             "plugin.notification.local.core"
         ]
-    },
-    {
-        "file": "plugins/ionic-plugin-keyboard/www/android/keyboard.js",
-        "id": "ionic-plugin-keyboard.keyboard",
-        "clobbers": [
-            "cordova.plugins.Keyboard"
-        ],
-        "runs": true
-    },
-    {
-        "file": "plugins/org.pbernasconi.progressindicator/www/progressIndicator.js",
-        "id": "org.pbernasconi.progressindicator.ProgressIndicator",
-        "clobbers": [
-            "ProgressIndicator"
-        ]
-    },
-    {
-        "file": "plugins/phonegap-plugin-barcodescanner/www/barcodescanner.js",
-        "id": "phonegap-plugin-barcodescanner.BarcodeScanner",
-        "clobbers": [
-            "cordova.plugins.barcodeScanner"
-        ]
-    },
-    {
-        "file": "plugins/cordova-plugin-vibration/www/vibration.js",
-        "id": "cordova-plugin-vibration.notification",
-        "merges": [
-            "navigator.notification",
-            "navigator"
-        ]
     }
 ];
 module.exports.metadata = 
@@ -367,29 +362,29 @@ module.exports.metadata =
 {
     "com.phonegap.plugins.PushPlugin": "2.5.0",
     "com.telerik.plugins.nativepagetransitions": "0.6.4",
-    "cordova-plugin-app-event": "1.2.0",
-    "cordova-plugin-device": "1.1.1",
-    "cordova-plugin-background-mode": "0.6.5",
     "cordova-plugin-compat": "1.0.0",
     "cordova-plugin-camera": "2.2.0",
-    "cordova-plugin-console": "1.0.2",
-    "cordova-plugin-crosswalk-webview": "1.7.2",
     "cordova-plugin-dialogs": "1.2.1",
     "cordova-plugin-file": "4.2.0",
     "cordova-plugin-file-transfer": "1.5.1",
     "cordova-plugin-geolocation": "2.2.0",
-    "cordova-plugin-image-picker": "1.0.8",
-    "cordova-plugin-network-information": "1.2.0",
-    "cordova-plugin-splashscreen": "3.1.0",
-    "cordova-plugin-statusbar": "2.1.2",
-    "cordova-plugin-whitelist": "1.2.1",
-    "cordova-plugin-x-toast": "2.5.0",
     "cordova.plugins.diagnostic.api-22": "2.3.10-api-22",
-    "de.appplant.cordova.plugin.local-notification": "0.8.4",
-    "ionic-plugin-keyboard": "2.0.1",
     "org.pbernasconi.progressindicator": "1.1.0",
-    "phonegap-plugin-barcodescanner": "5.0.0",
-    "cordova-plugin-vibration": "2.1.1"
+    "cordova-plugin-vibration": "2.1.1",
+    "cordova-plugin-crosswalk-webview": "2.0.0",
+    "phonegap-plugin-barcodescanner": "6.0.1",
+    "cordova-plugin-image-picker": "1.1.1",
+    "cordova-plugin-x-toast": "2.5.2",
+    "cordova-plugin-network-information": "1.2.1",
+    "ionic-plugin-keyboard": "2.2.1",
+    "cordova-plugin-statusbar": "2.1.3",
+    "cordova-plugin-splashscreen": "3.2.2",
+    "cordova-plugin-whitelist": "1.2.2",
+    "cordova-plugin-console": "1.0.3",
+    "cordova-plugin-device": "1.1.2",
+    "cordova-plugin-background-mode": "0.6.5",
+    "cordova-plugin-app-event": "1.2.0",
+    "de.appplant.cordova.plugin.local-notification": "0.8.4"
 };
 // BOTTOM OF METADATA
 });
