@@ -253,7 +253,7 @@ angular.module('starter.controllers', [])
         max = 0;
         $scope.noMoreItemsAvailable = false;
         $scope.clientelists = [];
-        $scope.$broadcast('scroll.refreshComplete');
+        $scope.loadMore();
     };
 
     $scope.scanearCodigo = function() {
@@ -833,14 +833,6 @@ angular.module('starter.controllers', [])
             num = 1;
             max = 0;
             $scope.noMoreItemsAvailable = false;
-            $scope.$broadcast('scroll.refreshComplete');
-        };
-
-        $scope.reload2 = function() {
-            $scope.reportes = [];
-            num = 1;
-            max = 0;
-            $scope.noMoreItemsAvailable = false;
             $scope.loadMore();
         };
 
@@ -1393,14 +1385,6 @@ angular.module('starter.controllers', [])
             num = 1;
             max = 0;
             $scope.noMoreItemsAvailable = false;
-            $scope.$broadcast('scroll.refreshComplete');
-        };
-
-        $scope.reload2 = function() {
-            $scope.lista = [];
-            num = 1;
-            max = 0;
-            $scope.noMoreItemsAvailable = false;
             $scope.loadMore();
         };
 
@@ -1698,16 +1682,9 @@ angular.module('starter.controllers', [])
         max = 0;
         $scope.noMoreItemsAvailable = false;
         $scope.piscineros = [];
-        $scope.$broadcast('scroll.refreshComplete');
-    };
-
-    $scope.reload2 = function() {
-        num = 1;
-        max = 0;
-        $scope.noMoreItemsAvailable = false;
-        $scope.piscineros = [];
         $scope.loadMore();
     };
+
 })
 
 .controller('PiscinaAsignacion', function($scope, $stateParams, $http, $cordovaToast, $ionicLoading, $state, $cordovaDialogs, $timeout, $location) {
@@ -2142,14 +2119,6 @@ angular.module('starter.controllers', [])
         };
 
         $scope.reload = function() {
-            $scope.reportes = [];
-            num = 1;
-            max = 0;
-            $scope.noMoreItemsAvailable = false;
-            $scope.$broadcast('scroll.refreshComplete');
-        };
-
-        $scope.reload2 = function() {
             $scope.reportes = [];
             num = 1;
             max = 0;

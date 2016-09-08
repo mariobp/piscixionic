@@ -7,7 +7,7 @@
 	  </ion-header-bar>
 	<ion-content overflow-scroll=”true”>
 		<ion-list>
-		  <ion-item collection-repeat="piscina in piscinas" class="collection-item">
+		  <ion-item collection-repeat="piscina in piscinas|orderBy:'-check'" class="collection-item">
 				<div class="">
 					<h2>Piscina {{piscina.nombre}} <b>Tipo</b> {{ piscina.tipo__nombre }}</h2>
 						<p>
