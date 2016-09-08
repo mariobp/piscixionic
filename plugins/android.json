@@ -13,16 +13,7 @@
         "com.telerik.plugins.nativepagetransitions": {
             "PACKAGE_NAME": "com.ionicframework.piscixp998893"
         },
-        "cordova-plugin-background-mode": {
-            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
-        },
         "cordova-plugin-camera": {
-            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
-        },
-        "cordova-plugin-crosswalk-webview": {
-            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
-        },
-        "cordova-plugin-device": {
             "PACKAGE_NAME": "com.ionicframework.piscixp998893"
         },
         "cordova-plugin-dialogs": {
@@ -34,51 +25,60 @@
         "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.ionicframework.piscixp998893"
         },
-        "cordova-plugin-image-picker": {
-            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
-        },
-        "cordova-plugin-network-information": {
-            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
-        },
-        "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
-        },
-        "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
-        },
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
-        },
-        "cordova-plugin-x-toast": {
-            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
-        },
-        "de.appplant.cordova.plugin.local-notification": {
-            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
-        },
-        "ionic-plugin-keyboard": {
-            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
-        },
         "org.pbernasconi.progressindicator": {
             "PACKAGE_NAME": "com.ionicframework.piscixp998893"
         },
-        "phonegap-plugin-barcodescanner": {
+        "cordova-plugin-vibration": {
             "PACKAGE_NAME": "com.ionicframework.piscixp998893"
         },
         "cordova.plugins.diagnostic": {
             "PACKAGE_NAME": "com.ionicframework.piscixp998893"
         },
-        "cordova-plugin-vibration": {
+        "cordova-plugin-crosswalk-webview": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
+        "phonegap-plugin-barcodescanner": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
+        "cordova-plugin-image-picker": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
+        "cordova-plugin-x-toast": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
+        "de.appplant.cordova.plugin.local-notification": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
+        "cordova-plugin-background-mode": {
             "PACKAGE_NAME": "com.ionicframework.piscixp998893"
         }
     },
     "dependent_plugins": {
-        "cordova-plugin-app-event": {
-            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
-        },
         "cordova-plugin-compat": {
             "PACKAGE_NAME": "com.ionicframework.piscixp998893"
         },
         "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.ionicframework.piscixp998893"
+        },
+        "cordova-plugin-app-event": {
             "PACKAGE_NAME": "com.ionicframework.piscixp998893"
         }
     }

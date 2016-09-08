@@ -2,7 +2,7 @@
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="cordova.plugins.diagnostic"
-    version="3.1.0">
+    version="3.1.4">
 
     <name>Diagnostic</name>
     <description>Cordova/Phonegap plugin to check the state of Location/WiFi/Camera/Bluetooth device settings.</description>
@@ -42,6 +42,7 @@
         <framework src="Photos.framework" />
         <framework src="AddressBook.framework" />
         <framework src="EventKit.framework" />
+        <framework src="Contacts.framework" />
     </platform>
 
     <!-- android -->
@@ -53,8 +54,8 @@
             </feature>
         </config-file>
 
-        <framework src="com.android.support:support-v4:23.+" />
-        <framework src="com.android.support:appcompat-v7:23.+" />
+        <framework src="com.android.support:support-v4:+" />
+        <framework src="com.android.support:appcompat-v7:+" />
 
         <js-module src="www/android/diagnostic.js" name="Diagnostic">
             <clobbers target="cordova.plugins.diagnostic" />

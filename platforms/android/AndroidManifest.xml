@@ -18,19 +18,11 @@
             </intent-filter>
         </receiver>
         <service android:name="com.plugin.gcm.GCMIntentService" />
-        <service android:name="de.appplant.cordova.plugin.background.ForegroundService" />
-        <activity android:label="@string/multi_app_name" android:name="com.synconset.MultiImageChooserActivity" android:theme="@android:style/Theme.Holo.Light" />
-        <receiver android:exported="false" android:name="de.appplant.cordova.plugin.localnotification.TriggerReceiver" />
-        <receiver android:exported="false" android:name="de.appplant.cordova.plugin.localnotification.ClearReceiver" />
-        <activity android:exported="false" android:launchMode="singleInstance" android:name="de.appplant.cordova.plugin.localnotification.ClickActivity" android:theme="@android:style/Theme.NoDisplay" />
-        <receiver android:exported="false" android:name="de.appplant.cordova.plugin.notification.TriggerReceiver" />
-        <receiver android:exported="false" android:name="de.appplant.cordova.plugin.notification.ClearReceiver" />
-        <receiver android:exported="false" android:name="de.appplant.cordova.plugin.localnotification.RestoreReceiver">
+        <receiver android:name="cordova.plugins.Diagnostic$LocationProviderChangedReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.location.PROVIDERS_CHANGED" />
             </intent-filter>
         </receiver>
-        <activity android:exported="false" android:launchMode="singleInstance" android:name="de.appplant.cordova.plugin.notification.ClickActivity" android:theme="@android:style/Theme.NoDisplay" />
         <activity android:clearTaskOnLaunch="true" android:configChanges="orientation|keyboardHidden|screenSize" android:exported="false" android:name="com.google.zxing.client.android.CaptureActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="com.google.zxing.client.android.SCAN" />
@@ -49,11 +41,19 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <receiver android:name="cordova.plugins.Diagnostic$LocationProviderChangedReceiver">
+        <activity android:label="@string/multi_app_name" android:name="com.synconset.MultiImageChooserActivity" android:theme="@android:style/Theme.Holo.Light" />
+        <receiver android:exported="false" android:name="de.appplant.cordova.plugin.localnotification.TriggerReceiver" />
+        <receiver android:exported="false" android:name="de.appplant.cordova.plugin.localnotification.ClearReceiver" />
+        <activity android:exported="false" android:launchMode="singleInstance" android:name="de.appplant.cordova.plugin.localnotification.ClickActivity" android:theme="@android:style/Theme.NoDisplay" />
+        <receiver android:exported="false" android:name="de.appplant.cordova.plugin.notification.TriggerReceiver" />
+        <receiver android:exported="false" android:name="de.appplant.cordova.plugin.notification.ClearReceiver" />
+        <receiver android:exported="false" android:name="de.appplant.cordova.plugin.localnotification.RestoreReceiver">
             <intent-filter>
-                <action android:name="android.location.PROVIDERS_CHANGED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+        <activity android:exported="false" android:launchMode="singleInstance" android:name="de.appplant.cordova.plugin.notification.ClickActivity" android:theme="@android:style/Theme.NoDisplay" />
+        <service android:name="de.appplant.cordova.plugin.background.ForegroundService" />
     </application>
     <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="23" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -64,11 +64,11 @@
     <permission android:name="com.ionicframework.piscixp998893.permission.C2D_MESSAGE" android:protectionLevel="signature" />
     <uses-permission android:name="com.ionicframework.piscixp998893.permission.C2D_MESSAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 </manifest>

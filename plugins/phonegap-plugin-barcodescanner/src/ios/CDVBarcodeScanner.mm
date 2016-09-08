@@ -138,6 +138,15 @@
     return result;
 }
 
+-(BOOL)notHasPermission
+{
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    return (authStatus == AVAuthorizationStatusDenied ||
+            authStatus == AVAuthorizationStatusRestricted);
+}
+
+
+
 //--------------------------------------------------------------------------
 - (void)scan:(CDVInvokedUrlCommand*)command {
     CDVbcsProcessor* processor;
@@ -159,6 +168,10 @@
     capabilityError = [self isScanNotPossible];
     if (capabilityError) {
         [self returnError:capabilityError callback:callback];
+        return;
+    } else if ([self notHasPermission]) {
+        NSString * error = NSLocalizedString(@"Access to the camera has been prohibited; please enable it in the Settings app to continue.",nil);
+        [self returnError:error callback:callback];
         return;
     }
 
@@ -336,11 +349,11 @@ parentViewController:(UIViewController*)parentViewController
 }
 
 //--------------------------------------------------------------------------
-- (void)barcodeScanDone {
+- (void)barcodeScanDone:(void (^)(void))callbackBlock {
     self.capturing = NO;
     [self.captureSession stopRunning];
-    [self.parentViewController dismissViewControllerAnimated: YES completion:nil];
-
+    [self.parentViewController dismissViewControllerAnimated:YES completion:callbackBlock];
+    
     // viewcontroller holding onto a reference to us, release them so they
     // will release us
     self.viewController = nil;
@@ -380,22 +393,25 @@ parentViewController:(UIViewController*)parentViewController
 //--------------------------------------------------------------------------
 - (void)barcodeScanSucceeded:(NSString*)text format:(NSString*)format {
     dispatch_sync(dispatch_get_main_queue(), ^{
-        [self barcodeScanDone];
+        [self barcodeScanDone:^{
+            [self.plugin returnSuccess:text format:format cancelled:FALSE flipped:FALSE callback:self.callback];
+        }];
         AudioServicesPlaySystemSound(_soundFileObject);
-        [self.plugin returnSuccess:text format:format cancelled:FALSE flipped:FALSE callback:self.callback];
     });
 }
 
 //--------------------------------------------------------------------------
 - (void)barcodeScanFailed:(NSString*)message {
-    [self barcodeScanDone];
-    [self.plugin returnError:message callback:self.callback];
+    [self barcodeScanDone:^{
+        [self.plugin returnError:message callback:self.callback];
+    }];
 }
 
 //--------------------------------------------------------------------------
 - (void)barcodeScanCancelled {
-    [self barcodeScanDone];
-    [self.plugin returnSuccess:@"" format:@"" cancelled:TRUE flipped:self.isFlipped callback:self.callback];
+    [self barcodeScanDone:^{
+        [self.plugin returnSuccess:@"" format:@"" cancelled:TRUE flipped:self.isFlipped callback:self.callback];
+    }];
     if (self.isFlipped) {
         self.isFlipped = NO;
     }
@@ -404,11 +420,12 @@ parentViewController:(UIViewController*)parentViewController
 - (void)flipCamera {
     self.isFlipped = YES;
     self.isFrontCamera = !self.isFrontCamera;
-    [self barcodeScanDone];
-    if (self.isFlipped) {
-      self.isFlipped = NO;
-    }
+    [self barcodeScanDone:^{
+        if (self.isFlipped) {
+            self.isFlipped = NO;
+        }
     [self performSelector:@selector(scanBarcode) withObject:nil afterDelay:0.1];
+    }];
 }
 
 //--------------------------------------------------------------------------
@@ -1070,17 +1087,17 @@ parentViewController:(UIViewController*)parentViewController
 
 - (BOOL)shouldAutorotate
 {
-  return NO; // if we want to support non-portrait orientation then this should change as well
+    return YES;
 }
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
 {
-    return UIInterfaceOrientationPortrait;
+    return [[UIApplication sharedApplication] statusBarOrientation];
 }
 
 - (NSUInteger)supportedInterfaceOrientations
 {
-    return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskAll;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -1094,14 +1111,22 @@ parentViewController:(UIViewController*)parentViewController
 
 - (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)orientation duration:(NSTimeInterval)duration
 {
-    [CATransaction begin];
+    [UIView setAnimationsEnabled:NO];
+    AVCaptureVideoPreviewLayer* previewLayer = self.processor.previewLayer;
+    previewLayer.frame = self.view.bounds;
 
-    self.processor.previewLayer.connection.videoOrientation = orientation;
-    [self.processor.previewLayer layoutSublayers];
-    self.processor.previewLayer.frame = self.view.bounds;
+    if (orientation == UIInterfaceOrientationLandscapeLeft) {
+        [previewLayer setOrientation:AVCaptureVideoOrientationLandscapeLeft];
+    } else if (orientation == UIInterfaceOrientationLandscapeRight) {
+        [previewLayer setOrientation:AVCaptureVideoOrientationLandscapeRight];
+    } else if (orientation == UIInterfaceOrientationPortrait) {
+        [previewLayer setOrientation:AVCaptureVideoOrientationPortrait];
+    } else if (orientation == UIInterfaceOrientationPortraitUpsideDown) {
+        [previewLayer setOrientation:AVCaptureVideoOrientationPortraitUpsideDown];
+    }
 
-    [CATransaction commit];
-    [super willAnimateRotationToInterfaceOrientation:orientation duration:duration];
+    previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+    [UIView setAnimationsEnabled:YES];
 }
 
 @end

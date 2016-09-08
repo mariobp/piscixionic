@@ -2,7 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:rim="http://www.blackberry.com/ns/widgets"
     id="phonegap-plugin-barcodescanner"
-    version="5.0.0">
+    version="6.0.1">
 
     <name>BarcodeScanner</name>
     <description>You can use the BarcodeScanner plugin to scan different types of barcodes (using the device's camera) and get the metadata encoded in them for processing within your application.</description>
@@ -10,6 +10,8 @@
 
     <repo>https://github.com/phonegap/phonegap-plugin-barcodescanner</repo>
     <issue>https://github.com/phonegap/phonegap-plugin-barcodescanner/issues</issue>
+
+    <preference name="CAMERA_USAGE_DESCRIPTION" default=" " />
 
     <engines>
         <engine name="cordova" version=">=3.0.0" />
@@ -26,6 +28,11 @@
             <feature name="BarcodeScanner">
                 <param name="ios-package" value="CDVBarcodeScanner" />
             </feature>
+        </config-file>
+
+        <!-- Usage description of the Camera, mandatory since iOS 10 -->
+        <config-file target="*-Info.plist" parent="NSCameraUsageDescription">
+            <string>$CAMERA_USAGE_DESCRIPTION</string>
         </config-file>
 
         <resource-file src="src/ios/scannerOverlay.xib" />
@@ -88,28 +95,13 @@
             <uses-permission android:name="android.permission.CAMERA" />
             <uses-permission android:name="android.permission.FLASHLIGHT" />
             <!-- Not required to allow users to work around this -->
-            <uses-feature android:name="android.hardware.camera" android:required="false" />
+            <uses-feature android:name="android.hardware.camera" android:required="true" />
         </config-file>
 
         <framework src="src/android/barcodescanner.gradle" custom="true" type="gradleReference"/>
         <resource-file src="src/android/barcodescanner-release-2.0.1.aar" target="libs/barcodescanner.aar" />
 
         <dependency id="cordova-plugin-compat" version="^1.0.0" />
-    </platform>
-
-    <platform name="windows8">
-        <js-module src="src/windows/BarcodeScannerProxy.js" name="BarcodeScannerProxy">
-            <merges target="" />
-        </js-module>
-
-        <config-file target="package.appxmanifest" parent="/Package/Capabilities">
-            <DeviceCapability Name="webcam" />
-        </config-file>
-
-        <framework src="src/windows/lib/WinRTBarcodeReader.csproj" custom="true" type="projectReference" versions="&lt;=8.1"/>
-        <framework src="src/windows/lib.UW/WinRTBarcodeReader.UW.csproj" custom="true" type="projectReference" versions=">8.1"/>
-
-        <asset src="src/windows/assets/plugin-barcodeScanner.css" target="css/plugin-barcodeScanner.css" />
     </platform>
 
     <platform name="windows">
@@ -127,6 +119,8 @@
         <framework src="src/windows/lib/WinRTBarcodeReader.csproj" custom="true" type="projectReference" versions="&lt;=8.1"/>
 
         <asset src="src/windows/assets/plugin-barcodeScanner.css" target="css/plugin-barcodeScanner.css" />
+        <hook src="hooks/windows/check-arch.js" type="before_compile" />
+        <hook src="hooks/windows/check-arch.js" type="before_run" />
     </platform>
 
     <!-- Windows Phone 8 -->

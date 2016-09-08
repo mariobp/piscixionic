@@ -30,6 +30,7 @@ var Diagnostic = (function(){
 	Diagnostic.permissionStatus = {
 		"NOT_REQUESTED": "not_determined", // App has not yet requested this permission
 		"DENIED": "denied", // User denied access to this permission
+		"RESTRICTED": "restricted", // Permission is unavailable and user cannot enable it.  For example, when parental controls are in effect for the current user.
 		"GRANTED": "authorized", //  User granted access to this permission
 		"GRANTED_WHEN_IN_USE": "authorized_when_in_use" //  User granted access use location permission only when app is in use
 	};
@@ -187,12 +188,13 @@ var Diagnostic = (function(){
 	 * This can be triggered either by the user's response to a location permission authorization dialog,
 	 * by the user turning on/off Location Services,
 	 * or by the user changing the Location authorization state specifically for your app.
+	 * Pass in a falsey value to de-register the currently registered function.
 	 *
 	 * @param {Function} successCallback -  The callback which will be called when the Location state changes.
 	 * This callback function is passed a single string parameter indicating the new location authorisation status as a constant in `cordova.plugins.diagnostic.permissionStatus`.
 	 */
 	Diagnostic.registerLocationStateChangeHandler = function(successCallback) {
-		Diagnostic._onLocationStateChange = successCallback;
+		Diagnostic._onLocationStateChange = successCallback || function(){};
 	};
 
 	/************
@@ -271,7 +273,7 @@ var Diagnostic = (function(){
 	 *
 	 * @param {Function} successCallback - The callback which will be called when operation is successful.
 	 * This callback function is passed a single string parameter indicating whether access to the camera was granted or denied:
-	 * `Diagnostic.permissionStatus.GRANTED` or `Diagnostic.permissionStatus.DENIED`
+	 * `cordova.plugins.diagnostic.permissionStatus.GRANTED` or `cordova.plugins.diagnostic.permissionStatus.DENIED`
 	 * @param {Function} errorCallback -  The callback which will be called when operation encounters an error.
 	 * This callback function is passed a single string parameter containing the error message.
 	 */
@@ -323,7 +325,7 @@ var Diagnostic = (function(){
 	 *
 	 * @param {Function} successCallback - The callback which will be called when operation is successful.
 	 * This callback function is passed a single string parameter indicating the new authorization status:
-	 * `Diagnostic.permissionStatus.GRANTED` or `Diagnostic.permissionStatus.DENIED`
+	 * `cordova.plugins.diagnostic.permissionStatus.GRANTED` or `cordova.plugins.diagnostic.permissionStatus.DENIED`
 	 * @param {Function} errorCallback -  The callback which will be called when operation encounters an error.
 	 * This callback function is passed a single string parameter containing the error message.
 	 */
@@ -397,13 +399,15 @@ var Diagnostic = (function(){
 
 	/**
 	 * Registers a function to be called when a change in Bluetooth state occurs.
+	 * Pass in a falsey value to de-register the currently registered function.
+	 *
 	 * @param {Function} successCallback - function call when a change in Bluetooth state occurs.
 	 * This callback function is passed a single string parameter which indicates the Bluetooth state as a constant in `cordova.plugins.diagnostic.bluetoothState`.
 	 * @param {Function} errorCallback -  The callback which will be called when the operation encounters an error.
 	 *  This callback function is passed a single string parameter containing the error message.
 	 */
 	Diagnostic.registerBluetoothStateChangeHandler = function(successCallback, errorCallback){
-		Diagnostic._onBluetoothStateChange = successCallback;
+		Diagnostic._onBluetoothStateChange = successCallback || function(){};
 	};
 
 	/***************************
@@ -447,7 +451,7 @@ var Diagnostic = (function(){
 	 *
 	 * @param {Function} successCallback - The callback which will be called when operation is successful.
 	 * This callback function is passed a single string parameter indicating whether access to the microphone was granted or denied:
-	 * `Diagnostic.permissionStatus.GRANTED` or `Diagnostic.permissionStatus.DENIED`
+	 * `cordova.plugins.diagnostic.permissionStatus.GRANTED` or `cordova.plugins.diagnostic.permissionStatus.DENIED`
 	 * @param {Function} errorCallback - The callback which will be called when an error occurs.
 	 * This callback function is passed a single string parameter containing the error message.
 	 * This works only on iOS 7+.
@@ -572,7 +576,7 @@ var Diagnostic = (function(){
 	 *
 	 * @param {Function} successCallback - The callback which will be called when operation is successful.
 	 * This callback function is passed a single string parameter indicating whether access to contacts was granted or denied:
-	 * `Diagnostic.permissionStatus.GRANTED` or `Diagnostic.permissionStatus.DENIED`
+	 * `cordova.plugins.diagnostic.permissionStatus.GRANTED` or `cordova.plugins.diagnostic.permissionStatus.DENIED`
 	 * @param {Function} errorCallback -  The callback which will be called when operation encounters an error.
 	 * This callback function is passed a single string parameter containing the error message.
 	 */
@@ -628,7 +632,7 @@ var Diagnostic = (function(){
 	 *
 	 * @param {Function} successCallback - The callback which will be called when operation is successful.
 	 * This callback function is passed a single string parameter indicating whether access to calendar was granted or denied:
-	 * `Diagnostic.permissionStatus.GRANTED` or `Diagnostic.permissionStatus.DENIED`
+	 * `cordova.plugins.diagnostic.permissionStatus.GRANTED` or `cordova.plugins.diagnostic.permissionStatus.DENIED`
 	 * @param {Function} errorCallback -  The callback which will be called when operation encounters an error.
 	 * This callback function is passed a single string parameter containing the error message.
 	 */
@@ -684,7 +688,7 @@ var Diagnostic = (function(){
 	 *
 	 * @param {Function} successCallback - The callback which will be called when operation is successful.
 	 * This callback function is passed a single string parameter indicating whether access to reminders was granted or denied:
-	 * `Diagnostic.permissionStatus.GRANTED` or `Diagnostic.permissionStatus.DENIED`
+	 * `cordova.plugins.diagnostic.permissionStatus.GRANTED` or `cordova.plugins.diagnostic.permissionStatus.DENIED`
 	 * @param {Function} errorCallback -  The callback which will be called when operation encounters an error.
 	 * This callback function is passed a single string parameter containing the error message.
 	 */
@@ -696,6 +700,40 @@ var Diagnostic = (function(){
 			'Diagnostic',
 			'requestRemindersAuthorization',
 			[]);
+	};
+
+	/*********************
+	 * Background refresh
+	 *********************/
+
+	/**
+	 * Returns the background refresh authorization status for the application.
+	 *
+	 * @param {Function} successCallback - The callback which will be called when operation is successful.
+	 * This callback function is passed a single string parameter which indicates the authorization status as a constant in `cordova.plugins.diagnostic.permissionStatus`.
+	 * @param {Function} errorCallback -  The callback which will be called when operation encounters an error.
+	 * This callback function is passed a single string parameter containing the error message.
+	 */
+	Diagnostic.getBackgroundRefreshStatus = function(successCallback, errorCallback) {
+		return cordova.exec(successCallback,
+			errorCallback,
+			'Diagnostic',
+			'getBackgroundRefreshStatus',
+			[]);
+	};
+
+	/**
+	 * Checks if the application is authorized for background refresh.
+	 *
+	 * @param {Function} successCallback - The callback which will be called when operation is successful.
+	 * This callback function is passed a single boolean parameter which is TRUE if background refresh is authorized for use.
+	 * @param {Function} errorCallback -  The callback which will be called when operation encounters an error.
+	 * This callback function is passed a single string parameter containing the error message.
+	 */
+	Diagnostic.isBackgroundRefreshAuthorized = function(successCallback, errorCallback) {
+		Diagnostic.getBackgroundRefreshStatus(function(status){
+			successCallback(status === Diagnostic.permissionStatus.GRANTED);
+		}, errorCallback);
 	};
 
 	return Diagnostic;

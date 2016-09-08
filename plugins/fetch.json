@@ -1,70 +1,4 @@
 {
-    "cordova-plugin-device": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-device@~1.1.1"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-whitelist": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-whitelist@~1.2.1"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-splashscreen": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-splashscreen"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-statusbar": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-statusbar"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "ionic-plugin-keyboard": {
-        "source": {
-            "type": "registry",
-            "id": "ionic-plugin-keyboard"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-network-information": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-network-information"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-x-toast": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git",
-            "subdir": "."
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-image-picker": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/wymsee/cordova-imagePicker.git",
-            "subdir": "."
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "com.telerik.plugins.nativepagetransitions": {
         "source": {
             "type": "git",
@@ -79,15 +13,6 @@
         "source": {
             "type": "git",
             "url": "https://github.com/phonegap-build/PushPlugin.git",
-            "subdir": "."
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "de.appplant.cordova.plugin.local-notification": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/katzer/cordova-plugin-local-notifications.git",
             "subdir": "."
         },
         "is_top_level": true,
@@ -115,15 +40,6 @@
             "id": "cordova-plugin-compat"
         },
         "is_top_level": false,
-        "variables": {}
-    },
-    "phonegap-plugin-barcodescanner": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/phonegap/phonegap-plugin-barcodescanner.git",
-            "subdir": "."
-        },
-        "is_top_level": true,
         "variables": {}
     },
     "cordova-plugin-dialogs": {
@@ -176,19 +92,10 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-crosswalk-webview": {
+    "cordova-plugin-vibration": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-crosswalk-webview"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-background-mode": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/katzer/cordova-plugin-background-mode.git",
-            "subdir": "."
+            "id": "cordova-plugin-vibration"
         },
         "is_top_level": true,
         "variables": {}
@@ -201,10 +108,102 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-vibration": {
+    "cordova-plugin-crosswalk-webview": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-vibration"
+            "id": "cordova-plugin-crosswalk-webview"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "phonegap-plugin-barcodescanner": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/phonegap/phonegap-plugin-barcodescanner",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-image-picker": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/wymsee/cordova-imagePicker",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-x-toast": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-network-information": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-network-information"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "ionic-plugin-keyboard": {
+        "source": {
+            "type": "registry",
+            "id": "ionic-plugin-keyboard"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-statusbar": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-statusbar"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-splashscreen": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-splashscreen"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-whitelist": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-whitelist@~1.2.1"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-device": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-device@~1.1.1"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "de.appplant.cordova.plugin.local-notification": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/katzer/cordova-plugin-local-notifications.git",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-background-mode": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-background-mode"
         },
         "is_top_level": true,
         "variables": {}

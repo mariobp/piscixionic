@@ -754,14 +754,6 @@ angular.module('starter.controllers', [])
             num = 1;
             max = 0;
             $scope.noMoreItemsAvailable = false;
-            $scope.$broadcast('scroll.refreshComplete');
-        };
-
-        $scope.reload2 = function() {
-            $scope.reportes = [];
-            num = 1;
-            max = 0;
-            $scope.noMoreItemsAvailable = false;
             $scope.loadMore();
         };
 
@@ -1304,16 +1296,9 @@ angular.module('starter.controllers', [])
             num = 1;
             max = 0;
             $scope.noMoreItemsAvailable = false;
-            $scope.$broadcast('scroll.refreshComplete');
-        };
-
-        $scope.reload2 = function() {
-            $scope.lista = [];
-            num = 1;
-            max = 0;
-            $scope.noMoreItemsAvailable = false;
             $scope.loadMore();
         };
+
     })
     .controller('GaleriaM', function($http, $scope, $stateParams, $cordovaToast, $state, $cordovaDialogs, $location, $timeout, $ionicLoading) {
         var id = $stateParams.mantenimientoId;
@@ -2035,14 +2020,6 @@ angular.module('starter.controllers', [])
         };
 
         $scope.reload = function() {
-            $scope.reportes = [];
-            num = 1;
-            max = 0;
-            $scope.noMoreItemsAvailable = false;
-            $scope.$broadcast('scroll.refreshComplete');
-        };
-
-        $scope.reload2 = function() {
             $scope.reportes = [];
             num = 1;
             max = 0;
