@@ -370,7 +370,7 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('Reporte', function($http, $scope, $stateParams, $cordovaDialogs, $cordovaToast, Galeria, $cordovaImagePicker, $state, $timeout, $ionicHistory, Camera, $ionicLoading, $location, $cordovaGeolocation, $cordovaProgress) {
+.controller('Reporte', function($http, $scope, $stateParams, $cordovaDialogs, $cordovaToast, Galeria, $cordovaImagePicker, $state, $timeout, $ionicHistory,  $cordovaCamera, $ionicLoading, $location, $cordovaGeolocation, $cordovaProgress) {
         $scope.posicion($location.path());
         $scope.data = {};
         $scope.imagenes = [];
@@ -472,19 +472,35 @@ angular.module('starter.controllers', [])
         $scope.piscinas();
         $scope.tiposReporte();
 
+        function setOptions(srcType, edit) {
+            var options = {
+                quality: 75,
+                sourceType: srcType,
+                targetWidth: 1280,
+                targetHeight: 720,
+                allowEdit: edit,
+                correctOrientation: true,
+                saveToPhotoAlbum: true
+            };
+            return options;
+        }
+
+
         $scope.takePicture = function() {
             if ($scope.imagenes.length < 5) {
-                var options = {
-                    quality: 75,
-                    targetWidth: 1280,
-                    targetHeight: 720,
-                    sourceType: 1
-                };
-                Camera.getPicture(options).then(function(imageData) {
-                    $scope.imagenes.push(imageData);
-                }, function(err) {
-                    console.log("Error", err);
-                });
+                var srcType = 1;
+                var options = setOptions(srcType, false);
+
+                document.addEventListener("deviceready", function () {
+                  $cordovaCamera.getPicture(options).then(function(imageData) {
+                        console.log(imageData);
+                        $scope.imagenes.push(imageData);
+                  }, function(error) {
+                    // error
+                      console.log("Unable to obtain picture: " + error, "app");
+                  });
+                  
+                }, false);
             } else {
                 $cordovaToast.show('El maximo es 5 fotos', 'short', 'center');
             }
@@ -496,17 +512,17 @@ angular.module('starter.controllers', [])
 
         $scope.getPicture = function() {
             if ($scope.imagenes.length < 5) {
-                var options = {
-                    quality: 75,
-                    targetWidth: 1280,
-                    targetHeight: 720,
-                    sourceType: 0
-                };
-                Camera.getPicture(options).then(function(imageData) {
-                    $scope.imagenes.push(imageData);
-                }, function(err) {
-                    console.log("Error", err);
-                });
+                var srcType = 0;
+                var options = setOptions(srcType, false);
+
+                document.addEventListener("deviceready", function () {
+                  $cordovaCamera.getPicture(options).then(function(imageData) {
+                          $scope.imagenes.push(imageData);
+                  }, function(error) {
+                    // error
+                      console.log("Unable to obtain picture: " + error, "app");
+                  });
+                }, false);
             } else {
                 $cordovaToast.show('El maximo es 5 fotos', 'short', 'center');
             }
@@ -1501,7 +1517,6 @@ angular.module('starter.controllers', [])
         $scope.loadPendiente = function() {
             $http.get($scope.server + '/actividades/planilladiaria/pendiente/list/')
                 .then(function doneCallbacks(response) {
-                  console.log("Pendiente");
                     if (response.data.num_rows === 0) {
                         $cordovaDialogs.alert('Este piscinero no tiene ninguna planilla pendiente.', 'Información');
                     }
@@ -1537,7 +1552,6 @@ angular.module('starter.controllers', [])
         $scope.loadMore = function() {
             $http.get($scope.server + '/usuarios/service/list/asignaciones/?page=' + num + '&asigna=true')
                 .then(function doneCallbacks(response) {
-                  console.log("De hoy");
                     if (response.data.num_rows === 0) {
                         $cordovaDialogs.alert('Este piscinero no tiene ninguna ruta asignada.', 'Información');
                     }
@@ -1734,7 +1748,7 @@ angular.module('starter.controllers', [])
                         }
                     });
             } else {
-                $cordovaToast.show("No se ha tomado aun la ubicación, por favor espere e intente de nuevo", 'short', 'center').then(function() {
+                $cordovaToast.show("No se ha tomado aun la ubicación, por favor espere e intente de nuevo", 'short', 'bottom').then(function() {
                     $scope.disableEnviar = false;
                 });
             }
@@ -1800,7 +1814,7 @@ angular.module('starter.controllers', [])
                     $cordovaDialogs.alert("Hay un problema en el servidor, por favor contáctese con el administrador.", 'Error');
                 } else {
                     $timeout(function() {
-                        $cordovaToast.show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'center').then(function(success) {
+                        $cordovaToast.show('El servicio esta tardando en responder. Estamos Reconectando.', 'short', 'bottom').then(function(success) {
                             $scope.enviando();
                         });
                     }, 5000);
@@ -1822,7 +1836,7 @@ angular.module('starter.controllers', [])
                         $scope.dataRespuesta.nombre = "Salida de piscina " + $scope.planilla.nombreP;
                         $scope.dataRespuesta.descripcion = "Actividad de mantenimiento finalizada en la piscina " + $scope.planilla.nombreP + " del cliente " + $scope.planilla.nombreCF + " " + $scope.planilla.nombreCL;
                         $ionicLoading.hide();
-                        $cordovaToast.show("Ubicación tomada", 'short', 'center').then(function(success) {
+                        $cordovaToast.show("Ubicación tomada", 'short', 'bottom').then(function(success) {
                             $cordovaDialogs.confirm('Esta seguro que quiere indicar que ya salio?', 'Enviar', ['Si, Enviar!', 'Cancelar'])
                                 .then(function(result) {
                                     if (result === 1) {
