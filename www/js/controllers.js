@@ -499,7 +499,7 @@ angular.module('starter.controllers', [])
                     // error
                       console.log("Unable to obtain picture: " + error, "app");
                   });
-                  
+
                 }, false);
             } else {
                 $cordovaToast.show('El maximo es 5 fotos', 'short', 'center');
@@ -1550,7 +1550,7 @@ angular.module('starter.controllers', [])
         };
         $scope.loadPendiente();
         $scope.loadMore = function() {
-            $http.get($scope.server + '/usuarios/service/list/asignaciones/?page=' + num + '&asigna=true')
+            $http.get($scope.server + '/usuarios/service/list/asignaciones/?page=' + num + '&asigna=True')
                 .then(function doneCallbacks(response) {
                     if (response.data.num_rows === 0) {
                         $cordovaDialogs.alert('Este piscinero no tiene ninguna ruta asignada.', 'Información');
