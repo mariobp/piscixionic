@@ -1829,7 +1829,7 @@ angular.module('starter.controllers', [])
             max = 0;
         $scope.posicion($location.path());
         $scope.loadMore = function() {
-            $http.get($scope.server + '/usuarios/service/list/asignaciones/?piscinero=' + $scope.piscinero + '&page=' + num + '&asigna=true')
+            $http.get($scope.server + '/usuarios/service/list/asignaciones/?piscinero=' + $scope.piscinero + '&page=' + num + '&asigna=True')
                 .then(function doneCallbacks(response) {
                     if (response.data.num_rows === 0) {
                         $cordovaDialogs.alert('Este piscinero no tiene ninguna ruta asignada.', 'Información');
@@ -1948,7 +1948,7 @@ angular.module('starter.controllers', [])
     $scope.calculate = function calculateAndDisplayRoute(directionsService, directionsDisplay) {
         var ruta = [];
         var waypts = [];
-        $http.get($scope.server + '/usuarios/service/list/asignaciones/?piscinero=' + $stateParams.piscineroId + '&asigna=true')
+        $http.get($scope.server + '/usuarios/service/list/asignaciones/?piscinero=' + $stateParams.piscineroId + '&asigna=True')
             .then(function doneCallbacks(response) {
                     if (response.data.num_rows === 0) {
                         $cordovaDialogs.alert('No hay ninguna ruta que mostrar.', 'Información');
