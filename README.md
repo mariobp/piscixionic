@@ -1,4 +1,4 @@
-# Piscix 
+# Piscix
 ***Ionic Project***
 
 1. Lista de Clientes
@@ -6,6 +6,7 @@
     * Reporte
     * Historial de Reportes cliente
       * Historial de Soluciones de Reporte
+    * Planilla
     * Asignar gps a Casa
   * Escanear código
 2. Piscinero
@@ -15,6 +16,7 @@
 3. Historial de Reportes General
   * Fotos
   * Respuestas
+  * Solución
   * historial de Solución
 4. Historial de Soluciones General
   * Fotos
